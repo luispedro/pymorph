@@ -1,3 +1,4 @@
+__all__ = ['mmtext']
 def mmtext(txt):
     """
         - Purpose
