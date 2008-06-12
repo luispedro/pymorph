@@ -142,7 +142,6 @@
     ---
 
 """
-#
 __version__ = '0.8 pybase'
 
 __version_string__ = 'SDC Morphology Toolbox V0.8 01Aug03 (script version)'
@@ -426,7 +425,7 @@ def mmdist(f, Bc=None, METRIC=None):
     f = mmgray(f,'uint16')
     y = mmintersec(f,0)
     if (METRIC == 'EUCLIDEAN') or (METRIC == 'EUC2'):
-        b = int32(zeros((3,3)))
+        b = zeros((3,3),numpy.int32)
         i=1
         while not mmisequal(f,y):
             a4,a2 = -4*i+2, -2*i+1
@@ -434,7 +433,7 @@ def mmdist(f, Bc=None, METRIC=None):
                        [a2, 0,a2],
                        [a4,a2,a4]])
             y=f
-            i=i+1
+            i+=1
             f = mmero(f,b)
         if METRIC == 'EUCLIDEAN':
             f = uint16(sqrt(f)+0.5)
@@ -7662,12 +7661,5 @@ def mmplot(plotitems=[], options=[], outfig=-1, filename=None):
         g.hardcopy(filename, terminal='png', color=1)
     fig = outfig
     return fig
-#
-#
-#
-# =====================================================================
-#  Adesso -- Generated Mon Aug 04 12:09:00 Hora oficial do Brasil 2003
-# =====================================================================
-#
 
 # vim: set ts=4 sts=4 sw=4 expandtab smartindent:
