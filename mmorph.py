@@ -6,136 +6,136 @@
     segmentation, non-linear filtering, pattern recognition and image analysis.
     -------------------------------------------------------------------
     int32()          -- Convert an image to an int32 image.
-    mmadd4dil()      -- Addition for dilation
-    mmaddm()         -- Addition of two images, with saturation.
-    mmareaclose()    -- Area closing
-    mmareaopen()     -- Area opening
-    mmasf()          -- Alternating Sequential Filtering
-    mmasfrec()       -- Reconstructive Alternating Sequential Filtering
-    mmbench()        -- benchmarking main functions of the toolbox.
-    mmbinary()       -- Convert a gray-scale image into a binary image
-    mmblob()         -- Blob measurements from a labeled image.
-    mmbshow()        -- Generate a graphical representation of overlaid binary
-                        images.
-    mmcbisector()    -- N-Conditional bisector.
-    mmcdil()         -- Dilate an image conditionally.
-    mmcenter()       -- Center filter.
-    mmcero()         -- Erode an image conditionally.
-    mmclohole()      -- Close holes of binary and gray-scale images.
-    mmclose()        -- Morphological closing.
-    mmcloserec()     -- Closing by reconstruction.
-    mmcloserecth()   -- Close-by-Reconstruction Top-Hat.
-    mmcloseth()      -- Closing Top Hat.
-    mmcmp()          -- Compare two images pixelwisely.
-    mmconcat()       -- Concatenate two or more images along width, height or
-                        depth.
-    mmcthick()       -- Image transformation by conditional thickening.
-    mmcthin()        -- Image transformation by conditional thinning.
-    mmcwatershed()   -- Detection of watershed from markers.
-    mmdatatype()     -- Return the image datatype string
-    mmdil()          -- Dilate an image by a structuring element.
-    mmdist()         -- Distance transform.
-    mmdrawv()        -- Superpose points, rectangles and lines on an image.
-    mmdtshow()       -- Display a distance transform image with an iso-line
-                        color table.
-    mmedgeoff()      -- Eliminate the objects that hit the image frame.
-    mmendpoints()    -- Interval to detect end-points.
-    mmero()          -- Erode an image by a structuring element.
-    mmflood()        -- Flooding filter- h,v,a-basin and dynamics (depth, area,
-                        volume)
-    mmframe()        -- Create a frame image.
-    mmfreedom()      -- Control automatic data type conversion.
-    mmgdist()        -- Geodesic Distance Transform.
-    mmgdtshow()      -- Apply an iso-line color table to a gray-scale image.
-    mmglblshow()     -- Apply a random color table to a gray-scale image.
-    mmgradm()        -- Morphological gradient.
-    mmgrain()        -- Gray-scale statistics for each labeled region.
-    mmgray()         -- Convert a binary image into a gray-scale image.
-    mmgshow()        -- Apply binary overlays as color layers on a binary or
-                        gray-scale image
-    mmhistogram()    -- Find the histogram of the image f.
-    mmhmax()         -- Remove peaks with contrast less than h.
-    mmhmin()         -- Remove basins with contrast less than h.
-    mmhomothick()    -- Interval for homotopic thickening.
-    mmhomothin()     -- Interval for homotopic thinning.
-    mmimg2se()       -- Create a structuring element from a pair of images.
-    mminfcanon()     -- Intersection of inf-generating operators.
-    mminfgen()       -- Inf-generating.
-    mminfrec()       -- Inf-reconstruction.
-    mminpos()        -- Minima imposition.
-    mminstall()      -- Verify if the Morphology Toolbox is registered.
-    mminterot()      -- Rotate an interval
-    mmintersec()     -- Intersection of images.
-    mmintershow()    -- Visualize an interval.
+    add4dil()      -- Addition for dilation
+    addm()         -- Addition of two images, with saturation.
+    areaclose()    -- Area closing
+    areaopen()     -- Area opening
+    asf()          -- Alternating Sequential Filtering
+    asfrec()       -- Reconstructive Alternating Sequential Filtering
+    bench()        -- benchmarking main functions of the toolbox.
+    binary()       -- Convert a gray-scale image into a binary image
+    blob()         -- Blob measurements from a labeled image.
+    bshow()        -- Generate a graphical representation of overlaid binary
+                      images.
+    cbisector()    -- N-Conditional bisector.
+    cdil()         -- Dilate an image conditionally.
+    center()       -- Center filter.
+    cero()         -- Erode an image conditionally.
+    clohole()      -- Close holes of binary and gray-scale images.
+    close()        -- Morphological closing.
+    closerec()     -- Closing by reconstruction.
+    closerecth()   -- Close-by-Reconstruction Top-Hat.
+    closeth()      -- Closing Top Hat.
+    cmp()          -- Compare two images pixelwisely.
+    concat()       -- Concatenate two or more images along width, height or
+                      depth.
+    cthick()       -- Image transformation by conditional thickening.
+    cthin()        -- Image transformation by conditional thinning.
+    cwatershed()   -- Detection of watershed from markers.
+    datatype()     -- Return the image datatype string
+    dil()          -- Dilate an image by a structuring element.
+    dist()         -- Distance transform.
+    drawv()        -- Superpose points, rectangles and lines on an image.
+    dtshow()       -- Display a distance transform image with an iso-line
+                      color table.
+    edgeoff()      -- Eliminate the objects that hit the image frame.
+    endpoints()    -- Interval to detect end-points.
+    ero()          -- Erode an image by a structuring element.
+    flood()        -- Flooding filter- h,v,a-basin and dynamics (depth, area,
+                      volume)
+    frame()        -- Create a frame image.
+    freedom()      -- Control automatic data type conversion.
+    gdist()        -- Geodesic Distance Transform.
+    gdtshow()      -- Apply an iso-line color table to a gray-scale image.
+    glblshow()     -- Apply a random color table to a gray-scale image.
+    gradm()        -- Morphological gradient.
+    grain()        -- Gray-scale statistics for each labeled region.
+    gray()         -- Convert a binary image into a gray-scale image.
+    gshow()        -- Apply binary overlays as color layers on a binary or
+                      gray-scale image
+    histogram()    -- Find the histogram of the image f.
+    hmax()         -- Remove peaks with contrast less than h.
+    hmin()         -- Remove basins with contrast less than h.
+    homothick()    -- Interval for homotopic thickening.
+    homothin()     -- Interval for homotopic thinning.
+    img2se()       -- Create a structuring element from a pair of images.
+    infcanon()     -- Intersection of inf-generating operators.
+    infgen()       -- Inf-generating.
+    infrec()       -- Inf-reconstruction.
+    inpos()        -- Minima imposition.
+    install()      -- Verify if the Morphology Toolbox is registered.
+    interot()      -- Rotate an interval
+    intersec()     -- Intersection of images.
+    intershow()    -- Visualize an interval.
     mmis()           -- Verify if a relationship among images is true or false.
-    mmisbinary()     -- Check for binary image
-    mmisequal()      -- Verify if two images are equal
-    mmislesseq()     -- Verify if one image is less or equal another (is
-                        beneath)
-    mmlabel()        -- Label a binary image.
-    mmlabelflat()    -- Label the flat zones of gray-scale images.
-    mmlastero()      -- Last erosion.
-    mmlblshow()      -- Display a labeled image assigning a random color for
-                        each label.
-    mmlimits()       -- Get the possible minimum and maximum of an image.
-    mmmat2set()      -- Converts image representation from matrix to set
-    mmmaxleveltype() -- Returns the maximum value associated to an image
-                        datatype
-    mmneg()          -- Negate an image.
-    mmopen()         -- Morphological opening.
-    mmopenrec()      -- Opening by reconstruction.
-    mmopenrecth()    -- Open-by-Reconstruction Top-Hat.
-    mmopenth()       -- Opening Top Hat.
-    mmopentransf()   -- Open transform.
-    mmpad4n()        -- mmpad4n
-    mmpatspec()      -- Pattern spectrum (also known as granulometric size
-                        density).
-    mmplot()         -- Plot a function.
-    mmreadgray()     -- Read an image from a commercial file format and stores
-                        it as a gray-scale image.
-    mmregister()     -- Register the SDC Morphology Toolbox.
-    mmregmax()       -- Regional Maximum.
-    mmregmin()       -- Regional Minimum (with generalized dynamics).
-    mmse2hmt()       -- Create a Hit-or-Miss Template (or interval) from a pair
-                        of structuring elements.
-    mmse2interval()  -- Create an interval from a pair of structuring elements.
-    mmsebox()        -- Create a box structuring element.
-    mmsecross()      -- Diamond structuring element and elementary 3x3 cross.
-    mmsedil()        -- Dilate one structuring element by another
-    mmsedisk()       -- Create a disk or a semi-sphere structuring element.
-    mmseline()       -- Create a line structuring element.
-    mmsereflect()    -- Reflect a structuring element
-    mmserot()        -- Rotate a structuring element.
-    mmseshow()       -- Display a structuring element as an image.
-    mmsesum()        -- N-1 iterative Minkowski additions
-    mmset2mat()      -- Converts image representation from set to matrix
-    mmsetrans()      -- Translate a structuring element
-    mmseunion()      -- Union of structuring elements
-    mmshow()         -- Display binary or gray-scale images and optionally
-                        overlay it with binary images.
-    mmskelm()        -- Morphological skeleton (Medial Axis Transform).
-    mmskelmrec()     -- Morphological skeleton reconstruction (Inverse Medial
-                        Axis Transform).
-    mmskiz()         -- Skeleton of Influence Zone - also know as Generalized
-                        Voronoi Diagram
-    mmstats()        -- Find global image statistics.
-    mmsubm()         -- Subtraction of two images, with saturation.
-    mmsupcanon()     -- Union of sup-generating or hit-miss operators.
-    mmsupgen()       -- Sup-generating (hit-miss).
-    mmsuprec()       -- Sup-reconstruction.
-    mmswatershed()   -- Detection of similarity-based watershed from markers.
-    mmsymdif()       -- Symmetric difference between two images
-    mmtext()         -- Create a binary image of a text.
-    mmthick()        -- Image transformation by thickening.
-    mmthin()         -- Image transformation by thinning.
-    mmthreshad()     -- Threshold (adaptive)
-    mmtoggle()       -- Image contrast enhancement or classification by the
-                        toggle operator.
-    mmunion()        -- Union of images.
-    mmvdome()        -- Obsolete, use mmvmax.
-    mmversion()      -- SDC Morphology Toolbox version.
-    mmvmax()         -- Remove domes with volume less than v.
-    mmwatershed()    -- Watershed detection.
+    isbinary()     -- Check for binary image
+    isequal()      -- Verify if two images are equal
+    islesseq()     -- Verify if one image is less or equal another (is
+                      beneath)
+    label()        -- Label a binary image.
+    labelflat()    -- Label the flat zones of gray-scale images.
+    lastero()      -- Last erosion.
+    lblshow()      -- Display a labeled image assigning a random color for
+                      each label.
+    limits()       -- Get the possible minimum and maximum of an image.
+    mat2set()      -- Converts image representation from matrix to set
+    maxleveltype() -- Returns the maximum value associated to an image
+                      datatype
+    neg()          -- Negate an image.
+    open()         -- Morphological opening.
+    openrec()      -- Opening by reconstruction.
+    openrecth()    -- Open-by-Reconstruction Top-Hat.
+    openth()       -- Opening Top Hat.
+    opentransf()   -- Open transform.
+    pad4n()        -- pad4n
+    patspec()      -- Pattern spectrum (also known as granulometric size
+                      density).
+    plot()         -- Plot a function.
+    readgray()     -- Read an image from a commercial file format and stores
+                      it as a gray-scale image.
+    register()     -- Register the SDC Morphology Toolbox.
+    regmax()       -- Regional Maximum.
+    regmin()       -- Regional Minimum (with generalized dynamics).
+    se2hmt()       -- Create a Hit-or-Miss Template (or interval) from a pair
+                      of structuring elements.
+    se2interval()  -- Create an interval from a pair of structuring elements.
+    sebox()        -- Create a box structuring element.
+    secross()      -- Diamond structuring element and elementary 3x3 cross.
+    sedil()        -- Dilate one structuring element by another
+    sedisk()       -- Create a disk or a semi-sphere structuring element.
+    seline()       -- Create a line structuring element.
+    sereflect()    -- Reflect a structuring element
+    serot()        -- Rotate a structuring element.
+    seshow()       -- Display a structuring element as an image.
+    sesum()        -- N-1 iterative Minkowski additions
+    set2mat()      -- Converts image representation from set to matrix
+    setrans()      -- Translate a structuring element
+    seunion()      -- Union of structuring elements
+    show()         -- Display binary or gray-scale images and optionally
+                      overlay it with binary images.
+    skelm()        -- Morphological skeleton (Medial Axis Transform).
+    skelmrec()     -- Morphological skeleton reconstruction (Inverse Medial
+                      Axis Transform).
+    skiz()         -- Skeleton of Influence Zone - also know as Generalized
+                      Voronoi Diagram
+    stats()        -- Find global image statistics.
+    subm()         -- Subtraction of two images, with saturation.
+    supcanon()     -- Union of sup-generating or hit-miss operators.
+    supgen()       -- Sup-generating (hit-miss).
+    suprec()       -- Sup-reconstruction.
+    swatershed()   -- Detection of similarity-based watershed from markers.
+    symdif()       -- Symmetric difference between two images
+    text()         -- Create a binary image of a text.
+    thick()        -- Image transformation by thickening.
+    thin()         -- Image transformation by thinning.
+    threshad()     -- Threshold (adaptive)
+    toggle()       -- Image contrast enhancement or classification by the
+                      toggle operator.
+    union()        -- Union of images.
+    vdome()        -- Obsolete, use mmvmax.
+    version()      -- SDC Morphology Toolbox version.
+    vmax()         -- Remove domes with volume less than v.
+    watershed()    -- Watershed detection.
     uint16()         -- Convert an image to a uint16 image.
     to_uint8()          -- Convert an image to an uint8 image.
 
@@ -161,15 +161,15 @@ except:
 #
 # =====================================================================
 #
-#   mmconcat
+#   concat
 #
 # =====================================================================
-def mmconcat(DIM, X1, X2, X3=None, X4=None):
+def concat(DIM, X1, X2, X3=None, X4=None):
     """
         - Purpose
             Concatenate two or more images along width, height or depth.
         - Synopsis
-            Y = mmconcat(DIM, X1, X2, X3=None, X4=None)
+            Y = concat(DIM, X1, X2, X3=None, X4=None)
         - Input
             DIM: String Dimension to concatenate. 'WIDTH' or 'W', 'HEIGHT'
                  or 'H', or ' DEPTH' or 'D'.
@@ -188,10 +188,10 @@ def mmconcat(DIM, X1, X2, X3=None, X4=None):
             images must have the same datatype.
         - Examples
             #
-            f1=mmreadgray('cameraman.tif')
-            f2=mmreadgray('blob.tif')
-            g=mmconcat('W',f1,mmgray(mmneg(f2)))
-            mmshow(g);
+            f1=readgray('cameraman.tif')
+            f2=readgray('blob.tif')
+            g=concat('W',f1,gray(neg(f2)))
+            show(g);
     """
     from numpy import newaxis, sum, zeros
 
@@ -247,15 +247,15 @@ def mmconcat(DIM, X1, X2, X3=None, X4=None):
 #
 # =====================================================================
 #
-#   mmlimits
+#   limits
 #
 # =====================================================================
-def mmlimits(f):
+def limits(f):
     """
         - Purpose
             Get the possible minimum and maximum of an image.
         - Synopsis
-            y = mmlimits(f)
+            y = limits(f)
         - Input
             f: Unsigned gray-scale (uint8 or uint16), signed (int32) or
                binary image.
@@ -270,8 +270,8 @@ def mmlimits(f):
             minimum and the second, the possible maximum.
         - Examples
             #
-            print mmlimits(mmbinary([0, 1, 0]))
-            print mmlimits(to_uint8([0, 1, 2]))
+            print limits(binary([0, 1, 0]))
+            print limits(to_uint8([0, 1, 2]))
     """
     from numpy import array
 
@@ -287,54 +287,54 @@ def mmlimits(f):
 #
 # =====================================================================
 #
-#   mmcenter
+#   center
 #
 # =====================================================================
-def mmcenter(f, b=None):
+def center(f, b=None):
     """
         - Purpose
             Center filter.
         - Synopsis
-            y = mmcenter(f, b=None)
+            y = center(f, b=None)
         - Input
             f: Gray-scale (uint8 or uint16) or binary image.
             b: Structuring Element Default: None (3x3 elementary cross).
         - Output
             y: Image
         - Description
-            mmcenter creates the image y by computing recursively the
+            center creates the image y by computing recursively the
             morphological center, relative to the structuring element b , of
             the image f .
         - Examples
             #
-            f=mmreadgray('gear.tif')
-            g=mmcenter(f,mmsedisk(2))
-            mmshow(f)
-            mmshow(g)
+            f=readgray('gear.tif')
+            g=center(f,sedisk(2))
+            show(f)
+            show(g)
     """
 
-    if b is None: b = mmsecross()
+    if b is None: b = secross()
     y = f
     diff = 0
     while not diff:
         aux = y
-        beta1 = mmasf(y,'COC',b,1)
-        beta2 = mmasf(y,'OCO',b,1)
-        y = mmunion(mmintersec(y,beta1),beta2)
-        diff = mmisequal(aux,y)
+        beta1 = asf(y,'COC',b,1)
+        beta2 = asf(y,'OCO',b,1)
+        y = union(intersec(y,beta1),beta2)
+        diff = isequal(aux,y)
     return y
 #
 # =====================================================================
 #
-#   mmclohole
+#   clohole
 #
 # =====================================================================
-def mmclohole(f, Bc=None):
+def clohole(f, Bc=None):
     """
         - Purpose
             Close holes of binary and gray-scale images.
         - Synopsis
-            y = mmclohole(f, Bc=None)
+            y = clohole(f, Bc=None)
         - Input
             f:  Gray-scale (uint8 or uint16) or binary image.
             Bc: Structuring Element Default: None (3x3 elementary cross). (
@@ -342,42 +342,42 @@ def mmclohole(f, Bc=None):
         - Output
             y: (same datatype of f ).
         - Description
-            mmclohole creates the image y by closing the holes of the image
+            clohole creates the image y by closing the holes of the image
             f , according with the connectivity defined by the structuring
             element Bc .The images can be either binary or gray-scale.
         - Examples
             #
             #   example 1
             #
-            a = mmreadgray('pcb1bin.tif')
-            b = mmclohole(a)
-            mmshow(a)
-            mmshow(b)
+            a = readgray('pcb1bin.tif')
+            b = clohole(a)
+            show(a)
+            show(b)
             #
             #   example 2
             #
-            a = mmreadgray('boxdrill-B.tif')
-            b = mmclohole(a)
-            mmshow(a)
-            mmshow(b)
+            a = readgray('boxdrill-B.tif')
+            b = clohole(a)
+            show(a)
+            show(b)
     """
 
-    if Bc is None: Bc = mmsecross()
-    delta_f = mmframe(f)
-    y = mmneg( mminfrec( delta_f, mmneg(f), Bc))
+    if Bc is None: Bc = secross()
+    delta_f = frame(f)
+    y = neg( infrec( delta_f, neg(f), Bc))
     return y
 #
 # =====================================================================
 #
-#   mmdist
+#   dist
 #
 # =====================================================================
-def mmdist(f, Bc=None, METRIC=None):
+def dist(f, Bc=None, METRIC=None):
     """
         - Purpose
             Distance transform.
         - Synopsis
-            y = mmdist(f, Bc=None, METRIC=None)
+            y = dist(f, Bc=None, METRIC=None)
         - Input
             f:      Binary image.
             Bc:     Structuring Element Default: None (3x3 elementary
@@ -388,7 +388,7 @@ def mmdist(f, Bc=None, METRIC=None):
             y: distance image in uint16, or in int32 datatype with EUC2
                option.
         - Description
-            mmdist creates the distance image y of the binary image f . The
+            dist creates the distance image y of the binary image f . The
             value of y at the pixel x is the distance of x to the complement
             of f , that is, the distance of x to nearest point in the
             complement of f . The distances available are based on the
@@ -400,69 +400,69 @@ def mmdist(f, Bc=None, METRIC=None):
             #
             #   example 1
             #
-            a = mmframe(mmbinary(ones((5,9))),2,4)
-            f4=mmdist(a)
-            f8=mmdist(a,mmsebox())
-            fe=mmdist(a,mmsebox(),'EUCLIDEAN')
+            a = frame(binary(ones((5,9))),2,4)
+            f4=dist(a)
+            f8=dist(a,sebox())
+            fe=dist(a,sebox(),'EUCLIDEAN')
             #
             #   example 2
             #
-            f = mmreadgray('gear.tif')
-            f = mmneg(mmgradm(f))
-            d4=mmdist(f)
-            d8=mmdist(f,mmsebox())
-            de=mmdist(f,mmsebox(),'EUCLIDEAN')
-            mmshow(f)
-            mmshow(d4%8)
-            mmshow(d8%8)
-            mmshow(de%8)
+            f = readgray('gear.tif')
+            f = neg(gradm(f))
+            d4=dist(f)
+            d8=dist(f,sebox())
+            de=dist(f,sebox(),'EUCLIDEAN')
+            show(f)
+            show(d4%8)
+            show(d8%8)
+            show(de%8)
     """
     from string import upper
     from numpy import zeros, sqrt
-    if Bc is None: Bc = mmsecross()
+    if Bc is None: Bc = secross()
     if METRIC is not None:
        METRIC = upper(METRIC)
-    f = mmgray(f,'uint16')
-    y = mmintersec(f,0)
+    f = gray(f,'uint16')
+    y = intersec(f,0)
     if (METRIC == 'EUCLIDEAN') or (METRIC == 'EUC2'):
         b = zeros((3,3),numpy.int32)
         i=1
-        while not mmisequal(f,y):
+        while not isequal(f,y):
             a4,a2 = -4*i+2, -2*i+1
             b = int32([[a4,a2,a4],
                        [a2, 0,a2],
                        [a4,a2,a4]])
             y=f
             i+=1
-            f = mmero(f,b)
+            f = ero(f,b)
         if METRIC == 'EUCLIDEAN':
             f = uint16(sqrt(f)+0.5)
     else:
-        if mmisequal(Bc, mmsecross()):
+        if isequal(Bc, secross()):
             b = int32([[-2147483647,  -1, -2147483647],
                        [         -1,   0,          -1],
                        [-2147483647,  -1, -2147483647]])
-        elif mmisequal(Bc, mmsebox()):
+        elif isequal(Bc, sebox()):
             b = int32([[-1,-1,-1],
                        [-1, 0,-1],
                        [-1,-1,-1]])
         else: b = Bc
-        while not mmisequal(f,y):
+        while not isequal(f,y):
             y=f
-            f = mmero(f,b)
+            f = ero(f,b)
     return y
 #
 # =====================================================================
 #
-#   mmedgeoff
+#   edgeoff
 #
 # =====================================================================
-def mmedgeoff(f, Bc=None):
+def edgeoff(f, Bc=None):
     """
         - Purpose
             Eliminate the objects that hit the image frame.
         - Synopsis
-            y = mmedgeoff(f, Bc=None)
+            y = edgeoff(f, Bc=None)
         - Input
             f:  Binary image.
             Bc: Structuring Element Default: None (3x3 elementary cross). (
@@ -470,34 +470,34 @@ def mmedgeoff(f, Bc=None):
         - Output
             y: Binary image.
         - Description
-            mmedgeoff creates the binary image y by eliminating the objects
+            edgeoff creates the binary image y by eliminating the objects
             (connected components) of the binary image f that hit the image
             frame, according to the connectivity defined by the structuring
             element Bc .
         - Examples
             #
-            a=mmreadgray('form-1.tif')
-            b=mmedgeoff(a)
-            mmshow(a)
-            mmshow(b)
+            a=readgray('form-1.tif')
+            b=edgeoff(a)
+            show(a)
+            show(b)
     """
 
-    if Bc is None: Bc = mmsecross()
-    edge = mmframe(f)
-    y = mmsubm( f, mminfrec(edge, f, Bc))
+    if Bc is None: Bc = secross()
+    edge = frame(f)
+    y = subm( f, infrec(edge, f, Bc))
     return y
 #
 # =====================================================================
 #
-#   mmframe
+#   frame
 #
 # =====================================================================
-def mmframe(f, WT=1, HT=1, DT=0, k1=None, k2=None):
+def frame(f, WT=1, HT=1, DT=0, k1=None, k2=None):
     """
         - Purpose
             Create a frame image.
         - Synopsis
-            y = mmframe(f, WT=1, HT=1, DT=0, k1=None, k2=None)
+            y = frame(f, WT=1, HT=1, DT=0, k1=None, k2=None)
         - Input
             f:  Unsigned gray-scale (uint8 or uint16), signed (int32) or
                 binary image.
@@ -511,17 +511,17 @@ def mmframe(f, WT=1, HT=1, DT=0, k1=None, k2=None):
         - Output
             y: image of same type as f .
         - Description
-            mmframe creates an image y , with the same dimensions (W,H,D)
+            frame creates an image y , with the same dimensions (W,H,D)
             and same pixel type of the image f , such that the value of the
             pixels in the image frame is k1 and the value of the other
             pixels is k2 . The thickness of the image frame is DT.
 
     """
 
-    if k1 is None: k1 = mmlimits(f)[1]
-    if k2 is None: k2 = mmlimits(f)[0]
+    if k1 is None: k1 = limits(f)[1]
+    if k2 is None: k2 = limits(f)[0]
     assert len(f.shape)<3,'Supports 2D only'
-    y = mmunion(mmintersec(f,mmlimits(f)[0]),k2)
+    y = union(intersec(f,limits(f)[0]),k2)
     y[:,0:WT] = k1
     y[:,-WT:] = k1
     y[0:HT,:] = k1
@@ -530,15 +530,15 @@ def mmframe(f, WT=1, HT=1, DT=0, k1=None, k2=None):
 #
 # =====================================================================
 #
-#   mmglblshow
+#   glblshow
 #
 # =====================================================================
-def mmglblshow(X, border=0.0):
+def glblshow(X, border=0.0):
     """
         - Purpose
             Apply a random color table to a gray-scale image.
         - Synopsis
-            Y = mmglblshow(X, border=0.0)
+            Y = glblshow(X, border=0.0)
         - Input
             X:      Gray-scale (uint8 or uint16) image. Labeled image.
             border: Boolean Default: 0.0. Labeled image.
@@ -560,20 +560,20 @@ def mmglblshow(X, border=0.0):
     r=resize(take(R, X.flat - mmin),X.shape)
     g=resize(take(G, X.flat - mmin),X.shape)
     b=resize(take(B, X.flat - mmin),X.shape)
-    Y=mmconcat('d',r,g,b)
+    Y=concat('d',r,g,b)
     return Y
 #
 # =====================================================================
 #
-#   mmgdtshow
+#   gdtshow
 #
 # =====================================================================
-def mmgdtshow(X, N=10):
+def gdtshow(X, N=10):
     """
         - Purpose
             Apply an iso-line color table to a gray-scale image.
         - Synopsis
-            Y = mmgdtshow(X, N=10)
+            Y = gdtshow(X, N=10)
         - Input
             X: Gray-scale (uint8 or uint16) image. Distance transform image.
             N: Default: 10. Number of iso-contours.
@@ -611,16 +611,16 @@ def mmgdtshow(X, N=10):
 #
 # =====================================================================
 #
-#   mmgshow
+#   gshow
 #
 # =====================================================================
-def mmgshow(X, X1=None, X2=None, X3=None, X4=None, X5=None, X6=None):
+def gshow(X, X1=None, X2=None, X3=None, X4=None, X5=None, X6=None):
     """
         - Purpose
             Apply binary overlays as color layers on a binary or gray-scale
             image
         - Synopsis
-            Y = mmgshow(X, X1=None, X2=None, X3=None, X4=None, X5=None,
+            Y = gshow(X, X1=None, X2=None, X3=None, X4=None, X5=None,
             X6=None)
         - Input
             X:  Gray-scale (uint8 or uint16) or binary image.
@@ -635,60 +635,60 @@ def mmgshow(X, X1=None, X2=None, X3=None, X4=None, X5=None, X6=None):
 
     """
 
-    if mmisbinary(X): X = mmgray(X,'uint8')
+    if isbinary(X): X = gray(X,'uint8')
     r = X
     g = X
     b = X
     if X1 is not None: # red 1 0 0
-      assert mmisbinary(X1),'X1 must be binary overlay'
-      x1 = mmgray(X1,'uint8')
-      r = mmunion(r,x1)
-      g = mmintersec(g,mmneg(x1))
-      b = mmintersec(b,mmneg(x1))
+      assert isbinary(X1),'X1 must be binary overlay'
+      x1 = gray(X1,'uint8')
+      r = union(r,x1)
+      g = intersec(g,neg(x1))
+      b = intersec(b,neg(x1))
     if X2 is not None: # green 0 1 0
-      assert mmisbinary(X2),'X2 must be binary overlay'
-      x2 = mmgray(X2,'uint8')
-      r = mmintersec(r,mmneg(x2))
-      g = mmunion(g,x2)
-      b = mmintersec(b,mmneg(x2))
+      assert isbinary(X2),'X2 must be binary overlay'
+      x2 = gray(X2,'uint8')
+      r = intersec(r,neg(x2))
+      g = union(g,x2)
+      b = intersec(b,neg(x2))
     if X3 is not None: # blue 0 0 1
-      assert mmisbinary(X3),'X3 must be binary overlay'
-      x3 = mmgray(X3,'uint8')
-      r = mmintersec(r,mmneg(x3))
-      g = mmintersec(g,mmneg(x3))
-      b = mmunion(b,x3)
+      assert isbinary(X3),'X3 must be binary overlay'
+      x3 = gray(X3,'uint8')
+      r = intersec(r,neg(x3))
+      g = intersec(g,neg(x3))
+      b = union(b,x3)
     if X4 is not None: # magenta 1 0 1
-      assert mmisbinary(X4),'X4 must be binary overlay'
-      x4 = mmgray(X4,'uint8')
-      r = mmunion(r,x4)
-      g = mmintersec(g,mmneg(x4))
-      b = mmunion(b,x4)
+      assert isbinary(X4),'X4 must be binary overlay'
+      x4 = gray(X4,'uint8')
+      r = union(r,x4)
+      g = intersec(g,neg(x4))
+      b = union(b,x4)
     if X5 is not None: # yellow 1 1 0
-      assert mmisbinary(X5),'X5 must be binary overlay'
-      x5 = mmgray(X5,'uint8')
-      r = mmunion(r,x5)
-      g = mmunion(g,x5)
-      b = mmintersec(b,mmneg(x5))
+      assert isbinary(X5),'X5 must be binary overlay'
+      x5 = gray(X5,'uint8')
+      r = union(r,x5)
+      g = union(g,x5)
+      b = intersec(b,neg(x5))
     if X6 is not None: # cyan 0 1 1
-      assert mmisbinary(X6),'X6 must be binary overlay'
-      x6 = mmgray(X6,'uint8')
-      r = mmintersec(r,mmneg(x6))
-      g = mmunion(g,x6)
-      b = mmunion(b,x6)
-    return mmconcat('d',r,g,b)
+      assert isbinary(X6),'X6 must be binary overlay'
+      x6 = gray(X6,'uint8')
+      r = intersec(r,neg(x6))
+      g = union(g,x6)
+      b = union(b,x6)
+    return concat('d',r,g,b)
     return Y
 #
 # =====================================================================
 #
-#   mmhistogram
+#   histogram
 #
 # =====================================================================
-def mmhistogram(f, option="uint16"):
+def histogram(f, option="uint16"):
     """
         - Purpose
             Find the histogram of the image f.
         - Synopsis
-            h = mmhistogram(f, option="uint16")
+            h = histogram(f, option="uint16")
         - Input
             f:      Gray-scale (uint8 or uint16) or binary image.
             option: String Default: "uint16". Values: "uint16" or "int32".
@@ -705,15 +705,15 @@ def mmhistogram(f, option="uint16"):
             #   example 1
             #
             f=to_uint8([0, 1, 1, 2, 2, 2, 5, 3, 5])
-            h=mmhistogram(f)
+            h=histogram(f)
             print h
             #
             #   example 2
             #
-            f=mmreadgray('lenina.tif')
-            mmshow(f)
-            h=mmhistogram(f)
-            mmplot([[h]],[['style', 'impulses']])
+            f=readgray('lenina.tif')
+            show(f)
+            h=histogram(f)
+            plot([[h]],[['style', 'impulses']])
     """
     from numpy import searchsorted, sort, ravel, concatenate, product
 
@@ -724,15 +724,15 @@ def mmhistogram(f, option="uint16"):
 #
 # =====================================================================
 #
-#   mmlabel
+#   label
 #
 # =====================================================================
-def mmlabel(f, Bc=None):
+def label(f, Bc=None):
     """
         - Purpose
             Label a binary image.
         - Synopsis
-            y = mmlabel(f, Bc=None)
+            y = label(f, Bc=None)
         - Input
             f:  Binary image.
             Bc: Structuring Element Default: None (3x3 elementary cross). (
@@ -741,7 +741,7 @@ def mmlabel(f, Bc=None):
             y: Image If number of labels is less than 65535, the data type
                is uint16, otherwise it is int32.
         - Description
-            mmlabel creates the image y by labeling the connect components
+            label creates the image y by labeling the connect components
             of a binary image f , according to the connectivity defined by
             the structuring element Bc . The background pixels (with value
             0) are not labeled. The maximum label value in the output image
@@ -750,51 +750,51 @@ def mmlabel(f, Bc=None):
             #
             #   example 1
             #
-            f=mmbinary([
+            f=binary([
                [0,1,0,1,1],
                [1,0,0,1,0]])
-            g=mmlabel(f)
+            g=label(f)
             print g
             #
             #   example 2
             #
-            f = mmreadgray('blob3.tif')
-            g=mmlabel(f)
-            nblobs=mmstats(g,'max')
+            f = readgray('blob3.tif')
+            g=label(f)
+            nblobs=stats(g,'max')
             print nblobs
-            mmshow(f)
-            mmlblshow(g)
+            show(f)
+            lblshow(g)
     """
     from numpy import allclose, ravel, nonzero, array
-    if Bc is None: Bc = mmsecross()
-    assert mmisbinary,'Can only label binary image'
-    zero = mmsubm(f,f)               # zero image
+    if Bc is None: Bc = secross()
+    assert isbinary,'Can only label binary image'
+    zero = subm(f,f)               # zero image
     faux=f
     r = array(zero)
     label = 1
-    y = mmgray( f,'uint16',0)        # zero image (output)
+    y = gray( f,'uint16',0)        # zero image (output)
     while not allclose(faux,0):
         x=nonzero(ravel(faux))[0]      # get first unlabeled pixel
         fmark = array(zero)
         fmark.flat[x] = 1              # get the first unlabeled pixel
-        r = mminfrec( fmark, faux, Bc) # detects all pixels connected to it
-        faux = mmsubm( faux, r)        # remove them from faux
-        r = mmgray( r,'uint16',label)  # label them with the value label
-        y = mmunion( y, r)             # merge them with the labeled image
+        r = infrec( fmark, faux, Bc) # detects all pixels connected to it
+        faux = subm( faux, r)        # remove them from faux
+        r = gray( r,'uint16',label)  # label them with the value label
+        y = union( y, r)             # merge them with the labeled image
         label = label + 1
     return y
 #
 # =====================================================================
 #
-#   mmneg
+#   neg
 #
 # =====================================================================
-def mmneg(f):
+def neg(f):
     """
         - Purpose
             Negate an image.
         - Synopsis
-            y = mmneg(f)
+            y = neg(f)
         - Input
             f: Unsigned gray-scale (uint8 or uint16), signed (int32) or
                binary image.
@@ -802,7 +802,7 @@ def mmneg(f):
             y: Unsigned gray-scale (uint8 or uint16), signed (int32) or
                binary image.
         - Description
-            mmneg returns an image y that is the negation (i.e., inverse or
+            neg returns an image y that is the negation (i.e., inverse or
             involution) of the image f . In the binary case, y is the
             complement of f .
         - Examples
@@ -810,40 +810,40 @@ def mmneg(f):
             #   example 1
             #
             f=to_uint8([255, 255, 0, 10, 20, 10, 0, 255, 255])
-            print mmneg(f)
-            print mmneg(to_uint8([0, 1]))
-            print mmneg(int32([0, 1]))
+            print neg(f)
+            print neg(to_uint8([0, 1]))
+            print neg(int32([0, 1]))
             #
             #   example 2
             #
-            a = mmreadgray('gear.tif')
-            b = mmneg(a)
-            mmshow(a)
-            mmshow(b)
+            a = readgray('gear.tif')
+            b = neg(a)
+            show(a)
+            show(b)
             #
             #   example 3
             #
-            c = mmreadgray('astablet.tif')
-            d = mmneg(c)
-            mmshow(c)
-            mmshow(d)
+            c = readgray('astablet.tif')
+            d = neg(c)
+            show(c)
+            show(d)
     """
 
-    y = mmlimits(f)[0] + mmlimits(f)[1] - f
+    y = limits(f)[0] + limits(f)[1] - f
     y = y.astype(f.dtype)
     return y
 #
 # =====================================================================
 #
-#   mmthreshad
+#   threshad
 #
 # =====================================================================
-def mmthreshad(f, f1, f2=None):
+def threshad(f, f1, f2=None):
     """
         - Purpose
             Threshold (adaptive)
         - Synopsis
-            y = mmthreshad(f, f1, f2=None)
+            y = threshad(f, f1, f2=None)
         - Input
             f:  Gray-scale (uint8 or uint16) image.
             f1: Gray-scale (uint8 or uint16) image. lower value
@@ -852,38 +852,38 @@ def mmthreshad(f, f1, f2=None):
         - Output
             y: Binary image.
         - Description
-            mmthreshad creates the image y as the threshold of the image f
+            threshad creates the image y as the threshold of the image f
             by the images f1 and f2 . A pixel in y has the value 1 when the
             value of the corresponding pixel in f is between the values of
             the corresponding pixels in f1 and f2 .
         - Examples
             #
-            a = mmreadgray('keyb.tif')
-            mmshow(a)
-            b = mmthreshad(a,to_uint8(10), to_uint8(50))
-            mmshow(b)
-            c = mmthreshad(a,238)
-            mmshow(c)
+            a = readgray('keyb.tif')
+            show(a)
+            b = threshad(a,to_uint8(10), to_uint8(50))
+            show(b)
+            c = threshad(a,238)
+            show(c)
     """
 
     if f2 is None: 
-      y = mmbinary(f1 <= f)
+      y = binary(f1 <= f)
     else:
-      y = mmbinary((f1 <= f) & (f <= f2))
+      y = binary((f1 <= f) & (f <= f2))
     return y
 #
 # =====================================================================
 #
-#   mmtoggle
+#   toggle
 #
 # =====================================================================
-def mmtoggle(f, f1, f2, OPTION="GRAY"):
+def toggle(f, f1, f2, OPTION="GRAY"):
     """
         - Purpose
             Image contrast enhancement or classification by the toggle
             operator.
         - Synopsis
-            y = mmtoggle(f, f1, f2, OPTION="GRAY")
+            y = toggle(f, f1, f2, OPTION="GRAY")
         - Input
             f:      Gray-scale (uint8 or uint16) image.
             f1:     Gray-scale (uint8 or uint16) image.
@@ -892,7 +892,7 @@ def mmtoggle(f, f1, f2, OPTION="GRAY"):
         - Output
             y: Image binary image if option is 'BINARY' or same type as f
         - Description
-            mmtoggle creates the image y that is an enhancement or
+            toggle creates the image y that is an enhancement or
             classification of the image f by the toggle operator, with
             parameters f1 and f2 . If the OPTION is 'GRAY', it performs an
             enhancement and, if the OPTION is 'BINARY', it performs a binary
@@ -911,45 +911,45 @@ def mmtoggle(f, f1, f2, OPTION="GRAY"):
             print f1
             f2 = to_uint8([6,6,6,6,6,6,6])
             print f2
-            print mmtoggle(f,f1,f2)
+            print toggle(f,f1,f2)
             #
             #   example 2
             #
-            a = mmreadgray('angiogr.tif')
-            b = mmero(a,mmsedisk(2))
-            c = mmdil(a,mmsedisk(2))
-            d = mmtoggle(a,b,c)
-            mmshow(a)
-            mmshow(d)
+            a = readgray('angiogr.tif')
+            b = ero(a,sedisk(2))
+            c = dil(a,sedisk(2))
+            d = toggle(a,b,c)
+            show(a)
+            show(d)
             #
             #   example 3
             #
-            e = mmreadgray('lenina.tif')
-            f = mmero(e,mmsedisk(2))
-            g = mmdil(e,mmsedisk(2))
-            h = mmtoggle(e,f,g,'BINARY')
-            mmshow(e)
-            mmshow(h)
+            e = readgray('lenina.tif')
+            f = ero(e,sedisk(2))
+            g = dil(e,sedisk(2))
+            h = toggle(e,f,g,'BINARY')
+            show(e)
+            show(h)
     """
     from string import upper
 
-    y=mmbinary(mmsubm(f,f1),mmsubm(f2,f))
+    y=binary(subm(f,f1),subm(f2,f))
     if upper(OPTION) == 'GRAY':
-        t=mmgray(y)
-        y=mmunion(mmintersec(mmneg(t),f1),mmintersec(t,f2))
+        t=gray(y)
+        y=union(intersec(neg(t),f1),intersec(t,f2))
     return y
 #
 # =====================================================================
 #
-#   mmaddm
+#   addm
 #
 # =====================================================================
-def mmaddm(f1, f2):
+def addm(f1, f2):
     """
         - Purpose
             Addition of two images, with saturation.
         - Synopsis
-            y = mmaddm(f1, f2)
+            y = addm(f1, f2)
         - Input
             f1: Unsigned gray-scale (uint8 or uint16), signed (int32) or
                 binary image.
@@ -959,7 +959,7 @@ def mmaddm(f1, f2):
             y: Unsigned gray-scale (uint8 or uint16), signed (int32) or
                binary image.
         - Description
-            mmaddm creates the image y by pixelwise addition of images f1
+            addm creates the image y by pixelwise addition of images f1
             and f2 . When the addition of the values of two pixels saturates
             the image data type considered, the greatest value of this type
             is taken as the result of the addition.
@@ -969,37 +969,37 @@ def mmaddm(f1, f2):
             #
             f = to_uint8([255,   255,    0,   10,    0,   255,   250])
             g = to_uint8([ 0,    40,   80,   140,  250,    10,    30])
-            y1 = mmaddm(f,g)
+            y1 = addm(f,g)
             print y1
-            y2 = mmaddm(g, 100)
+            y2 = addm(g, 100)
             print y2
             #
             #   example 2
             #
-            a = mmreadgray('keyb.tif')
-            b = mmaddm(a,128)
-            mmshow(a)
-            mmshow(b)
+            a = readgray('keyb.tif')
+            b = addm(a,128)
+            show(a)
+            show(b)
     """
     from numpy import array, minimum, maximum
 
     if type(f2) is array:
         assert f1.dtype == f2.dtype, 'Cannot have different datatypes:'
-    y = maximum(minimum(f1.astype('d')+f2, mmlimits(f1)[1]),mmlimits(f1)[0])
+    y = maximum(minimum(f1.astype('d')+f2, limits(f1)[1]),limits(f1)[0])
     y = y.astype(f1.dtype)
     return y
 #
 # =====================================================================
 #
-#   mmareaclose
+#   areaclose
 #
 # =====================================================================
-def mmareaclose(f, a, Bc=None):
+def areaclose(f, a, Bc=None):
     """
         - Purpose
             Area closing
         - Synopsis
-            y = mmareaclose(f, a, Bc=None)
+            y = areaclose(f, a, Bc=None)
         - Input
             f:  Gray-scale (uint8 or uint16) or binary image.
             a:  Double non negative integer.
@@ -1008,7 +1008,7 @@ def mmareaclose(f, a, Bc=None):
         - Output
             y: Same type of f
         - Description
-            mmareaclose removes any pore (i.e., background connected
+            areaclose removes any pore (i.e., background connected
             component) with area less than a of a binary image f . The
             connectivity is given by the structuring element Bc . This
             operator is generalized to gray-scale images by applying the
@@ -1018,34 +1018,34 @@ def mmareaclose(f, a, Bc=None):
             #
             #   example 1
             #
-            a=mmreadgray('form-1.tif')
-            b=mmareaclose(a,400)
-            mmshow(a)
-            mmshow(b)
+            a=readgray('form-1.tif')
+            b=areaclose(a,400)
+            show(a)
+            show(b)
             #
             #   example 2
             #
-            a=mmreadgray('n2538.tif')
-            b=mmareaclose(a,400)
-            mmshow(a)
-            mmshow(b)
+            a=readgray('n2538.tif')
+            b=areaclose(a,400)
+            show(a)
+            show(b)
     """
 
-    if Bc is None: Bc = mmsecross()
-    y = mmneg(mmareaopen(mmneg(f),a,Bc))
+    if Bc is None: Bc = secross()
+    y = neg(areaopen(neg(f),a,Bc))
     return y
 #
 # =====================================================================
 #
-#   mmareaopen
+#   areaopen
 #
 # =====================================================================
-def mmareaopen(f, a, Bc=None):
+def areaopen(f, a, Bc=None):
     """
         - Purpose
             Area opening
         - Synopsis
-            y = mmareaopen(f, a, Bc=None)
+            y = areaopen(f, a, Bc=None)
         - Input
             f:  Gray-scale (uint8 or uint16) or binary image.
             a:  Double non negative integer.
@@ -1054,7 +1054,7 @@ def mmareaopen(f, a, Bc=None):
         - Output
             y: Same type of f
         - Description
-            mmareaopen removes any grain (i.e., connected component) with
+            areaopen removes any grain (i.e., connected component) with
             area less than a of a binary image f . The connectivity is given
             by the structuring element Bc . This operator is generalized to
             gray-scale images by applying the binary operator successively
@@ -1064,11 +1064,11 @@ def mmareaopen(f, a, Bc=None):
             #
             #   example 1
             #
-            f=mmbinary(to_uint8([
+            f=binary(to_uint8([
              [1, 1, 0, 0, 0, 0, 1],
              [1, 0, 1, 1, 1, 0, 1],
              [0, 0, 0, 0, 1, 0, 0]]))
-            y=mmareaopen(f,4,mmsecross())
+            y=areaopen(f,4,secross())
             print y
             #
             #   example 2
@@ -1077,53 +1077,53 @@ def mmareaopen(f, a, Bc=None):
                [10,   11,   0,    0,   0,   0,  20],
                [10,    0,   5,    8,   9,   0,  15],
                [10,    0,   0,    0,  10,   0,   0]])
-            y=mmareaopen(f,4,mmsecross())
+            y=areaopen(f,4,secross())
             print y
             #
             #   example 3
             #
-            a=mmreadgray('form-1.tif');
-            b=mmareaopen(a,500);
-            mmshow(a);
-            mmshow(b);
+            a=readgray('form-1.tif');
+            b=areaopen(a,500);
+            show(a);
+            show(b);
             #
             #   example 4
             #
-            a=mmreadgray('bloodcells.tif');
-            b=mmareaopen(a,500);
-            mmshow(a);
-            mmshow(b);
+            a=readgray('bloodcells.tif');
+            b=areaopen(a,500);
+            show(a);
+            show(b);
     """
 
-    if Bc is None: Bc = mmsecross()
-    if mmisbinary(f):
-      fr = mmlabel(f,Bc)      # binary area open, use area measurement
-      g = mmblob(fr,'area')
-      y = mmthreshad(g,a)
+    if Bc is None: Bc = secross()
+    if isbinary(f):
+      fr = label(f,Bc)      # binary area open, use area measurement
+      g = blob(fr,'area')
+      y = threshad(g,a)
     else:
-      y = mmintersec(f,0)
-      zero = mmbinary(y)
-      k1 = mmstats(f,'min')
-      k2 = mmstats(f,'max')
+      y = intersec(f,0)
+      zero = binary(y)
+      k1 = stats(f,'min')
+      k2 = stats(f,'max')
       for k in range(k1,k2+1):   # gray-scale, use thresholding decomposition
-        fk = mmthreshad(f,k)
-        fo = mmareaopen(fk,a,Bc)
-        if mmisequal(fo,zero):
+        fk = threshad(f,k)
+        fo = areaopen(fk,a,Bc)
+        if isequal(fo,zero):
           break
-        y = mmunion(y, mmgray(fo,mmdatatype(f),k))
+        y = union(y, gray(fo,datatype(f),k))
     return y
 #
 # =====================================================================
 #
-#   mmflood
+#   flood
 #
 # =====================================================================
-def mmflood(fin, T, option, Bc=None):
+def flood(fin, T, option, Bc=None):
     """
         - Purpose
             Flooding filter- h,v,a-basin and dynamics (depth, area, volume)
         - Synopsis
-            y = mmflood(fin, T, option, Bc=None)
+            y = flood(fin, T, option, Bc=None)
         - Input
             fin:    Gray-scale (uint8 or uint16) image.
             T:      Criterion value. If T==-1, then the dynamics is
@@ -1152,22 +1152,22 @@ def mmflood(fin, T, option, Bc=None):
 
     """
 
-    if Bc is None: Bc = mmsecross()
+    if Bc is None: Bc = secross()
     print 'Not implemented yet'
     return None
     return y
 #
 # =====================================================================
 #
-#   mmasf
+#   asf
 #
 # =====================================================================
-def mmasf(f, SEQ="OC", b=None, n=1):
+def asf(f, SEQ="OC", b=None, n=1):
     """
         - Purpose
             Alternating Sequential Filtering
         - Synopsis
-            y = mmasf(f, SEQ="OC", b=None, n=1)
+            y = asf(f, SEQ="OC", b=None, n=1)
         - Input
             f:   Gray-scale (uint8 or uint16) or binary image.
             SEQ: String Default: "OC". 'OC', 'CO', 'OCO', 'COC'.
@@ -1176,7 +1176,7 @@ def mmasf(f, SEQ="OC", b=None, n=1):
         - Output
             y: Image
         - Description
-            mmasf creates the image y by filtering the image f by n
+            asf creates the image y by filtering the image f by n
             iterations of the close and open alternating sequential filter
             characterized by the structuring element b . The sequence of
             opening and closing is controlled by the parameter SEQ . 'OC'
@@ -1187,51 +1187,51 @@ def mmasf(f, SEQ="OC", b=None, n=1):
             #
             #   example 1
             #
-            f=mmreadgray('gear.tif')
-            g=mmasf(f,'oc',mmsecross(),2)
-            mmshow(f)
-            mmshow(g)
+            f=readgray('gear.tif')
+            g=asf(f,'oc',secross(),2)
+            show(f)
+            show(g)
             #
             #   example 2
             #
-            f=mmreadgray('fabric.tif')
-            g=mmasf(f,'oc',mmsecross(),3)
-            mmshow(f)
-            mmshow(g)
+            f=readgray('fabric.tif')
+            g=asf(f,'oc',secross(),3)
+            show(f)
+            show(g)
     """
     from string import upper
-    if b is None: b = mmsecross()
+    if b is None: b = secross()
     SEQ=upper(SEQ)
     y = f
     if SEQ == 'OC':
         for i in range(1,n+1):
-            nb = mmsesum(b,i)
-            y = mmopen(mmclose(y,nb),nb)
+            nb = sesum(b,i)
+            y = open(close(y,nb),nb)
     elif SEQ == 'CO':
         for i in range(1,n+1):
-            nb = mmsesum(b,i)
-            y = mmclose(mmopen(y,nb),nb)
+            nb = sesum(b,i)
+            y = close(open(y,nb),nb)
     elif SEQ == 'OCO':
         for i in range(1,n+1):
-            nb = mmsesum(b,i)
-            y = mmopen(mmclose(mmopen(y,nb),nb),nb)
+            nb = sesum(b,i)
+            y = open(close(open(y,nb),nb),nb)
     elif SEQ == 'COC':
         for i in range(1,n+1):
-            nb = mmsesum(b,i)
-            y = mmclose(mmopen(mmclose(y,nb),nb),nb)
+            nb = sesum(b,i)
+            y = close(open(close(y,nb),nb),nb)
     return y
 #
 # =====================================================================
 #
-#   mmasfrec
+#   asfrec
 #
 # =====================================================================
-def mmasfrec(f, SEQ="OC", b=None, bc=None, n=1):
+def asfrec(f, SEQ="OC", b=None, bc=None, n=1):
     """
         - Purpose
             Reconstructive Alternating Sequential Filtering
         - Synopsis
-            y = mmasfrec(f, SEQ="OC", b=None, bc=None, n=1)
+            y = asfrec(f, SEQ="OC", b=None, bc=None, n=1)
         - Input
             f:   Gray-scale (uint8 or uint16) or binary image.
             SEQ: String Default: "OC". Values: "OC" or "CO".
@@ -1241,7 +1241,7 @@ def mmasfrec(f, SEQ="OC", b=None, bc=None, n=1):
         - Output
             y: Same type of f
         - Description
-            mmasf creates the image y by filtering the image f by n
+            asf creates the image y by filtering the image f by n
             iterations of the close by reconstruction and open by
             reconstruction alternating sequential filter characterized by
             the structuring element b . The structure element bc is used in
@@ -1250,41 +1250,41 @@ def mmasfrec(f, SEQ="OC", b=None, bc=None, n=1):
             closing, and 'CO' performs closing after opening.
         - Examples
             #
-            f=mmreadgray('fabric.tif')
-            g=mmasfrec(f,'oc',mmsecross(),mmsecross(),3)
-            mmshow(f)
-            mmshow(g)
+            f=readgray('fabric.tif')
+            g=asfrec(f,'oc',secross(),secross(),3)
+            show(f)
+            show(g)
     """
     from string import upper
-    if b is None: b = mmsecross()
-    if bc is None: bc = mmsecross()
+    if b is None: b = secross()
+    if bc is None: bc = secross()
     SEQ = upper(SEQ)
     y = f
     if SEQ == 'OC':
         for i in range(1,n+1):
-            nb = mmsesum(b,i)
-            y = mmcloserec(y,nb,bc)
-            y = mmopenrec(y,nb,bc)
+            nb = sesum(b,i)
+            y = closerec(y,nb,bc)
+            y = openrec(y,nb,bc)
     elif SEQ == 'CO':
         for i in range(1,n+1):
-            nb = mmsesum(b,i)
-            y = mmopenrec(y,nb,bc)
-            y = mmcloserec(y,nb,bc)
+            nb = sesum(b,i)
+            y = openrec(y,nb,bc)
+            y = closerec(y,nb,bc)
     else:
         assert 0,'Only accepts OC or CO for SEQ parameter'
     return y
 #
 # =====================================================================
 #
-#   mmbinary
+#   binary
 #
 # =====================================================================
-def mmbinary(f, k=1):
+def binary(f, k=1):
     """
         - Purpose
             Convert a gray-scale image into a binary image
         - Synopsis
-            y = mmbinary(f, k1=1)
+            y = binary(f, k1=1)
         - Input
             f:  Unsigned gray-scale (uint8 or uint16), signed (int32) or
                 binary image.
@@ -1292,7 +1292,7 @@ def mmbinary(f, k=1):
         - Output
             y: Binary image.
         - Description
-            mmbinary converts a gray-scale image f into a binary image y by
+            binary converts a gray-scale image f into a binary image y by
             a threshold rule. A pixel in y has the value 1 if and only if
             the corresponding pixel in f has a value greater or equal k1 .
         - Examples
@@ -1300,15 +1300,15 @@ def mmbinary(f, k=1):
             #   example 1
             #
             a = array([0, 1, 2, 3, 4])
-            b=mmbinary(a)
+            b=binary(a)
             print b
             #
             #   example 2
             #
-            a=mmreadgray('mm3.tif')
-            b=mmbinary(a,82)
-            mmshow(a)
-            mmshow(b)
+            a=readgray('3.tif')
+            b=binary(a,82)
+            show(a)
+            show(b)
     """
     from numpy import asarray
     f=asarray(f)
@@ -1316,15 +1316,15 @@ def mmbinary(f, k=1):
 #
 # =====================================================================
 #
-#   mmblob
+#   blob
 #
 # =====================================================================
-def mmblob(fr, measurement, option="image"):
+def blob(fr, measurement, option="image"):
     """
         - Purpose
             Blob measurements from a labeled image.
         - Synopsis
-            y = mmblob(fr, measurement, option="image")
+            y = blob(fr, measurement, option="image")
         - Input
             fr:          Gray-scale (uint8 or uint16) image. Labeled image.
             measurement: String Default: "". Choice from 'AREA', 'CENTROID',
@@ -1350,40 +1350,40 @@ def mmblob(fr, measurement, option="image"):
                [1,1,1,0,0,0],
                [1,1,1,0,0,2],
                [1,1,1,0,2,2]])
-            f_area=mmblob(fr,'area')
+            f_area=blob(fr,'area')
             print f_area
-            f_cent=mmblob(fr,'centroid')
+            f_cent=blob(fr,'centroid')
             print f_cent
-            f_bb=mmblob(fr,'boundingbox')
+            f_bb=blob(fr,'boundingbox')
             print f_bb
-            d_area=mmblob(fr,'area','data')
+            d_area=blob(fr,'area','data')
             print d_area
-            d_cent=mmblob(fr,'centroid','data')
+            d_cent=blob(fr,'centroid','data')
             print d_cent
-            d_bb=mmblob(fr,'boundingbox','data')
+            d_bb=blob(fr,'boundingbox','data')
             print d_bb
             #
             #   example 2
             #
-            f=mmreadgray('blob3.tif')
-            fr=mmlabel(f)
-            g=mmblob(fr,'area')
-            mmshow(f)
-            mmshow(g)
+            f=readgray('blob3.tif')
+            fr=label(f)
+            g=blob(fr,'area')
+            show(f)
+            show(g)
             #
             #   example 3
             #
-            f=mmreadgray('blob3.tif')
-            fr=mmlabel(f)
-            centr=mmblob(fr,'centroid')
-            mmshow(f,mmdil(centr))
+            f=readgray('blob3.tif')
+            fr=label(f)
+            centr=blob(fr,'centroid')
+            show(f,dil(centr))
             #
             #   example 4
             #
-            f=mmreadgray('blob3.tif')
-            fr=mmlabel(f)
-            box=mmblob(fr,'boundingbox')
-            mmshow(f,box)
+            f=readgray('blob3.tif')
+            fr=label(f)
+            box=blob(fr,'boundingbox')
+            show(f,box)
     """
     from numpy import newaxis, ravel, zeros, sum, nonzero, sometrue, array
     from string import upper
@@ -1429,15 +1429,15 @@ def mmblob(fr, measurement, option="image"):
 #
 # =====================================================================
 #
-#   mmcbisector
+#   cbisector
 #
 # =====================================================================
-def mmcbisector(f, B, n):
+def cbisector(f, B, n):
     """
         - Purpose
             N-Conditional bisector.
         - Synopsis
-            y = mmcbisector(f, B, n)
+            y = cbisector(f, B, n)
         - Input
             f: Binary image.
             B: Structuring Element
@@ -1445,43 +1445,43 @@ def mmcbisector(f, B, n):
         - Output
             y: Binary image.
         - Description
-            mmcbisector creates the binary image y by performing a filtering
+            cbisector creates the binary image y by performing a filtering
             of the morphological skeleton of the binary image f , relative
             to the structuring element B . The strength of this filtering is
             controlled by the parameter n. Particularly, if n=0 , y is the
             morphological skeleton of f itself.
         - Examples
             #
-            a=mmreadgray('blob2.tif')
-            b=mmcbisector(a,mmsebox(),1)
-            c=mmcbisector(a,mmsebox(),3)
-            d=mmcbisector(a,mmsebox(),10)
-            mmshow(a,b)
-            mmshow(a,c)
-            mmshow(a,d)
+            a=readgray('blob2.tif')
+            b=cbisector(a,sebox(),1)
+            c=cbisector(a,sebox(),3)
+            d=cbisector(a,sebox(),10)
+            show(a,b)
+            show(a,c)
+            show(a,d)
     """
 
-    y = mmintersec(f,0)
+    y = intersec(f,0)
     for i in range(n):
-        nb = mmsesum(B,i)
-        nbp = mmsesum(B,i+1)
-        f1 = mmero(f,nbp)
-        f2 = mmcdil(f1,f,B,n)
-        f3 = mmsubm(mmero(f,nb),f2)
-        y  = mmunion(y,f3)
+        nb = sesum(B,i)
+        nbp = sesum(B,i+1)
+        f1 = ero(f,nbp)
+        f2 = cdil(f1,f,B,n)
+        f3 = subm(ero(f,nb),f2)
+        y  = union(y,f3)
     return y
 #
 # =====================================================================
 #
-#   mmcdil
+#   cdil
 #
 # =====================================================================
-def mmcdil(f, g, b=None, n=1):
+def cdil(f, g, b=None, n=1):
     """
         - Purpose
             Dilate an image conditionally.
         - Synopsis
-            y = mmcdil(f, g, b=None, n=1)
+            y = cdil(f, g, b=None, n=1)
         - Input
             f: Gray-scale (uint8 or uint16) or binary image.
             g: Gray-scale (uint8 or uint16) or binary image. Conditioning
@@ -1491,21 +1491,21 @@ def mmcdil(f, g, b=None, n=1):
         - Output
             y: Image
         - Description
-            mmcdil creates the image y by dilating the image f by the
+            cdil creates the image y by dilating the image f by the
             structuring element b conditionally to the image g . This
             operator may be applied recursively n times.
         - Examples
             #
             #   example 1
             #
-            f = mmbinary(to_uint8([[1, 0, 0, 0, 0, 0, 0],\
+            f = binary(to_uint8([[1, 0, 0, 0, 0, 0, 0],\
                 [0, 0, 0, 0, 0, 0, 0],\
                 [0, 0, 0, 0, 1, 0, 0,]]))
-            g = mmbinary(to_uint8([[1, 1, 1, 0, 0, 1, 1],\
+            g = binary(to_uint8([[1, 1, 1, 0, 0, 1, 1],\
                 [1, 0, 1, 1, 1, 0, 0],\
                 [0, 0, 0, 0, 1, 0, 0]]));
-            y1=mmcdil(f,g,mmsecross())
-            y2=mmcdil(f,g,mmsecross(),3)
+            y1=cdil(f,g,secross())
+            y2=cdil(f,g,secross(),3)
             #
             #   example 2
             #
@@ -1517,52 +1517,52 @@ def mmcdil(f, g, b=None, n=1):
                 [   0,    1,   2,   50,   4,   5],\
                 [   2,    3,   4,    0,   0,   0],\
                 [  12,  255,  14,   15,  16,  17]])
-            y1=mmcdil(f,g,mmsecross())
-            y2=mmcdil(f,g,mmsecross(),3)
+            y1=cdil(f,g,secross())
+            y2=cdil(f,g,secross(),3)
             #
             #   example 3
             #
-            g=mmreadgray('pcb1bin.tif')
-            f=mmframe(g,5,5)
-            y5=mmcdil(f,g,mmsecross(),5)
-            y25=mmcdil(f,g,mmsecross(),25)
-            mmshow(g)
-            mmshow(g,f)
-            mmshow(g,y5)
-            mmshow(g,y25)
+            g=readgray('pcb1bin.tif')
+            f=frame(g,5,5)
+            y5=cdil(f,g,secross(),5)
+            y25=cdil(f,g,secross(),25)
+            show(g)
+            show(g,f)
+            show(g,y5)
+            show(g,y25)
             #
             #   example 4
             #
-            g=mmneg(mmreadgray('n2538.tif'))
-            f=mmintersec(g,0)
-            f=mmdraw(f,'LINE:40,30,60,30:END')
-            y1=mmcdil(f,g,mmsebox())
-            y30=mmcdil(f,g,mmsebox(),30)
-            mmshow(g)
-            mmshow(f)
-            mmshow(y1)
-            mmshow(y30)
+            g=neg(readgray('n2538.tif'))
+            f=intersec(g,0)
+            f=draw(f,'LINE:40,30,60,30:END')
+            y1=cdil(f,g,sebox())
+            y30=cdil(f,g,sebox(),30)
+            show(g)
+            show(f)
+            show(y1)
+            show(y30)
     """
 
-    if b is None: b = mmsecross()
-    y = mmintersec(f,g)
+    if b is None: b = secross()
+    y = intersec(f,g)
     for i in range(n):
         aux = y
-        y = mmintersec(mmdil(y,b),g)
-        if mmisequal(y,aux): break
+        y = intersec(dil(y,b),g)
+        if isequal(y,aux): break
     return y
 #
 # =====================================================================
 #
-#   mmcero
+#   cero
 #
 # =====================================================================
-def mmcero(f, g, b=None, n=1):
+def cero(f, g, b=None, n=1):
     """
         - Purpose
             Erode an image conditionally.
         - Synopsis
-            y = mmcero(f, g, b=None, n=1)
+            y = cero(f, g, b=None, n=1)
         - Input
             f: Gray-scale (uint8 or uint16) or binary image.
             g: Gray-scale (uint8 or uint16) or binary image. Conditioning
@@ -1572,47 +1572,47 @@ def mmcero(f, g, b=None, n=1):
         - Output
             y: Image
         - Description
-            mmcero creates the image y by eroding the image f by the
+            cero creates the image y by eroding the image f by the
             structuring element b conditionally to g . This operator may be
             applied recursively n times.
         - Examples
             #
-            f = mmneg(mmtext('hello'))
-            mmshow(f)
-            g = mmdil(f,mmseline(7,90))
-            mmshow(g)
-            a1=mmcero(g,f,mmsebox())
-            mmshow(a1)
-            a13=mmcero(a1,f,mmsebox(),13)
-            mmshow(a13)
+            f = neg(text('hello'))
+            show(f)
+            g = dil(f,seline(7,90))
+            show(g)
+            a1=cero(g,f,sebox())
+            show(a1)
+            a13=cero(a1,f,sebox(),13)
+            show(a13)
     """
 
-    if b is None: b = mmsecross()
-    y = mmunion(f,g)
+    if b is None: b = secross()
+    y = union(f,g)
     for i in range(n):
         aux = y
-        y = mmunion(mmero(y,b),g)
-        if mmisequal(y,aux): break
+        y = union(ero(y,b),g)
+        if isequal(y,aux): break
     return y
 #
 # =====================================================================
 #
-#   mmclose
+#   close
 #
 # =====================================================================
-def mmclose(f, b=None):
+def close(f, b=None):
     """
         - Purpose
             Morphological closing.
         - Synopsis
-            y = mmclose(f, b=None)
+            y = close(f, b=None)
         - Input
             f: Gray-scale (uint8 or uint16) or binary image.
             b: Structuring Element Default: None (3x3 elementary cross).
         - Output
             y: Image
         - Description
-            mmclose creates the image y by the morphological closing of the
+            close creates the image y by the morphological closing of the
             image f by the structuring element b . In the binary case, the
             closing by a structuring element B may be interpreted as the
             intersection of all the binary images that contain the image f
@@ -1623,43 +1623,43 @@ def mmclose(f, b=None):
             #
             #   example 1
             #
-            f=mmreadgray('blob.tif')
-            bimg=mmreadgray('blob1.tif')
-            b=mmimg2se(bimg)
-            mmshow(f)
-            mmshow(mmclose(f,b))
-            mmshow(mmclose(f,b),mmgradm(f))
+            f=readgray('blob.tif')
+            bimg=readgray('blob1.tif')
+            b=img2se(bimg)
+            show(f)
+            show(close(f,b))
+            show(close(f,b),gradm(f))
             #
             #   example 2
             #
-            f = mmreadgray('form-1.tif')
-            mmshow(f)
-            y = mmclose(f,mmsedisk(4))
-            mmshow(y)
+            f = readgray('form-1.tif')
+            show(f)
+            y = close(f,sedisk(4))
+            show(y)
             #
             #   example 3
             #
-            f = mmreadgray('n2538.tif')
-            mmshow(f)
-            y = mmclose(f,mmsedisk(3))
-            mmshow(y)
+            f = readgray('n2538.tif')
+            show(f)
+            y = close(f,sedisk(3))
+            show(y)
     """
 
-    if b is None: b = mmsecross()
-    y = mmero(mmdil(f,b),b)
+    if b is None: b = secross()
+    y = ero(dil(f,b),b)
     return y
 #
 # =====================================================================
 #
-#   mmcloserec
+#   closerec
 #
 # =====================================================================
-def mmcloserec(f, bdil=None, bc=None):
+def closerec(f, bdil=None, bc=None):
     """
         - Purpose
             Closing by reconstruction.
         - Synopsis
-            y = mmcloserec(f, bdil=None, bc=None)
+            y = closerec(f, bdil=None, bc=None)
         - Input
             f:    Gray-scale (uint8 or uint16) or binary image.
             bdil: Structuring Element Default: None (3x3 elementary cross).
@@ -1669,33 +1669,33 @@ def mmcloserec(f, bdil=None, bc=None):
         - Output
             y: Same type of f .
         - Description
-            mmcloserec creates the image y by a sup-reconstruction ( with
+            closerec creates the image y by a sup-reconstruction ( with
             the connectivity defined by the structuring element bc ) of the
             image f from its dilation by bdil .
         - Examples
             #
-            a = mmreadgray('danaus.tif')
-            mmshow(a)
-            b = mmcloserec(a,mmsebox(4))
-            mmshow(b)
+            a = readgray('danaus.tif')
+            show(a)
+            b = closerec(a,sebox(4))
+            show(b)
     """
 
-    if bdil is None: bdil = mmsecross()
-    if bc is None: bc = mmsecross()
-    y = mmsuprec(mmdil(f,bdil),f,bc)
+    if bdil is None: bdil = secross()
+    if bc is None: bc = secross()
+    y = suprec(dil(f,bdil),f,bc)
     return y
 #
 # =====================================================================
 #
-#   mmcloserecth
+#   closerecth
 #
 # =====================================================================
-def mmcloserecth(f, bdil=None, bc=None):
+def closerecth(f, bdil=None, bc=None):
     """
         - Purpose
             Close-by-Reconstruction Top-Hat.
         - Synopsis
-            y = mmcloserecth(f, bdil=None, bc=None)
+            y = closerecth(f, bdil=None, bc=None)
         - Input
             f:    Gray-scale (uint8 or uint16) or binary image.
             bdil: Structuring Element Default: None (3x3 elementary cross).
@@ -1705,33 +1705,33 @@ def mmcloserecth(f, bdil=None, bc=None):
         - Output
             y: Gray-scale (uint8 or uint16) or binary image.
         - Description
-            mmcloserecth creates the image y by subtracting the image f of
+            closerecth creates the image y by subtracting the image f of
             its closing by reconstruction, defined by the structuring
             elements bc and bdil .
         - Examples
             #
-            a = mmreadgray('danaus.tif')
-            mmshow(a)
-            b = mmcloserecth(a,mmsebox(4))
-            mmshow(b)
+            a = readgray('danaus.tif')
+            show(a)
+            b = closerecth(a,sebox(4))
+            show(b)
     """
 
-    if bdil is None: bdil = mmsecross()
-    if bc is None: bc = mmsecross()
-    y = mmsubm(mmcloserec(f,bdil,bc), f)
+    if bdil is None: bdil = secross()
+    if bc is None: bc = secross()
+    y = subm(closerec(f,bdil,bc), f)
     return y
 #
 # =====================================================================
 #
-#   mmcloseth
+#   closeth
 #
 # =====================================================================
-def mmcloseth(f, b=None):
+def closeth(f, b=None):
     """
         - Purpose
             Closing Top Hat.
         - Synopsis
-            y = mmcloseth(f, b=None)
+            y = closeth(f, b=None)
         - Input
             f: Gray-scale (uint8 or uint16) or binary image.
             b: Structuring Element Default: None (3x3 elementary cross).
@@ -1739,31 +1739,31 @@ def mmcloseth(f, b=None):
             y: Gray-scale (uint8 or uint16) or binary image. (Same type of f
                ).
         - Description
-            mmcloseth creates the image y by subtracting the image f of its
+            closeth creates the image y by subtracting the image f of its
             morphological closing by the structuring element b .
         - Examples
             #
-            a = mmreadgray('danaus.tif')
-            mmshow(a)
-            b = mmcloseth(a,mmsebox(5))
-            mmshow(b)
+            a = readgray('danaus.tif')
+            show(a)
+            b = closeth(a,sebox(5))
+            show(b)
     """
 
-    if b is None: b = mmsecross()
-    y = mmsubm( mmclose(f,b), f)
+    if b is None: b = secross()
+    y = subm( close(f,b), f)
     return y
 #
 # =====================================================================
 #
-#   mmcmp
+#   cmp
 #
 # =====================================================================
-def mmcmp(f1, oper, f2, oper1=None, f3=None):
+def cmp(f1, oper, f2, oper1=None, f3=None):
     """
         - Purpose
             Compare two images pixelwisely.
         - Synopsis
-            y = mmcmp(f1, oper, f2, oper1=None, f3=None)
+            y = cmp(f1, oper, f2, oper1=None, f3=None)
         - Input
             f1:    Gray-scale (uint8 or uint16) or binary image.
             oper:  String Default: "". relationship from: '==', '~=',
@@ -1786,16 +1786,16 @@ def mmcmp(f1, oper, f2, oper1=None, f3=None):
             #
             #   example 1
             #
-            print mmcmp(to_uint8([1, 2, 3]),'<', to_uint8(2))
-            print mmcmp(to_uint8([1, 2, 3]),'<', to_uint8([0, 2, 4]))
-            print mmcmp(to_uint8([1, 2, 3]),'==', to_uint8([1, 1, 3]))
+            print cmp(to_uint8([1, 2, 3]),'<', to_uint8(2))
+            print cmp(to_uint8([1, 2, 3]),'<', to_uint8([0, 2, 4]))
+            print cmp(to_uint8([1, 2, 3]),'==', to_uint8([1, 1, 3]))
             #
             #   example 2
             #
-            f=mmreadgray('keyb.tif')
-            fbin=mmcmp(to_uint8(10), '<', f, '<', to_uint8(50))
-            mmshow(f)
-            mmshow(fbin)
+            f=readgray('keyb.tif')
+            fbin=cmp(to_uint8(10), '<', f, '<', to_uint8(50))
+            show(f)
+            show(fbin)
     """
 
     if   oper == '==':    y = (f1==f2)
@@ -1807,34 +1807,34 @@ def mmcmp(f1, oper, f2, oper1=None, f3=None):
     else:
         assert 0, 'oper must be one of: ==, ~=, >, >=, <, <=, it was:'+oper
     if oper1 != None:
-        if   oper1 == '==':     y = mmintersec(y, f2==f3)
-        elif oper1 == '~=':     y = mmintersec(y, f2!=f3)
-        elif oper1 == '<=':     y = mmintersec(y, f2<=f3)
-        elif oper1 == '>=':     y = mmintersec(y, f2>=f3)
-        elif oper1 == '>':      y = mmintersec(y, f2> f3)
-        elif oper1 == '<':      y = mmintersec(y, f2< f3)
+        if   oper1 == '==':     y = intersec(y, f2==f3)
+        elif oper1 == '~=':     y = intersec(y, f2!=f3)
+        elif oper1 == '<=':     y = intersec(y, f2<=f3)
+        elif oper1 == '>=':     y = intersec(y, f2>=f3)
+        elif oper1 == '>':      y = intersec(y, f2> f3)
+        elif oper1 == '<':      y = intersec(y, f2< f3)
         else:
             assert 0, 'oper1 must be one of: ==, ~=, >, >=, <, <=, it was:'+oper1
 
-    y = mmbinary(y)
+    y = binary(y)
     return y
 #
 # =====================================================================
 #
-#   mmcthick
+#   cthick
 #
 # =====================================================================
-def mmcthick(f, g, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
+def cthick(f, g, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
     """
         - Purpose
             Image transformation by conditional thickening.
         - Synopsis
-            y = mmcthick(f, g, Iab=None, n=-1, theta=45,
+            y = cthick(f, g, Iab=None, n=-1, theta=45,
             DIRECTION="CLOCKWISE")
         - Input
             f:         Binary image.
             g:         Binary image.
-            Iab:       Interval Default: None (mmhomothick).
+            Iab:       Interval Default: None (homothick).
             n:         Non-negative integer. Default: -1. Number of
                        iterations.
             theta:     Double Default: 45. Degrees of rotation: 45, 90, or
@@ -1844,7 +1844,7 @@ def mmcthick(f, g, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
         - Output
             y: Binary image.
         - Description
-            mmcthick creates the binary image y by performing a thickening
+            cthick creates the binary image y by performing a thickening
             of the binary image f conditioned to the binary image g . The
             number of iterations of the conditional thickening is n and in
             each iteration the thickening is characterized by rotations of
@@ -1853,53 +1853,53 @@ def mmcthick(f, g, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
             #
             #   example 1
             #
-            f=mmreadgray('blob2.tif')
-            mmshow(f)
-            t=mmse2hmt(mmbinary([[0,0,0],[0,0,1],[1,1,1]]),
-                                      mmbinary([[0,0,0],[0,1,0],[0,0,0]]))
-            print mmintershow(t)
-            f1=mmthick(f,t,40); # The thickening makes the image border grow
-            mmshow(f1)
+            f=readgray('blob2.tif')
+            show(f)
+            t=se2hmt(binary([[0,0,0],[0,0,1],[1,1,1]]),
+                                      binary([[0,0,0],[0,1,0],[0,0,0]]))
+            print intershow(t)
+            f1=thick(f,t,40); # The thickening makes the image border grow
+            show(f1)
             #
             #   example 2
             #
-            f2=mmcthick(f,mmneg(mmframe(f)),t,40) # conditioning to inner pixels
-            fn=mmcthick(f,mmneg(mmframe(f)),t) #pseudo convex hull
-            mmshow(f2)
-            mmshow(fn,f)
+            f2=cthick(f,neg(frame(f)),t,40) # conditioning to inner pixels
+            fn=cthick(f,neg(frame(f)),t) #pseudo convex hull
+            show(f2)
+            show(fn,f)
     """
     from numpy import product
     from string import upper
-    if Iab is None: Iab = mmhomothick()
+    if Iab is None: Iab = homothick()
     DIRECTION = upper(DIRECTION)            
-    assert mmisbinary(f),'f must be binary image'
+    assert isbinary(f),'f must be binary image'
     if n == -1: n = product(f.shape)
     y = f
     old = y
     for i in range(n):
         for t in range(0,360,theta):
-            sup = mmsupgen( y, mminterot(Iab, t, DIRECTION))
-            y = mmintersec(mmunion( y, sup),g)
-        if mmisequal(old,y): break
+            sup = supgen( y, interot(Iab, t, DIRECTION))
+            y = intersec(union( y, sup),g)
+        if isequal(old,y): break
         old = y
     return y
 #
 # =====================================================================
 #
-#   mmcthin
+#   cthin
 #
 # =====================================================================
-def mmcthin(f, g, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
+def cthin(f, g, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
     """
         - Purpose
             Image transformation by conditional thinning.
         - Synopsis
-            y = mmcthin(f, g, Iab=None, n=-1, theta=45,
+            y = cthin(f, g, Iab=None, n=-1, theta=45,
             DIRECTION="CLOCKWISE")
         - Input
             f:         Binary image.
             g:         Binary image.
-            Iab:       Interval Default: None (mmhomothin).
+            Iab:       Interval Default: None (homothin).
             n:         Non-negative integer. Default: -1. Number of
                        iterations.
             theta:     Double Default: 45. Degrees of rotations: 45, 90, or
@@ -1909,7 +1909,7 @@ def mmcthin(f, g, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
         - Output
             y: Binary image.
         - Description
-            mmcthin creates the binary image y by performing a thinning of
+            cthin creates the binary image y by performing a thinning of
             the binary image f conditioned to the binary image g . The
             number of iterations of the conditional thinning is n and in
             each iteration the thinning is characterized by rotations of
@@ -1918,31 +1918,31 @@ def mmcthin(f, g, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
     """
     from numpy import product
     from string import upper
-    if Iab is None: Iab = mmhomothin()
+    if Iab is None: Iab = homothin()
     DIRECTION = upper(DIRECTION)            
-    assert mmisbinary(f),'f must be binary image'
+    assert isbinary(f),'f must be binary image'
     if n == -1: n = product(f.shape)
     y = f
     old = y
     for i in range(n):
         for t in range(0,360,theta):
-            sup = mmsupgen( y, mminterot(Iab, t, DIRECTION))
-            y = mmunion(mmsubm( y, sup),g)
-        if mmisequal(old,y): break
+            sup = supgen( y, interot(Iab, t, DIRECTION))
+            y = union(subm( y, sup),g)
+        if isequal(old,y): break
         old = y
     return y
 #
 # =====================================================================
 #
-#   mmcwatershed
+#   cwatershed
 #
 # =====================================================================
-def mmcwatershed(f, g, Bc=None, LINEREG="LINES"):
+def cwatershed(f, g, Bc=None, LINEREG="LINES"):
     """
         - Purpose
             Detection of watershed from markers.
         - Synopsis
-            Y = mmcwatershed(f, g, Bc=None, LINEREG="LINES")
+            Y = cwatershed(f, g, Bc=None, LINEREG="LINES")
         - Input
             f:       Gray-scale (uint8 or uint16) image.
             g:       Gray-scale (uint8 or uint16) or binary image. marker
@@ -1953,14 +1953,14 @@ def mmcwatershed(f, g, Bc=None, LINEREG="LINES"):
         - Output
             Y: Gray-scale (uint8 or uint16) or binary image.
         - Description
-            mmcwatershed creates the image y by detecting the domain of the
+            cwatershed creates the image y by detecting the domain of the
             catchment basins of f indicated by the marker image g ,
             according to the connectivity defined by Bc . According to the
             flag LINEREG y will be a labeled image of the catchment basins
             domain or just a binary image that presents the watershed lines.
             To know more about watershed and watershed from markers, see
             BeucMeye:93 . The implementation of this function is based on
-            LotuFalc:00 . WARNING: There is a common mistake related to the
+            LotuFalc:00 . WARNING: There is a coon mistake related to the
             marker image g . If this image contains only zeros and ones, but
             it is not a binary image, the result will be an image with all
             ones. If the marker image is binary, you have to set this
@@ -1976,42 +1976,42 @@ def mmcwatershed(f, g, Bc=None, LINEREG="LINES"):
                 [10,    9,    9,   15,    9,    9,   10],\
                 [10,    9,    9,   15,   12,   10,   10],\
                 [10,   10,   10,   10,   10,   10,   10]])
-            b = mmcmp(a,'==',to_uint8(6))
-            print mmcwatershed(a,b)
-            print mmcwatershed(a,b,mmsecross(),'REGIONS')
+            b = cmp(a,'==',to_uint8(6))
+            print cwatershed(a,b)
+            print cwatershed(a,b,secross(),'REGIONS')
             #
             #   example 2
             #
-            f=mmreadgray('astablet.tif')
-            grad=mmgradm(f)
-            mark=mmregmin(mmhmin(grad,17))
-            w=mmcwatershed(grad,mark)
-            mmshow(grad)
-            mmshow(mark)
-            mmshow(w)
+            f=readgray('astablet.tif')
+            grad=gradm(f)
+            mark=regmin(hmin(grad,17))
+            w=cwatershed(grad,mark)
+            show(grad)
+            show(mark)
+            show(w)
     """
     from numpy import ones, zeros, nonzero, array, put, take, argmin, transpose, compress, concatenate
-    if Bc is None: Bc = mmsecross()
+    if Bc is None: Bc = secross()
     return g
     print 'starting'
     withline = (LINEREG == 'LINES')
     if mmis(g,'binary'):
-        g = mmlabel(g,Bc)
-    print 'before 1. mmpad4n'
-    status = mmpad4n(to_uint8(zeros(f.shape)),Bc, 3)
-    f = mmpad4n( f,Bc,0)                 #pad input image
-    print 'before 2. mmpad4n'
-    y = mmpad4n( g,Bc,0)                  # pad marker image with 0
+        g = label(g,Bc)
+    print 'before 1. pad4n'
+    status = pad4n(to_uint8(zeros(f.shape)),Bc, 3)
+    f = pad4n( f,Bc,0)                 #pad input image
+    print 'before 2. pad4n'
+    y = pad4n( g,Bc,0)                  # pad marker image with 0
     if withline:
-        y1 = mmintersec(mmbinary(y), 0)
-    costM = mmlimits(f)[1] * ones(f.shape)  # cummulative cost function image
-    mi = nonzero(mmgradm(y,mmsebox(0),Bc).flat)  # 1D index of internal contour of marker
+        y1 = intersec(binary(y), 0)
+    costM = limits(f)[1] * ones(f.shape)  # cuulative cost function image
+    mi = nonzero(gradm(y,sebox(0),Bc).flat)  # 1D index of internal contour of marker
     print 'before put costM'
     put(costM.flat,mi, 0)
     HQueue=transpose([mi, take(costM.flat, mi)])       # init hierarquical queue: index,value
-    print 'before mmse2list0'
-    Bi=mmse2list0(f,Bc)                # get 1D displacement neighborhood pixels
-    x,v = mmmat2set(Bc)
+    print 'before se2list0'
+    Bi=se2list0(f,Bc)                # get 1D displacement neighborhood pixels
+    x,v = mat2set(Bc)
     while HQueue:
         print 'Hq=',HQueue
         i = argmin(HQueue[:,1])           # i is the index of minimum value
@@ -2051,22 +2051,22 @@ def mmcwatershed(f, g, Bc=None, LINEREG="LINES"):
 #
 # =====================================================================
 #
-#   mmdil
+#   dil
 #
 # =====================================================================
-def mmdil(f, b=None):
+def dil(f, b=None):
     """
         - Purpose
             Dilate an image by a structuring element.
         - Synopsis
-            y = mmdil(f, b=None)
+            y = dil(f, b=None)
         - Input
             f: Gray-scale (uint8 or uint16) or binary image.
             b: Structuring Element Default: None (3x3 elementary cross).
         - Output
             y: Image
         - Description
-            mmdil performs the dilation of image f by the structuring
+            dil performs the dilation of image f by the structuring
             element b . Dilation is a neighbourhood operator that compares
             locally b with f , according to an intersection rule. Since
             Dilation is a fundamental operator to the construction of all
@@ -2077,64 +2077,64 @@ def mmdil(f, b=None):
             #
             #   example 1
             #
-            f=mmbinary([
+            f=binary([
                [0, 0, 0, 0, 0, 0, 1],
                [0, 1, 0, 0, 0, 0, 0],
                [0, 0, 0, 0, 1, 0, 0]])
-            b=mmbinary([1, 1, 0])
-            mmdil(f,b)
+            b=binary([1, 1, 0])
+            dil(f,b)
             f=to_uint8([
                [ 0,   1,  2, 50,  4,  5],
                [ 2,   3,  4,  0,  0,  0],
                [12, 255, 14, 15, 16, 17]])
-            mmdil(f,b)
+            dil(f,b)
             #
             #   example 2
             #
-            f=mmbinary(mmreadgray('blob.tif'))
-            bimg=mmbinary(mmreadgray('blob1.tif'))
-            b=mmimg2se(bimg)
-            mmshow(f)
-            mmshow(mmdil(f,b))
-            mmshow(mmdil(f,b),mmgradm(f))
+            f=binary(readgray('blob.tif'))
+            bimg=binary(readgray('blob1.tif'))
+            b=img2se(bimg)
+            show(f)
+            show(dil(f,b))
+            show(dil(f,b),gradm(f))
             #
             #   example 3
             #
-            f=mmreadgray('pcb_gray.tif')
-            b=mmsedisk(5)
-            mmshow(f)
-            mmshow(mmdil(f,b))
+            f=readgray('pcb_gray.tif')
+            b=sedisk(5)
+            show(f)
+            show(dil(f,b))
     """
     from numpy import maximum, newaxis, ones
-    if b is None: b = mmsecross()
+    if b is None: b = secross()
     if len(f.shape) == 1: f = f[newaxis,:]
     h,w = f.shape
-    x,v = mmmat2set(b)
+    x,v = mat2set(b)
     if len(x)==0:
-        y = (ones((h,w)) * mmlimits(f)[0]).astype(f.dtype)
+        y = (ones((h,w)) * limits(f)[0]).astype(f.dtype)
     else:
-        if mmisbinary(v):
-            v = mmintersec(mmgray(v,'int32'),0)
+        if isbinary(v):
+            v = intersec(gray(v,'int32'),0)
         mh,mw = max(abs(x)[:,0]),max(abs(x)[:,1])
-        y = (ones((h+2*mh,w+2*mw)) * mmlimits(f)[0]).astype(f.dtype)
+        y = (ones((h+2*mh,w+2*mw)) * limits(f)[0]).astype(f.dtype)
         for i in range(x.shape[0]):
             if v[i] > -2147483647:
                 y[mh+x[i,0]:mh+x[i,0]+h, mw+x[i,1]:mw+x[i,1]+w] = maximum(
-                    y[mh+x[i,0]:mh+x[i,0]+h, mw+x[i,1]:mw+x[i,1]+w], mmadd4dil(f,v[i]))
+                    y[mh+x[i,0]:mh+x[i,0]+h, mw+x[i,1]:mw+x[i,1]+w], add4dil(f,v[i]))
         y = y[mh:mh+h, mw:mw+w]
     return y
 #
 # =====================================================================
 #
-#   mmdrawv
+#   drawv
 #
 # =====================================================================
-def mmdrawv(f, data, value, GEOM):
+def drawv(f, data, value, GEOM):
     """
         - Purpose
             Superpose points, rectangles and lines on an image.
         - Synopsis
-            y = mmdrawv(f, data, value, GEOM)
+            y = drawv(f, data, value, GEOM)
         - Input
             f:     Gray-scale (uint8 or uint16) or binary image.
             data:  Gray-scale (uint8 or uint16) or binary image. vector of
@@ -2153,7 +2153,7 @@ def mmdrawv(f, data, value, GEOM):
             y: Gray-scale (uint8 or uint16) or binary image. y has the same
                type of f .
         - Description
-            mmdrawv creates the image y by a superposition of points,
+            drawv creates the image y by a superposition of points,
             rectangles and lines of gray-level k1 on the image f . The
             parameters for each geometrical primitive are defined by each
             line in the 'data' parameter. For points , they are represented
@@ -2172,20 +2172,20 @@ def mmdrawv(f, data, value, GEOM):
             pcoords=uint16([[0,2,4],
                             [0,0,2]])
             pvalue=uint16([1,2,3])
-            print mmdrawv(f,pcoords,pvalue,'point')
-            print mmdrawv(f,pcoords,pvalue,'line')
+            print drawv(f,pcoords,pvalue,'point')
+            print drawv(f,pcoords,pvalue,'line')
             rectcoords=uint16([[0],
                                [0],
                                [3],
                                [2]])
-            print mmdrawv(f,rectcoords, uint16(5), 'rect')
+            print drawv(f,rectcoords, uint16(5), 'rect')
             #
             #   example 2
             #
-            f=mmreadgray('blob3.tif')
-            pc=mmblob(mmlabel(f),'centroid','data')
-            lines=mmdrawv(mmintersec(f,0),transpose(pc),to_uint8(1),'line')
-            mmshow(f,lines)
+            f=readgray('blob3.tif')
+            pc=blob(label(f),'centroid','data')
+            lines=drawv(intersec(f,0),transpose(pc),to_uint8(1),'line')
+            show(f,lines)
     """
     from numpy import array, newaxis, zeros, Int, put, ravel, arange, floor
     from string import upper
@@ -2235,15 +2235,15 @@ def mmdrawv(f, data, value, GEOM):
 #
 # =====================================================================
 #
-#   mmdtshow
+#   dtshow
 #
 # =====================================================================
-def mmdtshow(f, n=10):
+def dtshow(f, n=10):
     """
         - Purpose
             Display a distance transform image with an iso-line color table.
         - Synopsis
-            y = mmdtshow(f, n=10)
+            y = dtshow(f, n=10)
         - Input
             f: Gray-scale (uint8 or uint16) image. Distance transform.
             n: Boolean Default: 10. Number of iso-contours.
@@ -2260,107 +2260,107 @@ def mmdtshow(f, n=10):
             parameter is given.
         - Examples
             #
-            f=mmreadgray('blob.tif')
-            fd=mmdist(f)
-            mmshow(fd)
-            mmdtshow(fd)
+            f=readgray('blob.tif')
+            fd=dist(f)
+            show(fd)
+            dtshow(fd)
     """
     import adpil
 
-    if (mmisbinary(f)) or (len(f.shape) != 2):
-      print 'Error, mmdtshow: works only for grayscale labeled image'
+    if (isbinary(f)) or (len(f.shape) != 2):
+      print 'Error, dtshow: works only for grayscale labeled image'
       return
-    y=mmgdtshow(f, n)
+    y=gdtshow(f, n)
     adpil.adshow(y)
     return
     return y
 #
 # =====================================================================
 #
-#   mmendpoints
+#   endpoints
 #
 # =====================================================================
-def mmendpoints(OPTION="LOOP"):
+def endpoints(OPTION="LOOP"):
     """
         - Purpose
             Interval to detect end-points.
         - Synopsis
-            Iab = mmendpoints(OPTION="LOOP")
+            Iab = endpoints(OPTION="LOOP")
         - Input
             OPTION: String Default: "LOOP". 'LOOP' or 'HOMOTOPIC'
         - Output
             Iab: Interval
         - Description
-            mmendpoints creates an interval that is useful to detect
+            endpoints creates an interval that is useful to detect
             end-points of curves (i.e., one pixel thick connected
             components) in binary images. It can be used to prune skeletons
             and to mark objects transforming them in a single pixel or
             closed loops if they have holes. There are two options
             available: LOOP, deletes all points but preserves loops if used
-            in mmthin ; HOMOTOPIC, deletes all points but preserves the last
+            in thin ; HOMOTOPIC, deletes all points but preserves the last
             single point or loops.
         - Examples
             #
             #   example 1
             #
-            print mmintershow(mmendpoints())
+            print intershow(endpoints())
             #
             #   example 2
             #
-            print mmintershow(mmendpoints('HOMOTOPIC'))
+            print intershow(endpoints('HOMOTOPIC'))
             #
             #   example 3
             #
-            f = mmreadgray('pcbholes.tif')
-            mmshow(f)
-            f1 = mmthin(f)
-            mmshow(f1)
-            f2 = mmthin(f1,mmendpoints(),20)
-            mmshow(f2)
+            f = readgray('pcbholes.tif')
+            show(f)
+            f1 = thin(f)
+            show(f1)
+            f2 = thin(f1,endpoints(),20)
+            show(f2)
             #
             #   example 4
             #
-            fn = mmthin(f1,mmendpoints('HOMOTOPIC'))
-            mmshow(mmdil(fn))
+            fn = thin(f1,endpoints('HOMOTOPIC'))
+            show(dil(fn))
     """
     from string import upper
 
     Iab = None
     OPTION = upper(OPTION)
     if OPTION == 'LOOP':
-        Iab = mmse2hmt(mmbinary([[0,0,0],
+        Iab = se2hmt(binary([[0,0,0],
                                   [0,1,0],
                                   [0,0,0]]),
-                        mmbinary([[0,0,0],
+                        binary([[0,0,0],
                                   [1,0,1],
                                   [1,1,1]]))
     elif OPTION == 'HOMOTOPIC':
-        Iab = mmse2hmt(mmbinary([[0,1,0],
+        Iab = se2hmt(binary([[0,1,0],
                                   [0,1,0],
                                   [0,0,0]]),
-                        mmbinary([[0,0,0],
+                        binary([[0,0,0],
                                   [1,0,1],
                                   [1,1,1]]))
     return Iab
 #
 # =====================================================================
 #
-#   mmero
+#   ero
 #
 # =====================================================================
-def mmero(f, b=None):
+def ero(f, b=None):
     """
         - Purpose
             Erode an image by a structuring element.
         - Synopsis
-            y = mmero(f, b=None)
+            y = ero(f, b=None)
         - Input
             f: Gray-scale (uint8 or uint16) or binary image.
             b: Structuring Element Default: None (3x3 elementary cross).
         - Output
             y: Image
         - Description
-            mmero performs the erosion of the image f by the structuring
+            ero performs the erosion of the image f by the structuring
             element b . Erosion is a neighbourhood operator that compairs
             locally b with f , according to an inclusion rule. Since erosion
             is a fundamental operator to the construction of all other
@@ -2371,63 +2371,63 @@ def mmero(f, b=None):
             #
             #   example 1
             #
-            f=mmbinary([
+            f=binary([
                [1, 1, 1, 0, 0, 1, 1],
                [1, 0, 1, 1, 1, 0, 0],
                [0, 0, 0, 0, 1, 0, 0]])
-            b=mmbinary([1, 1, 0])
-            mmero(f,b)
+            b=binary([1, 1, 0])
+            ero(f,b)
             f=to_uint8([
                [ 0,   1,  2, 50,  4,  5],
                [ 2,   3,  4,  0,  0,  0],
                [12, 255, 14, 15, 16, 17]])
-            mmero(f,b)
+            ero(f,b)
             #
             #   example 2
             #
-            f=mmbinary(mmreadgray('blob.tif'))
-            bimg=mmbinary(mmreadgray('blob1.tif'))
-            b=mmimg2se(bimg)
-            g=mmero(f,b)
-            mmshow(f)
-            mmshow(g)
-            mmshow(g,mmgradm(f))
+            f=binary(readgray('blob.tif'))
+            bimg=binary(readgray('blob1.tif'))
+            b=img2se(bimg)
+            g=ero(f,b)
+            show(f)
+            show(g)
+            show(g,gradm(f))
             #
             #   example 3
             #
-            f=mmreadgray('pcb_gray.tif')
-            b=mmsedisk(3)
-            mmshow(f)
-            mmshow(mmero(f,b))
+            f=readgray('pcb_gray.tif')
+            b=sedisk(3)
+            show(f)
+            show(ero(f,b))
     """
 
-    if b is None: b = mmsecross()
-    y = mmneg(mmdil(mmneg(f),mmsereflect(b)))
+    if b is None: b = secross()
+    y = neg(dil(neg(f),sereflect(b)))
     return y
 #
 # =====================================================================
 #
-#   mmfreedom
+#   freedom
 #
 # =====================================================================
-def mmfreedom(L=5):
+def freedom(L=5):
     """
         - Purpose
             Control automatic data type conversion.
         - Synopsis
-            Y = mmfreedom(L=5)
+            Y = freedom(L=5)
         - Input
             L: Double Default: 5. level of FREEDOM: 0, 1 or 2. If the input
                parameter is omitted, the current level is returned.
         - Output
             Y: Double current FREEDOM level
         - Description
-            mmfreedom controls the automatic data type conversion. There are
+            freedom controls the automatic data type conversion. There are
             3 possible levels, called FREEDOM levels, for automatic
             conversion: 0 - image type conversion is not allowed; 1- image
             type conversion is allowed, but a warning is sent for each
             conversion; 2- image type conversion is allowed without warning.
-            The FREEDOM levels are set or inquired by mmfreedom . If an
+            The FREEDOM levels are set or inquired by freedom . If an
             image is not in the required datatype, than it should be
             converted to the maximum and nearest pymorph Morphology Toolbox
             datatype. For example, if an image is in int32 and a
@@ -2443,21 +2443,21 @@ def mmfreedom(L=5):
             #
             #   example 1
             #
-            a=mmsubm([4., 2., 1.],to_uint8([3, 2, 0]))
+            a=subm([4., 2., 1.],to_uint8([3, 2, 0]))
             print a
-            print mmdatatype(a)
+            print datatype(a)
             #
             #   example 2
             #
-            a=mmsubm([4., 2., 1], mmbinary([3, 2, 0]))
+            a=subm([4., 2., 1], binary([3, 2, 0]))
             print a
-            print mmdatatype(a)
+            print datatype(a)
             #
             #   example 3
             #
-            a=mmsubm(to_uint8([4, 3, 2, 1]), 1)
+            a=subm(to_uint8([4, 3, 2, 1]), 1)
             print a
-            print mmdatatype(a)
+            print datatype(a)
     """
 
     Y = -1
@@ -2465,15 +2465,15 @@ def mmfreedom(L=5):
 #
 # =====================================================================
 #
-#   mmgdist
+#   gdist
 #
 # =====================================================================
-def mmgdist(f, g, Bc=None, METRIC=None):
+def gdist(f, g, Bc=None, METRIC=None):
     """
         - Purpose
             Geodesic Distance Transform.
         - Synopsis
-            y = mmgdist(f, g, Bc=None, METRIC=None)
+            y = gdist(f, g, Bc=None, METRIC=None)
         - Input
             f:      Binary image.
             g:      Binary image. Marker image
@@ -2483,7 +2483,7 @@ def mmgdist(f, g, Bc=None, METRIC=None):
         - Output
             y: uint16 (distance image).
         - Description
-            mmgdist creates the geodesic distance image y of the binary
+            gdist creates the geodesic distance image y of the binary
             image f relative to the binary image g . The value of y at the
             pixel x is the length of the smallest path between x and f . The
             distances available are based on the Euclidean metrics and on
@@ -2498,59 +2498,59 @@ def mmgdist(f, g, Bc=None, METRIC=None):
             #
             #   example 1
             #
-            f=mmbinary([
+            f=binary([
              [1,1,1,1,1,1],
              [1,1,1,0,0,1],
              [1,0,1,0,0,1],
              [1,0,1,1,0,0],
              [0,0,1,1,1,1],
              [0,0,0,1,1,1]])
-            g=mmbinary([
+            g=binary([
              [0,0,0,0,0,0],
              [1,1,0,0,0,0],
              [0,0,0,0,0,0],
              [0,0,0,0,0,0],
              [0,0,0,0,0,0],
              [0,0,0,0,0,1]])
-            y=mmgdist(f,g,mmsecross())
+            y=gdist(f,g,secross())
             print y
             #
             #   example 2
             #
-            f=mmreadgray('maze_bw.tif')
-            g=mmintersec(f,0)
-            g=mmdrawv(g,uint16([[2],[2],[6],[6]]),uint16(1),'frect')
-            y=mmgdist(f,g,mmsebox(),'EUCLIDEAN')
-            mmshow(f,g)
-            mmdtshow(y,200)
+            f=readgray('maze_bw.tif')
+            g=intersec(f,0)
+            g=drawv(g,uint16([[2],[2],[6],[6]]),uint16(1),'frect')
+            y=gdist(f,g,sebox(),'EUCLIDEAN')
+            show(f,g)
+            dtshow(y,200)
     """
 
-    if Bc is None: Bc = mmsecross()
+    if Bc is None: Bc = secross()
     assert METRIC is None,'Does not support EUCLIDEAN'
-    fneg,gneg = mmneg(f),mmneg(g)
-    y = mmgray(gneg,'uint16',1)
-    ero = mmintersec(y,0)
+    fneg,gneg = neg(f),neg(g)
+    y = gray(gneg,'uint16',1)
+    ero = intersec(y,0)
     aux = y
     i = 1
-    while not mmisequal(ero,aux):
+    while not isequal(ero,aux):
         aux = ero
-        ero = mmcero(gneg,fneg,Bc,i)
-        y = mmaddm(y,mmgray(ero,'uint16',1))
+        ero = cero(gneg,fneg,Bc,i)
+        y = addm(y,gray(ero,'uint16',1))
         i = i + 1
-    y = mmunion(y,mmgray(ero,'uint16'))
+    y = union(y,gray(ero,'uint16'))
     return y
 #
 # =====================================================================
 #
-#   mmgradm
+#   gradm
 #
 # =====================================================================
-def mmgradm(f, Bdil=None, Bero=None):
+def gradm(f, Bdil=None, Bero=None):
     """
         - Purpose
             Morphological gradient.
         - Synopsis
-            y = mmgradm(f, Bdil=None, Bero=None)
+            y = gradm(f, Bdil=None, Bero=None)
         - Input
             f:    Gray-scale (uint8 or uint16) or binary image.
             Bdil: Structuring Element Default: None (3x3 elementary cross).
@@ -2561,48 +2561,48 @@ def mmgradm(f, Bdil=None, Bero=None):
             y: Gray-scale (uint8 or uint16) or binary image. (same type of f
                ).
         - Description
-            mmgradm creates the image y by the subtraction of the erosion of
+            gradm creates the image y by the subtraction of the erosion of
             the image f by Bero of the dilation of f by Bdil .
         - Examples
             #
             #   example 1
             #
-            a = mmreadgray('small_bw.tif')
-            b = mmgradm(a)
-            mmshow(a)
-            mmshow(b)
+            a = readgray('small_bw.tif')
+            b = gradm(a)
+            show(a)
+            show(b)
             #
             #   example 2
             #
-            c=mmgradm(a,mmsecross(0),mmsecross())
-            d=mmgradm(a,mmsecross(),mmsecross(0))
-            mmshow(a,c)
-            mmshow(a,d)
+            c=gradm(a,secross(0),secross())
+            d=gradm(a,secross(),secross(0))
+            show(a,c)
+            show(a,d)
             #
             #   example 3
             #
-            a = mmreadgray('bloodcells.tif')
-            b = mmgradm(a)
-            mmshow(a)
-            mmshow(b)
+            a = readgray('bloodcells.tif')
+            b = gradm(a)
+            show(a)
+            show(b)
     """
 
-    if Bdil is None: Bdil = mmsecross()
-    if Bero is None: Bero = mmsecross()
-    y = mmsubm(mmdil(f,Bdil),mmero(f,Bero))
+    if Bdil is None: Bdil = secross()
+    if Bero is None: Bero = secross()
+    y = subm(dil(f,Bdil),ero(f,Bero))
     return y
 #
 # =====================================================================
 #
-#   mmgrain
+#   grain
 #
 # =====================================================================
-def mmgrain(fr, f, measurement, option="image"):
+def grain(fr, f, measurement, option="image"):
     """
         - Purpose
             Gray-scale statistics for each labeled region.
         - Synopsis
-            y = mmgrain(fr, f, measurement, option="image")
+            y = grain(fr, f, measurement, option="image")
         - Input
             fr:          Gray-scale (uint8 or uint16) image. Labeled image,
                          to define the regions. Label 0 is the background
@@ -2624,7 +2624,7 @@ def mmgrain(fr, f, measurement, option="image"):
             grains regions are specified by the labeled image fr and the
             gray-scale information is specified by the image f . The
             statistics to compute is specified by the parameter measurement
-            , which has the same options as in function mmstats . The
+            , which has the same options as in function stats . The
             parameter option defines: ('image') if the output is an uint16
             image where each label value is changed to the measurement
             value, or ('data') a double column vector. In this case, the
@@ -2636,19 +2636,19 @@ def mmgrain(fr, f, measurement, option="image"):
             #   example 1
             #
             f=to_uint8([range(6),range(6),range(6)])
-            fr=mmlabelflat(f)
-            mmgrain(fr,f,'sum','data')
-            mmgrain(fr,f,'sum')
+            fr=labelflat(f)
+            grain(fr,f,'sum','data')
+            grain(fr,f,'sum')
             #
             #   example 2
             #
-            f=mmreadgray('astablet.tif')
-            g=mmgradm(f)
-            marker=mmregmin(mmclose(g))
-            ws=mmcwatershed(g,marker,mmsebox(),'regions')
-            g=mmgrain(ws,f,'mean')
-            mmshow(f)
-            mmshow(g)
+            f=readgray('astablet.tif')
+            g=gradm(f)
+            marker=regmin(close(g))
+            ws=cwatershed(g,marker,sebox(),'regions')
+            g=grain(ws,f,'mean')
+            show(f)
+            show(g)
     """
     from numpy import newaxis, ravel, zeros, sum, nonzero, put, take, array
     from MLab import mean, std
@@ -2707,15 +2707,15 @@ def mmgrain(fr, f, measurement, option="image"):
 #
 # =====================================================================
 #
-#   mmgray
+#   gray
 #
 # =====================================================================
-def mmgray(f, TYPE="uint8", k1=None):
+def gray(f, TYPE="uint8", k1=None):
     """
         - Purpose
             Convert a binary image into a gray-scale image.
         - Synopsis
-            y = mmgray(f, TYPE="uint8", k1=None)
+            y = gray(f, TYPE="uint8", k1=None)
         - Input
             f:    Binary image.
             TYPE: String Default: "uint8". 'uint8', 'uint16', or 'int32'.
@@ -2725,47 +2725,47 @@ def mmgray(f, TYPE="uint8", k1=None):
             y: Unsigned gray-scale (uint8 or uint16), signed (int32) or
                binary image.
         - Description
-            mmgray converts a binary image into a gray-scale image of a
+            gray converts a binary image into a gray-scale image of a
             specified data type. The value k1 is assigned to the 1 pixels of
             f , while the 0 pixels are assigned to the minimum value
             associated to the specified data type.
         - Examples
             #
-            b=mmbinary([0, 1, 0, 1])
+            b=binary([0, 1, 0, 1])
             print b
-            c=mmgray(b)
+            c=gray(b)
             print c
-            d=mmgray(b,'uint8',100)
+            d=gray(b,'uint8',100)
             print d
-            e=mmgray(b,'uint16')
+            e=gray(b,'uint16')
             print e
-            f=mmgray(b,'int32',0)
+            f=gray(b,'int32',0)
             print f
     """
     from numpy import array
-    if k1 is None: k1 = mmmaxleveltype(TYPE)
-    if type(f) is list: f = mmbinary(f)
+    if k1 is None: k1 = maxleveltype(TYPE)
+    if type(f) is list: f = binary(f)
     assert mmis(f,'binary'), 'f must be binary'
     if k1==None:
-        k1=mmmaxleveltype(TYPE)
+        k1=maxleveltype(TYPE)
     if   TYPE == 'uint8' : y = to_uint8(f*k1)
     elif TYPE == 'uint16': y = uint16(f*k1)
-    elif TYPE == 'int32' : y = int32(f*k1) - int32(mmneg(f)*mmmaxleveltype(TYPE))
+    elif TYPE == 'int32' : y = int32(f*k1) - int32(neg(f)*maxleveltype(TYPE))
     else:
         assert 0, 'type not supported:'+TYPE
     return y
 #
 # =====================================================================
 #
-#   mmhmin
+#   hmin
 #
 # =====================================================================
-def mmhmin(f, h=1, Bc=None):
+def hmin(f, h=1, Bc=None):
     """
         - Purpose
             Remove basins with contrast less than h.
         - Synopsis
-            y = mmhmin(f, h=1, Bc=None)
+            y = hmin(f, h=1, Bc=None)
         - Input
             f:  Gray-scale (uint8 or uint16) image.
             h:  Default: 1. Contrast parameter.
@@ -2774,7 +2774,7 @@ def mmhmin(f, h=1, Bc=None):
         - Output
             y: Gray-scale (uint8 or uint16) or binary image.
         - Description
-            mmhmin sup-reconstructs the gray-scale image f from the marker
+            hmin sup-reconstructs the gray-scale image f from the marker
             created by the addition of the positive integer value h to f ,
             using the connectivity Bc . This operator removes connected
             basins with contrast less than h . This function is very userful
@@ -2788,33 +2788,33 @@ def mmhmin(f, h=1, Bc=None):
                 [10,   9,   6,  18,   6,   5,  10],
                 [10,   9,   9,  15,   4,   9,  10],
                 [10,  10,  10,  10,  10,  10,  10]])
-            print mmhmin(a,1,mmsebox())
+            print hmin(a,1,sebox())
             #
             #   example 2
             #
-            f = mmreadgray('r4x2_256.tif')
-            mmshow(f)
-            fb = mmhmin(f,70)
-            mmshow(fb)
-            mmshow(mmregmin(fb))
+            f = readgray('r4x2_256.tif')
+            show(f)
+            fb = hmin(f,70)
+            show(fb)
+            show(regmin(fb))
     """
 
-    if Bc is None: Bc = mmsecross()
-    g = mmaddm(f,h)
-    y = mmsuprec(g,f,Bc);
+    if Bc is None: Bc = secross()
+    g = addm(f,h)
+    y = suprec(g,f,Bc);
     return y
 #
 # =====================================================================
 #
-#   mmvdome
+#   vdome
 #
 # =====================================================================
-def mmvdome(f, v=1, Bc=None):
+def vdome(f, v=1, Bc=None):
     """
         - Purpose
-            Obsolete, use mmvmax.
+            Obsolete, use vmax.
         - Synopsis
-            y = mmvdome(f, v=1, Bc=None)
+            y = vdome(f, v=1, Bc=None)
         - Input
             f:  Gray-scale (uint8 or uint16) image.
             v:  Default: 1. Volume parameter.
@@ -2823,25 +2823,25 @@ def mmvdome(f, v=1, Bc=None):
         - Output
             y: Gray-scale (uint8 or uint16) or binary image.
         - Description
-            The correct name for this operator mmvdome is mmvmax.
+            The correct name for this operator vdome is vmax.
 
     """
 
-    if Bc is None: Bc = mmsecross()
-    y = mmhmax(f,v,Bc);
+    if Bc is None: Bc = secross()
+    y = hmax(f,v,Bc);
     return y
 #
 # =====================================================================
 #
-#   mmvmax
+#   vmax
 #
 # =====================================================================
-def mmvmax(f, v=1, Bc=None):
+def vmax(f, v=1, Bc=None):
     """
         - Purpose
             Remove domes with volume less than v.
         - Synopsis
-            y = mmvmax(f, v=1, Bc=None)
+            y = vmax(f, v=1, Bc=None)
         - Input
             f:  Gray-scale (uint8 or uint16) image.
             v:  Default: 1. Volume parameter.
@@ -2850,8 +2850,8 @@ def mmvmax(f, v=1, Bc=None):
         - Output
             y: Gray-scale (uint8 or uint16) or binary image.
         - Description
-            mmvmax This operator removes connected domes with volume less
-            than v . This function is very similar to mmhmax , but instead
+            vmax This operator removes connected domes with volume less
+            than v . This function is very similar to hmax , but instead
             of using a gray scale criterion (contrast) for the dome, it uses
             a volume criterion.
         - Examples
@@ -2863,33 +2863,33 @@ def mmvmax(f, v=1, Bc=None):
                 [2,  9,  6,  1,  6,  7,  3],
                 [8,  9,  3,  2,  4,  9,  4],
                 [3,  1,  2,  1,  2,  4,  2]])
-            print mmvmax(a,10,mmsebox())
+            print vmax(a,10,sebox())
             #
             #   example 2
             #
-            f = mmreadgray('astablet.tif')
-            mmshow(f)
-            fb = mmvmax(f,80000)
-            mmshow(fb)
-            mmshow(mmregmax(fb))
+            f = readgray('astablet.tif')
+            show(f)
+            fb = vmax(f,80000)
+            show(fb)
+            show(regmax(fb))
     """
 
-    if Bc is None: Bc = mmsecross()
+    if Bc is None: Bc = secross()
     print 'Not implemented yet'
     return None
     return y
 #
 # =====================================================================
 #
-#   mmhmax
+#   hmax
 #
 # =====================================================================
-def mmhmax(f, h=1, Bc=None):
+def hmax(f, h=1, Bc=None):
     """
         - Purpose
             Remove peaks with contrast less than h.
         - Synopsis
-            y = mmhmax(f, h=1, Bc=None)
+            y = hmax(f, h=1, Bc=None)
         - Input
             f:  Gray-scale (uint8 or uint16) image.
             h:  Default: 1. Contrast parameter.
@@ -2898,7 +2898,7 @@ def mmhmax(f, h=1, Bc=None):
         - Output
             y: Gray-scale (uint8 or uint16) or binary image.
         - Description
-            mmhmax inf-reconstructs the gray-scale image f from the marker
+            hmax inf-reconstructs the gray-scale image f from the marker
             created by the subtraction of the positive integer value h from
             f , using connectivity Bc . This operator removes connected
             peaks with contrast less than h .
@@ -2911,93 +2911,93 @@ def mmhmax(f, h=1, Bc=None):
                 [2,   9,   6,  1,  6,  7,  3],
                 [8,   9,   3,  2,  4,  9,  4],
                 [3,   1,   2,  1,  2,  4,  2]])
-            print mmhmax(a,2,mmsebox())
+            print hmax(a,2,sebox())
             #
             #   example 2
             #
-            f = mmreadgray('r4x2_256.tif')
-            mmshow(f)
-            fb = mmhmax(f,50)
-            mmshow(fb)
-            mmshow(mmregmax(fb))
+            f = readgray('r4x2_256.tif')
+            show(f)
+            fb = hmax(f,50)
+            show(fb)
+            show(regmax(fb))
     """
 
-    if Bc is None: Bc = mmsecross()
-    g = mmsubm(f,h)
-    y = mminfrec(g,f,Bc);
+    if Bc is None: Bc = secross()
+    g = subm(f,h)
+    y = infrec(g,f,Bc);
     return y
 #
 # =====================================================================
 #
-#   mmhomothick
+#   homothick
 #
 # =====================================================================
-def mmhomothick():
+def homothick():
     """
         - Purpose
             Interval for homotopic thickening.
         - Synopsis
-            Iab = mmhomothick()
+            Iab = homothick()
 
         - Output
             Iab: Interval
         - Description
-            mmhomothick creates an interval that is useful for the homotopic
+            homothick creates an interval that is useful for the homotopic
             (i.e., that conserves the relation between objects and holes)
             thickening of binary images.
         - Examples
             #
-            print mmintershow(mmhomothick())
+            print intershow(homothick())
     """
 
-    Iab = mmse2hmt(mmbinary([[1,1,1],
+    Iab = se2hmt(binary([[1,1,1],
                              [0,0,0],
                              [0,0,0]]),
-                   mmbinary([[0,0,0],
+                   binary([[0,0,0],
                              [0,1,0],
                              [1,1,1]]))
     return Iab
 #
 # =====================================================================
 #
-#   mmhomothin
+#   homothin
 #
 # =====================================================================
-def mmhomothin():
+def homothin():
     """
         - Purpose
             Interval for homotopic thinning.
         - Synopsis
-            Iab = mmhomothin()
+            Iab = homothin()
 
         - Output
             Iab: Interval
         - Description
-            mmhomothin creates an interval that is useful for the homotopic
+            homothin creates an interval that is useful for the homotopic
             (i.e., that conserves the relation between objects and holes)
             thinning of binary images.
 
     """
 
-    Iab = mmse2hmt(mmbinary([[0,0,0],
+    Iab = se2hmt(binary([[0,0,0],
                              [0,1,0],
                              [1,1,1]]),
-                   mmbinary([[1,1,1],
+                   binary([[1,1,1],
                              [0,0,0],
                              [0,0,0]]))
     return Iab
 #
 # =====================================================================
 #
-#   mmimg2se
+#   img2se
 #
 # =====================================================================
-def mmimg2se(fd, FLAT="FLAT", f=None):
+def img2se(fd, FLAT="FLAT", f=None):
     """
         - Purpose
             Create a structuring element from a pair of images.
         - Synopsis
-            B = mmimg2se(fd, FLAT="FLAT", f=None)
+            B = img2se(fd, FLAT="FLAT", f=None)
         - Input
             fd:   Binary image. The image is in the matrix format where the
                   origin (0,0) is at the matrix center.
@@ -3007,7 +3007,7 @@ def mmimg2se(fd, FLAT="FLAT", f=None):
         - Output
             B: Structuring Element
         - Description
-            mmimg2se creates a flat structuring element B from the binary
+            img2se creates a flat structuring element B from the binary
             image fd or creates a non-flat structuring element b from the
             binary image fd and the gray-scale image f . fd represents the
             domain of b and f represents the image of the points in fd .
@@ -3015,23 +3015,23 @@ def mmimg2se(fd, FLAT="FLAT", f=None):
             #
             #   example 1
             #
-            a = mmimg2se(mmbinary([
+            a = img2se(binary([
               [0,1,0],
               [1,1,1],
               [0,1,0]]))
-            print mmseshow(a)
+            print seshow(a)
             #
             #   example 2
             #
-            b = mmbinary([
+            b = binary([
               [0,1,1,1],
               [1,1,1,0]])
-            b1 = mmimg2se(b)
-            print mmseshow(b1)
+            b1 = img2se(b)
+            print seshow(b1)
             #
             #   example 3
             #
-            c = mmbinary([
+            c = binary([
               [0,1,0],
               [1,1,1],
               [0,1,0]])
@@ -3039,32 +3039,32 @@ def mmimg2se(fd, FLAT="FLAT", f=None):
               [0,0,0],
               [0,1,0],
               [0,0,0]])
-            e = mmimg2se(c,'NON-FLAT',d)
-            print mmseshow(e)
+            e = img2se(c,'NON-FLAT',d)
+            print seshow(e)
     """
     from string import upper
     from numpy import choose, ones
 
-    assert mmisbinary(fd),'First parameter must be binary'
+    assert isbinary(fd),'First parameter must be binary'
     FLAT = upper(FLAT)
     if FLAT == 'FLAT':
-        return mmseshow(fd)
+        return seshow(fd)
     else:
-        B = choose(fd, (mmlimits(int32([0]))[0]*ones(fd.shape),f) )
-    B = mmseshow(int32(B),'NON-FLAT')
+        B = choose(fd, (limits(int32([0]))[0]*ones(fd.shape),f) )
+    B = seshow(int32(B),'NON-FLAT')
     return B
 #
 # =====================================================================
 #
-#   mminfcanon
+#   infcanon
 #
 # =====================================================================
-def mminfcanon(f, Iab, theta=45, DIRECTION="CLOCKWISE"):
+def infcanon(f, Iab, theta=45, DIRECTION="CLOCKWISE"):
     """
         - Purpose
             Intersection of inf-generating operators.
         - Synopsis
-            y = mminfcanon(f, Iab, theta=45, DIRECTION="CLOCKWISE")
+            y = infcanon(f, Iab, theta=45, DIRECTION="CLOCKWISE")
         - Input
             f:         Binary image.
             Iab:       Interval
@@ -3075,7 +3075,7 @@ def mminfcanon(f, Iab, theta=45, DIRECTION="CLOCKWISE"):
         - Output
             y: Binary image.
         - Description
-            mminfcanon creates the image y by computing intersections of
+            infcanon creates the image y by computing intersections of
             transformations of the image f by inf-generating (i.e., dual of
             the hit-or-miss) operators. These inf-generating operators are
             characterized by rotations (in the clockwise or anti-clockwise
@@ -3085,50 +3085,50 @@ def mminfcanon(f, Iab, theta=45, DIRECTION="CLOCKWISE"):
     from string import upper
 
     DIRECTION = upper(DIRECTION)            
-    y = mmunion(f,1)
+    y = union(f,1)
     for t in range(0,360,theta):
-        Irot = mminterot( Iab, t, DIRECTION )
-        y = mmintersec( y, mminfgen(f, Irot))
+        Irot = interot( Iab, t, DIRECTION )
+        y = intersec( y, infgen(f, Irot))
     return y
 #
 # =====================================================================
 #
-#   mminfgen
+#   infgen
 #
 # =====================================================================
-def mminfgen(f, Iab):
+def infgen(f, Iab):
     """
         - Purpose
             Inf-generating.
         - Synopsis
-            y = mminfgen(f, Iab)
+            y = infgen(f, Iab)
         - Input
             f:   Binary image.
             Iab: Interval
         - Output
             y: Binary image.
         - Description
-            mminfgen creates the image y by computing the transformation of
+            infgen creates the image y by computing the transformation of
             the image f by the inf-generating operator (or dual of the
             hit-or-miss) characterized by the interval Iab .
 
     """
 
     A,Bc = Iab
-    y = mmunion(mmdil( f, A),mmdil( mmneg(f), Bc))
+    y = union(dil( f, A),dil( neg(f), Bc))
     return y
 #
 # =====================================================================
 #
-#   mminfrec
+#   infrec
 #
 # =====================================================================
-def mminfrec(f, g, bc=None):
+def infrec(f, g, bc=None):
     """
         - Purpose
             Inf-reconstruction.
         - Synopsis
-            y = mminfrec(f, g, bc=None)
+            y = infrec(f, g, bc=None)
         - Input
             f:  Gray-scale (uint8 or uint16) or binary image. Marker image.
             g:  Gray-scale (uint8 or uint16) or binary image. Conditioning
@@ -3138,7 +3138,7 @@ def mminfrec(f, g, bc=None):
         - Output
             y: Image
         - Description
-            mminfrec creates the image y by an infinite number of recursive
+            infrec creates the image y by an infinite number of recursive
             iterations (iterations until stability) of the dilation of f by
             bc conditioned to g . We say the y is the inf-reconstruction of
             g from the marker f . For algorithms and applications, see
@@ -3147,42 +3147,42 @@ def mminfrec(f, g, bc=None):
             #
             #   example 1
             #
-            g=mmreadgray('text_128.tif')
-            f=mmero(g,mmseline(9,90))
-            y=mminfrec(f,g,mmsebox())
-            mmshow(g)
-            mmshow(f)
-            mmshow(y)
+            g=readgray('text_128.tif')
+            f=ero(g,seline(9,90))
+            y=infrec(f,g,sebox())
+            show(g)
+            show(f)
+            show(y)
             #
             #   example 2
             #
-            g=mmneg(mmreadgray('n2538.tif'))
-            f=mmintersec(g,0)
-            f=mmdraw(f,'LINE:40,30,60,30:END')
-            y30=mmcdil(f,g,mmsebox(),30)
-            y=mminfrec(f,g,mmsebox())
-            mmshow(g)
-            mmshow(f)
-            mmshow(y30)
-            mmshow(y)
+            g=neg(readgray('n2538.tif'))
+            f=intersec(g,0)
+            f=draw(f,'LINE:40,30,60,30:END')
+            y30=cdil(f,g,sebox(),30)
+            y=infrec(f,g,sebox())
+            show(g)
+            show(f)
+            show(y30)
+            show(y)
     """
     from numpy import product
-    if bc is None: bc = mmsecross()
+    if bc is None: bc = secross()
     n = product(f.shape)
-    y = mmcdil(f,g,bc,n);
+    y = cdil(f,g,bc,n);
     return y
 #
 # =====================================================================
 #
-#   mminpos
+#   inpos
 #
 # =====================================================================
-def mminpos(f, g, bc=None):
+def inpos(f, g, bc=None):
     """
         - Purpose
             Minima imposition.
         - Synopsis
-            y = mminpos(f, g, bc=None)
+            y = inpos(f, g, bc=None)
         - Input
             f:  Binary image. Marker image.
             g:  Gray-scale (uint8 or uint16) image. input image.
@@ -3191,31 +3191,31 @@ def mminpos(f, g, bc=None):
         - Output
             y: Gray-scale (uint8 or uint16) image.
         - Description
-            Minima imposition on g based on the marker f . mminpos creates
+            Minima imposition on g based on the marker f . inpos creates
             an image y by filing the valleys of g that does not cover the
             connect components of f . A remarkable property of y is that its
             regional minima are exactly the connect components of g .
 
     """
 
-    if bc is None: bc = mmsecross()
-    assert mmisbinary(f),'First parameter must be binary image'
-    fg = mmgray(mmneg(f),mmdatatype(g))
-    k1 = mmlimits(g)[1] - 1
-    y = mmsuprec(fg, mmintersec(mmunion(g, 1), k1, fg), bc)
+    if bc is None: bc = secross()
+    assert isbinary(f),'First parameter must be binary image'
+    fg = gray(neg(f),datatype(g))
+    k1 = limits(g)[1] - 1
+    y = suprec(fg, intersec(union(g, 1), k1, fg), bc)
     return y
 #
 # =====================================================================
 #
-#   mminterot
+#   interot
 #
 # =====================================================================
-def mminterot(Iab, theta=45, DIRECTION="CLOCKWISE"):
+def interot(Iab, theta=45, DIRECTION="CLOCKWISE"):
     """
         - Purpose
             Rotate an interval
         - Synopsis
-            Irot = mminterot(Iab, theta=45, DIRECTION="CLOCKWISE")
+            Irot = interot(Iab, theta=45, DIRECTION="CLOCKWISE")
         - Input
             Iab:       Interval
             theta:     Double Default: 45. Degrees of rotation. Available
@@ -3225,13 +3225,13 @@ def mminterot(Iab, theta=45, DIRECTION="CLOCKWISE"):
         - Output
             Irot: Interval
         - Description
-            mminterot rotates the interval Iab by an angle theta .
+            interot rotates the interval Iab by an angle theta .
         - Examples
             #
-            b1 = mmendpoints()
-            b2 = mminterot(b1)
-            print mmintershow(b1)
-            print mmintershow(b2)
+            b1 = endpoints()
+            b2 = interot(b1)
+            print intershow(b1)
+            print intershow(b2)
     """
     from string import upper
 
@@ -3239,21 +3239,21 @@ def mminterot(Iab, theta=45, DIRECTION="CLOCKWISE"):
     A,Bc = Iab
     if DIRECTION != 'CLOCKWISE':
         theta = 360 - theta
-    Irot = mmse2hmt(mmserot(A, theta),
-                    mmserot(Bc,theta))
+    Irot = se2hmt(serot(A, theta),
+                    serot(Bc,theta))
     return Irot
 #
 # =====================================================================
 #
-#   mmintersec
+#   intersec
 #
 # =====================================================================
-def mmintersec(f1, f2, f3=None, f4=None, f5=None):
+def intersec(f1, f2, f3=None, f4=None, f5=None):
     """
         - Purpose
             Intersection of images.
         - Synopsis
-            y = mmintersec(f1, f2, f3=None, f4=None, f5=None)
+            y = intersec(f1, f2, f3=None, f4=None, f5=None)
         - Input
             f1: Gray-scale (uint8 or uint16) or binary image.
             f2: Gray-scale (uint8 or uint16) or binary image. Or constant.
@@ -3266,7 +3266,7 @@ def mmintersec(f1, f2, f3=None, f4=None, f5=None):
         - Output
             y: Image
         - Description
-            mmintersec creates the image y by taking the pixelwise minimum
+            intersec creates the image y by taking the pixelwise minimum
             between the images f1, f2, f3, f4, and f5 . When f1, f2, f3, f4,
             and f5 are binary images, y is the intersection of them.
         - Examples
@@ -3275,28 +3275,28 @@ def mmintersec(f1, f2, f3=None, f4=None, f5=None):
             #
             f=to_uint8([255,  255,    0,   10,    0,   255,   250])
             g=to_uint8([ 0,    40,   80,   140,  250,    10,    30])
-            print mmintersec(f, g)
-            print mmintersec(f, 0)
+            print intersec(f, g)
+            print intersec(f, 0)
             #
             #   example 2
             #
-            a = mmreadgray('form-ok.tif')
-            b = mmreadgray('form-1.tif')
-            c = mmintersec(a,b)
-            mmshow(a)
-            mmshow(b)
-            mmshow(c)
+            a = readgray('form-ok.tif')
+            b = readgray('form-1.tif')
+            c = intersec(a,b)
+            show(a)
+            show(b)
+            show(c)
             #
             #   example 3
             #
-            d = mmreadgray('tplayer1.tif')
-            e = mmreadgray('tplayer2.tif')
-            f = mmreadgray('tplayer3.tif')
-            g = mmintersec(d,e,f)
-            mmshow(d)
-            mmshow(e)
-            mmshow(f)
-            mmshow(g)
+            d = readgray('tplayer1.tif')
+            e = readgray('tplayer2.tif')
+            f = readgray('tplayer3.tif')
+            g = intersec(d,e,f)
+            show(d)
+            show(e)
+            show(f)
+            show(g)
     """
     from numpy import minimum
 
@@ -3309,38 +3309,38 @@ def mmintersec(f1, f2, f3=None, f4=None, f5=None):
 #
 # =====================================================================
 #
-#   mmintershow
+#   intershow
 #
 # =====================================================================
-def mmintershow(Iab):
+def intershow(Iab):
     """
         - Purpose
             Visualize an interval.
         - Synopsis
-            s = mmintershow(Iab)
+            s = intershow(Iab)
         - Input
             Iab: Interval
         - Output
             s: String ( representation of the interval).
         - Description
-            mmintershow creates a representation for an interval using 0, 1
+            intershow creates a representation for an interval using 0, 1
             and . ( don't care).
         - Examples
             #
-            print mmintershow(mmhomothin())
+            print intershow(homothin())
     """
     from numpy import array, product, reshape, choose
     from string import join
 
     assert (type(Iab) is tuple) and (len(Iab) == 2),'not proper fortmat of hit-or-miss template'
     A,Bc = Iab
-    S = mmseunion(A,Bc)
-    Z = mmintersec(S,0)
+    S = seunion(A,Bc)
+    Z = intersec(S,0)
     n = product(S.shape)
     one  = reshape(array(n*'1','c'),S.shape)
     zero = reshape(array(n*'0','c'),S.shape)
     x    = reshape(array(n*'.','c'),S.shape)
-    saux = choose( S + mmseunion(Z,A), ( x, zero, one))
+    saux = choose( S + seunion(Z,A), ( x, zero, one))
     s = ''
     for i in range(saux.shape[0]):
         s=s+(join(list(saux[i]))+' \n')
@@ -3373,10 +3373,10 @@ def mmis(f1, oper, f2=None, oper1=None, f3=None):
             Verify if the property or relatioship between images is true or
             false. The result is true if the relationship is true for all
             the pixels in the image, and false otherwise. (Obs: This
-            function replaces mmis equal, mmis lesseq, mmis binary ).
+            function replaces is equal, is lesseq, is binary ).
         - Examples
             #
-            fbin=mmbinary([0, 1])
+            fbin=binary([0, 1])
             f1=to_uint8([1, 2, 3])
             f2=to_uint8([2, 2, 3])
             f3=to_uint8([2, 3, 4])
@@ -3391,67 +3391,67 @@ def mmis(f1, oper, f2=None, oper1=None, f3=None):
 
     if f2 == None:
         oper=upper(oper);
-        if   oper == 'BINARY': return mmisbinary(f1)
-        elif oper == 'GRAY'  : return not mmisbinary(f1)
+        if   oper == 'BINARY': return isbinary(f1)
+        elif oper == 'GRAY'  : return not isbinary(f1)
         else:
             assert 0,'oper should be BINARY or GRAY, was'+oper
-    elif oper == '==':    y = mmisequal(f1, f2)
-    elif oper == '~=':    y = not mmisequal(f1,f2)
-    elif oper == '<=':    y = mmislesseq(f1,f2)
-    elif oper == '>=':    y = mmislesseq(f2,f1)
-    elif oper == '>':     y = mmisequal(mmneg(mmthreshad(f2,f1)),mmbinary(1))
-    elif oper == '<':     y = mmisequal(mmneg(mmthreshad(f1,f2)),mmbinary(1))
+    elif oper == '==':    y = isequal(f1, f2)
+    elif oper == '~=':    y = not isequal(f1,f2)
+    elif oper == '<=':    y = islesseq(f1,f2)
+    elif oper == '>=':    y = islesseq(f2,f1)
+    elif oper == '>':     y = isequal(neg(threshad(f2,f1)),binary(1))
+    elif oper == '<':     y = isequal(neg(threshad(f1,f2)),binary(1))
     else:
         assert 0,'oper must be one of: ==, ~=, >, >=, <, <=, it was:'+oper
     if oper1 != None:
-        if   oper1 == '==': y = y and mmisequal(f2,f3)
-        elif oper1 == '~=': y = y and (not mmisequal(f2,f3))
-        elif oper1 == '<=': y = y and mmislesseq(f2,f3)
-        elif oper1 == '>=': y = y and mmislesseq(f3,f2)
-        elif oper1 == '>':  y = y and mmisequal(mmneg(mmthreshad(f3,f2)),mmbinary(1))
-        elif oper1 == '<':  y = y and mmisequal(mmneg(mmthreshad(f2,f3)),mmbinary(1))
+        if   oper1 == '==': y = y and isequal(f2,f3)
+        elif oper1 == '~=': y = y and (not isequal(f2,f3))
+        elif oper1 == '<=': y = y and islesseq(f2,f3)
+        elif oper1 == '>=': y = y and islesseq(f3,f2)
+        elif oper1 == '>':  y = y and isequal(neg(threshad(f3,f2)),binary(1))
+        elif oper1 == '<':  y = y and isequal(neg(threshad(f2,f3)),binary(1))
         else:
             assert 0,'oper1 must be one of: ==, ~=, >, >=, <, <=, it was:'+oper1
     return y
 #
 # =====================================================================
 #
-#   mmisbinary
+#   isbinary
 #
 # =====================================================================
-def mmisbinary(f):
+def isbinary(f):
     """
         - Purpose
             Check for binary image
         - Synopsis
-            bool = mmisbinary(f)
+            bool = isbinary(f)
         - Input
             f:
         - Output
             bool: Boolean
         - Description
-            mmisbinary returns TRUE(1) if the datatype of the input image is
+            isbinary returns TRUE(1) if the datatype of the input image is
             binary. A binary image has just the values 0 and 1.
         - Examples
             #
             a=to_uint8([0, 1, 0, 1])
-            print mmisbinary(a)
+            print isbinary(a)
             b=(a)
-            print mmisbinary(b)
+            print isbinary(b)
     """
-    return type(f) is type(mmbinary([1])) and f.dtype == bool
+    return type(f) is type(binary([1])) and f.dtype == bool
 #
 # =====================================================================
 #
-#   mmisequal
+#   isequal
 #
 # =====================================================================
-def mmisequal(f1, f2, MSG=None):
+def isequal(f1, f2, MSG=None):
     """
         - Purpose
             Verify if two images are equal
         - Synopsis
-            bool = mmisequal(f1, f2)
+            bool = isequal(f1, f2)
         - Input
             f1:  Unsigned gray-scale (uint8 or uint16), signed (int32) or
                  binary image.
@@ -3460,7 +3460,7 @@ def mmisequal(f1, f2, MSG=None):
         - Output
             bool: Boolean
         - Description
-            mmisequal compares the images f1 and f2 and returns true (1), if
+            isequal compares the images f1 and f2 and returns true (1), if
             f1(x)=f2(x) , for all pixel x , and false (0), otherwise.
         - Examples
             #
@@ -3469,8 +3469,8 @@ def mmisequal(f1, f2, MSG=None):
             f2 = to_uint8([9, 5, 3, 3])
             print f2
             f3 = f1
-            mmisequal(f1,f2)
-            mmisequal(f1,f3)
+            isequal(f1,f2)
+            isequal(f1,f3)
     """
     from numpy import ravel, alltrue, array
 
@@ -3491,30 +3491,30 @@ def mmisequal(f1, f2, MSG=None):
 #
 # =====================================================================
 #
-#   mmislesseq
+#   islesseq
 #
 # =====================================================================
-def mmislesseq(f1, f2, MSG=None):
+def islesseq(f1, f2, MSG=None):
     """
         - Purpose
             Verify if one image is less or equal another (is beneath)
         - Synopsis
-            bool = mmislesseq(f1, f2)
+            bool = islesseq(f1, f2)
         - Input
             f1:  Gray-scale (uint8 or uint16) or binary image.
             f2:  Gray-scale (uint8 or uint16) or binary image.
         - Output
             bool: Boolean
         - Description
-            mmislesseq compares the images f1 and f2 and returns true (1),
+            islesseq compares the images f1 and f2 and returns true (1),
             if f1(x) <= f2(x) , for every pixel x, and false (0), otherwise.
         - Examples
             #
             f1 = to_uint8([0, 1, 2, 3])
             f2 = to_uint8([9, 5, 3, 3])
-            print mmislesseq(f1,f2)
-            print mmislesseq(f2,f1)
-            print mmislesseq(f1,f1)
+            print islesseq(f1,f2)
+            print islesseq(f2,f1)
+            print islesseq(f1,f1)
     """
     from numpy import ravel
 
@@ -3523,15 +3523,15 @@ def mmislesseq(f1, f2, MSG=None):
 #
 # =====================================================================
 #
-#   mmlabelflat
+#   labelflat
 #
 # =====================================================================
-def mmlabelflat(f, Bc=None, _lambda=0):
+def labelflat(f, Bc=None, _lambda=0):
     """
         - Purpose
             Label the flat zones of gray-scale images.
         - Synopsis
-            y = mmlabelflat(f, Bc=None, _lambda=0)
+            y = labelflat(f, Bc=None, _lambda=0)
         - Input
             f:       Gray-scale (uint8 or uint16) or binary image.
             Bc:      Structuring Element Default: None (3x3 elementary
@@ -3541,7 +3541,7 @@ def mmlabelflat(f, Bc=None, _lambda=0):
             y: Image If number of labels is less than 65535, the data type
                is uint16, otherwise it is int32.
         - Description
-            mmlabelflat creates the image y by labeling the flat zones of f
+            labelflat creates the image y by labeling the flat zones of f
             , according to the connectivity defined by the structuring
             element Bc . A flat zone is a connected region of the image
             domain in which all the pixels have the same gray-level
@@ -3557,65 +3557,65 @@ def mmlabelflat(f, Bc=None, _lambda=0):
             f=to_uint8([
                [5,5,8,3,0],
                [5,8,8,0,2]])
-            g=mmlabelflat(f)
+            g=labelflat(f)
             print g
-            g1=mmlabelflat(f,mmsecross(),2)
+            g1=labelflat(f,secross(),2)
             print g1
             #
             #   example 2
             #
-            f=mmreadgray('blob.tif')
-            d=mmdist(f,mmsebox(),'euclidean')
+            f=readgray('blob.tif')
+            d=dist(f,sebox(),'euclidean')
             g= d /8
-            mmshow(g)
-            fz=mmlabelflat(g,mmsebox());
-            mmlblshow(fz)
-            print mmstats(fz,'max')
+            show(g)
+            fz=labelflat(g,sebox());
+            lblshow(fz)
+            print stats(fz,'max')
             #
             #   example 3
             #
-            f=mmreadgray('pcb_gray.tif')
-            g=mmlabelflat(f,mmsebox(),3)
-            mmshow(f)
-            mmlblshow(g)
+            f=readgray('pcb_gray.tif')
+            g=labelflat(f,sebox(),3)
+            show(f)
+            lblshow(g)
     """
     from numpy import allclose, ravel, nonzero, array
-    if Bc is None: Bc = mmsecross()
-    zero = mmbinary(mmsubm(f,f))       # zero image
-    faux = mmneg(zero)
+    if Bc is None: Bc = secross()
+    zero = binary(subm(f,f))       # zero image
+    faux = neg(zero)
     r = array(zero)
     label = 1
-    y = mmgray( zero,'uint16',0)          # zero image (output)
+    y = gray( zero,'uint16',0)          # zero image (output)
     while not allclose(faux,0):
         x=nonzero(ravel(faux))[0]        # get first unlabeled pixel
         fmark = array(zero)
         fmark.flat[x] = 1                # get the first unlabeled pixel
-        f2aux = mmcmp( f, '==', ravel(f)[x])
-        r = mminfrec( fmark, f2aux, Bc)  # detects all pixels connected to it
-        faux = mmsubm( faux, r)          # remove them from faux
-        r = mmgray( r,'uint16',label)    # label them with the value label
-        y = mmunion( y, r)               # merge them with the labeled image
+        f2aux = cmp( f, '==', ravel(f)[x])
+        r = infrec( fmark, f2aux, Bc)  # detects all pixels connected to it
+        faux = subm( faux, r)          # remove them from faux
+        r = gray( r,'uint16',label)    # label them with the value label
+        y = union( y, r)               # merge them with the labeled image
         label = label + 1
     return y
 #
 # =====================================================================
 #
-#   mmlastero
+#   lastero
 #
 # =====================================================================
-def mmlastero(f, B=None):
+def lastero(f, B=None):
     """
         - Purpose
             Last erosion.
         - Synopsis
-            y = mmlastero(f, B=None)
+            y = lastero(f, B=None)
         - Input
             f: Binary image.
             B: Structuring Element Default: None (3x3 elementary cross).
         - Output
             y: Binary image.
         - Description
-            mmlastero creates the image y by computing the last erosion by
+            lastero creates the image y by computing the last erosion by
             the structuring element B of the image f . The objects found in
             y are the objects of the erosion by nB that can not be
             reconstructed from the erosion by (n+1)B , where n is a generic
@@ -3624,23 +3624,23 @@ def mmlastero(f, B=None):
 
     """
 
-    if B is None: B = mmsecross()
-    assert mmisbinary(f),'Can only process binary images'
-    dt = mmdist(f,B)
-    y = mmregmax(dt,B)
+    if B is None: B = secross()
+    assert isbinary(f),'Can only process binary images'
+    dt = dist(f,B)
+    y = regmax(dt,B)
     return y
 #
 # =====================================================================
 #
-#   mmlblshow
+#   lblshow
 #
 # =====================================================================
-def mmlblshow(f, option='noborder'):
+def lblshow(f, option='noborder'):
     """
         - Purpose
             Display a labeled image assigning a random color for each label.
         - Synopsis
-            y = mmlblshow(f, option='noborder')
+            y = lblshow(f, option='noborder')
         - Input
             f:      Gray-scale (uint8 or uint16) image. Labeled image.
             option: String Default: 'noborder'. BORDER or NOBORDER: includes
@@ -3655,17 +3655,17 @@ def mmlblshow(f, option='noborder'):
             given.
         - Examples
             #
-            f=mmreadgray('blob3.tif')
-            f1=mmlabel(f,mmsebox())
-            mmshow(f1)
-            mmlblshow(f1)
-            mmlblshow(f1,'border')
+            f=readgray('blob3.tif')
+            f1=label(f,sebox())
+            show(f1)
+            lblshow(f1)
+            lblshow(f1,'border')
     """
     import string
     import adpil
 
-    if (mmisbinary(f)) or (len(f.shape) != 2):
-      print 'Error, mmlblshow: works only for grayscale labeled image'
+    if (isbinary(f)) or (len(f.shape) != 2):
+      print 'Error, lblshow: works only for grayscale labeled image'
       return
     option = string.upper(option);
     if option == 'NOBORDER':
@@ -3674,29 +3674,29 @@ def mmlblshow(f, option='noborder'):
       border = 1.0;
     else:
       print 'Error: option must be BORDER or NOBORDER'
-    y=mmglblshow(f, border);
+    y=glblshow(f, border);
     adpil.adshow(y)
     return
     return y
 #
 # =====================================================================
 #
-#   mmopen
+#   open
 #
 # =====================================================================
-def mmopen(f, b=None):
+def open(f, b=None):
     """
         - Purpose
             Morphological opening.
         - Synopsis
-            y = mmopen(f, b=None)
+            y = open(f, b=None)
         - Input
             f: Gray-scale (uint8 or uint16) or binary image.
             b: Structuring Element Default: None (3x3 elementary cross).
         - Output
             y: Image
         - Description
-            mmopen creates the image y by the morphological opening of the
+            open creates the image y by the morphological opening of the
             image f by the structuring element b . In the binary case, the
             opening by the structuring element B may be interpreted as the
             union of translations of B included in f . In the gray-scale
@@ -3706,45 +3706,45 @@ def mmopen(f, b=None):
             #
             #   example 1
             #
-            f=mmbinary(mmreadgray('blob.tif'))
-            bimg=mmbinary(mmreadgray('blob1.tif'))
-            b=mmimg2se(bimg)
-            mmshow(f)
-            mmshow(mmopen(f,b))
-            mmshow(mmopen(f,b),mmgradm(f))
+            f=binary(readgray('blob.tif'))
+            bimg=binary(readgray('blob1.tif'))
+            b=img2se(bimg)
+            show(f)
+            show(open(f,b))
+            show(open(f,b),gradm(f))
             #
             #   example 2
             #
-            a=mmbinary(mmreadgray('pcb1bin.tif'))
-            b=mmopen(a,mmsebox(2))
-            c=mmopen(a,mmsebox(4))
-            mmshow(a)
-            mmshow(b)
-            mmshow(c)
+            a=binary(readgray('pcb1bin.tif'))
+            b=open(a,sebox(2))
+            c=open(a,sebox(4))
+            show(a)
+            show(b)
+            show(c)
             #
             #   example 3
             #
-            a=mmreadgray('astablet.tif')
-            b=mmopen(a,mmsedisk(18))
-            mmshow(a)
-            mmshow(b)
+            a=readgray('astablet.tif')
+            b=open(a,sedisk(18))
+            show(a)
+            show(b)
     """
 
-    if b is None: b = mmsecross()
-    y = mmdil(mmero(f,b),b)
+    if b is None: b = secross()
+    y = dil(ero(f,b),b)
     return y
 #
 # =====================================================================
 #
-#   mmopenrec
+#   openrec
 #
 # =====================================================================
-def mmopenrec(f, bero=None, bc=None):
+def openrec(f, bero=None, bc=None):
     """
         - Purpose
             Opening by reconstruction.
         - Synopsis
-            y = mmopenrec(f, bero=None, bc=None)
+            y = openrec(f, bero=None, bc=None)
         - Input
             f:    Gray-scale (uint8 or uint16) or binary image.
             bero: Structuring Element Default: None (3x3 elementary cross).
@@ -3754,28 +3754,28 @@ def mmopenrec(f, bero=None, bc=None):
         - Output
             y: Image (same type of f ).
         - Description
-            mmopenrec creates the image y by an inf-reconstruction of the
+            openrec creates the image y by an inf-reconstruction of the
             image f from its erosion by bero , using the connectivity
             defined by Bc .
 
     """
 
-    if bero is None: bero = mmsecross()
-    if bc is None: bc = mmsecross()
-    y = mminfrec(mmero(f,bero),f,bc)
+    if bero is None: bero = secross()
+    if bc is None: bc = secross()
+    y = infrec(ero(f,bero),f,bc)
     return y
 #
 # =====================================================================
 #
-#   mmopenrecth
+#   openrecth
 #
 # =====================================================================
-def mmopenrecth(f, bero=None, bc=None):
+def openrecth(f, bero=None, bc=None):
     """
         - Purpose
             Open-by-Reconstruction Top-Hat.
         - Synopsis
-            y = mmopenrecth(f, bero=None, bc=None)
+            y = openrecth(f, bero=None, bc=None)
         - Input
             f:    Gray-scale (uint8 or uint16) or binary image.
             bero: Structuring Element Default: None (3x3 elementary cross).
@@ -3786,28 +3786,28 @@ def mmopenrecth(f, bero=None, bc=None):
             y: Gray-scale (uint8 or uint16) or binary image. (same type of f
                ).
         - Description
-            mmopenrecth creates the image y by subtracting the open by
+            openrecth creates the image y by subtracting the open by
             reconstruction of f , defined by the structuring elements bero e
             bc , of f itself.
 
     """
 
-    if bero is None: bero = mmsecross()
-    if bc is None: bc = mmsecross()
-    y = mmsubm(f, mmopenrec( f, bero, bc))
+    if bero is None: bero = secross()
+    if bc is None: bc = secross()
+    y = subm(f, openrec( f, bero, bc))
     return y
 #
 # =====================================================================
 #
-#   mmopenth
+#   openth
 #
 # =====================================================================
-def mmopenth(f, b=None):
+def openth(f, b=None):
     """
         - Purpose
             Opening Top Hat.
         - Synopsis
-            y = mmopenth(f, b=None)
+            y = openth(f, b=None)
         - Input
             f: Gray-scale (uint8 or uint16) or binary image.
             b: Structuring Element Default: None (3x3 elementary cross).
@@ -3816,31 +3816,31 @@ def mmopenth(f, b=None):
             y: Gray-scale (uint8 or uint16) or binary image. (same type of f
                ).
         - Description
-            mmopenth creates the image y by subtracting the morphological
+            openth creates the image y by subtracting the morphological
             opening of f by the structuring element b of f itself.
         - Examples
             #
-            a = mmreadgray('keyb.tif')
-            mmshow(a)
-            b = mmopenth(a,mmsebox(3))
-            mmshow(b)
+            a = readgray('keyb.tif')
+            show(a)
+            b = openth(a,sebox(3))
+            show(b)
     """
 
-    if b is None: b = mmsecross()
-    y = mmsubm(f, mmopen(f,b))
+    if b is None: b = secross()
+    y = subm(f, open(f,b))
     return y
 #
 # =====================================================================
 #
-#   mmopentransf
+#   opentransf
 #
 # =====================================================================
-def mmopentransf(f, type='OCTAGON', n=65535, Bc=None, Buser=None):
+def opentransf(f, type='OCTAGON', n=65535, Bc=None, Buser=None):
     """
         - Purpose
             Open transform.
         - Synopsis
-            y = mmopentransf(f, type='OCTAGON', n=65535, Bc=None,
+            y = opentransf(f, type='OCTAGON', n=65535, Bc=None,
             Buser=None)
         - Input
             f:     Binary image.
@@ -3868,38 +3868,38 @@ def mmopentransf(f, type='OCTAGON', n=65535, Bc=None, Buser=None):
             #
             #   example 1
             #
-            f = mmbinary([
+            f = binary([
                           [0,0,0,0,0,0,0,0],
                           [0,0,1,1,1,1,0,0],
                           [0,0,1,1,1,1,1,0],
                           [0,1,0,1,1,1,0,0],
                           [1,1,0,0,0,0,0,0]])
-            print mmopentransf( f, 'city-block')
-            print mmopentransf( f, 'linear-h')
-            print mmopentransf( f, 'linear-45r')
-            print mmopentransf( f, 'user',10,mmsecross(),mmbinary([0,1,1]))
-            print mmopentransf( f, 'city-block-rec')
+            print opentransf( f, 'city-block')
+            print opentransf( f, 'linear-h')
+            print opentransf( f, 'linear-45r')
+            print opentransf( f, 'user',10,secross(),binary([0,1,1]))
+            print opentransf( f, 'city-block-rec')
             #
             #   example 2
             #
-            f=mmreadgray('numbers.tif')
-            mmshow(f)
-            g=mmopentransf(f,'OCTAGON')
-            mmshow(g)
+            f=readgray('numbers.tif')
+            show(f)
+            g=opentransf(f,'OCTAGON')
+            show(g)
             #
             #   example 3
             #
-            b=mmsedisk(3,'2D','OCTAGON')
-            g1=mmopen(f,b)
-            mmshow(g1)
-            g2=mmcmp(g,'>',3)
+            b=sedisk(3,'2D','OCTAGON')
+            g1=open(f,b)
+            show(g1)
+            g2=cmp(g,'>',3)
             print mmis(g1,'==',g2)
     """
     from numpy import zeros
     from string import find, upper
-    if Bc is None: Bc = mmsecross()
-    if Buser is None: Buser = mmsecross()
-    assert mmisbinary(f),'Error: input image is not binary'
+    if Bc is None: Bc = secross()
+    if Buser is None: Buser = secross()
+    assert isbinary(f),'Error: input image is not binary'
     type = upper(type)
     rec_flag = find(type,'-REC')
     if rec_flag != -1:
@@ -3910,16 +3910,16 @@ def mmopentransf(f, type='OCTAGON', n=65535, Bc=None, Buser=None):
     if not flag:
         n  = min(n,min(f.shape))
     elif  type == 'LINEAR-H':
-        se = mmbinary([1, 1, 1])
+        se = binary([1, 1, 1])
         n  = min(n,f.shape[1])
     elif  type =='LINEAR-V':
-        se = mmbinary([[1],[1],[1]])
+        se = binary([[1],[1],[1]])
         n  = min(n,f.shape[0])
     elif  type == 'LINEAR-45R':
-        se = mmbinary([[0, 0, 1],[0, 1, 0],[1, 0, 0]])
+        se = binary([[0, 0, 1],[0, 1, 0],[1, 0, 0]])
         n  = min(n,min(f.shape))
     elif  type == 'LINEAR-45L':
-        se = mmbinary([[1, 0, 0],[0, 1, 0],[0, 0, 1]])
+        se = binary([[1, 0, 0],[0, 1, 0],[0, 0, 1]])
         n  = min(n,min(f.shape))
     elif  type == 'USER':
         se = Buser
@@ -3929,31 +3929,31 @@ def mmopentransf(f, type='OCTAGON', n=65535, Bc=None, Buser=None):
         return []
     k = 0
     y = uint16(zeros(f.shape))
-    a = mmbinary([1])
-    z = mmbinary([0])
-    while not (mmisequal(a,z) or (k>=n)):
+    a = binary([1])
+    z = binary([0])
+    while not (isequal(a,z) or (k>=n)):
         print 'processing r=',k
         if flag:
-            a = mmopen(f,mmsesum(se,k))
+            a = open(f,sesum(se,k))
         else:
-            a = mmopen(f,mmsedisk(k,'2D',type))
-        y = mmaddm(y, mmgray(a,'uint16',1))
+            a = open(f,sedisk(k,'2D',type))
+        y = addm(y, gray(a,'uint16',1))
         k = k+1
     if rec_flag != -1:
-        y = mmgrain(mmlabel(f,Bc),y,'max')
+        y = grain(label(f,Bc),y,'max')
     return y
 #
 # =====================================================================
 #
-#   mmpatspec
+#   patspec
 #
 # =====================================================================
-def mmpatspec(f, type='OCTAGON', n=65535, Bc=None, Buser=None):
+def patspec(f, type='OCTAGON', n=65535, Bc=None, Buser=None):
     """
         - Purpose
             Pattern spectrum (also known as granulometric size density).
         - Synopsis
-            h = mmpatspec(f, type='OCTAGON', n=65535, Bc=None, Buser=None)
+            h = patspec(f, type='OCTAGON', n=65535, Bc=None, Buser=None)
         - Input
             f:     Binary image.
             type:  String Default: 'OCTAGON'. Disk family: 'OCTAGON',
@@ -3975,40 +3975,40 @@ def mmpatspec(f, type='OCTAGON', n=65535, Bc=None, Buser=None):
 
     """
 
-    if Bc is None: Bc = mmsecross()
-    if Buser is None: Buser = mmsecross()
-    assert mmisbinary(f),'Error: input image is not binary'
-    g=mmopentransf(f,type,n,Bc,Buser)
-    h=mmhistogram(g)
+    if Bc is None: Bc = secross()
+    if Buser is None: Buser = secross()
+    assert isbinary(f),'Error: input image is not binary'
+    g=opentransf(f,type,n,Bc,Buser)
+    h=histogram(g)
     h=h[1:]
     return h
 #
 # =====================================================================
 #
-#   mmreadgray
+#   readgray
 #
 # =====================================================================
-def mmreadgray(filename):
+def readgray(filename):
     """
         - Purpose
-            Read an image from a commercial file format and stores it as a
+            Read an image from a coercial file format and stores it as a
             gray-scale image.
         - Synopsis
-            y = mmreadgray(filename)
+            y = readgray(filename)
         - Input
             filename: String Name of file to read.
         - Output
             y: Gray-scale (uint8 or uint16) or binary image.
         - Description
-            mmreadgray reads the image in filename and stores it in y , an
+            readgray reads the image in filename and stores it in y , an
             uint8 gray-scale image (without colormap). If the input file is
             a color RGB image, it is converted to gray-scale using the
             equation: y = 0.2989 R + 0.587 G + 0.114 B. This functions uses
             de PIL module.
         - Examples
             #
-            a=mmreadgray('cookies.tif')
-            mmshow(a)
+            a=readgray('cookies.tif')
+            show(a)
     """
     import adpil
     import numpy
@@ -4020,7 +4020,7 @@ def mmreadgray(filename):
           y = y[0,:,:]
        else:
           print 'Warning: converting true-color RGB image to gray'
-          y = mmubyte(0.2989 * y[0,:,:] + 
+          y = ubyte(0.2989 * y[0,:,:] + 
                       0.5870 * y[1,:,:] + 
                       0.1140 * y[2,:,:])
     elif (len(y.shape) == 2):
@@ -4031,15 +4031,15 @@ def mmreadgray(filename):
 #
 # =====================================================================
 #
-#   mmregister
+#   register
 #
 # =====================================================================
-def mmregister(code=None, file_name=None):
+def register(code=None, file_name=None):
     """
         - Purpose
             Register the SDC Morphology Toolbox.
         - Synopsis
-            s = mmregister(code=None, file_name=None)
+            s = register(code=None, file_name=None)
         - Input
             code:      String Default: None. Authorization code.
             file_name: String Default: None. Filename of the license file to
@@ -4047,9 +4047,9 @@ def mmregister(code=None, file_name=None):
         - Output
             s: String Message of the status of the license.
         - Description
-            mmregister licenses the copy of the SDC Morphology Toolbox by
+            register licenses the copy of the SDC Morphology Toolbox by
             entering the license code and the toolbox license file. If
-            mmregister is called without parameters, it returns the internal
+            register is called without parameters, it returns the internal
             code that must be sent for registration.
 
     """
@@ -4059,15 +4059,15 @@ def mmregister(code=None, file_name=None):
 #
 # =====================================================================
 #
-#   mmregmax
+#   regmax
 #
 # =====================================================================
-def mmregmax(f, Bc=None):
+def regmax(f, Bc=None):
     """
         - Purpose
             Regional Maximum.
         - Synopsis
-            y = mmregmax(f, Bc=None)
+            y = regmax(f, Bc=None)
         - Input
             f:  Gray-scale (uint8 or uint16) image.
             Bc: Structuring Element Default: None (3x3 elementary cross).
@@ -4075,28 +4075,28 @@ def mmregmax(f, Bc=None):
         - Output
             y: Binary image.
         - Description
-            mmregmax creates a binary image y by computing the regional
+            regmax creates a binary image y by computing the regional
             maxima of f , according to the connectivity defined by the
             structuring element Bc . A regional maximum is a flat zone not
             surrounded by flat zones of higher gray values.
 
     """
 
-    if Bc is None: Bc = mmsecross()
-    y = mmregmin(mmneg(f),Bc)
+    if Bc is None: Bc = secross()
+    y = regmin(neg(f),Bc)
     return y
 #
 # =====================================================================
 #
-#   mmregmin
+#   regmin
 #
 # =====================================================================
-def mmregmin(f, Bc=None, option="binary"):
+def regmin(f, Bc=None, option="binary"):
     """
         - Purpose
             Regional Minimum (with generalized dynamics).
         - Synopsis
-            y = mmregmin(f, Bc=None, option="binary")
+            y = regmin(f, Bc=None, option="binary")
         - Input
             f:      Gray-scale (uint8 or uint16) image.
             Bc:     Structuring Element Default: None (3x3 elementary
@@ -4111,7 +4111,7 @@ def mmregmin(f, Bc=None, option="binary"):
         - Output
             y: Gray-scale (uint8 or uint16) or binary image.
         - Description
-            mmregmin creates a binary image f by computing the regional
+            regmin creates a binary image f by computing the regional
             minima of f , according to the connectivity defined by the
             structuring element Bc . A regional minimum is a flat zone not
             surrounded by flat zones of lower gray values. A flat zone is a
@@ -4138,87 +4138,87 @@ def mmregmin(f, Bc=None, option="binary"):
                 [10,   9,   9,  15,   4,   9,  10],
                 [10,   9,   9,  15,  12,  10,  10],
                 [10,  10,  10,  10,  10,  10,  10]])
-            print mmregmin(a)
-            print mmregmin(a,mmsecross(),'value')
-            print mmregmin(a,mmsecross(),'dynamics')
+            print regmin(a)
+            print regmin(a,secross(),'value')
+            print regmin(a,secross(),'dynamics')
             #
             #   example 2
             #
-            f1=mmreadgray('bloodcells.tif')
-            m1=mmregmin(f1,mmsebox())
-            mmshow(f1,m1)
-            f2=mmhmin(f1,70)
-            mmshow(f2)
-            m2=mmregmin(f2,mmsebox())
-            mmshow(f2,m2)
+            f1=readgray('bloodcells.tif')
+            m1=regmin(f1,sebox())
+            show(f1,m1)
+            f2=hmin(f1,70)
+            show(f2)
+            m2=regmin(f2,sebox())
+            show(f2,m2)
             #
             #   example 3
             #
-            f=mmreadgray('cameraman.tif')
-            g=mmgradm(f)
-            mh=mmregmin(g,mmsecross(),'dynamics')
-            ws1=mmcwatershed(g, mmbinary(mh, 20))
-            ws2=mmcwatershed(g, mmbinary(mh, 40))
-            mmshow(ws1)
-            mmshow(ws2)
+            f=readgray('cameraman.tif')
+            g=gradm(f)
+            mh=regmin(g,secross(),'dynamics')
+            ws1=cwatershed(g, binary(mh, 20))
+            ws2=cwatershed(g, binary(mh, 40))
+            show(ws1)
+            show(ws2)
     """
 
-    if Bc is None: Bc = mmsecross()
-    fplus = mmaddm(f,1)
-    g = mmsubm(mmsuprec(fplus,f,Bc),f)
-    y = mmunion(mmthreshad(g,1),mmthreshad(f,0,0))
+    if Bc is None: Bc = secross()
+    fplus = addm(f,1)
+    g = subm(suprec(fplus,f,Bc),f)
+    y = union(threshad(g,1),threshad(f,0,0))
     return y
 #
 # =====================================================================
 #
-#   mmse2interval
+#   se2interval
 #
 # =====================================================================
-def mmse2interval(a, b):
+def se2interval(a, b):
     """
         - Purpose
             Create an interval from a pair of structuring elements.
         - Synopsis
-            Iab = mmse2interval(a, b)
+            Iab = se2interval(a, b)
         - Input
             a: Structuring Element Left extremity.
             b: Structuring Element Right extremity.
         - Output
             Iab: Interval
         - Description
-            mmse2interval creates the interval [a,b] from the structuring
+            se2interval creates the interval [a,b] from the structuring
             elements a and b such that a is less or equal b .
 
     """
 
-    Iab = (a,mmneg(b))
+    Iab = (a,neg(b))
     return Iab
 #
 # =====================================================================
 #
-#   mmse2hmt
+#   se2hmt
 #
 # =====================================================================
-def mmse2hmt(A, Bc):
+def se2hmt(A, Bc):
     """
         - Purpose
             Create a Hit-or-Miss Template (or interval) from a pair of
             structuring elements.
         - Synopsis
-            Iab = mmse2hmt(A, Bc)
+            Iab = se2hmt(A, Bc)
         - Input
             A:  Structuring Element Left extremity.
             Bc: Structuring Element Complement of the right extremity.
         - Output
             Iab: Interval
         - Description
-            mmse2hmt creates the Hit-or-Miss Template (HMT), also called
+            se2hmt creates the Hit-or-Miss Template (HMT), also called
             interval [A,Bc] from the structuring elements A and Bc such that
             A is included in the complement of Bc . The only difference
-            between this function and mmse2interval is that here the second
+            between this function and se2interval is that here the second
             structuring element is the complement of the one used in the
             other function. The advantage of this function over
-            mmse2interval is that this one is more flexible in the use of
+            se2interval is that this one is more flexible in the use of
             the structuring elements as they are not required to have the
             same size.
 
@@ -4229,83 +4229,83 @@ def mmse2hmt(A, Bc):
 #
 # =====================================================================
 #
-#   mmsebox
+#   sebox
 #
 # =====================================================================
-def mmsebox(r=1):
+def sebox(r=1):
     """
         - Purpose
             Create a box structuring element.
         - Synopsis
-            B = mmsebox(r=1)
+            B = sebox(r=1)
         - Input
             r: Non-negative integer. Default: 1. Radius.
         - Output
             B: Structuring Element
         - Description
-            mmsebox creates the structuring element B formed by r successive
+            sebox creates the structuring element B formed by r successive
             Minkowski additions of the elementary square (i.e., the 3x3
             square centered at the origin) with itself. If R=0, B is the
             unitary set that contains the origin. If R=1, B is the
             elementary square itself.
         - Examples
             #
-            b1 = mmsebox()
-            mmseshow(b1)
-            b2 = mmsebox(2)
-            mmseshow(b2)
+            b1 = sebox()
+            seshow(b1)
+            b2 = sebox(2)
+            seshow(b2)
     """
 
-    B = mmsesum(mmbinary([[1,1,1],
+    B = sesum(binary([[1,1,1],
                           [1,1,1],
                           [1,1,1]]),r)
     return B
 #
 # =====================================================================
 #
-#   mmsecross
+#   secross
 #
 # =====================================================================
-def mmsecross(r=1):
+def secross(r=1):
     """
         - Purpose
             Diamond structuring element and elementary 3x3 cross.
         - Synopsis
-            B = mmsecross(r=1)
+            B = secross(r=1)
         - Input
             r: Double Default: 1. (radius).
         - Output
             B: Structuring Element
         - Description
-            mmsecross creates the structuring element B formed by r
+            secross creates the structuring element B formed by r
             successive Minkowski additions of the elementary cross (i.e.,
             the 3x3 cross centered at the origin) with itself. If r=0, B is
             the unitary set that contains the origin. If r=1 , B is the
             elementary cross itself.
         - Examples
             #
-            b1 = mmsecross()
-            print mmseshow(b1)
-            b2 = mmsecross(2)
-            print mmseshow(b2)
+            b1 = secross()
+            print seshow(b1)
+            b2 = secross(2)
+            print seshow(b2)
     """
 
-    B = mmsesum(mmbinary([[0,1,0],
+    B = sesum(binary([[0,1,0],
                           [1,1,1],
                           [0,1,0]]),r)
     return B
 #
 # =====================================================================
 #
-#   mmsedisk
+#   sedisk
 #
 # =====================================================================
-def mmsedisk(r=3, DIM="2D", METRIC="EUCLIDEAN", FLAT="FLAT", h=0):
+def sedisk(r=3, DIM="2D", METRIC="EUCLIDEAN", FLAT="FLAT", h=0):
     """
         - Purpose
             Create a disk or a semi-sphere structuring element.
         - Synopsis
-            B = mmsedisk(r=3, DIM="2D", METRIC="EUCLIDEAN", FLAT="FLAT",
+            B = sedisk(r=3, DIM="2D", METRIC="EUCLIDEAN", FLAT="FLAT",
             h=0)
         - Input
             r:      Non-negative integer. Default: 3. Disk radius.
@@ -4318,7 +4318,7 @@ def mmsedisk(r=3, DIM="2D", METRIC="EUCLIDEAN", FLAT="FLAT", h=0):
         - Output
             B: Structuring Element
         - Description
-            mmsedisk creates a flat structuring element B that is disk under
+            sedisk creates a flat structuring element B that is disk under
             the metric METRIC , centered at the origin and with radius r or
             a non-flat structuring element that is a semi-sphere under the
             metric METRIC, centered at (0, h) and with radius r . This
@@ -4327,28 +4327,28 @@ def mmsedisk(r=3, DIM="2D", METRIC="EUCLIDEAN", FLAT="FLAT", h=0):
             #
             #   example 1
             #
-            a=mmseshow(mmsedisk(10,'2D','CITY-BLOCK'))
-            b=mmseshow(mmsedisk(10,'2D','EUCLIDEAN'))
-            c=mmseshow(mmsedisk(10,'2D','OCTAGON'))
-            mmshow(a)
-            mmshow(b)
-            mmshow(c)
+            a=seshow(sedisk(10,'2D','CITY-BLOCK'))
+            b=seshow(sedisk(10,'2D','EUCLIDEAN'))
+            c=seshow(sedisk(10,'2D','OCTAGON'))
+            show(a)
+            show(b)
+            show(c)
             #
             #   example 2
             #
-            d=mmseshow(mmsedisk(10,'2D','CITY-BLOCK','NON-FLAT'))
-            e=mmseshow(mmsedisk(10,'2D','EUCLIDEAN','NON-FLAT'))
-            f=mmseshow(mmsedisk(10,'2D','OCTAGON','NON-FLAT'))
-            mmshow(d)
-            mmshow(e)
-            mmshow(f)
+            d=seshow(sedisk(10,'2D','CITY-BLOCK','NON-FLAT'))
+            e=seshow(sedisk(10,'2D','EUCLIDEAN','NON-FLAT'))
+            f=seshow(sedisk(10,'2D','OCTAGON','NON-FLAT'))
+            show(d)
+            show(e)
+            show(f)
             #
             #   example 3
             #
-            g=mmsedisk(3,'2D','EUCLIDEAN','NON-FLAT')
-            mmseshow(g)
-            h=mmsedisk(3,'2D','EUCLIDEAN','NON-FLAT',5)
-            mmseshow(h)
+            g=sedisk(3,'2D','EUCLIDEAN','NON-FLAT')
+            seshow(g)
+            h=sedisk(3,'2D','EUCLIDEAN','NON-FLAT',5)
+            seshow(h)
     """
     from string import upper
     from numpy import resize, transpose, arange
@@ -4357,44 +4357,44 @@ def mmsedisk(r=3, DIM="2D", METRIC="EUCLIDEAN", FLAT="FLAT", h=0):
     METRIC = upper(METRIC)
     FLAT   = upper(FLAT)            
     assert DIM=='2D','Supports only 2D structuring elements'
-    if FLAT=='FLAT': y = mmbinary([1])
+    if FLAT=='FLAT': y = binary([1])
     else:            y = int32([h])
     if r==0: return y
     if METRIC == 'CITY-BLOCK':
         if FLAT == 'FLAT':
-            b = mmsecross(1)
+            b = secross(1)
         else:
             b = int32([[-2147483647, 0,-2147483647],
                        [          0, 1,          0],
                        [-2147483647, 0,-2147483647]])
-        return mmsedil(y,mmsesum(b,r))
+        return sedil(y,sesum(b,r))
     elif METRIC == 'CHESSBOARD':
         if FLAT == 'FLAT':
-            b = mmsebox(1)
+            b = sebox(1)
         else:
             b = int32([[1,1,1],
                        [1,1,1],
                        [1,1,1]])
-        return mmsedil(y,mmsesum(b,r))
+        return sedil(y,sesum(b,r))
     elif METRIC == 'OCTAGON':
         if FLAT == 'FLAT':
-            b1,b2 = mmsebox(1),mmsecross(1)
+            b1,b2 = sebox(1),secross(1)
         else:
             b1 = int32([[1,1,1],[1,1,1],[1,1,1]])
             b2 = int32([[-2147483647, 0,-2147483647],
                         [          0, 1,          0],
                         [-2147483647, 0,-2147483647]])
         if r==1: return b1
-        else:    return mmsedil( mmsedil(y,mmsesum(b1,r/2)) ,mmsesum(b2,(r+1)/2))
+        else:    return sedil( sedil(y,sesum(b1,r/2)) ,sesum(b2,(r+1)/2))
     elif METRIC == 'EUCLIDEAN':
         v = arange(-r,r+1)
         x = resize(v, (len(v), len(v)))
         y = transpose(x)
-        Be = mmbinary(sqrt(x*x + y*y) <= (r+0.5))
+        Be = binary(sqrt(x*x + y*y) <= (r+0.5))
         if FLAT=='FLAT':
             return Be
         be = h + int32( sqrt( maximum((r+0.5)*(r+0.5) - (x*x) - (y*y),0)))
-        be = mmintersec(mmgray(Be,'int32'),be)
+        be = intersec(gray(Be,'int32'),be)
         return be
     else:
         assert 0,'Non valid metric'
@@ -4402,36 +4402,36 @@ def mmsedisk(r=3, DIM="2D", METRIC="EUCLIDEAN", FLAT="FLAT", h=0):
 #
 # =====================================================================
 #
-#   mmseline
+#   seline
 #
 # =====================================================================
-def mmseline(l=3, theta=0):
+def seline(l=3, theta=0):
     """
         - Purpose
             Create a line structuring element.
         - Synopsis
-            B = mmseline(l=3, theta=0)
+            B = seline(l=3, theta=0)
         - Input
             l:     Non-negative integer. Default: 3.
             theta: Double Default: 0. (degrees, clockwise)
         - Output
             B: Structuring Element
         - Description
-            mmseline creates a structuring element B that is a line segment
+            seline creates a structuring element B that is a line segment
             that has an extremity at the origin, length l and angle theta (0
             degrees is east direction, clockwise). If l=0 , it generates the
             origin.
         - Examples
             #
-            mmseshow(mmseline())
-            b1 = mmseline(4,45)
-            mmseshow(b1)
-            b2 = mmseline(4,-180)
-            mmseshow(b2)
-            a=mmtext('Line')
-            b=mmdil(a,b1)
-            mmshow(a)
-            mmshow(b)
+            seshow(seline())
+            b1 = seline(4,45)
+            seshow(b1)
+            b2 = seline(4,-180)
+            seshow(b2)
+            a=text('Line')
+            b=dil(a,b1)
+            show(a)
+            show(b)
     """
     from numpy import pi, tan, cos, sin, sign, floor, arange, transpose, array, ones
 
@@ -4445,20 +4445,20 @@ def mmseline(l=3, theta=0):
         x1 = arange(0, l * sin(theta) - (s*0.5),s)
         x0 = floor(x1 / tan(theta) + 0.5)
     x = int32(transpose(array([x1,x0])))
-    B = mmset2mat((x,mmbinary(ones((x.shape[1],1)))))
+    B = set2mat((x,binary(ones((x.shape[1],1)))))
     return B
 #
 # =====================================================================
 #
-#   mmserot
+#   serot
 #
 # =====================================================================
-def mmserot(B, theta=45, DIRECTION="CLOCKWISE"):
+def serot(B, theta=45, DIRECTION="CLOCKWISE"):
     """
         - Purpose
             Rotate a structuring element.
         - Synopsis
-            BROT = mmserot(B, theta=45, DIRECTION="CLOCKWISE")
+            BROT = serot(B, theta=45, DIRECTION="CLOCKWISE")
         - Input
             B:         Structuring Element
             theta:     Double Default: 45. Degrees of rotation. Available
@@ -4468,13 +4468,13 @@ def mmserot(B, theta=45, DIRECTION="CLOCKWISE"):
         - Output
             BROT: Structuring Element
         - Description
-            mmserot rotates a structuring element B of an angle theta .
+            serot rotates a structuring element B of an angle theta .
         - Examples
             #
-            b = mmimg2se(mmbinary([[0, 0, 0], [0, 1, 1], [0, 0, 0]]));
-            mmseshow(b)
-            mmseshow(mmserot(b))
-            mmseshow(mmserot(b,45,'ANTI-CLOCKWISE'))
+            b = img2se(binary([[0, 0, 0], [0, 1, 1], [0, 0, 0]]));
+            seshow(b)
+            seshow(serot(b))
+            seshow(serot(b,45,'ANTI-CLOCKWISE'))
     """
     from string import upper
     from numpy import array, sin, cos, transpose
@@ -4483,29 +4483,29 @@ def mmserot(B, theta=45, DIRECTION="CLOCKWISE"):
     DIRECTION = upper(DIRECTION)            
     if DIRECTION == "ANTI-CLOCKWISE":
        theta = -theta
-    SA = mmmat2set(B)
+    SA = mat2set(B)
     theta = pi * theta/180
     (y,v)=SA
-    if len(y)==0: return mmbinary([0])
+    if len(y)==0: return binary([0])
     x0 = y[:,1] * cos(theta) - y[:,0] * sin(theta)
     x1 = y[:,1] * sin(theta) + y[:,0] * cos(theta)
     x0 = int32((x0 +0.5)*(x0>=0) + (x0-0.5)*(x0<0))
     x1 = int32((x1 +0.5)*(x1>=0) + (x1-0.5)*(x1<0))
     x = transpose(array([transpose(x1),transpose(x0)]))
-    BROT = mmset2mat((x,v))
+    BROT = set2mat((x,v))
     return BROT
 #
 # =====================================================================
 #
-#   mmseshow
+#   seshow
 #
 # =====================================================================
-def mmseshow(B, option="NORMAL"):
+def seshow(B, option="NORMAL"):
     """
         - Purpose
             Display a structuring element as an image.
         - Synopsis
-            y = mmseshow(B, option="NORMAL")
+            y = seshow(B, option="NORMAL")
         - Input
             B:      Structuring Element
             option: String Default: "NORMAL". 'NORMAL', ' EXPAND' or '
@@ -4513,7 +4513,7 @@ def mmseshow(B, option="NORMAL"):
         - Output
             y: Gray-scale (uint8 or uint16) or binary image.
         - Description
-            mmseshow used with the option EXPAND generates an image y that
+            seshow used with the option EXPAND generates an image y that
             is a suitable graphical representation of the structuring
             element B . This function is useful to convert a structuring
             element to an image. The origin of the structuring element is at
@@ -4524,225 +4524,225 @@ def mmseshow(B, option="NORMAL"):
             #
             #   example 1
             #
-            b=mmsecross(3);
-            print mmseshow(b)
-            a = mmseshow(b,'EXPAND')
-            mmshow(a)
-            print mmseshow(b,'NON-FLAT')
+            b=secross(3);
+            print seshow(b)
+            a = seshow(b,'EXPAND')
+            show(a)
+            print seshow(b,'NON-FLAT')
             #
             #   example 2
             #
-            b=mmsedisk(2,'2D','EUCLIDEAN','NON-FLAT')
-            print mmseshow(b)
+            b=sedisk(2,'2D','EUCLIDEAN','NON-FLAT')
+            print seshow(b)
     """
     from string import upper
 
     option = upper(option)            
     if option=='NON-FLAT': 
         y=int32([0])
-        if mmisbinary(B):
-            B = mmintersec(mmgray(B,'int32'),0)
+        if isbinary(B):
+            B = intersec(gray(B,'int32'),0)
     elif option=='NORMAL':
-        if mmisbinary(B):    y=mmbinary([1])
+        if isbinary(B):    y=binary([1])
         else:
            y=int32([0])
     elif option=='EXPAND':
-        assert mmisbinary(B), 'This option is only available with flat SE'
-        y = mmsedil(mmbinary([1]),B)
-        b1= mmbinary(y>=0)
-        b0= mmero(y,B)
-        y = mmbshow(b1,y,b0)
+        assert isbinary(B), 'This option is only available with flat SE'
+        y = sedil(binary([1]),B)
+        b1= binary(y>=0)
+        b0= ero(y,B)
+        y = bshow(b1,y,b0)
         return y
     else:
-        print 'mmseshow: not a valid flag: NORMAL, EXPAND or NON-FLAT'
-    y = mmsedil(y,B)
+        print 'seshow: not a valid flag: NORMAL, EXPAND or NON-FLAT'
+    y = sedil(y,B)
     return y
 #
 # =====================================================================
 #
-#   mmsesum
+#   sesum
 #
 # =====================================================================
-def mmsesum(B=None, N=1):
+def sesum(B=None, N=1):
     """
         - Purpose
             N-1 iterative Minkowski additions
         - Synopsis
-            NB = mmsesum(B=None, N=1)
+            NB = sesum(B=None, N=1)
         - Input
             B: Structuring Element Default: None (3x3 elementary cross).
             N: Non-negative integer. Default: 1.
         - Output
             NB: Structuring Element
         - Description
-            mmsesum creates the structuring element NB from N - 1 iterative
+            sesum creates the structuring element NB from N - 1 iterative
             Minkowski additions with the structuring element B .
         - Examples
             #
             #   example 1
             #
-            b = mmimg2se(mmbinary([[1, 1, 1], [1, 1, 1], [0, 1, 0]]))
-            mmseshow(b)
-            b3 = mmsesum(b,3)
-            mmseshow(b3)
+            b = img2se(binary([[1, 1, 1], [1, 1, 1], [0, 1, 0]]))
+            seshow(b)
+            b3 = sesum(b,3)
+            seshow(b3)
             #
             #   example 2
             #
-            b = mmsedisk(1,'2D','CITY-BLOCK','NON-FLAT');
-            mmseshow(b)
-            mmseshow(mmsesum(b,2))
+            b = sedisk(1,'2D','CITY-BLOCK','NON-FLAT');
+            seshow(b)
+            seshow(sesum(b,2))
     """
 
-    if B is None: B = mmsecross()
+    if B is None: B = secross()
     if N==0:
-        if mmisbinary(B): return mmbinary([1])
+        if isbinary(B): return binary([1])
         else:             return int32([0]) # identity
     NB = B
     for i in range(N-1):
-        NB = mmsedil(NB,B)
+        NB = sedil(NB,B)
     return NB
 #
 # =====================================================================
 #
-#   mmsetrans
+#   setrans
 #
 # =====================================================================
-def mmsetrans(Bi, t):
+def setrans(Bi, t):
     """
         - Purpose
             Translate a structuring element
         - Synopsis
-            Bo = mmsetrans(Bi, t)
+            Bo = setrans(Bi, t)
         - Input
             Bi: Structuring Element
             t:
         - Output
             Bo: Structuring Element
         - Description
-            mmsetrans translates a structuring element by a specific value.
+            setrans translates a structuring element by a specific value.
         - Examples
             #
-            b1 = mmseline(5)
-            mmseshow(b1)
-            b2 = mmsetrans(b1,[2,-2])
-            mmseshow(b2)
+            b1 = seline(5)
+            seshow(b1)
+            b2 = setrans(b1,[2,-2])
+            seshow(b2)
     """
 
-    x,v=mmmat2set(Bi)
-    Bo = mmset2mat((x+t,v))
+    x,v=mat2set(Bi)
+    Bo = set2mat((x+t,v))
     Bo = Bo.astype(Bi.dtype)
     return Bo
 #
 # =====================================================================
 #
-#   mmsereflect
+#   sereflect
 #
 # =====================================================================
-def mmsereflect(Bi):
+def sereflect(Bi):
     """
         - Purpose
             Reflect a structuring element
         - Synopsis
-            Bo = mmsereflect(Bi)
+            Bo = sereflect(Bi)
         - Input
             Bi: Structuring Element
         - Output
             Bo: Structuring Element
         - Description
-            mmsereflect reflects a structuring element by rotating it 180
+            sereflect reflects a structuring element by rotating it 180
             degrees.
         - Examples
             #
-            b1 = mmseline(5,30)
-            print mmseshow(b1)
-            b2 = mmsereflect(b1)
-            print mmseshow(b2)
+            b1 = seline(5,30)
+            print seshow(b1)
+            b2 = sereflect(b1)
+            print seshow(b2)
     """
 
-    Bo = mmserot(Bi, 180)
+    Bo = serot(Bi, 180)
     return Bo
 #
 # =====================================================================
 #
-#   mmsedil
+#   sedil
 #
 # =====================================================================
-def mmsedil(B1, B2):
+def sedil(B1, B2):
     """
         - Purpose
             Dilate one structuring element by another
         - Synopsis
-            Bo = mmsedil(B1, B2)
+            Bo = sedil(B1, B2)
         - Input
             B1: Structuring Element
             B2: Structuring Element
         - Output
             Bo: Structuring Element
         - Description
-            mmsedil dilates an structuring element by another. The main
-            difference between this dilation and mmdil is that the dilation
+            sedil dilates an structuring element by another. The main
+            difference between this dilation and dil is that the dilation
             between structuring elements are not bounded, returning another
             structuring element usually larger than anyone of them. This
             gives the composition of the two structuring elements by
             Minkowski addition.
         - Examples
             #
-            b1 = mmseline(5)
-            mmseshow(b1)
-            b2 = mmsedisk(2)
-            mmseshow(b2)
-            b3 = mmsedil(b1,b2)
-            mmseshow(b3)
+            b1 = seline(5)
+            seshow(b1)
+            b2 = sedisk(2)
+            seshow(b2)
+            b3 = sedil(b1,b2)
+            seshow(b3)
     """
     from numpy import newaxis, array
 
-    assert ((mmdatatype(B1) == 'binary') or (mmdatatype(B1) == 'int32')) and (
-            (mmdatatype(B2) == 'binary') or (mmdatatype(B2) == 'int32')),'SE must be binary or int32'
+    assert ((datatype(B1) == 'binary') or (datatype(B1) == 'int32')) and (
+            (datatype(B2) == 'binary') or (datatype(B2) == 'int32')),'SE must be binary or int32'
     if len(B1.shape) == 1: B1 = B1[newaxis,:]
     if len(B2.shape) == 1: B2 = B2[newaxis,:]
-    if (mmdatatype(B1) == 'int32') or (mmdatatype(B2) == 'int32'):
-       Bo = int32([mmlimits(int32([0]))[0]])
-       if mmdatatype(B1) == 'binary':
-          B1 = mmgray(B1,'int32',0)
-       if mmdatatype(B2) == 'binary':
-          B2 = mmgray(B2,'int32',0)
+    if (datatype(B1) == 'int32') or (datatype(B2) == 'int32'):
+       Bo = int32([limits(int32([0]))[0]])
+       if datatype(B1) == 'binary':
+          B1 = gray(B1,'int32',0)
+       if datatype(B2) == 'binary':
+          B2 = gray(B2,'int32',0)
     else:
-       Bo = mmbinary([0])
-    x,v = mmmat2set(B2)
+       Bo = binary([0])
+    x,v = mat2set(B2)
     if len(x):
         for i in range(x.shape[0]):
-            s = mmadd4dil(B1,v[i])
-            st= mmsetrans(s,x[i])
-            Bo = mmseunion(Bo,st)
+            s = add4dil(B1,v[i])
+            st= setrans(s,x[i])
+            Bo = seunion(Bo,st)
     return Bo
 #
 # =====================================================================
 #
-#   mmseunion
+#   seunion
 #
 # =====================================================================
-def mmseunion(B1, B2):
+def seunion(B1, B2):
     """
         - Purpose
             Union of structuring elements
         - Synopsis
-            B = mmseunion(B1, B2)
+            B = seunion(B1, B2)
         - Input
             B1: Structuring Element
             B2: Structuring Element
         - Output
             B: Structuring Element
         - Description
-            mmseunion creates a structuring element from the union of two
+            seunion creates a structuring element from the union of two
             structuring elements.
         - Examples
             #
-            b1 = mmseline(5)
-            mmseshow(b1)
-            b2 = mmsedisk(3)
-            mmseshow(b2)
-            b3 = mmseunion(b1,b2)
-            mmseshow(b3)
+            b1 = seline(5)
+            seshow(b1)
+            b2 = sedisk(3)
+            seshow(b2)
+            b3 = seunion(b1,b2)
+            seshow(b3)
     """
     from numpy import maximum, ones, asarray, newaxis
 
@@ -4752,7 +4752,7 @@ def mmseunion(B1, B2):
     if len(B1.shape) == 1: B1 = B1[newaxis,:]
     if len(B2.shape) == 1: B2 = B2[newaxis,:]
     if B1.shape <> B2.shape:
-        inf = mmlimits(B1)[0]
+        inf = limits(B1)[0]
         h1,w1 = B1.shape
         h2,w2 = B2.shape
         H,W = max(h1,h2),max(w1,w2)
@@ -4770,16 +4770,16 @@ def mmseunion(B1, B2):
 #
 # =====================================================================
 #
-#   mmshow
+#   show
 #
 # =====================================================================
-def mmshow(f, f1=None, f2=None, f3=None, f4=None, f5=None, f6=None):
+def show(f, f1=None, f2=None, f3=None, f4=None, f5=None, f6=None):
     """
         - Purpose
             Display binary or gray-scale images and optionally overlay it
             with binary images.
         - Synopsis
-            mmshow(f, f1=None, f2=None, f3=None, f4=None, f5=None, f6=None)
+            show(f, f1=None, f2=None, f3=None, f4=None, f5=None, f6=None)
         - Input
             f:  Gray-scale (uint8 or uint16) or binary image.
             f1: Binary image. Default: None. Red overlay.
@@ -4797,41 +4797,41 @@ def mmshow(f, f1=None, f2=None, f3=None, f4=None, f5=None, f6=None):
             in the MATLAB figure only if no output parameter is given.
         - Examples
             #
-            f=mmreadgray('mribrain.tif');
-            f150=mmthreshad(f,150);
-            f200=mmthreshad(f,200);
-            mmshow(f);
-            mmshow(f150);
-            mmshow(f,f150,f200);
+            f=readgray('mribrain.tif');
+            f150=threshad(f,150);
+            f200=threshad(f,200);
+            show(f);
+            show(f150);
+            show(f,f150,f200);
     """
     import adpil
 
     if len(f.shape) != 2:
-       print "Error, mmshow: can only process gray-scale and binary images."
+       print "Error, show: can only process gray-scale and binary images."
        return
-    if   f1 == None: y = mmgshow(f)
-    elif f2 == None: y = mmgshow(f,f1)
-    elif f3 == None: y = mmgshow(f,f1,f2)
-    elif f4 == None: y = mmgshow(f,f1,f2,f3)
-    elif f5 == None: y = mmgshow(f,f1,f2,f3,f4)
-    elif f6 == None: y = mmgshow(f,f1,f2,f3,f4,f5)
-    elif f6 == None: y = mmgshow(f,f1,f2,f3,f4,f5)
-    else:            y = mmgshow(f,f1,f2,f3,f4,f5,f6)
+    if   f1 == None: y = gshow(f)
+    elif f2 == None: y = gshow(f,f1)
+    elif f3 == None: y = gshow(f,f1,f2)
+    elif f4 == None: y = gshow(f,f1,f2,f3)
+    elif f5 == None: y = gshow(f,f1,f2,f3,f4)
+    elif f6 == None: y = gshow(f,f1,f2,f3,f4,f5)
+    elif f6 == None: y = gshow(f,f1,f2,f3,f4,f5)
+    else:            y = gshow(f,f1,f2,f3,f4,f5,f6)
     adpil.adshow(y)
     return
 
 #
 # =====================================================================
 #
-#   mmskelm
+#   skelm
 #
 # =====================================================================
-def mmskelm(f, B=None, option="binary"):
+def skelm(f, B=None, option="binary"):
     """
         - Purpose
             Morphological skeleton (Medial Axis Transform).
         - Synopsis
-            y = mmskelm(f, B=None, option="binary")
+            y = skelm(f, B=None, option="binary")
         - Input
             f:      Binary image.
             B:      Structuring Element Default: None (3x3 elementary
@@ -4843,7 +4843,7 @@ def mmskelm(f, B=None, option="binary"):
         - Output
             y: Gray-scale (uint8 or uint16) or binary image.
         - Description
-            mmskelm creates the image y by computing the morphological
+            skelm creates the image y by computing the morphological
             skeleton by B of the image f , when option is BINARY. In this
             case, the pixels of value 1 in y are center of maximal balls
             (generated from B ) included in f . This is also called Medial
@@ -4855,92 +4855,92 @@ def mmskelm(f, B=None, option="binary"):
             #   example 1
             #
             from numpy import ones
-            a=mmneg(mmframe(mmbinary(ones((7,9)))))
+            a=neg(frame(binary(ones((7,9)))))
             print a
-            print mmskelm(a)
-            print mmskelm(a,mmsebox())
+            print skelm(a)
+            print skelm(a,sebox())
             #
             #   example 2
             #
-            a=mmreadgray('pcbholes.tif')
-            b=mmskelm(a)
-            mmshow(a)
-            mmshow(b)
+            a=readgray('pcbholes.tif')
+            b=skelm(a)
+            show(a)
+            show(b)
             #
             #   example 3
             #
-            c=mmskelm(a,mmsecross(),'value')
-            mmshow(c)
+            c=skelm(a,secross(),'value')
+            show(c)
     """
     from string import upper
     from numpy import asarray
-    if B is None: B = mmsecross()
-    assert mmisbinary(f),'Input binary image only'
+    if B is None: B = secross()
+    assert isbinary(f),'Input binary image only'
     option = upper(option)
-    k1,k2 = mmlimits(f)
-    y = mmgray(mmintersec(f, k1),'uint16')
+    k1,k2 = limits(f)
+    y = gray(intersec(f, k1),'uint16')
     iszero = asarray(y)
-    nb = mmsesum(B,0)
+    nb = sesum(B,0)
     for r in range(1,65535):
-        ero = mmero( f, nb)
-        if mmisequal(ero, iszero): break
-        f1 = mmopenth( ero, B)
-        nb = mmsedil(nb, B)
-        y = mmunion(y, mmgray(f1,'uint16',r))
+        ero = ero( f, nb)
+        if isequal(ero, iszero): break
+        f1 = openth( ero, B)
+        nb = sedil(nb, B)
+        y = union(y, gray(f1,'uint16',r))
     if option == 'BINARY':
-        y = mmbinary(y)
+        y = binary(y)
     return y
 #
 # =====================================================================
 #
-#   mmskelmrec
+#   skelmrec
 #
 # =====================================================================
-def mmskelmrec(f, B=None):
+def skelmrec(f, B=None):
     """
         - Purpose
             Morphological skeleton reconstruction (Inverse Medial Axis
             Transform).
         - Synopsis
-            y = mmskelmrec(f, B=None)
+            y = skelmrec(f, B=None)
         - Input
             f: Gray-scale (uint8 or uint16) or binary image.
             B: Structuring Element Default: None (3x3 elementary cross).
         - Output
             y: Binary image.
         - Description
-            mmskelmrec reconstructs the valued morphological skeleton to
+            skelmrec reconstructs the valued morphological skeleton to
             recover the original image.
         - Examples
             #
             from numpy import ones
-            a=mmneg(mmframe(mmbinary(ones((7,9)))))
+            a=neg(frame(binary(ones((7,9)))))
             print a
-            b=mmskelm(a,mmsecross(),'value')
+            b=skelm(a,secross(),'value')
             print b
-            c=mmskelmrec(b,mmsecross())
+            c=skelmrec(b,secross())
             print c
     """
     from numpy import ravel
-    if B is None: B = mmsecross()
-    y = mmbinary(mmintersec(f, 0))
+    if B is None: B = secross()
+    y = binary(intersec(f, 0))
     for r in range(max(ravel(f)),1,-1):
-        y = mmdil(mmunion(y,mmbinary(f,r)), B)
-    y = mmunion(y, mmbinary(f,1))
+        y = dil(union(y,binary(f,r)), B)
+    y = union(y, binary(f,1))
     return y
 #
 # =====================================================================
 #
-#   mmskiz
+#   skiz
 #
 # =====================================================================
-def mmskiz(f, Bc=None, LINEREG="LINES", METRIC=None):
+def skiz(f, Bc=None, LINEREG="LINES", METRIC=None):
     """
         - Purpose
             Skeleton of Influence Zone - also know as Generalized Voronoi
             Diagram
         - Synopsis
-            y = mmskiz(f, Bc=None, LINEREG="LINES", METRIC=None)
+            y = skiz(f, Bc=None, LINEREG="LINES", METRIC=None)
         - Input
             f:       Binary image.
             Bc:      Structuring Element Default: None (3x3 elementary
@@ -4950,7 +4950,7 @@ def mmskiz(f, Bc=None, LINEREG="LINES", METRIC=None):
         - Output
             y: Gray-scale (uint8 or uint16) or binary image.
         - Description
-            mmskiz creates the image y by detecting the lines which are
+            skiz creates the image y by detecting the lines which are
             equidistant to two or more connected components of f , according
             to the connectivity defined by Bc . Depending on with the flag
             LINEREG, y will be a binary image with the skiz lines or a
@@ -4961,37 +4961,37 @@ def mmskiz(f, Bc=None, LINEREG="LINES", METRIC=None):
             #
             #   example 1
             #
-            f=mmreadgray('blob2.tif')
-            y=mmskiz(f,mmsebox(),'LINES','EUCLIDEAN')
-            mmshow(f,y)
+            f=readgray('blob2.tif')
+            y=skiz(f,sebox(),'LINES','EUCLIDEAN')
+            show(f,y)
             #
             #   example 2
             #
             from numpy import zeros
-            f=mmbinary(zeros((100,100)))
+            f=binary(zeros((100,100)))
             f[30,25],f[20,75],f[50,50],f[70,30],f[80,70] = 1,1,1,1,1
-            y = mmskiz(f,mmsebox(),'LINES','EUCLIDEAN')
-            mmshow(f,y)
+            y = skiz(f,sebox(),'LINES','EUCLIDEAN')
+            show(f,y)
     """
     from string import upper
-    if Bc is None: Bc = mmsecross()
+    if Bc is None: Bc = secross()
     LINEREG = upper(LINEREG)
     if METRIC is not None: METRIC = upper(METRIC)
-    d = mmdist( mmneg(f), Bc, METRIC)
-    return mmcwatershed(d,f,Bc,LINEREG)
+    d = dist( neg(f), Bc, METRIC)
+    return cwatershed(d,f,Bc,LINEREG)
     return y
 #
 # =====================================================================
 #
-#   mmstats
+#   stats
 #
 # =====================================================================
-def mmstats(f, measurement):
+def stats(f, measurement):
     """
         - Purpose
             Find global image statistics.
         - Synopsis
-            y = mmstats(f, measurement)
+            y = stats(f, measurement)
         - Input
             f:           
             measurement: String Default: "". Choose the measure to compute:
@@ -5029,15 +5029,15 @@ def mmstats(f, measurement):
 #
 # =====================================================================
 #
-#   mmsubm
+#   subm
 #
 # =====================================================================
-def mmsubm(f1, f2):
+def subm(f1, f2):
     """
         - Purpose
             Subtraction of two images, with saturation.
         - Synopsis
-            y = mmsubm(f1, f2)
+            y = subm(f1, f2)
         - Input
             f1: Unsigned gray-scale (uint8 or uint16), signed (int32) or
                 binary image.
@@ -5047,7 +5047,7 @@ def mmsubm(f1, f2):
             y: Unsigned gray-scale (uint8 or uint16), signed (int32) or
                binary image.
         - Description
-            mmsubm creates the image y by pixelwise subtraction of the image
+            subm creates the image y by pixelwise subtraction of the image
             f2 from the image f1 . When the subtraction of the values of two
             pixels is negative, 0 is taken as the result of the subtraction.
             When f1 and f2 are binary images, y represents the set
@@ -5058,39 +5058,39 @@ def mmsubm(f1, f2):
             #
             f = to_uint8([255,   255,    0,   10,   20,   10,    0,   255,  255])
             g = to_uint8([10,     20,   30,   40,   50,   40,   30,    20,    10])
-            print mmsubm(f, g)
-            print mmsubm(f, 100)
-            print mmsubm(100, f)
+            print subm(f, g)
+            print subm(f, 100)
+            print subm(100, f)
             #
             #   example 2
             #
-            a = mmreadgray('boxdrill-C.tif')
-            b = mmreadgray('boxdrill-B.tif')
-            c = mmsubm(a,b)
-            mmshow(a)
-            mmshow(b)
-            mmshow(c)
+            a = readgray('boxdrill-C.tif')
+            b = readgray('boxdrill-B.tif')
+            c = subm(a,b)
+            show(a)
+            show(b)
+            show(c)
     """
     from numpy import array, clip
 
     if type(f2) is array:
         assert f1.dtype == f2.dtype, 'Cannot have different datatypes:'
-    bottom,top=mmlimits(f1)
+    bottom,top=limits(f1)
     y = clip(f1.astype('d') - f2, bottom, top)
     y = y.astype(f1.dtype)
     return y
 #
 # =====================================================================
 #
-#   mmsupcanon
+#   supcanon
 #
 # =====================================================================
-def mmsupcanon(f, Iab, theta=45, DIRECTION="CLOCKWISE"):
+def supcanon(f, Iab, theta=45, DIRECTION="CLOCKWISE"):
     """
         - Purpose
             Union of sup-generating or hit-miss operators.
         - Synopsis
-            y = mmsupcanon(f, Iab, theta=45, DIRECTION="CLOCKWISE")
+            y = supcanon(f, Iab, theta=45, DIRECTION="CLOCKWISE")
         - Input
             f:         Binary image.
             Iab:       Interval
@@ -5101,7 +5101,7 @@ def mmsupcanon(f, Iab, theta=45, DIRECTION="CLOCKWISE"):
         - Output
             y: Binary image.
         - Description
-            mmsupcanon creates the image y by computing the union of
+            supcanon creates the image y by computing the union of
             transformations of the image f by sup-generating operators.
             These hit-miss operators are characterized by rotations (in the
             clockwise or anti-clockwise direction) of theta degrees of the
@@ -5111,30 +5111,30 @@ def mmsupcanon(f, Iab, theta=45, DIRECTION="CLOCKWISE"):
     from string import upper
 
     DIRECTION = upper(DIRECTION)            
-    y = mmintersec(f,0)
+    y = intersec(f,0)
     for t in range(0,360,theta):
-        Irot = mminterot( Iab, t, DIRECTION )
-        y = mmunion( y, mmsupgen(f, Irot))
+        Irot = interot( Iab, t, DIRECTION )
+        y = union( y, supgen(f, Irot))
     return y
 #
 # =====================================================================
 #
-#   mmsupgen
+#   supgen
 #
 # =====================================================================
-def mmsupgen(f, INTER):
+def supgen(f, INTER):
     """
         - Purpose
             Sup-generating (hit-miss).
         - Synopsis
-            y = mmsupgen(f, INTER)
+            y = supgen(f, INTER)
         - Input
             f:     Binary image.
             INTER: Interval
         - Output
             y: Binary image.
         - Description
-            mmsupgen creates the binary image y by computing the
+            supgen creates the binary image y by computing the
             transformation of the image f by the sup-generating operator
             characterized by the interval Iab . The sup-generating operator
             is just a relaxed template matching, where the criterion to keep
@@ -5146,39 +5146,39 @@ def mmsupgen(f, INTER):
             #
             #   example 1
             #
-            f=mmbinary([
+            f=binary([
                [0,0,1,0,0,1,1],
                [0,1,0,0,1,0,0],
                [0,0,0,1,1,0,0]])
-            i=mmendpoints()
-            print mmintershow(i)
-            g=mmsupgen(f,i)
+            i=endpoints()
+            print intershow(i)
+            g=supgen(f,i)
             print g
             #
             #   example 2
             #
-            a=mmreadgray('gear.tif')
-            b=mmsupgen(a,mmendpoints())
-            mmshow(a)
-            mmshow(mmdil(b))
+            a=readgray('gear.tif')
+            b=supgen(a,endpoints())
+            show(a)
+            show(dil(b))
     """
 
     A,Bc = INTER
-    y = mmintersec(mmero( f, A),
-                   mmero( mmneg(f), Bc))
+    y = intersec(ero( f, A),
+                   ero( neg(f), Bc))
     return y
 #
 # =====================================================================
 #
-#   mmsuprec
+#   suprec
 #
 # =====================================================================
-def mmsuprec(f, g, Bc=None):
+def suprec(f, g, Bc=None):
     """
         - Purpose
             Sup-reconstruction.
         - Synopsis
-            y = mmsuprec(f, g, Bc=None)
+            y = suprec(f, g, Bc=None)
         - Input
             f:  Gray-scale (uint8 or uint16) or binary image. Marker image.
             g:  Gray-scale (uint8 or uint16) or binary image. Conditioning
@@ -5188,29 +5188,29 @@ def mmsuprec(f, g, Bc=None):
         - Output
             y: Image
         - Description
-            mmsuprec creates the image y by an infinite number of recursive
+            suprec creates the image y by an infinite number of recursive
             iterations (iterations until stability) of the erosion of f by
             Bc conditioned to g . We say that y is the sup-reconstruction of
             g from the marker f .
 
     """
     from numpy import product
-    if Bc is None: Bc = mmsecross()
+    if Bc is None: Bc = secross()
     n = product(f.shape)
-    y = mmcero(f,g,Bc,n);
+    y = cero(f,g,Bc,n);
     return y
 #
 # =====================================================================
 #
-#   mmbshow
+#   bshow
 #
 # =====================================================================
-def mmbshow(f1, f2=None, f3=None, factor=17):
+def bshow(f1, f2=None, f3=None, factor=17):
     """
         - Purpose
             Generate a graphical representation of overlaid binary images.
         - Synopsis
-            y = mmbshow(f1, f2=None, f3=None, factor=17)
+            y = bshow(f1, f2=None, f3=None, factor=17)
         - Input
             f1:     Binary image.
             f2:     Binary image. Default: None.
@@ -5229,13 +5229,13 @@ def mmbshow(f1, f2=None, f3=None, factor=17):
             images.
         - Examples
             #
-            f1=mmtext('b')
-            f2=mmtext('w')
-            g2=mmbshow(f1,f2)
-            mmshow(g2)
-            f3=mmtext('x')
-            g3=mmbshow(f1,f2,f3)
-            mmshow(g3);
+            f1=text('b')
+            f2=text('w')
+            g2=bshow(f1,f2)
+            show(g2)
+            f3=text('x')
+            g3=bshow(f1,f2,f3)
+            show(g3);
     """
     from numpy import newaxis, zeros, resize, transpose, floor, arange, array
 
@@ -5277,15 +5277,15 @@ def mmbshow(f1, f2=None, f3=None, factor=17):
 #
 # =====================================================================
 #
-#   mmswatershed
+#   swatershed
 #
 # =====================================================================
-def mmswatershed(f, g, B=None, LINEREG="LINES"):
+def swatershed(f, g, B=None, LINEREG="LINES"):
     """
         - Purpose
             Detection of similarity-based watershed from markers.
         - Synopsis
-            y = mmswatershed(f, g, B=None, LINEREG="LINES")
+            y = swatershed(f, g, B=None, LINEREG="LINES")
         - Input
             f:       Gray-scale (uint8 or uint16) image.
             g:       Gray-scale (uint8 or uint16) or binary image. Marker
@@ -5297,7 +5297,7 @@ def mmswatershed(f, g, B=None, LINEREG="LINES"):
         - Output
             y: Gray-scale (uint8 or uint16) or binary image.
         - Description
-            mmswatershed creates the image y by detecting the domain of the
+            swatershed creates the image y by detecting the domain of the
             catchment basins of f indicated by g , according with the
             connectivity defined by B . This watershed is a modified version
             where each basin is defined by a similarity criterion between
@@ -5323,32 +5323,32 @@ def mmswatershed(f, g, B=None, LINEREG="LINES"):
                 [0,  0,  0,  0,  0,  0,  0],
                 [0,  0,  0,  0,  0,  0,  0],
                 [0,  0,  0,  2,  0,  0,  0]])
-            print mmswatershed(f,m,mmsecross(),'REGIONS')
+            print swatershed(f,m,secross(),'REGIONS')
     """
 
-    if B is None: B = mmsecross()
+    if B is None: B = secross()
     print 'Not implemented yet'
     return None
     return y
 #
 # =====================================================================
 #
-#   mmsymdif
+#   symdif
 #
 # =====================================================================
-def mmsymdif(f1, f2):
+def symdif(f1, f2):
     """
         - Purpose
-            Symmetric difference between two images
+            Syetric difference between two images
         - Synopsis
-            y = mmsymdif(f1, f2)
+            y = symdif(f1, f2)
         - Input
             f1: Gray-scale (uint8 or uint16) or binary image.
             f2: Gray-scale (uint8 or uint16) or binary image.
         - Output
             y: Image i
         - Description
-            mmsymdif creates the image y by taken the union of the
+            symdif creates the image y by taken the union of the
             subtractions of f1 from f2 and f2 from f1 . When f1 and f2 are
             binary images, y represents the set of points that are in f1 and
             not in f2 or that are in f2 and not in f1 .
@@ -5358,35 +5358,35 @@ def mmsymdif(f1, f2):
             #
             a = to_uint8([1, 2, 3, 4, 5])
             b = to_uint8([5, 4, 3, 2, 1])
-            print mmsymdif(a,b)
+            print symdif(a,b)
             #
             #   example 2
             #
-            c = mmreadgray('tplayer1.tif')
-            d = mmreadgray('tplayer2.tif')
-            e = mmsymdif(c,d)
-            mmshow(c)
-            mmshow(d)
-            mmshow(e)
+            c = readgray('tplayer1.tif')
+            d = readgray('tplayer2.tif')
+            e = symdif(c,d)
+            show(c)
+            show(d)
+            show(e)
     """
 
-    y = mmunion(mmsubm(f1,f2),mmsubm(f2,f1))
+    y = union(subm(f1,f2),subm(f2,f1))
     return y
 #
 # =====================================================================
 #
-#   mmthick
+#   thick
 #
 # =====================================================================
-def mmthick(f, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
+def thick(f, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
     """
         - Purpose
             Image transformation by thickening.
         - Synopsis
-            y = mmthick(f, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE")
+            y = thick(f, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE")
         - Input
             f:         Binary image.
-            Iab:       Interval Default: None (mmhomothick).
+            Iab:       Interval Default: None (homothick).
             n:         Non-negative integer. Default: -1. Number of
                        iterations.
             theta:     Double Default: 45. Degrees of rotation: 45, 90, or
@@ -5396,7 +5396,7 @@ def mmthick(f, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
         - Output
             y: Binary image.
         - Description
-            mmthick creates the binary image y by performing a thickening of
+            thick creates the binary image y by performing a thickening of
             the binary image f . The number of iterations of the thickening
             is n and each iteration is performed by union of f with the
             points that are detected in f by the hit-miss operators
@@ -5406,35 +5406,35 @@ def mmthick(f, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
     """
     from numpy import product
     from string import upper
-    if Iab is None: Iab = mmhomothick()
+    if Iab is None: Iab = homothick()
     DIRECTION = upper(DIRECTION)            
-    assert mmisbinary(f),'f must be binary image'
+    assert isbinary(f),'f must be binary image'
     if n == -1: n = product(f.shape)
     y = f
-    zero = mmintersec(f,0)
+    zero = intersec(f,0)
     for i in range(n):
         aux = zero
         for t in range(0,360,theta):
-            sup = mmsupgen( y, mminterot(Iab, t, DIRECTION))
-            aux = mmunion( aux, sup)
-            y = mmunion( y, sup)
-        if mmisequal(aux,zero): break
+            sup = supgen( y, interot(Iab, t, DIRECTION))
+            aux = union( aux, sup)
+            y = union( y, sup)
+        if isequal(aux,zero): break
     return y
 #
 # =====================================================================
 #
-#   mmthin
+#   thin
 #
 # =====================================================================
-def mmthin(f, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
+def thin(f, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
     """
         - Purpose
             Image transformation by thinning.
         - Synopsis
-            y = mmthin(f, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE")
+            y = thin(f, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE")
         - Input
             f:         Binary image.
-            Iab:       Interval Default: None (mmhomothin).
+            Iab:       Interval Default: None (homothin).
             n:         Non-negative integer. Default: -1. Number of
                        iterations.
             theta:     Double Default: 45. Degrees of rotation: 45, 90, or
@@ -5444,49 +5444,49 @@ def mmthin(f, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
         - Output
             y: Binary image.
         - Description
-            mmthin creates the binary image y by performing a thinning of
+            thin creates the binary image y by performing a thinning of
             the binary image f . The number of iterations of the thinning is
             n and each iteration is performed by subtracting the points that
             are detect in f by hit-miss operators characterized by rotations
             of theta of the interval Iab . When n is infinite and the
-            interval is mmhomothin (default conditions), mmthin gives the
+            interval is homothin (default conditions), thin gives the
             skeleton by thinning.
         - Examples
             #
-            f=mmreadgray('scissors.tif')
-            f1=mmthin(f)
-            mmshow(f,f1) # skeleton
-            f2=mmthin(f1,mmendpoints(),15) # prunning 15 pixels
-            mmshow(f,f2) # prunned skeleton
+            f=readgray('scissors.tif')
+            f1=thin(f)
+            show(f,f1) # skeleton
+            f2=thin(f1,endpoints(),15) # prunning 15 pixels
+            show(f,f2) # prunned skeleton
     """
     from numpy import product
     from string import upper
-    if Iab is None: Iab = mmhomothin()
+    if Iab is None: Iab = homothin()
     DIRECTION = upper(DIRECTION)            
-    assert mmisbinary(f),'f must be binary image'
+    assert isbinary(f),'f must be binary image'
     if n == -1: n = product(f.shape)
     y = f
-    zero = mmintersec(f,0)
+    zero = intersec(f,0)
     for i in range(n):
         aux = zero
         for t in range(0,360,theta):
-            sup = mmsupgen( y, mminterot(Iab, t, DIRECTION))
-            aux = mmunion( aux, sup)
-            y = mmsubm( y, sup)
-        if mmisequal(aux,zero): break
+            sup = supgen( y, interot(Iab, t, DIRECTION))
+            aux = union( aux, sup)
+            y = subm( y, sup)
+        if isequal(aux,zero): break
     return y
 #
 # =====================================================================
 #
-#   mmunion
+#   union
 #
 # =====================================================================
-def mmunion(f1, f2, f3=None, f4=None, f5=None):
+def union(f1, f2, f3=None, f4=None, f5=None):
     """
         - Purpose
             Union of images.
         - Synopsis
-            y = mmunion(f1, f2, f3=None, f4=None, f5=None)
+            y = union(f1, f2, f3=None, f4=None, f5=None)
         - Input
             f1: Gray-scale (uint8 or uint16) or binary image.
             f2: Gray-scale (uint8 or uint16) or binary image. Or constant
@@ -5499,7 +5499,7 @@ def mmunion(f1, f2, f3=None, f4=None, f5=None):
         - Output
             y: Image
         - Description
-            mmunion creates the image y by taking the pixelwise maximum
+            union creates the image y by taking the pixelwise maximum
             between the images f1, f2, f3, f4, and f5 . When f1, f2, f3, f4,
             and f5 are binary images, y represents the union of them.
         - Examples
@@ -5510,37 +5510,37 @@ def mmunion(f1, f2, f3=None, f4=None, f5=None):
             print 'f=',f
             g=to_uint8([  0,  40, 80, 140, 250,  10,  30])
             print 'g=',g
-            print mmunion(f, g)
-            print mmunion(f, 255)
+            print union(f, g)
+            print union(f, 255)
             #
             #   example 2
             #
-            a = mmreadgray('form-ok.tif')
-            b = mmreadgray('form-1.tif')
-            c = mmunion(a,b)
-            mmshow(a)
-            mmshow(b)
-            mmshow(c)
+            a = readgray('form-ok.tif')
+            b = readgray('form-1.tif')
+            c = union(a,b)
+            show(a)
+            show(b)
+            show(c)
             #
             #   example 3
             #
-            d = mmreadgray('danaus.tif')
-            e = mmcmp(d,'<',80)
-            f = mmunion(d,mmgray(e))
-            mmshow(d)
-            mmshow(e)
-            mmshow(f)
+            d = readgray('danaus.tif')
+            e = cmp(d,'<',80)
+            f = union(d,gray(e))
+            show(d)
+            show(e)
+            show(f)
             #
             #   example 4
             #
-            g = mmreadgray('tplayer1.tif')
-            h = mmreadgray('tplayer2.tif')
-            i = mmreadgray('tplayer3.tif')
-            j = mmunion(g,h,i)
-            mmshow(g)
-            mmshow(h)
-            mmshow(i)
-            mmshow(j)
+            g = readgray('tplayer1.tif')
+            h = readgray('tplayer2.tif')
+            i = readgray('tplayer3.tif')
+            j = union(g,h,i)
+            show(g)
+            show(h)
+            show(i)
+            show(j)
     """
     from numpy import maximum
 
@@ -5553,23 +5553,23 @@ def mmunion(f1, f2, f3=None, f4=None, f5=None):
 #
 # =====================================================================
 #
-#   mmversion
+#   version
 #
 # =====================================================================
-def mmversion():
+def version():
     """
         - Purpose
             SDC Morphology Toolbox version.
         - Synopsis
-            S = mmversion()
+            S = version()
 
         - Output
             S: String ( description of the version).
         - Description
-            mmversion gives the SDC Morphology Toolbox version.
+            version gives the SDC Morphology Toolbox version.
         - Examples
             #
-            print mmversion()
+            print version()
     """
 
     return __version_string__
@@ -5577,15 +5577,15 @@ def mmversion():
 #
 # =====================================================================
 #
-#   mmwatershed
+#   watershed
 #
 # =====================================================================
-def mmwatershed(f, Bc=None, LINEREG="LINES"):
+def watershed(f, Bc=None, LINEREG="LINES"):
     """
         - Purpose
             Watershed detection.
         - Synopsis
-            y = mmwatershed(f, Bc=None, LINEREG="LINES")
+            y = watershed(f, Bc=None, LINEREG="LINES")
         - Input
             f:       Gray-scale (uint8 or uint16) or binary image.
             Bc:      Structuring Element Default: None (3x3 elementary
@@ -5594,7 +5594,7 @@ def mmwatershed(f, Bc=None, LINEREG="LINES"):
         - Output
             y: Gray-scale (uint8 or uint16) or binary image.
         - Description
-            mmwatershed creates the image y by detecting the domain of the
+            watershed creates the image y by detecting the domain of the
             catchment basins of f , according to the connectivity defined by
             Bc . According to the flag LINEREG y will be a labeled image of
             the catchment basins domain or just a binary image that presents
@@ -5602,54 +5602,54 @@ def mmwatershed(f, Bc=None, LINEREG="LINES"):
             based on VincSoil:91 .
         - Examples
             #
-            f=mmreadgray('astablet.tif')
-            grad=mmgradm(f)
-            w1=mmwatershed(grad,mmsebox())
-            w2=mmwatershed(grad,mmsebox(),'REGIONS')
-            mmshow(grad)
-            mmshow(w1)
-            mmlblshow(w2)
+            f=readgray('astablet.tif')
+            grad=gradm(f)
+            w1=watershed(grad,sebox())
+            w2=watershed(grad,sebox(),'REGIONS')
+            show(grad)
+            show(w1)
+            lblshow(w2)
     """
     from string import upper
-    if Bc is None: Bc = mmsecross()
-    return mmcwatershed(f,mmregmin(f,Bc),upper(LINEREG))
+    if Bc is None: Bc = secross()
+    return cwatershed(f,regmin(f,Bc),upper(LINEREG))
     return y
 #
 # =====================================================================
 #
-#   mmbench
+#   bench
 #
 # =====================================================================
-def mmbench(count=10):
+def bench(count=10):
     """
         - Purpose
             benchmarking main functions of the toolbox.
         - Synopsis
-            mmbench(count=10)
+            bench(count=10)
         - Input
             count: Double Default: 10. Number of repetitions of each
                    function.
 
         - Description
-            mmbench measures the speed of many of SDC Morphology Toolbox
+            bench measures the speed of many of SDC Morphology Toolbox
             functions in seconds. An illustrative example of the output of
-            mmbench is, for a MS-Windows 2000 Pentium 4, 2.4GHz, 533MHz
+            bench is, for a MS-Windows 2000 Pentium 4, 2.4GHz, 533MHz
             system bus, machine: SDC Morphology Toolbox V1.2 27Sep02
             Benchmark Made on Wed Jul 16 15:33:17 2003 computer= win32 image
             filename= csample.jpg width= 640 , height= 480 Function time
             (sec.) 1. Union bin 0.00939999818802 2. Union gray-scale
-            0.00319999456406 3. Dilation bin, mmsecross 0.0110000014305 4.
-            Dilation gray, mmsecross 0.00780000686646 5. Dilation gray,
-            non-flat 3x3 SE 0.0125 6. Open bin, mmsecross 0.0125 7. Open
-            gray-scale, mmsecross 0.0141000032425 8. Open gray, non-flat 3x3
-            SE 0.0235000014305 9. Distance mmsecross 0.021899998188 10.
+            0.00319999456406 3. Dilation bin, secross 0.0110000014305 4.
+            Dilation gray, secross 0.00780000686646 5. Dilation gray,
+            non-flat 3x3 SE 0.0125 6. Open bin, secross 0.0125 7. Open
+            gray-scale, secross 0.0141000032425 8. Open gray, non-flat 3x3
+            SE 0.0235000014305 9. Distance secross 0.021899998188 10.
             Distance Euclidean 0.0264999985695 11. Geodesic distance
-            mmsecross 0.028100001812 12. Geodesic distance Euclidean
+            secross 0.028100001812 12. Geodesic distance Euclidean
             0.303100001812 13. Area open bin 0.0639999985695 14. Area open
-            gray-scale 0.148500001431 15. Label mmsecross 0.071899998188 16.
-            Regional maximum, mmsecross 0.043700003624 17. Open by rec,
-            gray, mmsecross 0.0515000104904 18. ASF by rec, oc, mmsecross, 1
-            0.090600001812 19. Gradient, gray-scale, mmsecross
+            gray-scale 0.148500001431 15. Label secross 0.071899998188 16.
+            Regional maximum, secross 0.043700003624 17. Open by rec,
+            gray, secross 0.0515000104904 18. ASF by rec, oc, secross, 1
+            0.090600001812 19. Gradient, gray-scale, secross
             0.0171999931335 20. Thinning 0.0984999895096 21. Watershed
             0.268799996376 Average 0.0632523809161
 
@@ -5659,32 +5659,32 @@ def mmbench(count=10):
     from numpy import average, zeros
 
     filename = 'csample.jpg'
-    f = mmreadgray(filename)
-    fbin=mmthreshad(f,150)
-    se = mmimg2se(mmbinary([[0,1,0],[1,1,1],[0,1,0]]),'NON-FLAT',int32([[0,1,0],[1,2,1],[0,1,0]]))
-    m=mmthin(fbin)
+    f = readgray(filename)
+    fbin=threshad(f,150)
+    se = img2se(binary([[0,1,0],[1,1,1],[0,1,0]]),'NON-FLAT',int32([[0,1,0],[1,2,1],[0,1,0]]))
+    m=thin(fbin)
     tasks=[
-       [' 1. Union  bin                      ','mmunion(fbin,fbin)'],
-       [' 2. Union  gray-scale               ','mmunion(f,f)'],
-       [' 3. Dilation  bin, mmsecross        ','mmdil(fbin)'],
-       [' 4. Dilation  gray, mmsecross       ','mmdil(f)'],
-       [' 5. Dilation  gray, non-flat 3x3 SE ','mmdil(f,se)'],
-       [' 6. Open      bin, mmsecross        ','mmopen(fbin)'],
-       [' 7. Open      gray-scale, mmsecross ','mmopen(f)'],
-       [' 8. Open      gray, non-flat 3x3 SE ','mmopen(f,se)'],
-       [' 9. Distance  mmsecross             ','mmdist(fbin)'],
-       ['10. Distance  Euclidean             ','mmdist(fbin,mmsebox(),"euclidean")'],
-       ['11. Geodesic distance mmsecross     ','mmgdist(fbin,m)'],
-       ['12. Geodesic distance Euclidean     ','mmgdist(fbin,m,mmsebox(),"euclidean")'],
-       ['13. Area open bin                   ','mmareaopen(fbin,100)'],
-       ['14. Area open gray-scale            ','mmareaopen(f,100)'],
-       ['15. Label mmsecross                 ','mmlabel(fbin)'],
-       ['16. Regional maximum, mmsecross     ','mmregmax(f)'],
-       ['17. Open by rec, gray, mmsecross    ','mmopenrec(f)'],
-       ['18. ASF by rec, oc, mmsecross, 1    ','mmasfrec(f)'],
-       ['19. Gradient, gray-scale, mmsecross ','mmgradm(f)'],
-       ['20. Thinning                        ','mmthin(fbin)'],
-       ['21. Watershed                       ','mmcwatershed(f,fbin)']]
+       [' 1. Union  bin                      ','union(fbin,fbin)'],
+       [' 2. Union  gray-scale               ','union(f,f)'],
+       [' 3. Dilation  bin, secross        ','dil(fbin)'],
+       [' 4. Dilation  gray, secross       ','dil(f)'],
+       [' 5. Dilation  gray, non-flat 3x3 SE ','dil(f,se)'],
+       [' 6. Open      bin, secross        ','open(fbin)'],
+       [' 7. Open      gray-scale, secross ','open(f)'],
+       [' 8. Open      gray, non-flat 3x3 SE ','open(f,se)'],
+       [' 9. Distance  secross             ','dist(fbin)'],
+       ['10. Distance  Euclidean             ','dist(fbin,sebox(),"euclidean")'],
+       ['11. Geodesic distance secross     ','gdist(fbin,m)'],
+       ['12. Geodesic distance Euclidean     ','gdist(fbin,m,sebox(),"euclidean")'],
+       ['13. Area open bin                   ','areaopen(fbin,100)'],
+       ['14. Area open gray-scale            ','areaopen(f,100)'],
+       ['15. Label secross                 ','label(fbin)'],
+       ['16. Regional maximum, secross     ','regmax(f)'],
+       ['17. Open by rec, gray, secross    ','openrec(f)'],
+       ['18. ASF by rec, oc, secross, 1    ','asfrec(f)'],
+       ['19. Gradient, gray-scale, secross ','gradm(f)'],
+       ['20. Thinning                        ','thin(fbin)'],
+       ['21. Watershed                       ','cwatershed(f,fbin)']]
     result = zeros((21),'d')
     for t in range(len(tasks)):
        print tasks[t][0],tasks[t][1]
@@ -5693,7 +5693,7 @@ def mmbench(count=10):
           a=eval(tasks[t][1])
        t2=time()
        result[t]= (t2-t1)/(count+0.0)
-    print mmversion() +' Benchmark'
+    print version() +' Benchmark'
     print 'Made on ',asctime(),' computer=',platform
     print 'image filename=',filename,' width=', f.shape[1],', height=',f.shape[0]
     print '    Function                            time (sec.)'
@@ -5705,37 +5705,37 @@ def mmbench(count=10):
 #
 # =====================================================================
 #
-#   mminstall
+#   install
 #
 # =====================================================================
-def mminstall(code=None):
+def install(code=None):
     """
         - Purpose
             Verify if the Morphology Toolbox is registered.
         - Synopsis
-            mminstall(code=None)
+            install(code=None)
         - Input
             code: String Default: None. Authorization code.
 
         - Description
-            mminstall verifies if the toolbox is registered or not. If not,
+            install verifies if the toolbox is registered or not. If not,
             it identifies the internal code that must be used to get the
             authorization code from the software manufacturer.
 
     """
 
-    mmver = ''
+    ver = ''
     if code is None:
-       s = mmregister()
+       s = register()
        if s[0:8] != 'Licensed':
-          print 'Please access the web site http://www.mmorph.com/cgi-bin/pymorph-reg.cgi'
+          print 'Please access the web site http://www.orph.com/cgi-bin/pymorph-reg.cgi'
           print 'and use the internal code below to obtain your license'
           print s
-          print 'If you have any difficulty, please inform morph@mmorph.com'
+          print 'If you have any difficulty, please inform morph@orph.com'
           return
     else:
-       if mmregister(code,'pymorph_license.txt'):
-          s=mmregister()
+       if register(code,'pymorph_license.txt'):
+          s=register()
           if s[0:8] != 'Licensed':
             print 'Could not license the toolbox.'
             return
@@ -5748,15 +5748,15 @@ def mminstall(code=None):
 #
 # =====================================================================
 #
-#   mmmaxleveltype
+#   maxleveltype
 #
 # =====================================================================
-def mmmaxleveltype(TYPE='uint8'):
+def maxleveltype(TYPE='uint8'):
     """
         - Purpose
             Returns the maximum value associated to an image datatype
         - Synopsis
-            max = mmmaxleveltype(TYPE='uint8')
+            max = maxleveltype(TYPE='uint8')
         - Input
             TYPE: String Default: 'uint8'. One of the strings 'uint8',
                   'uint16' or 'int32', specifying the image type
@@ -5857,15 +5857,15 @@ def uint16(f):
 #
 # =====================================================================
 #
-#   mmdatatype
+#   datatype
 #
 # =====================================================================
-def mmdatatype(f):
+def datatype(f):
     """
         - Purpose
             Return the image datatype string
         - Synopsis
-            type = mmdatatype(f)
+            type = datatype(f)
         - Input
             f: Unsigned gray-scale (uint8 or uint16), signed (int32) or
                binary image. Any image
@@ -5873,7 +5873,7 @@ def mmdatatype(f):
             type: String String representation of image type: 'binary',
                   'uint8', 'uint16' or 'int32'
         - Description
-            mmdatatype returns a string that identifies the pixel datatype
+            datatype returns a string that identifies the pixel datatype
             of the image f .
 
     """
@@ -5889,15 +5889,15 @@ def mmdatatype(f):
 #
 # =====================================================================
 #
-#   mmadd4dil
+#   add4dil
 #
 # =====================================================================
-def mmadd4dil(f, c):
+def add4dil(f, c):
     """
         - Purpose
             Addition for dilation
         - Synopsis
-            a = mmadd4dil(f, c)
+            a = add4dil(f, c)
         - Input
             f: Gray-scale (uint8 or uint16) or binary image. Image
             c: Gray-scale (uint8 or uint16) or binary image. Constant
@@ -5909,7 +5909,7 @@ def mmadd4dil(f, c):
 
     if c:            
        y = asarray(f,'d') + c
-       k1,k2 = mmlimits(f)
+       k1,k2 = limits(f)
        y = ((f==k1) * k1) + ((f!=k1) * y)
        y = maximum(minimum(y,k2),k1)
        a = y.astype(f.dtype)
@@ -5919,15 +5919,15 @@ def mmadd4dil(f, c):
 #
 # =====================================================================
 #
-#   mmmat2set
+#   mat2set
 #
 # =====================================================================
-def mmmat2set(A):
+def mat2set(A):
     """
         - Purpose
             Converts image representation from matrix to set
         - Synopsis
-            CV = mmmat2set(A)
+            CV = mat2set(A)
         - Input
             A: Image in matrix format, where the origin (0,0) is at the
                center of the matrix.
@@ -5944,21 +5944,21 @@ def mmmat2set(A):
             #   example 1
             #
             f=to_uint8([[1,2,3],[4,5,6],[7,8,9]])
-            i,v=mmmat2set(f)
+            i,v=mat2set(f)
             print i
             print v
             #
             #   example 2
             #
             f=to_uint8([[1,2,3,4],[5,6,7,8]])
-            i,v=mmmat2set(f)
+            i,v=mat2set(f)
             print i
             print v
     """
     from numpy import take, ravel, nonzero, transpose, newaxis
 
     if len(A.shape) == 1: A = A[newaxis,:]
-    offsets = nonzero(ravel(A) - mmlimits(A)[0])[0]
+    offsets = nonzero(ravel(A) - limits(A)[0])[0]
     if len(offsets) == 0: return ([],[])
     (h,w) = A.shape
     x = range(2)
@@ -5970,15 +5970,15 @@ def mmmat2set(A):
 #
 # =====================================================================
 #
-#   mmset2mat
+#   set2mat
 #
 # =====================================================================
-def mmset2mat(A):
+def set2mat(A):
     """
         - Purpose
             Converts image representation from set to matrix
         - Synopsis
-            M = mmset2mat(A)
+            M = set2mat(A)
         - Input
             A: Tuple with array of pixel coordinates and optional array of
                corresponding pixel values
@@ -5994,17 +5994,17 @@ def mmset2mat(A):
               [ 0,0],
               [-1,0],
               [ 1,1]])
-            A=mmset2mat((coord,))
+            A=set2mat((coord,))
             print A
-            print mmdatatype(A)
+            print datatype(A)
             vu = to_uint8([1,2,3])
-            f=mmset2mat((coord,vu))
+            f=set2mat((coord,vu))
             print f
-            print mmdatatype(f)
+            print datatype(f)
             vi = int32([1,2,3])
-            g=mmset2mat((coord,vi))
+            g=set2mat((coord,vi))
             print g
-            print mmdatatype(g)
+            print datatype(g)
     """
     from MLab import max
     from numpy import put, ones, ravel, shape, newaxis, array, asarray
@@ -6021,7 +6021,7 @@ def mmset2mat(A):
     if len(x.shape) == 1: x = x[newaxis,:]
     dh,dw = max(abs(x))
     h,w = (2*dh)+1, (2*dw)+1 
-    M=ones((h,w)) * mmlimits(v)[0]
+    M=ones((h,w)) * limits(v)[0]
     offset = x[:,0] * w + x[:,1] + (dh*w + dw)
     put(M,offset,v)
     M = M.astype(v.dtype)
@@ -6029,15 +6029,15 @@ def mmset2mat(A):
 #
 # =====================================================================
 #
-#   mmpad4n
+#   pad4n
 #
 # =====================================================================
-def mmpad4n(f, Bc, value, scale=1):
+def pad4n(f, Bc, value, scale=1):
     """
         - Purpose
-            mmpad4n
+            pad4n
         - Synopsis
-            y = mmpad4n(f, Bc, value, scale=1)
+            y = pad4n(f, Bc, value, scale=1)
         - Input
             f:     Image
             Bc:    Structuring Element ( connectivity).
@@ -6050,7 +6050,7 @@ def mmpad4n(f, Bc, value, scale=1):
     from numpy import ones, array
 
     if type(Bc) is not array:
-      Bc = mmseshow(Bc)            
+      Bc = seshow(Bc)            
     Bh, Bw = Bc.shape
     assert Bh%2 and Bw%2, 'structuring element must be odd sized'
     ch, cw = scale * Bh/2, scale * Bw/2
@@ -6061,21 +6061,21 @@ def mmpad4n(f, Bc, value, scale=1):
 #
 # =====================================================================
 #
-#   Global statements for mmplot
+#   Global statements for plot
 #
 # =====================================================================
 __figs__ = [None]
 # =====================================================================
 #
-#   mmplot
+#   plot
 #
 # =====================================================================
-def mmplot(plotitems=[], options=[], outfig=-1, filename=None):
+def plot(plotitems=[], options=[], outfig=-1, filename=None):
     """
         - Purpose
             Plot a function.
         - Synopsis
-            fig = mmplot(plotitems=[], options=[], outfig=-1, filename=None)
+            fig = plot(plotitems=[], options=[], outfig=-1, filename=None)
         - Input
             plotitems: Default: []. List of plotitems.
             options:   Default: []. List of options.
@@ -6090,7 +6090,7 @@ def mmplot(plotitems=[], options=[], outfig=-1, filename=None):
             import numpy
             #
             x = numpy.arange(0, 2*numpy.pi, 0.1)
-            mmplot([[x]])
+            plot([[x]])
             y1 = numpy.sin(x)
             y2 = numpy.cos(x)
             opts = [['title', 'Example Plot'],\
@@ -6102,15 +6102,15 @@ def mmplot(plotitems=[], options=[], outfig=-1, filename=None):
             y2_plt = [x, y2, 'lines', 'cos(X)']
             #
             # plotting two graphs using one step
-            fig1 = mmplot([y1_plt, y2_plt], opts, 0)
+            fig1 = plot([y1_plt, y2_plt], opts, 0)
             #
             # plotting the same graphs using two steps
-            fig2 = mmplot([y1_plt], opts, 0)
-            fig2 = mmplot([y2_plt], opts, fig2)
+            fig2 = plot([y1_plt], opts, 0)
+            fig2 = plot([y2_plt], opts, fig2)
             #
             # first function has been lost, lets recover it
             opts.append(['replot'])
-            fig2 = mmplot([y1_plt], opts, fig2)
+            fig2 = plot([y1_plt], opts, fig2)
     """
     import Gnuplot
     import numpy
@@ -6128,8 +6128,8 @@ def mmplot(plotitems=[], options=[], outfig=-1, filename=None):
             g.replot()
             return outfig
         else:
-            #assert 0, "mmplot error: There is no current figure\n"
-            print "mmplot error: There is no current figure\n"
+            #assert 0, "plot error: There is no current figure\n"
+            print "plot error: There is no current figure\n"
             return 0
     # figure to be plotted
     if ((outfig < 0) and __figs__[0]):
@@ -6140,16 +6140,16 @@ def mmplot(plotitems=[], options=[], outfig=-1, filename=None):
         newfig = 1
         outfig = len(__figs__)
     elif outfig >= len(__figs__):
-        #assert 0, 'mmplot error: Figure ' + str(outfig) + 'does not exist\n'
-        print 'mmplot error: Figure ' + str(outfig) + 'does not exist\n'
+        #assert 0, 'plot error: Figure ' + str(outfig) + 'does not exist\n'
+        print 'plot error: Figure ' + str(outfig) + 'does not exist\n'
         return 0
     #current figure
     __figs__[0] = outfig
     # Gnuplot pointer
     if newfig:
         if len(__figs__) > 20:
-            print '''mmplot error: could not create figure. Too many PlotItems in memory (20). Use
-                     mmplot('reset') to clear table'''
+            print '''plot error: could not create figure. Too many PlotItems in memory (20). Use
+                     plot('reset') to clear table'''
             return 0
 
         g = Gnuplot.Gnuplot()
@@ -6177,9 +6177,9 @@ def mmplot(plotitems=[], options=[], outfig=-1, filename=None):
             elif option[0] == 'style':
                 g('set data style ' + option[1])
             else:
-                print "mmplot warning: Unknown option: " + option[0]
+                print "plot warning: Unknown option: " + option[0]
     except:
-        print "mmplot warning: Bad usage in options! Using default values. Please, use help.\n"
+        print "plot warning: Bad usage in options! Using default values. Please, use help.\n"
     # Plot items: item[0]=x, item[1]=y, item[2]=style
     for item in plotitems:
         try:
@@ -6203,8 +6203,8 @@ def mmplot(plotitems=[], options=[], outfig=-1, filename=None):
             g.reset()
             if newfig:
                 __figs__.pop()
-            #assert 0, "mmplot error: Bad usage in plotitems! Impossible to plot graph. Please, use help.\n"
-            print "mmplot error: Bad usage in plotitems! Impossible to plot graph. Please, use help.\n"
+            #assert 0, "plot error: Bad usage in plotitems! Impossible to plot graph. Please, use help.\n"
+            print "plot error: Bad usage in plotitems! Impossible to plot graph. Please, use help.\n"
             return 0
     # PNG file
     if filename:

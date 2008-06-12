@@ -1,23 +1,23 @@
-__all__ = ['mmtext']
-def mmtext(txt):
+__all__ = ['text']
+def text(txt):
     """
         - Purpose
             Create a binary image of a text.
         - Synopsis
-            y = mmtext(txt)
+            y = text(txt)
         - Input
             txt: String Default: "". Text to be written.
         - Output
             y: Binary image.
         - Description
-            mmtext creates the binary image y of the text txt . The
+            text creates the binary image y of the text txt . The
             background of y is 0, while its foreground is 1. The text should
             be composed only by lower and upper case letters.
 
     """
     from numpy import reshape, array
 
-    FontDft = mmbinary([
+    FontDft = binary([
      0,   0,   0,   0,   0,   0,   0,   0,   0,
      0,   0,   0,   0,   0,   0,   0,   0,   0,
      0,   0,   0,   0,   0,   0,   0,   0,   0,
@@ -1437,9 +1437,9 @@ def mmtext(txt):
     txt_i = array(txt,'l') - FIRST_CHAR
     for i in range(len(txt_i)):
       ind = txt_i[i]
-      assert ind < (LAST_CHAR-FIRST_CHAR),'mmtext, code not allowed'
+      assert ind < (LAST_CHAR-FIRST_CHAR),'text, code not allowed'
       if i == 0:
         y = FontDft[ind*HEIGHT_DFT:(ind+1)*HEIGHT_DFT,:]
       else:
-        y = mmconcat('w',y,FontDft[ind*HEIGHT_DFT:(ind+1)*HEIGHT_DFT,:])
+        y = concat('w',y,FontDft[ind*HEIGHT_DFT:(ind+1)*HEIGHT_DFT,:])
     return y
