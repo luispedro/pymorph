@@ -137,7 +137,7 @@
     mmvmax()         -- Remove domes with volume less than v.
     mmwatershed()    -- Watershed detection.
     uint16()         -- Convert an image to a uint16 image.
-    uint8()          -- Convert an image to an uint8 image.
+    to_uint8()          -- Convert an image to an uint8 image.
 
     ---
 
@@ -194,9 +194,9 @@ def mmconcat(DIM, X1, X2, X3=None, X4=None):
             g=mmconcat('W',f1,mmgray(mmneg(f2)))
             mmshow(g);
     """
-    from Numeric import NewAxis, sum, zeros
+    from numpy import newaxis, sum, zeros
 
-    aux = 'NewAxis,'
+    aux = 'newaxis,'
     d = len(X1.shape)
     if d < 3: X1 = eval('X1[' + (3-d)*aux + ':]')
     d1,h1,w1 = X1.shape
@@ -272,15 +272,16 @@ def mmlimits(f):
         - Examples
             #
             print mmlimits(mmbinary([0, 1, 0]))
-            print mmlimits(uint8([0, 1, 2]))
+            print mmlimits(to_uint8([0, 1, 2]))
     """
-    from Numeric import array
+    from numpy import array
 
-    code = f.typecode()
-    if   code == '1': y=array([0,1])
-    elif code == 'b': y=array([0,255])
-    elif code == 'w': y=array([0,65535])
-    elif code == 'i': y=array([-2147483647,2147483647])
+    import numpy as N
+    code = f.dtype
+    if   code == N.bool: y=array([0,1])
+    elif code == N.uint8: y=array([0,255])
+    elif code == N.uint16: y=array([0,65535])
+    elif code == N.int32: y=array([-2147483647,2147483647])
     else:
         assert 0,'Does not accept this typecode:'+code
     return y
@@ -418,7 +419,7 @@ def mmdist(f, Bc=None, METRIC=None):
             mmshow(de%8)
     """
     from string import upper
-    from Numeric import zeros, sqrt
+    from numpy import zeros, sqrt
     if Bc is None: Bc = mmsecross()
     if METRIC is not None:
        METRIC = upper(METRIC)
@@ -546,7 +547,7 @@ def mmglblshow(X, border=0.0):
             Y: Gray-scale (uint8 or uint16) or binary image.
 
     """
-    from Numeric import take, resize, shape
+    from numpy import take, resize, shape
     from MLab import rand
 
     mmin = mmstats(X,'min')
@@ -581,14 +582,14 @@ def mmgdtshow(X, N=10):
             Y: Gray-scale (uint8 or uint16) or binary image.
 
     """
-    from Numeric import NewAxis, ravel, ceil, zeros, ones, transpose, repeat, concatenate, arange, reshape, floor
+    from numpy import newaxis, ravel, ceil, zeros, ones, transpose, repeat, concatenate, arange, reshape, floor
 
     def apply_lut(img, lut):
         def lut_map(intens, lut=lut): return lut[intens]
         g = reshape(transpose(map(lut_map, ravel(img))), (3,img.shape[0],img.shape[1]))
         return g
     np = 1  # number of pixels by isoline
-    if len(X.shape) == 1: X = X[NewAxis,:]
+    if len(X.shape) == 1: X = X[newaxis,:]
     aux  = ravel(X)
     maxi, mini = max(aux), min(aux)
     d = int(ceil(256./N))
@@ -704,7 +705,7 @@ def mmhistogram(f, option="uint16"):
             #
             #   example 1
             #
-            f=uint8([0, 1, 1, 2, 2, 2, 5, 3, 5])
+            f=to_uint8([0, 1, 1, 2, 2, 2, 5, 3, 5])
             h=mmhistogram(f)
             print h
             #
@@ -715,7 +716,7 @@ def mmhistogram(f, option="uint16"):
             h=mmhistogram(f)
             mmplot([[h]],[['style', 'impulses']])
     """
-    from Numeric import searchsorted, sort, ravel, concatenate, product
+    from numpy import searchsorted, sort, ravel, concatenate, product
 
     n = searchsorted(sort(ravel(f)), range(max(ravel(f))+1))
     n = concatenate([n, [product(f.shape)]])
@@ -765,7 +766,7 @@ def mmlabel(f, Bc=None):
             mmshow(f)
             mmlblshow(g)
     """
-    from Numeric import allclose, ravel, nonzero, array
+    from numpy import allclose, ravel, nonzero, array
     if Bc is None: Bc = mmsecross()
     assert mmisbinary,'Can only label binary image'
     zero = mmsubm(f,f)               # zero image
@@ -809,9 +810,9 @@ def mmneg(f):
             #
             #   example 1
             #
-            f=uint8([255, 255, 0, 10, 20, 10, 0, 255, 255])
+            f=to_uint8([255, 255, 0, 10, 20, 10, 0, 255, 255])
             print mmneg(f)
-            print mmneg(uint8([0, 1]))
+            print mmneg(to_uint8([0, 1]))
             print mmneg(int32([0, 1]))
             #
             #   example 2
@@ -830,7 +831,7 @@ def mmneg(f):
     """
 
     y = mmlimits(f)[0] + mmlimits(f)[1] - f
-    y = y.astype(f.typecode())
+    y = y.astype(f.dtype)
     return y
 #
 # =====================================================================
@@ -860,7 +861,7 @@ def mmthreshad(f, f1, f2=None):
             #
             a = mmreadgray('keyb.tif')
             mmshow(a)
-            b = mmthreshad(a,uint8(10), uint8(50))
+            b = mmthreshad(a,to_uint8(10), to_uint8(50))
             mmshow(b)
             c = mmthreshad(a,238)
             mmshow(c)
@@ -905,11 +906,11 @@ def mmtoggle(f, f1, f2, OPTION="GRAY"):
             #
             #   example 1
             #
-            f = uint8([0,1,2,3,4,5,6])
+            f = to_uint8([0,1,2,3,4,5,6])
             print f
-            f1 = uint8([0,0,0,0,0,0,0])
+            f1 = to_uint8([0,0,0,0,0,0,0])
             print f1
-            f2 = uint8([6,6,6,6,6,6,6])
+            f2 = to_uint8([6,6,6,6,6,6,6])
             print f2
             print mmtoggle(f,f1,f2)
             #
@@ -967,8 +968,8 @@ def mmaddm(f1, f2):
             #
             #   example 1
             #
-            f = uint8([255,   255,    0,   10,    0,   255,   250])
-            g = uint8([ 0,    40,   80,   140,  250,    10,    30])
+            f = to_uint8([255,   255,    0,   10,    0,   255,   250])
+            g = to_uint8([ 0,    40,   80,   140,  250,    10,    30])
             y1 = mmaddm(f,g)
             print y1
             y2 = mmaddm(g, 100)
@@ -981,12 +982,12 @@ def mmaddm(f1, f2):
             mmshow(a)
             mmshow(b)
     """
-    from Numeric import array, minimum, maximum
+    from numpy import array, minimum, maximum
 
     if type(f2) is array:
-        assert f1.typecode() == f2.typecode(), 'Cannot have different datatypes:'
+        assert f1.dtype == f2.dtype, 'Cannot have different datatypes:'
     y = maximum(minimum(f1.astype('d')+f2, mmlimits(f1)[1]),mmlimits(f1)[0])
-    y = y.astype(f1.typecode())
+    y = y.astype(f1.dtype)
     return y
 #
 # =====================================================================
@@ -1064,7 +1065,7 @@ def mmareaopen(f, a, Bc=None):
             #
             #   example 1
             #
-            f=mmbinary(uint8([
+            f=mmbinary(to_uint8([
              [1, 1, 0, 0, 0, 0, 1],
              [1, 0, 1, 1, 1, 0, 1],
              [0, 0, 0, 0, 1, 0, 0]]))
@@ -1073,7 +1074,7 @@ def mmareaopen(f, a, Bc=None):
             #
             #   example 2
             #
-            f=uint8([
+            f=to_uint8([
                [10,   11,   0,    0,   0,   0,  20],
                [10,    0,   5,    8,   9,   0,  15],
                [10,    0,   0,    0,  10,   0,   0]])
@@ -1279,7 +1280,7 @@ def mmasfrec(f, SEQ="OC", b=None, bc=None, n=1):
 #   mmbinary
 #
 # =====================================================================
-def mmbinary(f, k1=1):
+def mmbinary(f, k=1):
     """
         - Purpose
             Convert a gray-scale image into a binary image
@@ -1310,11 +1311,9 @@ def mmbinary(f, k1=1):
             mmshow(a)
             mmshow(b)
     """
-    from Numeric import array
-
-    if type(f) is not array: f = array(f)
-    y = array(f>=k1).astype('1')
-    return y
+    from numpy import asarray
+    f=asarray(f)
+    return (f >= k)
 #
 # =====================================================================
 #
@@ -1348,7 +1347,7 @@ def mmblob(fr, measurement, option="image"):
             #
             #   example 1
             #
-            fr=uint8([
+            fr=to_uint8([
                [1,1,1,0,0,0],
                [1,1,1,0,0,2],
                [1,1,1,0,2,2]])
@@ -1387,12 +1386,12 @@ def mmblob(fr, measurement, option="image"):
             box=mmblob(fr,'boundingbox')
             mmshow(f,box)
     """
-    from Numeric import NewAxis, ravel, zeros, sum, nonzero, sometrue, array
+    from numpy import newaxis, ravel, zeros, sum, nonzero, sometrue, array
     from string import upper
 
     measurement = upper(measurement)
     option      = upper(option)
-    if len(fr.shape) == 1: fr = fr[NewAxis,:]
+    if len(fr.shape) == 1: fr = fr[newaxis,:]
     n = max(ravel(fr))
     if option == 'DATA': y = []
     else               : y = zeros(fr.shape)
@@ -1426,7 +1425,7 @@ def mmblob(fr, measurement, option="image"):
         print "Measurement option should be 'AREA','CENTROID', or 'BOUNDINGBOX'."
     if option == 'DATA':
         y = array(y)
-        if len(y.shape) == 1: y = y[:,NewAxis]
+        if len(y.shape) == 1: y = y[:,newaxis]
     return y
 #
 # =====================================================================
@@ -1500,10 +1499,10 @@ def mmcdil(f, g, b=None, n=1):
             #
             #   example 1
             #
-            f = mmbinary(uint8([[1, 0, 0, 0, 0, 0, 0],\
+            f = mmbinary(to_uint8([[1, 0, 0, 0, 0, 0, 0],\
                 [0, 0, 0, 0, 0, 0, 0],\
                 [0, 0, 0, 0, 1, 0, 0,]]))
-            g = mmbinary(uint8([[1, 1, 1, 0, 0, 1, 1],\
+            g = mmbinary(to_uint8([[1, 1, 1, 0, 0, 1, 1],\
                 [1, 0, 1, 1, 1, 0, 0],\
                 [0, 0, 0, 0, 1, 0, 0]]));
             y1=mmcdil(f,g,mmsecross())
@@ -1511,11 +1510,11 @@ def mmcdil(f, g, b=None, n=1):
             #
             #   example 2
             #
-            f = uint8([\
+            f = to_uint8([\
                 [   0,    0,   0,   80,   0,   0],\
                 [   0,    0,   0,    0,   0,   0],\
                 [  10,   10,   0,  255,   0,   0]])
-            g = uint8([\
+            g = to_uint8([\
                 [   0,    1,   2,   50,   4,   5],\
                 [   2,    3,   4,    0,   0,   0],\
                 [  12,  255,  14,   15,  16,  17]])
@@ -1788,14 +1787,14 @@ def mmcmp(f1, oper, f2, oper1=None, f3=None):
             #
             #   example 1
             #
-            print mmcmp(uint8([1, 2, 3]),'<', uint8(2))
-            print mmcmp(uint8([1, 2, 3]),'<', uint8([0, 2, 4]))
-            print mmcmp(uint8([1, 2, 3]),'==', uint8([1, 1, 3]))
+            print mmcmp(to_uint8([1, 2, 3]),'<', to_uint8(2))
+            print mmcmp(to_uint8([1, 2, 3]),'<', to_uint8([0, 2, 4]))
+            print mmcmp(to_uint8([1, 2, 3]),'==', to_uint8([1, 1, 3]))
             #
             #   example 2
             #
             f=mmreadgray('keyb.tif')
-            fbin=mmcmp(uint8(10), '<', f, '<', uint8(50))
+            fbin=mmcmp(to_uint8(10), '<', f, '<', to_uint8(50))
             mmshow(f)
             mmshow(fbin)
     """
@@ -1870,7 +1869,7 @@ def mmcthick(f, g, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
             mmshow(f2)
             mmshow(fn,f)
     """
-    from Numeric import product
+    from numpy import product
     from string import upper
     if Iab is None: Iab = mmhomothick()
     DIRECTION = upper(DIRECTION)            
@@ -1918,7 +1917,7 @@ def mmcthin(f, g, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
             theta of the interval Iab .
 
     """
-    from Numeric import product
+    from numpy import product
     from string import upper
     if Iab is None: Iab = mmhomothin()
     DIRECTION = upper(DIRECTION)            
@@ -1971,14 +1970,14 @@ def mmcwatershed(f, g, Bc=None, LINEREG="LINES"):
             #
             #   example 1
             #
-            a = uint8([\
+            a = to_uint8([\
                 [10,   10,   10,   10,   10,   10,   10],\
                 [10,    9,    6,   18,    6,    5,   10],\
                 [10,    9,    6,   18,    6,    8,   10],\
                 [10,    9,    9,   15,    9,    9,   10],\
                 [10,    9,    9,   15,   12,   10,   10],\
                 [10,   10,   10,   10,   10,   10,   10]])
-            b = mmcmp(a,'==',uint8(6))
+            b = mmcmp(a,'==',to_uint8(6))
             print mmcwatershed(a,b)
             print mmcwatershed(a,b,mmsecross(),'REGIONS')
             #
@@ -1992,7 +1991,7 @@ def mmcwatershed(f, g, Bc=None, LINEREG="LINES"):
             mmshow(mark)
             mmshow(w)
     """
-    from Numeric import ones, zeros, nonzero, array, put, take, argmin, transpose, compress, concatenate
+    from numpy import ones, zeros, nonzero, array, put, take, argmin, transpose, compress, concatenate
     if Bc is None: Bc = mmsecross()
     return g
     print 'starting'
@@ -2000,7 +1999,7 @@ def mmcwatershed(f, g, Bc=None, LINEREG="LINES"):
     if mmis(g,'binary'):
         g = mmlabel(g,Bc)
     print 'before 1. mmpad4n'
-    status = mmpad4n(uint8(zeros(f.shape)),Bc, 3)
+    status = mmpad4n(to_uint8(zeros(f.shape)),Bc, 3)
     f = mmpad4n( f,Bc,0)                 #pad input image
     print 'before 2. mmpad4n'
     y = mmpad4n( g,Bc,0)                  # pad marker image with 0
@@ -2085,7 +2084,7 @@ def mmdil(f, b=None):
                [0, 0, 0, 0, 1, 0, 0]])
             b=mmbinary([1, 1, 0])
             mmdil(f,b)
-            f=uint8([
+            f=to_uint8([
                [ 0,   1,  2, 50,  4,  5],
                [ 2,   3,  4,  0,  0,  0],
                [12, 255, 14, 15, 16, 17]])
@@ -2107,18 +2106,18 @@ def mmdil(f, b=None):
             mmshow(f)
             mmshow(mmdil(f,b))
     """
-    from Numeric import maximum, NewAxis, ones
+    from numpy import maximum, newaxis, ones
     if b is None: b = mmsecross()
-    if len(f.shape) == 1: f = f[NewAxis,:]
+    if len(f.shape) == 1: f = f[newaxis,:]
     h,w = f.shape
     x,v = mmmat2set(b)
     if len(x)==0:
-        y = (ones((h,w)) * mmlimits(f)[0]).astype(f.typecode())
+        y = (ones((h,w)) * mmlimits(f)[0]).astype(f.dtype)
     else:
         if mmisbinary(v):
             v = mmintersec(mmgray(v,'int32'),0)
         mh,mw = max(abs(x)[:,0]),max(abs(x)[:,1])
-        y = (ones((h+2*mh,w+2*mw)) * mmlimits(f)[0]).astype(f.typecode())
+        y = (ones((h+2*mh,w+2*mw)) * mmlimits(f)[0]).astype(f.dtype)
         for i in range(x.shape[0]):
             if v[i] > -2147483647:
                 y[mh+x[i,0]:mh+x[i,0]+h, mw+x[i,1]:mw+x[i,1]+w] = maximum(
@@ -2170,7 +2169,7 @@ def mmdrawv(f, data, value, GEOM):
             #
             #   example 1
             #
-            f=uint8(zeros((3,5)))
+            f=to_uint8(zeros((3,5)))
             pcoords=uint16([[0,2,4],
                             [0,0,2]])
             pvalue=uint16([1,2,3])
@@ -2186,10 +2185,10 @@ def mmdrawv(f, data, value, GEOM):
             #
             f=mmreadgray('blob3.tif')
             pc=mmblob(mmlabel(f),'centroid','data')
-            lines=mmdrawv(mmintersec(f,0),transpose(pc),uint8(1),'line')
+            lines=mmdrawv(mmintersec(f,0),transpose(pc),to_uint8(1),'line')
             mmshow(f,lines)
     """
-    from Numeric import array, NewAxis, zeros, Int, put, ravel, arange, floor
+    from numpy import array, newaxis, zeros, Int, put, ravel, arange, floor
     from string import upper
 
     GEOM  = upper(GEOM)
@@ -2198,7 +2197,7 @@ def mmdrawv(f, data, value, GEOM):
     y     = array(f)
     lin, col = data[1,:], data[0,:]
     i = lin*f.shape[1] + col; i = i.astype(Int)
-    if len(f.shape) == 1: f = f[NewAxis,:]
+    if len(f.shape) == 1: f = f[newaxis,:]
     if value.shape == (): value = value + zeros(lin.shape)
     if len(lin) != len(value):
         print 'Number of points must match n. of colors.'
@@ -2379,7 +2378,7 @@ def mmero(f, b=None):
                [0, 0, 0, 0, 1, 0, 0]])
             b=mmbinary([1, 1, 0])
             mmero(f,b)
-            f=uint8([
+            f=to_uint8([
                [ 0,   1,  2, 50,  4,  5],
                [ 2,   3,  4,  0,  0,  0],
                [12, 255, 14, 15, 16, 17]])
@@ -2445,7 +2444,7 @@ def mmfreedom(L=5):
             #
             #   example 1
             #
-            a=mmsubm([4., 2., 1.],uint8([3, 2, 0]))
+            a=mmsubm([4., 2., 1.],to_uint8([3, 2, 0]))
             print a
             print mmdatatype(a)
             #
@@ -2457,7 +2456,7 @@ def mmfreedom(L=5):
             #
             #   example 3
             #
-            a=mmsubm(uint8([4, 3, 2, 1]), 1)
+            a=mmsubm(to_uint8([4, 3, 2, 1]), 1)
             print a
             print mmdatatype(a)
     """
@@ -2637,7 +2636,7 @@ def mmgrain(fr, f, measurement, option="image"):
             #
             #   example 1
             #
-            f=uint8([range(6),range(6),range(6)])
+            f=to_uint8([range(6),range(6),range(6)])
             fr=mmlabelflat(f)
             mmgrain(fr,f,'sum','data')
             mmgrain(fr,f,'sum')
@@ -2652,13 +2651,13 @@ def mmgrain(fr, f, measurement, option="image"):
             mmshow(f)
             mmshow(g)
     """
-    from Numeric import NewAxis, ravel, zeros, sum, nonzero, put, take, array
+    from numpy import newaxis, ravel, zeros, sum, nonzero, put, take, array
     from MLab import mean, std
     from string import upper
 
     measurement = upper(measurement)
     option      = upper(option)
-    if len(fr.shape) == 1: fr = fr[NewAxis,:]
+    if len(fr.shape) == 1: fr = fr[newaxis,:]
     n = max(ravel(fr))
     if option == 'DATA': y = []
     else               : y = zeros(fr.shape)
@@ -2704,7 +2703,7 @@ def mmgrain(fr, f, measurement, option="image"):
         print "Measurement should be 'MAX', 'MIN', 'MEAN', 'SUM', 'STD', 'STD1'."
     if option == 'DATA':
         y = array(y)
-        if len(y.shape) == 1: y = y[:,NewAxis]
+        if len(y.shape) == 1: y = y[:,newaxis]
     return y
 #
 # =====================================================================
@@ -2744,13 +2743,13 @@ def mmgray(f, TYPE="uint8", k1=None):
             f=mmgray(b,'int32',0)
             print f
     """
-    from Numeric import array
+    from numpy import array
     if k1 is None: k1 = mmmaxleveltype(TYPE)
     if type(f) is list: f = mmbinary(f)
     assert mmis(f,'binary'), 'f must be binary'
     if k1==None:
         k1=mmmaxleveltype(TYPE)
-    if   TYPE == 'uint8' : y = uint8(f*k1)
+    if   TYPE == 'uint8' : y = to_uint8(f*k1)
     elif TYPE == 'uint16': y = uint16(f*k1)
     elif TYPE == 'int32' : y = int32(f*k1) - int32(mmneg(f)*mmmaxleveltype(TYPE))
     else:
@@ -2785,7 +2784,7 @@ def mmhmin(f, h=1, Bc=None):
             #
             #   example 1
             #
-            a = uint8([
+            a = to_uint8([
                 [10,   3,   6,  18,  16,  15,  10],
                 [10,   9,   6,  18,   6,   5,  10],
                 [10,   9,   9,  15,   4,   9,  10],
@@ -2860,7 +2859,7 @@ def mmvmax(f, v=1, Bc=None):
             #
             #   example 1
             #
-            a = uint8([
+            a = to_uint8([
                 [4,  3,  6,  1,  3,  5,  2],
                 [2,  9,  6,  1,  6,  7,  3],
                 [8,  9,  3,  2,  4,  9,  4],
@@ -2908,7 +2907,7 @@ def mmhmax(f, h=1, Bc=None):
             #
             #   example 1
             #
-            a = uint8([
+            a = to_uint8([
                 [4,   3,   6,  1,  3,  5,  2],
                 [2,   9,   6,  1,  6,  7,  3],
                 [8,   9,   3,  2,  4,  9,  4],
@@ -3045,7 +3044,7 @@ def mmimg2se(fd, FLAT="FLAT", f=None):
             print mmseshow(e)
     """
     from string import upper
-    from Numeric import choose, ones
+    from numpy import choose, ones
 
     assert mmisbinary(fd),'First parameter must be binary'
     FLAT = upper(FLAT)
@@ -3168,7 +3167,7 @@ def mminfrec(f, g, bc=None):
             mmshow(y30)
             mmshow(y)
     """
-    from Numeric import product
+    from numpy import product
     if bc is None: bc = mmsecross()
     n = product(f.shape)
     y = mmcdil(f,g,bc,n);
@@ -3275,8 +3274,8 @@ def mmintersec(f1, f2, f3=None, f4=None, f5=None):
             #
             #   example 1
             #
-            f=uint8([255,  255,    0,   10,    0,   255,   250])
-            g=uint8([ 0,    40,   80,   140,  250,    10,    30])
+            f=to_uint8([255,  255,    0,   10,    0,   255,   250])
+            g=to_uint8([ 0,    40,   80,   140,  250,    10,    30])
             print mmintersec(f, g)
             print mmintersec(f, 0)
             #
@@ -3300,13 +3299,13 @@ def mmintersec(f1, f2, f3=None, f4=None, f5=None):
             mmshow(f)
             mmshow(g)
     """
-    from Numeric import minimum
+    from numpy import minimum
 
     y = minimum(f1,f2)
     if f3 != None: y = minimum(y,f3)
     if f4 != None: y = minimum(y,f4)
     if f5 != None: y = minimum(y,f5)
-    y = y.astype(f1.typecode())
+    y = y.astype(f1.dtype)
     return y
 #
 # =====================================================================
@@ -3331,7 +3330,7 @@ def mmintershow(Iab):
             #
             print mmintershow(mmhomothin())
     """
-    from Numeric import array, product, reshape, choose
+    from numpy import array, product, reshape, choose
     from string import join
 
     assert (type(Iab) is tuple) and (len(Iab) == 2),'not proper fortmat of hit-or-miss template'
@@ -3379,9 +3378,9 @@ def mmis(f1, oper, f2=None, oper1=None, f3=None):
         - Examples
             #
             fbin=mmbinary([0, 1])
-            f1=uint8([1, 2, 3])
-            f2=uint8([2, 2, 3])
-            f3=uint8([2, 3, 4])
+            f1=to_uint8([1, 2, 3])
+            f2=to_uint8([2, 2, 3])
+            f3=to_uint8([2, 3, 4])
             mmis(fbin,'binary')
             mmis(f1,'gray')
             mmis(f1,'==',f2)
@@ -3436,16 +3435,12 @@ def mmisbinary(f):
             binary. A binary image has just the values 0 and 1.
         - Examples
             #
-            a=uint8([0, 1, 0, 1])
+            a=to_uint8([0, 1, 0, 1])
             print mmisbinary(a)
             b=(a)
             print mmisbinary(b)
     """
-
-    bool = type(f) is type(mmbinary([1]))
-    if bool:            
-       bool = f.typecode() == '1'
-    return bool
+    return type(f) is type(mmbinary([1])) and f.dtype == bool
 #
 # =====================================================================
 #
@@ -3470,21 +3465,21 @@ def mmisequal(f1, f2, MSG=None):
             f1(x)=f2(x) , for all pixel x , and false (0), otherwise.
         - Examples
             #
-            f1 = uint8(arrayrange(4))
+            f1 = to_uint8(arrayrange(4))
             print f1
-            f2 = uint8([9, 5, 3, 3])
+            f2 = to_uint8([9, 5, 3, 3])
             print f2
             f3 = f1
             mmisequal(f1,f2)
             mmisequal(f1,f3)
     """
-    from Numeric import ravel, alltrue, array
+    from numpy import ravel, alltrue, array
 
     bool = alltrue(ravel(f1==f2))
     bool1 = 1
     if type(f1) is type(array([1])):
         bool1 = type(f1) is type(f2)
-        bool1 = bool1 and ((f1.typecode() == f2.typecode()))
+        bool1 = bool1 and ((f1.dtype == f2.dtype))
     if MSG != None:
         if bool:
             if bool1:
@@ -3516,13 +3511,13 @@ def mmislesseq(f1, f2, MSG=None):
             if f1(x) <= f2(x) , for every pixel x, and false (0), otherwise.
         - Examples
             #
-            f1 = uint8([0, 1, 2, 3])
-            f2 = uint8([9, 5, 3, 3])
+            f1 = to_uint8([0, 1, 2, 3])
+            f2 = to_uint8([9, 5, 3, 3])
             print mmislesseq(f1,f2)
             print mmislesseq(f2,f1)
             print mmislesseq(f1,f1)
     """
-    from Numeric import ravel
+    from numpy import ravel
 
     bool = min(ravel(f1<=f2))
     return bool
@@ -3560,7 +3555,7 @@ def mmlabelflat(f, Bc=None, _lambda=0):
             #
             #   example 1
             #
-            f=uint8([
+            f=to_uint8([
                [5,5,8,3,0],
                [5,8,8,0,2]])
             g=mmlabelflat(f)
@@ -3585,7 +3580,7 @@ def mmlabelflat(f, Bc=None, _lambda=0):
             mmshow(f)
             mmlblshow(g)
     """
-    from Numeric import allclose, ravel, nonzero, array
+    from numpy import allclose, ravel, nonzero, array
     if Bc is None: Bc = mmsecross()
     zero = mmbinary(mmsubm(f,f))       # zero image
     faux = mmneg(zero)
@@ -3901,7 +3896,7 @@ def mmopentransf(f, type='OCTAGON', n=65535, Bc=None, Buser=None):
             g2=mmcmp(g,'>',3)
             print mmis(g1,'==',g2)
     """
-    from Numeric import zeros
+    from numpy import zeros
     from string import find, upper
     if Bc is None: Bc = mmsecross()
     if Buser is None: Buser = mmsecross()
@@ -4017,11 +4012,11 @@ def mmreadgray(filename):
             mmshow(a)
     """
     import adpil
-    import Numeric
+    import numpy
 
     y = adpil.adread(filename)
     if (len(y.shape) == 3) and (y.shape[0] == 3):
-       if Numeric.alltrue(Numeric.alltrue(y[0,:,:] == y[1,:,:] and
+       if numpy.alltrue(numpy.alltrue(y[0,:,:] == y[1,:,:] and
                                           y[0,:,:] == y[2,:,:])):
           y = y[0,:,:]
        else:
@@ -4137,7 +4132,7 @@ def mmregmin(f, Bc=None, option="binary"):
             #
             #   example 1
             #
-            a = uint8([
+            a = to_uint8([
                 [10,  10,  10,  10,  10,  10,  10],
                 [10,   9,   6,  18,   6,   5,  10],
                 [10,   9,   6,  18,   6,   5,  10],
@@ -4357,8 +4352,8 @@ def mmsedisk(r=3, DIM="2D", METRIC="EUCLIDEAN", FLAT="FLAT", h=0):
             mmseshow(h)
     """
     from string import upper
-    from Numeric import resize, transpose, arange
-    from Numeric import sqrt, arange, transpose, maximum
+    from numpy import resize, transpose, arange
+    from numpy import sqrt, arange, transpose, maximum
 
     METRIC = upper(METRIC)
     FLAT   = upper(FLAT)            
@@ -4439,7 +4434,7 @@ def mmseline(l=3, theta=0):
             mmshow(a)
             mmshow(b)
     """
-    from Numeric import pi, tan, cos, sin, sign, floor, arange, transpose, array, ones
+    from numpy import pi, tan, cos, sin, sign, floor, arange, transpose, array, ones
 
     theta = pi*theta/180
     if abs(tan(theta)) <= 1:
@@ -4483,8 +4478,8 @@ def mmserot(B, theta=45, DIRECTION="CLOCKWISE"):
             mmseshow(mmserot(b,45,'ANTI-CLOCKWISE'))
     """
     from string import upper
-    from Numeric import array, sin, cos, transpose
-    from Numeric import cos, sin, pi, concatenate, transpose, array
+    from numpy import array, sin, cos, transpose
+    from numpy import cos, sin, pi, concatenate, transpose, array
 
     DIRECTION = upper(DIRECTION)            
     if DIRECTION == "ANTI-CLOCKWISE":
@@ -4636,7 +4631,7 @@ def mmsetrans(Bi, t):
 
     x,v=mmmat2set(Bi)
     Bo = mmset2mat((x+t,v))
-    Bo = Bo.astype(Bi.typecode())
+    Bo = Bo.astype(Bi.dtype)
     return Bo
 #
 # =====================================================================
@@ -4700,12 +4695,12 @@ def mmsedil(B1, B2):
             b3 = mmsedil(b1,b2)
             mmseshow(b3)
     """
-    from Numeric import NewAxis, array
+    from numpy import newaxis, array
 
     assert ((mmdatatype(B1) == 'binary') or (mmdatatype(B1) == 'int32')) and (
             (mmdatatype(B2) == 'binary') or (mmdatatype(B2) == 'int32')),'SE must be binary or int32'
-    if len(B1.shape) == 1: B1 = B1[NewAxis,:]
-    if len(B2.shape) == 1: B2 = B2[NewAxis,:]
+    if len(B1.shape) == 1: B1 = B1[newaxis,:]
+    if len(B2.shape) == 1: B2 = B2[newaxis,:]
     if (mmdatatype(B1) == 'int32') or (mmdatatype(B2) == 'int32'):
        Bo = int32([mmlimits(int32([0]))[0]])
        if mmdatatype(B1) == 'binary':
@@ -4750,13 +4745,13 @@ def mmseunion(B1, B2):
             b3 = mmseunion(b1,b2)
             mmseshow(b3)
     """
-    from Numeric import maximum, ones, asarray, NewAxis
+    from numpy import maximum, ones, asarray, newaxis
 
-    assert B1.typecode() == B2.typecode(), 'Cannot have different datatypes:'
-    type1 = B1.typecode()
+    assert B1.dtype == B2.dtype, 'Cannot have different datatypes:'
+    type1 = B1.dtype
     if len(B1) == 0: return B2
-    if len(B1.shape) == 1: B1 = B1[NewAxis,:]
-    if len(B2.shape) == 1: B2 = B2[NewAxis,:]
+    if len(B1.shape) == 1: B1 = B1[newaxis,:]
+    if len(B2.shape) == 1: B2 = B2[newaxis,:]
     if B1.shape <> B2.shape:
         inf = mmlimits(B1)[0]
         h1,w1 = B1.shape
@@ -4860,7 +4855,7 @@ def mmskelm(f, B=None, option="binary"):
             #
             #   example 1
             #
-            from Numeric import ones
+            from numpy import ones
             a=mmneg(mmframe(mmbinary(ones((7,9)))))
             print a
             print mmskelm(a)
@@ -4879,7 +4874,7 @@ def mmskelm(f, B=None, option="binary"):
             mmshow(c)
     """
     from string import upper
-    from Numeric import asarray
+    from numpy import asarray
     if B is None: B = mmsecross()
     assert mmisbinary(f),'Input binary image only'
     option = upper(option)
@@ -4919,7 +4914,7 @@ def mmskelmrec(f, B=None):
             recover the original image.
         - Examples
             #
-            from Numeric import ones
+            from numpy import ones
             a=mmneg(mmframe(mmbinary(ones((7,9)))))
             print a
             b=mmskelm(a,mmsecross(),'value')
@@ -4927,7 +4922,7 @@ def mmskelmrec(f, B=None):
             c=mmskelmrec(b,mmsecross())
             print c
     """
-    from Numeric import ravel
+    from numpy import ravel
     if B is None: B = mmsecross()
     y = mmbinary(mmintersec(f, 0))
     for r in range(max(ravel(f)),1,-1):
@@ -4973,7 +4968,7 @@ def mmskiz(f, Bc=None, LINEREG="LINES", METRIC=None):
             #
             #   example 2
             #
-            from Numeric import zeros
+            from numpy import zeros
             f=mmbinary(zeros((100,100)))
             f[30,25],f[20,75],f[50,50],f[70,30],f[80,70] = 1,1,1,1,1
             y = mmskiz(f,mmsebox(),'LINES','EUCLIDEAN')
@@ -5015,7 +5010,7 @@ def mmstats(f, measurement):
 
     """
     from string import upper
-    from Numeric import ravel
+    from numpy import ravel
     from MLab import mean, median, std
 
     measurement = upper(measurement)
@@ -5062,8 +5057,8 @@ def mmsubm(f1, f2):
             #
             #   example 1
             #
-            f = uint8([255,   255,    0,   10,   20,   10,    0,   255,  255])
-            g = uint8([10,     20,   30,   40,   50,   40,   30,    20,    10])
+            f = to_uint8([255,   255,    0,   10,   20,   10,    0,   255,  255])
+            g = to_uint8([10,     20,   30,   40,   50,   40,   30,    20,    10])
             print mmsubm(f, g)
             print mmsubm(f, 100)
             print mmsubm(100, f)
@@ -5077,12 +5072,13 @@ def mmsubm(f1, f2):
             mmshow(b)
             mmshow(c)
     """
-    from Numeric import array, minimum, maximum
+    from numpy import array, clip
 
     if type(f2) is array:
-        assert f1.typecode() == f2.typecode(), 'Cannot have different datatypes:'
-    y = minimum(maximum(f1.astype('d')-f2, mmlimits(f1)[0]), mmlimits(f1)[1])
-    y = y.astype(f1.typecode())
+        assert f1.dtype == f2.dtype, 'Cannot have different datatypes:'
+    bottom,top=mmlimits(f1)
+    y = clip(f1.astype('d') - f2, bottom, top)
+    y = y.astype(f1.dtype)
     return y
 #
 # =====================================================================
@@ -5199,7 +5195,7 @@ def mmsuprec(f, g, Bc=None):
             g from the marker f .
 
     """
-    from Numeric import product
+    from numpy import product
     if Bc is None: Bc = mmsecross()
     n = product(f.shape)
     y = mmcero(f,g,Bc,n);
@@ -5242,10 +5238,10 @@ def mmbshow(f1, f2=None, f3=None, factor=17):
             g3=mmbshow(f1,f2,f3)
             mmshow(g3);
     """
-    from Numeric import NewAxis, zeros, resize, transpose, floor, arange, array
+    from numpy import newaxis, zeros, resize, transpose, floor, arange, array
 
     if f1.shape == (): f1 = array([f1])
-    if len(f1.shape) == 1: f1 = f1[NewAxis,:]
+    if len(f1.shape) == 1: f1 = f1[newaxis,:]
     if (`f1.shape` != `f2.shape`) or \
        (`f1.shape` != `f3.shape`) or \
        (`f2.shape` != `f3.shape`):
@@ -5314,14 +5310,14 @@ def mmswatershed(f, g, B=None, LINEREG="LINES"):
             function is based on LotuFalc:00 .
         - Examples
             #
-            f = uint8([
+            f = to_uint8([
                 [0,  0,  0,  0,  0,  0,  0],
                 [0,  1,  0,  0,  0,  1,  0],
                 [0,  1,  0,  0,  0,  1,  0],
                 [0,  1,  1,  1,  1,  1,  0],
                 [0,  1,  0,  0,  0,  0,  0],
                 [0,  0,  0,  0,  0,  0,  0]])
-            m = uint8([
+            m = to_uint8([
                 [0,  0,  0,  0,  0,  0,  0],
                 [0,  1,  0,  0,  0,  0,  0],
                 [0,  0,  0,  0,  0,  0,  0],
@@ -5361,8 +5357,8 @@ def mmsymdif(f1, f2):
             #
             #   example 1
             #
-            a = uint8([1, 2, 3, 4, 5])
-            b = uint8([5, 4, 3, 2, 1])
+            a = to_uint8([1, 2, 3, 4, 5])
+            b = to_uint8([5, 4, 3, 2, 1])
             print mmsymdif(a,b)
             #
             #   example 2
@@ -5399,7 +5395,7 @@ def mmtext(txt):
             be composed only by lower and upper case letters.
 
     """
-    from Numeric import reshape, array
+    from numpy import reshape, array
 
     FontDft = mmbinary([
      0,   0,   0,   0,   0,   0,   0,   0,   0,
@@ -6859,7 +6855,7 @@ def mmthick(f, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
             .
 
     """
-    from Numeric import product
+    from numpy import product
     from string import upper
     if Iab is None: Iab = mmhomothick()
     DIRECTION = upper(DIRECTION)            
@@ -6914,7 +6910,7 @@ def mmthin(f, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
             f2=mmthin(f1,mmendpoints(),15) # prunning 15 pixels
             mmshow(f,f2) # prunned skeleton
     """
-    from Numeric import product
+    from numpy import product
     from string import upper
     if Iab is None: Iab = mmhomothin()
     DIRECTION = upper(DIRECTION)            
@@ -6961,9 +6957,9 @@ def mmunion(f1, f2, f3=None, f4=None, f5=None):
             #
             #   example 1
             #
-            f=uint8([255, 255,  0,  10,   0, 255, 250])
+            f=to_uint8([255, 255,  0,  10,   0, 255, 250])
             print 'f=',f
-            g=uint8([  0,  40, 80, 140, 250,  10,  30])
+            g=to_uint8([  0,  40, 80, 140, 250,  10,  30])
             print 'g=',g
             print mmunion(f, g)
             print mmunion(f, 255)
@@ -6997,13 +6993,13 @@ def mmunion(f1, f2, f3=None, f4=None, f5=None):
             mmshow(i)
             mmshow(j)
     """
-    from Numeric import maximum
+    from numpy import maximum
 
     y = maximum(f1,f2)
     if f3: y = maximum(y,f3)
     if f4: y = maximum(y,f4)
     if f5: y = maximum(y,f5)
-    y = y.astype(f1.typecode())
+    y = y.astype(f1.dtype)
     return y
 #
 # =====================================================================
@@ -7111,7 +7107,7 @@ def mmbench(count=10):
     """
     from sys import platform
     from time import time, asctime
-    from Numeric import average, zeros
+    from numpy import average, zeros
 
     filename = 'csample.jpg'
     f = mmreadgray(filename)
@@ -7249,7 +7245,7 @@ def int32(f):
             2147483647 and converts it to the signed 32-bit datatype.
 
     """
-    from Numeric import array, clip
+    from numpy import array, clip
 
     img = array(clip(f,-2147483647,2147483647)).astype('i')
     return img
@@ -7259,12 +7255,12 @@ def int32(f):
 #   uint8
 #
 # =====================================================================
-def uint8(f):
+def to_uint8(f):
     """
         - Purpose
             Convert an image to an uint8 image.
         - Synopsis
-            img = uint8(f)
+            img = to_uint8(f)
         - Input
             f: Any image
         - Output
@@ -7275,11 +7271,11 @@ def uint8(f):
         - Examples
             #
             a = int32([-3,0,8,600])
-            print uint8(a)
+            print to_uint8(a)
     """
-    from Numeric import array, clip
+    from numpy import array, clip, uint8
 
-    img = array(clip(f,0,255)).astype('b')
+    img = array(clip(f,0,255),uint8)
     return img
 #
 # =====================================================================
@@ -7305,7 +7301,7 @@ def uint16(f):
             a = int32([-3,0,8,100000])
             print uint16(a)
     """
-    from Numeric import array, clip
+    from numpy import array, clip
 
     img = array(clip(f,0,65535)).astype('w')
     return img
@@ -7333,11 +7329,11 @@ def mmdatatype(f):
 
     """
 
-    code = f.typecode()
-    if   code == '1': type='binary'
-    elif code == 'b': type='uint8'
-    elif code == 'w': type='uint16'
-    elif code == 'i': type='int32'
+    code = f.dtype
+    if   code == bool: type='binary'
+    elif code == uint8: type='uint8'
+    elif code == uint16: type='uint16'
+    elif code == int32: type='int32'
     else:
         assert 0,'Does not accept this typecode:'+code
     return type
@@ -7360,14 +7356,14 @@ def mmadd4dil(f, c):
             a: Image f + c
 
     """
-    from Numeric import asarray, minimum, maximum
+    from numpy import asarray, minimum, maximum
 
     if c:            
        y = asarray(f,'d') + c
        k1,k2 = mmlimits(f)
        y = ((f==k1) * k1) + ((f!=k1) * y)
        y = maximum(minimum(y,k2),k1)
-       a = y.astype(f.typecode())
+       a = y.astype(f.dtype)
     else:
        a = f
     return a
@@ -7398,22 +7394,22 @@ def mmmat2set(A):
             #
             #   example 1
             #
-            f=uint8([[1,2,3],[4,5,6],[7,8,9]])
+            f=to_uint8([[1,2,3],[4,5,6],[7,8,9]])
             i,v=mmmat2set(f)
             print i
             print v
             #
             #   example 2
             #
-            f=uint8([[1,2,3,4],[5,6,7,8]])
+            f=to_uint8([[1,2,3,4],[5,6,7,8]])
             i,v=mmmat2set(f)
             print i
             print v
     """
-    from Numeric import take, ravel, nonzero, transpose, NewAxis
+    from numpy import take, ravel, nonzero, transpose, newaxis
 
-    if len(A.shape) == 1: A = A[NewAxis,:]
-    offsets = nonzero(ravel(A) - mmlimits(A)[0])
+    if len(A.shape) == 1: A = A[newaxis,:]
+    offsets = nonzero(ravel(A) - mmlimits(A)[0])[0]
     if len(offsets) == 0: return ([],[])
     (h,w) = A.shape
     x = range(2)
@@ -7452,7 +7448,7 @@ def mmset2mat(A):
             A=mmset2mat((coord,))
             print A
             print mmdatatype(A)
-            vu = uint8([1,2,3])
+            vu = to_uint8([1,2,3])
             f=mmset2mat((coord,vu))
             print f
             print mmdatatype(f)
@@ -7462,7 +7458,7 @@ def mmset2mat(A):
             print mmdatatype(g)
     """
     from MLab import max
-    from Numeric import put, ones, ravel, shape, NewAxis, array, asarray
+    from numpy import put, ones, ravel, shape, newaxis, array, asarray
 
     if len(A) == 2:            
         x, v = A
@@ -7472,14 +7468,14 @@ def mmset2mat(A):
         v = ones((len(x),), '1')
     else:
         raise TypeError, 'Argument must be a tuple of length 1 or 2'
-    if len(x) == 0:  return array([0]).astype(v.typecode())
-    if len(x.shape) == 1: x = x[NewAxis,:]
+    if len(x) == 0:  return array([0]).astype(v.dtype)
+    if len(x.shape) == 1: x = x[newaxis,:]
     dh,dw = max(abs(x))
     h,w = (2*dh)+1, (2*dw)+1 
     M=ones((h,w)) * mmlimits(v)[0]
     offset = x[:,0] * w + x[:,1] + (dh*w + dw)
     put(M,offset,v)
-    M = M.astype(v.typecode())
+    M = M.astype(v.dtype)
     return M
 #
 # =====================================================================
@@ -7502,7 +7498,7 @@ def mmpad4n(f, Bc, value, scale=1):
             y: The converted image
 
     """
-    from Numeric import ones, array
+    from numpy import ones, array
 
     if type(Bc) is not array:
       Bc = mmseshow(Bc)            
@@ -7511,7 +7507,7 @@ def mmpad4n(f, Bc, value, scale=1):
     ch, cw = scale * Bh/2, scale * Bw/2
     g = value * ones( f.shape + scale * (array(Bc.shape) - 1))
     g[ ch: -ch, cw: -cw] = f
-    y = g.astype( f.typecode())
+    y = g.astype(f.dtype)
     return y
 #
 # =====================================================================
@@ -7542,12 +7538,12 @@ def mmplot(plotitems=[], options=[], outfig=-1, filename=None):
 
         - Examples
             #
-            import Numeric
+            import numpy
             #
-            x = Numeric.arange(0, 2*Numeric.pi, 0.1)
+            x = numpy.arange(0, 2*numpy.pi, 0.1)
             mmplot([[x]])
-            y1 = Numeric.sin(x)
-            y2 = Numeric.cos(x)
+            y1 = numpy.sin(x)
+            y2 = numpy.cos(x)
             opts = [['title', 'Example Plot'],\
                     ['grid'],\
                     ['style', 'linespoints'],\
@@ -7568,7 +7564,7 @@ def mmplot(plotitems=[], options=[], outfig=-1, filename=None):
             fig2 = mmplot([y1_plt], opts, fig2)
     """
     import Gnuplot
-    import Numeric
+    import numpy
 
     newfig = 0
     if (plotitems == 'reset'):
@@ -7640,10 +7636,10 @@ def mmplot(plotitems=[], options=[], outfig=-1, filename=None):
         try:
             title = None
             style = None
-            x = Numeric.ravel(item[0])
+            x = numpy.ravel(item[0])
             if len(item) > 1:
                 # y axis specified
-                y = Numeric.ravel(item[1])
+                y = numpy.ravel(item[1])
                 if len(item) > 2:
                     # style specified
                     style = item[2]
@@ -7652,7 +7648,7 @@ def mmplot(plotitems=[], options=[], outfig=-1, filename=None):
             else:
                 # no y axis specified
                 y = x
-                x = Numeric.arange(len(y))
+                x = numpy.arange(len(y))
             g.replot(Gnuplot.Data(x, y, title=title, with=style))
         except:
             g.reset()
@@ -7674,3 +7670,4 @@ def mmplot(plotitems=[], options=[], outfig=-1, filename=None):
 # =====================================================================
 #
 
+# vim: set ts=4 sts=4 sw=4 expandtab smartindent:
