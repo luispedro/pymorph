@@ -3036,7 +3036,7 @@ def isbinary(f):
         - Output
             bool: Boolean
         - Description
-            isbinary returns TRUE(1) if the datatype of the input image is
+            isbinary returns True if the datatype of the input image is
             binary. A binary image has just the values 0 and 1.
         - Examples
             #
@@ -3045,7 +3045,7 @@ def isbinary(f):
             b=(a)
             print isbinary(b)
     """
-    return type(f) is type(binary([1])) and f.dtype == bool
+    return f.dtype == bool
 
 def isequal(f1, f2):
     """
