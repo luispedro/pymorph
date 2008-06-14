@@ -1021,7 +1021,7 @@ def areaopen(f, a, Bc=None):
       zero = binary(y)
       k1 = f.min()
       k2 = f.max()
-      for k in range(k1,k2+1):   # gray-scale, use thresholding decomposition
+      for k in xrange(k1,k2+1):   # gray-scale, use thresholding decomposition
         fk = threshad(f,k)
         fo = areaopen(fk,a,Bc)
         if isequal(fo,zero):
@@ -1112,19 +1112,19 @@ def asf(f, SEQ="OC", b=None, n=1):
     SEQ=upper(SEQ)
     y = f
     if SEQ == 'OC':
-        for i in range(1,n+1):
+        for i in xrange(1,n+1):
             nb = sesum(b,i)
             y = open(close(y,nb),nb)
     elif SEQ == 'CO':
-        for i in range(1,n+1):
+        for i in xrange(1,n+1):
             nb = sesum(b,i)
             y = close(open(y,nb),nb)
     elif SEQ == 'OCO':
-        for i in range(1,n+1):
+        for i in xrange(1,n+1):
             nb = sesum(b,i)
             y = open(close(open(y,nb),nb),nb)
     elif SEQ == 'COC':
-        for i in range(1,n+1):
+        for i in xrange(1,n+1):
             nb = sesum(b,i)
             y = close(open(close(y,nb),nb),nb)
     return y
@@ -1165,12 +1165,12 @@ def asfrec(f, SEQ="OC", b=None, bc=None, n=1):
     SEQ = upper(SEQ)
     y = f
     if SEQ == 'OC':
-        for i in range(1,n+1):
+        for i in xrange(1,n+1):
             nb = sesum(b,i)
             y = closerec(y,nb,bc)
             y = openrec(y,nb,bc)
     elif SEQ == 'CO':
-        for i in range(1,n+1):
+        for i in xrange(1,n+1):
             nb = sesum(b,i)
             y = openrec(y,nb,bc)
             y = closerec(y,nb,bc)
@@ -1291,13 +1291,13 @@ def blob(fr, measurement, option="image"):
     if option == 'DATA': y = []
     else               : y = zeros(fr.shape)
     if measurement == 'AREA':
-        for i in range(1,n+1):
+        for i in xrange(1,n+1):
             aux  = fr==i
             area = aux.ravel()
             if option == 'DATA': y.append(area)
             else               : y = y + area*aux
     elif measurement == 'CENTROID':
-        for i in range(1,n+1):
+        for i in xrange(1,n+1):
             aux  = fr==i
             ind  = nonzero(ravel(aux))
             indx = ind / fr.shape[1]
@@ -1306,7 +1306,7 @@ def blob(fr, measurement, option="image"):
             if option == 'DATA': y.append([centroid[1],centroid[0]])
             else               : y[centroid] = 1
     elif measurement == 'BOUNDINGBOX':
-        for i in range(1,n+1):
+        for i in xrange(1,n+1):
             aux = fr==i
             aux1, aux2 = sometrue(aux,0), sometrue(aux,1)
             col , row  = nonzero(aux1)  , nonzero(aux2)
@@ -1354,7 +1354,7 @@ def cbisector(f, B, n):
     """
 
     y = intersec(f,0)
-    for i in range(n):
+    for i in xrange(n):
         nb = sesum(B,i)
         nbp = sesum(B,i+1)
         f1 = erode(f,nbp)
@@ -1434,7 +1434,7 @@ def cdilate(f, g, b=None, n=1):
 
     if b is None: b = secross()
     y = intersec(f,g)
-    for i in range(n):
+    for i in xrange(n):
         aux = y
         y = intersec(dilate(y,b),g)
         if isequal(y,aux): break
@@ -1473,7 +1473,7 @@ def cerode(f, g, b=None, n=1):
 
     if b is None: b = secross()
     y = union(f,g)
-    for i in range(n):
+    for i in xrange(n):
         aux = y
         y = union(erode(y,b),g)
         if isequal(y,aux): break
@@ -1673,8 +1673,8 @@ def cthick(f, g, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
     if n == -1: n = product(f.shape)
     y = f
     old = y
-    for i in range(n):
-        for t in range(0,360,theta):
+    for i in xrange(n):
+        for t in xrange(0,360,theta):
             sup = supgen( y, interot(Iab, t, DIRECTION))
             y = intersec(union( y, sup),g)
         if isequal(old,y): break
@@ -1717,8 +1717,8 @@ def cthin(f, g, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
     if n == -1: n = product(f.shape)
     y = f
     old = y
-    for i in range(n):
-        for t in range(0,360,theta):
+    for i in xrange(n):
+        for t in xrange(0,360,theta):
             sup = supgen( y, interot(Iab, t, DIRECTION))
             y = union(subm( y, sup),g)
         if isequal(old,y): break
@@ -1902,7 +1902,7 @@ def dilate(f, b=None):
             v = intersec(gray(v,'int32'),0)
         mh,mw = max(abs(x)[:,0]),max(abs(x)[:,1])
         y = (ones((h+2*mh,w+2*mw)) * limits(f)[0]).astype(f.dtype)
-        for i in range(x.shape[0]):
+        for i in xrange(x.shape[0]):
             if v[i] > -2147483647:
                 y[mh+x[i,0]:mh+x[i,0]+h, mw+x[i,1]:mw+x[i,1]+w] = maximum(
                     y[mh+x[i,0]:mh+x[i,0]+h, mw+x[i,1]:mw+x[i,1]+w], add4dilate(f,v[i]))
@@ -1985,7 +1985,7 @@ def drawv(f, data, value, GEOM):
     if GEOM == 'POINT':
         put(ravel(y), i, value)
     elif GEOM == 'LINE':
-        for k in range(len(value)-1):
+        for k in xrange(len(value)-1):
             delta = 1.*(lin[k+1]-lin[k])/(1e-10 + col[k+1]-col[k])
             if abs(delta) <= 1:
                 if col[k] < col[k+1]: x_ = arange(col[k],col[k+1]+1)
@@ -1998,7 +1998,7 @@ def drawv(f, data, value, GEOM):
             i_ = y_*f.shape[1] + x_; i_ = i_.astype(Int)
             put(ravel(y), i_, value[k])
     elif GEOM == 'RECT':
-        for k in range(data.shape[1]):
+        for k in xrange(data.shape[1]):
             d = data[:,k]
             x0,y0,x1,y1 = d[1],d[0],d[3],d[2]
             y[x0:x1,y0]   = value[k]
@@ -2006,7 +2006,7 @@ def drawv(f, data, value, GEOM):
             y[x0,y0:y1]   = value[k]
             y[x1,y0:y1+1] = value[k]
     elif GEOM == 'FRECT':
-        for k in range(data.shape[1]):
+        for k in xrange(data.shape[1]):
             d = data[:,k]
             x0,y0,x1,y1 = d[1],d[0],d[3],d[2]
             y[x0:x1+1,y0:y1+1] = value[k]
@@ -2414,13 +2414,13 @@ def grain(fr, f, measurement, option="image"):
     if option == 'DATA': y = []
     else               : y = zeros(fr.shape)
     if measurement == 'MAX':
-        for i in range(1,n+1):
+        for i in xrange(1,n+1):
             aux = (fr==i)
             val = (aux*f).max()
             if option == 'DATA': y.append(val)
             else               : put(ravel(y), nonzero(ravel(aux)), val)
     elif measurement == 'MIN':
-        for i in range(1,n+1):
+        for i in xrange(1,n+1):
             aux = fr==i
             lin = ravel(aux*f)
             ind = nonzero(ravel(aux))
@@ -2428,20 +2428,20 @@ def grain(fr, f, measurement, option="image"):
             if option == 'DATA': y.append(val)
             else               : put(ravel(y), ind, val)
     elif measurement == 'SUM':
-        for i in range(1,n+1):
+        for i in xrange(1,n+1):
             aux = fr==i
             val = (aux*f).sum()
             if option == 'DATA': y.append(val)
             else               : put(ravel(y), nonzero(ravel(aux)), val)
     elif measurement == 'MEAN':
-        for i in range(1,n+1):
+        for i in xrange(1,n+1):
             aux = fr==i
             ind = nonzero(ravel(aux))
             val = take(ravel(aux*f), ind).mean()
             if option == 'DATA': y.append(val)
             else               : put(ravel(y), ind, val)
     elif measurement == 'STD':
-        for i in range(1,n+1):
+        for i in xrange(1,n+1):
             aux = fr==i
             ind = nonzero(ravel(aux))
             v   = take(ravel(aux*f), ind)
@@ -2778,7 +2778,7 @@ def infcanon(f, Iab, theta=45, DIRECTION="CLOCKWISE"):
 
     DIRECTION = upper(DIRECTION)            
     y = union(f,1)
-    for t in range(0,360,theta):
+    for t in xrange(0,360,theta):
         Irot = interot( Iab, t, DIRECTION )
         y = intersec( y, infgen(f, Irot))
     return y
@@ -3010,7 +3010,7 @@ def intershow(Iab):
     x    = reshape(array(n*'.','c'),S.shape)
     saux = choose( S + seunion(Z,A), ( x, zero, one))
     s = ''
-    for i in range(saux.shape[0]):
+    for i in xrange(saux.shape[0]):
         s=s+(join(list(saux[i]))+' \n')
     return s
 
@@ -4038,7 +4038,7 @@ def sesum(B=None, N=1):
         if isbinary(B): return binary([1])
         else:             return int32([0]) # identity
     NB = B
-    for i in range(N-1):
+    for i in xrange(N-1):
         NB = sedilate(NB,B)
     return NB
 
@@ -4137,7 +4137,7 @@ def sedilate(B1, B2):
        Bo = binary([0])
     x,v = mat2set(B2)
     if len(x):
-        for i in range(x.shape[0]):
+        for i in xrange(x.shape[0]):
             s = add4dilate(B1,v[i])
             st= setrans(s,x[i])
             Bo = seunion(Bo,st)
@@ -4295,7 +4295,7 @@ def skelm(f, B=None, option="binary"):
     y = gray(intersec(f, k1),'uint16')
     iszero = asarray(y)
     nb = sesum(B,0)
-    for r in range(1,65535):
+    for r in xrange(1,65535):
         ero = erode(f,nb)
         if isequal(ero, iszero): break
         f1 = openth( ero, B)
@@ -4334,7 +4334,7 @@ def skelmrec(f, B=None):
     from numpy import ravel
     if B is None: B = secross()
     y = binary(intersec(f, 0))
-    for r in range(f.max(),1,-1):
+    for r in xrange(f.max(),1,-1):
         y = dilate(union(y,binary(f,r)), B)
     y = union(y, binary(f,1))
     return y
@@ -4463,7 +4463,7 @@ def supcanon(f, Iab, theta=45, DIRECTION="CLOCKWISE"):
 
     DIRECTION = upper(DIRECTION)            
     y = intersec(f,0)
-    for t in range(0,360,theta):
+    for t in xrange(0,360,theta):
         Irot = interot( Iab, t, DIRECTION )
         y = union( y, supgen(f, Irot))
     return y
@@ -4599,8 +4599,8 @@ def bshow(f1, f2=None, f3=None, factor=17):
     fillrect[s-1,:] = 0
     fillrect[:  ,0] = 0
     fillrect[:  ,s-1] = 0
-    for i in range(h):
-        for j in range(w):
+    for i in xrange(h):
+        for j in xrange(w):
             m, n = s*i, s*j
             if f1 and f1[i,j]:
                 y[m     ,n:n+s] = 1
@@ -4739,9 +4739,9 @@ def thick(f, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
     if n == -1: n = product(f.shape)
     y = f
     zero = intersec(f,0)
-    for i in range(n):
+    for i in xrange(n):
         aux = zero
-        for t in range(0,360,theta):
+        for t in xrange(0,360,theta):
             sup = supgen( y, interot(Iab, t, DIRECTION))
             aux = union( aux, sup)
             y = union( y, sup)
@@ -4790,9 +4790,9 @@ def thin(f, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
     if n == -1: n = product(f.shape)
     y = f
     zero = intersec(f,0)
-    for i in range(n):
+    for i in xrange(n):
         aux = zero
-        for t in range(0,360,theta):
+        for t in xrange(0,360,theta):
             sup = supgen( y, interot(Iab, t, DIRECTION))
             aux = union( aux, sup)
             y = subm( y, sup)
@@ -4973,10 +4973,10 @@ def bench(count=10):
        ['20. Thinning                        ','thin(fbin)'],
        ['21. Watershed                       ','cwatershed(f,fbin)']]
     result = zeros((21),'d')
-    for t in range(len(tasks)):
+    for t in xrange(len(tasks)):
        print tasks[t][0],tasks[t][1]
        t1=time()
-       for k in range(count):
+       for k in xrange(count):
           a=eval(tasks[t][1])
        t2=time()
        result[t]= (t2-t1)/(count+0.0)
@@ -4984,7 +4984,7 @@ def bench(count=10):
     print 'Made on ',asctime(),' computer=',platform
     print 'image filename=',filename,' width=', f.shape[1],', height=',f.shape[0]
     print '    Function                            time (sec.)'
-    for j in range(21):
+    for j in xrange(21):
      print tasks[j][0], result[j]
     print '    Average                         ', average(result)
     out=[]
@@ -5176,7 +5176,7 @@ def mat2set(A):
     offsets = nonzero(ravel(A) - limits(A)[0])[0]
     if len(offsets) == 0: return ([],[])
     (h,w) = A.shape
-    x = range(2)
+    x = [0,1]
     x[0] = offsets/w - (h-1)/2
     x[1] = offsets%w - (w-1)/2
     x = transpose(x)
