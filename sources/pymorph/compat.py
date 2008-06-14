@@ -65,13 +65,11 @@ mminfcanon=infcanon
 mminfgen=infgen
 mminfrec=infrec
 mminpos=inpos
-mminstall=install
 mminterot=interot
 mmintersec=intersec
 mmintershow=intershow
 mmisbinary=isbinary
 mmisequal=isequal
-mmislesseq=islesseq
 mmlabel=label
 mmlabelflat=labelflat
 mmlastero=lastero
@@ -89,7 +87,6 @@ mmpad4n=pad4n
 mmpatspec=patspec
 mmplot=plot
 mmreadgray=readgray
-mmregister=register
 mmregmax=regmax
 mmregmin=regmin
 mmse2hmt=se2hmt
@@ -110,7 +107,6 @@ mmshow=show
 mmskelm=skelm
 mmskelmrec=skelmrec
 mmskiz=skiz
-mmstats=stats
 mmsubm=subm
 mmsupcanon=supcanon
 mmsupgen=supgen
@@ -123,12 +119,17 @@ mmthin=thin
 mmthreshad=threshad
 mmtoggle=toggle
 mmunion=union
-mmvdome=vdome
-mmversion=version
 mmvmax=vmax
 mmwatershed=watershed
 
 # Functions which were removed:
+
+def mminstall(*args):
+    pass
+def mmversion(*args):
+    pass
+def mmregister(*args):
+    pass
 
 
 def cmp(f1, oper, f2, oper1=None, f3=None):
@@ -198,12 +199,12 @@ def cmp(f1, oper, f2, oper1=None, f3=None):
     return y
 
 
-def vdome(f, v=1, Bc=None):
+def mmvdome(f, v=1, Bc=None):
     """
         - Purpose
             Obsolete, use vmax.
         - Synopsis
-            y = vdome(f, v=1, Bc=None)
+            y = mmvdome(f, v=1, Bc=None)
         - Input
             f:  Gray-scale (uint8 or uint16) image.
             v:  Default: 1. Volume parameter.
@@ -212,7 +213,7 @@ def vdome(f, v=1, Bc=None):
         - Output
             y: Gray-scale (uint8 or uint16) or binary image.
         - Description
-            The correct name for this operator vdome is vmax.
+            The correct name for this operator mmvdome is vmax.
 
     """
 
@@ -268,8 +269,8 @@ def mmis(f1, oper, f2=None, oper1=None, f3=None):
             assert 0,'oper should be BINARY or GRAY, was'+oper
     elif oper == '==':    y = isequal(f1, f2)
     elif oper == '~=':    y = not isequal(f1,f2)
-    elif oper == '<=':    y = islesseq(f1,f2)
-    elif oper == '>=':    y = islesseq(f2,f1)
+    elif oper == '<=':    y = mmislesseq(f1,f2)
+    elif oper == '>=':    y = mmislesseq(f2,f1)
     elif oper == '>':     y = isequal(neg(threshad(f2,f1)),binary(1))
     elif oper == '<':     y = isequal(neg(threshad(f1,f2)),binary(1))
     else:
@@ -277,8 +278,8 @@ def mmis(f1, oper, f2=None, oper1=None, f3=None):
     if oper1 != None:
         if   oper1 == '==': y = y and isequal(f2,f3)
         elif oper1 == '~=': y = y and (not isequal(f2,f3))
-        elif oper1 == '<=': y = y and islesseq(f2,f3)
-        elif oper1 == '>=': y = y and islesseq(f3,f2)
+        elif oper1 == '<=': y = y and mmislesseq(f2,f3)
+        elif oper1 == '>=': y = y and mmislesseq(f3,f2)
         elif oper1 == '>':  y = y and isequal(neg(threshad(f3,f2)),binary(1))
         elif oper1 == '<':  y = y and isequal(neg(threshad(f2,f3)),binary(1))
         else:
@@ -331,41 +332,41 @@ def isequal(f1, f2, MSG=None):
     return bool
 
 
-def islesseq(f1, f2, MSG=None):
+def mmislesseq(f1, f2, MSG=None):
     """
         - Alternative
             Consider using f1 <= f2
         - Purpose
             Verify if one image is less or equal another (is beneath)
         - Synopsis
-            bool = islesseq(f1, f2)
+            bool = mmislesseq(f1, f2)
         - Input
             f1:  Gray-scale (uint8 or uint16) or binary image.
             f2:  Gray-scale (uint8 or uint16) or binary image.
         - Output
             bool: Boolean
         - Description
-            islesseq compares the images f1 and f2 and returns true (1),
+            mmislesseq compares the images f1 and f2 and returns true (1),
             if f1(x) <= f2(x) , for every pixel x, and false (0), otherwise.
         - Examples
             #
             f1 = to_uint8([0, 1, 2, 3])
             f2 = to_uint8([9, 5, 3, 3])
-            print islesseq(f1,f2)
-            print islesseq(f2,f1)
-            print islesseq(f1,f1)
+            print mmislesseq(f1,f2)
+            print mmislesseq(f2,f1)
+            print mmislesseq(f1,f1)
     """
     from numpy import ravel
 
     bool = min(ravel(f1<=f2))
     return bool
 
-def stats(f, measurement):
+def mmstats(f, measurement):
     """
         - Purpose
             Find global image statistics.
         - Synopsis
-            y = stats(f, measurement)
+            y = mmstats(f, measurement)
         - Input
             f:           
             measurement: String Default: "". Choose the measure to compute:
@@ -393,4 +394,4 @@ def stats(f, measurement):
     elif measurement == 'MEDIAN': return f.median()
     elif measurement == 'STD': return f.std()
     else:
-        assert 0,'pymorph.compat.stats: Not a valid measurement'
+        assert 0,'pymorph.compat.mmstats: Not a valid measurement'
