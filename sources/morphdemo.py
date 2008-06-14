@@ -36,7 +36,8 @@
     mmdruler()       -- Detect defects in a ruler.
     mmdsoil()        -- Detect fractures in soil.
 """
-from morph08pybase.morph import *
+from pymorph.compat import *
+import numpy
 # =========================================================================
 #
 #   mmdairport - Detecting runways in satellite airport imagery.
@@ -369,12 +370,12 @@ def mmdlabeltext():
     print '========================================================================='
     #0
     print '''
-    from Numeric import ones
+    from numpy.oldnumeric import ones
     sew = mmimg2se(mmbinary(ones((7,11))))
     mmseshow(sew)
     fw=mmlabel(f,sew)
     mmlblshow(fw)'''
-    from Numeric import ones
+    from numpy.oldnumeric import ones
     sew = mmimg2se(mmbinary(ones((7,11))))
     mmseshow(sew)
     fw=mmlabel(f,sew)
@@ -2374,22 +2375,22 @@ def mmdholecenter():
     print '========================================================================='
     #0
     print '''
-    from Numeric import nonzero
+    from numpy.oldnumeric import nonzero
     mmshow(a,h,l)
     m = mmdist(mmneg(l),mmsecross(),'EUCLIDEAN')
     n = mmintersec(mmgray(h),uint8(m))
     mmshow(n,a)
-    i = nonzero(n.flat)
+    i = nonzero(n.ravel())
     x = i / n.shape[1]
     y = i % n.shape[1]
     for k in range(len(i)):
       print 'displacement of %d at (%d,%d)\n' %(n[x[k],y[k]],x[k],y[k])'''
-    from Numeric import nonzero
+    from numpy.oldnumeric import nonzero
     mmshow(a,h,l)
     m = mmdist(mmneg(l),mmsecross(),'EUCLIDEAN')
     n = mmintersec(mmgray(h),uint8(m))
     mmshow(n,a)
-    i = nonzero(n.flat)
+    i = nonzero(n.ravel())
     x = i / n.shape[1]
     y = i % n.shape[1]
     for k in range(len(i)):
@@ -2415,7 +2416,7 @@ def mmdholecenter():
     q = mmdist(a,mmsecross(),'EUCLIDEAN')
     r = mmgrain(mmlabel(p,mmsebox()),q,'min') # minimum
     s = mmgrain(mmlabel(p,mmsebox()),q,'min','data') # minimum
-    from Numeric import ravel
+    from numpy.oldnumeric import ravel
     for k in ravel(s):
       print 'Minimum distance: %d pixels' %(2*k+1)
     t = mmintersec(mmcmp(r,'==',q),a)
@@ -2426,7 +2427,7 @@ def mmdholecenter():
     q = mmdist(a,mmsecross(),'EUCLIDEAN')
     r = mmgrain(mmlabel(p,mmsebox()),q,'min') # minimum
     s = mmgrain(mmlabel(p,mmsebox()),q,'min','data') # minimum
-    from Numeric import ravel
+    from numpy.oldnumeric import ravel
     for k in ravel(s):
       print 'Minimum distance: %d pixels' %(2*k+1)
     t = mmintersec(mmcmp(r,'==',q),a)
