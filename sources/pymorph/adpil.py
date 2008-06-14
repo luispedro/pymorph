@@ -317,14 +317,14 @@ def array2pil(arr):
             explained in the pil2array docstring.
 
     """
-
+    import numpy
     nd = len(arr.shape)
     x = arr.astype('B')
     if nd == 2:
         d, h, w = (1,) + arr.shape
         mode = 'L'
     elif nd == 3:
-        if arr.typecode == '1':
+        if arr.dtype == 'b':
             raise TypeError, "Binary array cannot be RGB"
         d, h, w = arr.shape
         if d == 3:   mode = 'RGB'
