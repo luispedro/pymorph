@@ -512,9 +512,9 @@ def glblshow(X, border=0.0):
     B = int32(rand(ncolors)*255)
     if mmin == 0:
        R[0],G[0],B[0] = 0,0,0
-    r=resize(take(R, X.flat - mmin),X.shape)
-    g=resize(take(G, X.flat - mmin),X.shape)
-    b=resize(take(B, X.flat - mmin),X.shape)
+    r=resize(take(R, X.ravel() - mmin),X.shape)
+    g=resize(take(G, X.ravel() - mmin),X.shape)
+    b=resize(take(B, X.ravel() - mmin),X.shape)
     Y=concat('d',r,g,b)
     return Y
 
@@ -546,7 +546,7 @@ def gdtshow(X, N=10):
     m[0:256:d] = 1
     m = transpose([m,m,m])
     # lut gray
-    gray = floor(arange(N)*255. / (N-1) + 0.5).astype('b')
+    gray = floor(arange(N)*255. / (N-1) + 0.5).astype('B')
     gray = repeat(gray, d)[0:256]
     gray = transpose([gray,gray,gray])
     # lut jet
@@ -555,7 +555,7 @@ def gdtshow(X, N=10):
     b = 255 - r
     jet = transpose([r,g,b])
     # apply lut
-    XX  = floor((X-mini)*255. / maxi + 0.5).astype('b')
+    XX  = floor((X-mini)*255. / maxi + 0.5).astype('B')
     lut = (1-m)*gray + m*jet
     Y = apply_lut(XX, lut)
     return Y
@@ -1792,10 +1792,10 @@ def cwatershed(f, g, Bc=None, LINEREG="LINES"):
     if withline:
         y1 = intersec(binary(y), 0)
     costM = limits(f)[1] * ones(f.shape)  # cuulative cost function image
-    mi = nonzero(gradm(y,sebox(0),Bc).flat)  # 1D index of internal contour of marker
+    mi = nonzero(gradm(y,sebox(0),Bc).ravel())  # 1D index of internal contour of marker
     print 'before put costM'
-    put(costM.flat,mi, 0)
-    HQueue=transpose([mi, take(costM.flat, mi)])       # init hierarquical queue: index,value
+    put(costM.ravel(),mi, 0)
+    HQueue=transpose([mi, take(costM.ravel(), mi)])       # init hierarquical queue: index,value
     print 'before se2list0'
     Bi=se2list0(f,Bc)                # get 1D displacement neighborhood pixels
     x,v = mat2set(Bc)
@@ -1811,7 +1811,7 @@ def cwatershed(f, g, Bc=None, LINEREG="LINES"):
         HQueue = transpose(array([compress(ii,HQueue[:,0]),
                                   compress(ii,HQueue[:,1])])) # remove this pixel from queue
         print 'H=',HQueue
-        put(status.flat, pi, 1)          # make it a permanent label
+        put(status.ravel(), pi, 1)          # make it a permanent label
         for qi in pi+Bi :                # for each neighbor of pi
             if (status.flat[qi] != 3):          # not image border
                 if (status.flat[qi] != 1):        # if not permanent
@@ -4121,11 +4121,11 @@ def sedilate(B1, B2):
     """
     from numpy import newaxis, array
 
-    assert ((datatype(B1) == 'binary') or (datatype(B1) == 'int32')) and (
-            (datatype(B2) == 'binary') or (datatype(B2) == 'int32')),'SE must be binary or int32'
+    assert ((dataisinstance(B1, 'binary') or (datatype(B1) == 'int)32')) and (
+            (dataisinstance(B2, 'binary') or (datatype(B2) == 'int)32')),'SE must be binary or int32'
     if len(B1.shape) == 1: B1 = B1[newaxis,:]
     if len(B2.shape) == 1: B2 = B2[newaxis,:]
-    if (datatype(B1) == 'int32') or (datatype(B2) == 'int32'):
+    if (dataisinstance(B1, 'int)32') or (dataisinstance(B2, 'int)32'):
        Bo = int32([limits(int32([0]))[0]])
        if datatype(B1) == 'binary':
           B1 = gray(B1,'int32',0)
@@ -5077,7 +5077,7 @@ def uint16(f):
     """
     from numpy import array, clip
 
-    img = array(clip(f,0,65535)).astype('w')
+    img = array(clip(f,0,65535)).astype('H')
     return img
 
 
