@@ -666,7 +666,7 @@ def histogram(f, option="uint16"):
     """
     from numpy import searchsorted, sort, ravel, concatenate, product
 
-    n = searchsorted(sort(ravel(f)), range(max(ravel(f))+1))
+    n = searchsorted(sort(ravel(f)), range(f.max()+1))
     n = concatenate([n, [product(f.shape)]])
     h = n[1:]-n[:-1]
     return h
@@ -1292,13 +1292,13 @@ def blob(fr, measurement, option="image"):
     measurement = upper(measurement)
     option      = upper(option)
     if len(fr.shape) == 1: fr = fr[newaxis,:]
-    n = max(ravel(fr))
+    n = fr.max()
     if option == 'DATA': y = []
     else               : y = zeros(fr.shape)
     if measurement == 'AREA':
         for i in range(1,n+1):
             aux  = fr==i
-            area = sum(ravel(aux))
+            area = aux.ravel()
             if option == 'DATA': y.append(area)
             else               : y = y + area*aux
     elif measurement == 'CENTROID':
@@ -2417,13 +2417,13 @@ def grain(fr, f, measurement, option="image"):
     measurement = upper(measurement)
     option      = upper(option)
     if len(fr.shape) == 1: fr = fr[newaxis,:]
-    n = max(ravel(fr))
+    n = fr.max()
     if option == 'DATA': y = []
     else               : y = zeros(fr.shape)
     if measurement == 'MAX':
         for i in range(1,n+1):
             aux = fr==i
-            val = max(ravel(aux*f))
+            val = (aux*f).max()
             if option == 'DATA': y.append(val)
             else               : put(ravel(y), nonzero(ravel(aux)), val)
     elif measurement == 'MIN':
@@ -2437,7 +2437,7 @@ def grain(fr, f, measurement, option="image"):
     elif measurement == 'SUM':
         for i in range(1,n+1):
             aux = fr==i
-            val = sum(ravel(aux*f))
+            val = (aux*f).sum()
             if option == 'DATA': y.append(val)
             else               : put(ravel(y), nonzero(ravel(aux)), val)
     elif measurement == 'MEAN':
@@ -4368,7 +4368,7 @@ def skelmrec(f, B=None):
     from numpy import ravel
     if B is None: B = secross()
     y = binary(intersec(f, 0))
-    for r in range(max(ravel(f)),1,-1):
+    for r in range(f.max(),1,-1):
         y = dilate(union(y,binary(f,r)), B)
     y = union(y, binary(f,1))
     return y
