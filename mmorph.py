@@ -113,7 +113,6 @@
                       Axis Transform).
     skiz()         -- Skeleton of Influence Zone - also know as Generalized
                       Voronoi Diagram
-    stats()        -- Find global image statistics.
     subm()         -- Subtraction of two images, with saturation.
     supcanon()     -- Union of sup-generating or hit-miss operators.
     supgen()       -- Sup-generating (hit-miss).
@@ -510,8 +509,8 @@ def glblshow(X, border=0.0):
     from numpy import take, resize, shape
     from MLab import rand
 
-    mmin = mmstats(X,'min')
-    mmax = mmstats(X,'max')
+    mmin = X.min()
+    mmax = X.max()
     ncolors = mmax - mmin + 1
     R = int32(rand(ncolors)*255)
     G = int32(rand(ncolors)*255)
@@ -705,7 +704,7 @@ def label(f, Bc=None):
             #
             f = readgray('blob3.tif')
             g=label(f)
-            nblobs=stats(g,'max')
+            nblobs=g.max()
             print nblobs
             show(f)
             lblshow(g)
@@ -1024,8 +1023,8 @@ def areaopen(f, a, Bc=None):
     else:
       y = intersec(f,0)
       zero = binary(y)
-      k1 = stats(f,'min')
-      k2 = stats(f,'max')
+      k1 = f.min()
+      k2 = f.max()
       for k in range(k1,k2+1):   # gray-scale, use thresholding decomposition
         fk = threshad(f,k)
         fo = areaopen(fk,a,Bc)
@@ -2383,8 +2382,8 @@ def grain(fr, f, measurement, option="image"):
             Computes gray-scale statistics of each grain in the image. The
             grains regions are specified by the labeled image fr and the
             gray-scale information is specified by the image f . The
-            statistics to compute is specified by the parameter measurement
-            , which has the same options as in function stats . The
+            statistics to compute is specified by the parameter measurement,
+            which has the same options as in function stats . The
             parameter option defines: ('image') if the output is an uint16
             image where each label value is changed to the measurement
             value, or ('data') a double column vector. In this case, the
@@ -3123,7 +3122,7 @@ def labelflat(f, Bc=None, _lambda=0):
             show(g)
             fz=labelflat(g,sebox());
             lblshow(fz)
-            print stats(fz,'max')
+            print fz.max()
             #
             #   example 3
             #
@@ -4420,49 +4419,6 @@ def skiz(f, Bc=None, LINEREG="LINES", METRIC=None):
     d = dist( neg(f), Bc, METRIC)
     return cwatershed(d,f,Bc,LINEREG)
     return y
-
-
-def stats(f, measurement):
-    """
-        - Purpose
-            Find global image statistics.
-        - Synopsis
-            y = stats(f, measurement)
-        - Input
-            f:           
-            measurement: String Default: "". Choose the measure to compute:
-                         'max', 'min', 'median', 'mean', 'sum', 'std',
-                         'std1'.
-        - Output
-            y:
-        - Description
-            Compute global image statistics: 'max' - maximum gray-scale
-            value in image; 'min' - minimum gray-scale value in image; 'sum'
-            - sum of all pixel values; 'median' - median value of all pixels
-            in image; 'mean' - mean value of all pixels in image; 'std' -
-            standard deviation of all pixels (normalized by N-1); 'std1' -
-            idem, normalized by N.
-
-    """
-    from string import upper
-    from numpy import ravel
-    from MLab import mean, median, std
-
-    measurement = upper(measurement)
-    if measurement == 'MAX':
-        y = max(ravel(f))
-    elif measurement == 'MIN':
-        y = min(ravel(f))
-    elif measurement == 'MEAN':
-        y = mean(ravel(f))
-    elif measurement == 'MEDIAN':
-        y = median(ravel(f))
-    elif measurement == 'STD':
-        y = std(ravel(f))
-    else:
-        assert 0,'Not a valid measurement'
-    return y
-
 
 def subm(f1, f2):
     """

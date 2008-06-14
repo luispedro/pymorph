@@ -360,3 +360,37 @@ def islesseq(f1, f2, MSG=None):
     bool = min(ravel(f1<=f2))
     return bool
 
+def stats(f, measurement):
+    """
+        - Purpose
+            Find global image statistics.
+        - Synopsis
+            y = stats(f, measurement)
+        - Input
+            f:           
+            measurement: String Default: "". Choose the measure to compute:
+                         'max', 'min', 'median', 'mean', 'sum', 'std',
+                         'std1'.
+        - Output
+            y:
+        - Description
+            Compute global image statistics: 'max' - maximum gray-scale
+            value in image; 'min' - minimum gray-scale value in image; 'sum'
+            - sum of all pixel values; 'median' - median value of all pixels
+            in image; 'mean' - mean value of all pixels in image; 'std' -
+            standard deviation of all pixels (normalized by N-1); 'std1' -
+            idem, normalized by N.
+
+    """
+    from string import upper
+    from numpy import ravel
+    from MLab import mean, median, std
+
+    measurement = upper(measurement)
+    if measurement == 'MAX': return f.max()
+    elif measurement == 'MIN': return f.min()
+    elif measurement == 'MEAN': return f.mean()
+    elif measurement == 'MEDIAN': return f.median()
+    elif measurement == 'STD': return f.std()
+    else:
+        assert 0,'pymorph.compat.stats: Not a valid measurement'
