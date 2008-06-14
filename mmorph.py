@@ -148,7 +148,7 @@ __version__ = '0.8 pybase'
 __version_string__ = 'SDC Morphology Toolbox V0.8 01Aug03 (script version)'
 
 __build_date__ = '04aug2003 12:07'
-#
+
 
 import sys, os
 mydir = os.path.dirname(__file__)
@@ -157,14 +157,8 @@ try:
 except:
     sys.imagepath = [os.path.join(mydir, 'data')]
 
-#
 
-#
-# =====================================================================
-#
-#   concat
-#
-# =====================================================================
+
 def concat(DIM, X1, X2, X3=None, X4=None):
     """
         - Purpose
@@ -245,12 +239,7 @@ def concat(DIM, X1, X2, X3=None, X4=None):
     if Y.shape[0] == 1: # adjustment
        Y = Y[0,:,:]
     return Y
-#
-# =====================================================================
-#
-#   limits
-#
-# =====================================================================
+
 def limits(f):
     """
         - Purpose
@@ -285,12 +274,8 @@ def limits(f):
     else:
         assert 0,'Does not accept this typecode:'+code
     return y
-#
-# =====================================================================
-#
-#   center
-#
-# =====================================================================
+
+
 def center(f, b=None):
     """
         - Purpose
@@ -324,12 +309,8 @@ def center(f, b=None):
         y = union(intersec(y,beta1),beta2)
         diff = isequal(aux,y)
     return y
-#
-# =====================================================================
-#
-#   close_holes
-#
-# =====================================================================
+
+
 def close_holes(f, Bc=None):
     """
         - Purpose
@@ -367,12 +348,8 @@ def close_holes(f, Bc=None):
     delta_f = frame(f)
     y = neg( infrec( delta_f, neg(f), Bc))
     return y
-#
-# =====================================================================
-#
-#   dist
-#
-# =====================================================================
+
+
 def dist(f, Bc=None, METRIC=None):
     """
         - Purpose
@@ -452,12 +429,8 @@ def dist(f, Bc=None, METRIC=None):
             y=f
             f = erode(f,b)
     return y
-#
-# =====================================================================
-#
-#   edgeoff
-#
-# =====================================================================
+
+
 def edgeoff(f, Bc=None):
     """
         - Purpose
@@ -487,12 +460,8 @@ def edgeoff(f, Bc=None):
     edge = frame(f)
     y = subm( f, infrec(edge, f, Bc))
     return y
-#
-# =====================================================================
-#
-#   frame
-#
-# =====================================================================
+
+
 def frame(f, WT=1, HT=1, DT=0, k1=None, k2=None):
     """
         - Purpose
@@ -528,12 +497,8 @@ def frame(f, WT=1, HT=1, DT=0, k1=None, k2=None):
     y[0:HT,:] = k1
     y[-HT:,:] = k1
     return y
-#
-# =====================================================================
-#
-#   glblshow
-#
-# =====================================================================
+
+
 def glblshow(X, border=0.0):
     """
         - Purpose
@@ -563,12 +528,8 @@ def glblshow(X, border=0.0):
     b=resize(take(B, X.flat - mmin),X.shape)
     Y=concat('d',r,g,b)
     return Y
-#
-# =====================================================================
-#
-#   gdtshow
-#
-# =====================================================================
+
+
 def gdtshow(X, N=10):
     """
         - Purpose
@@ -609,12 +570,8 @@ def gdtshow(X, N=10):
     lut = (1-m)*gray + m*jet
     Y = apply_lut(XX, lut)
     return Y
-#
-# =====================================================================
-#
-#   gshow
-#
-# =====================================================================
+
+
 def gshow(X, X1=None, X2=None, X3=None, X4=None, X5=None, X6=None):
     """
         - Purpose
@@ -678,12 +635,8 @@ def gshow(X, X1=None, X2=None, X3=None, X4=None, X5=None, X6=None):
       b = union(b,x6)
     return concat('d',r,g,b)
     return Y
-#
-# =====================================================================
-#
-#   histogram
-#
-# =====================================================================
+
+
 def histogram(f, option="uint16"):
     """
         - Purpose
@@ -722,12 +675,8 @@ def histogram(f, option="uint16"):
     n = concatenate([n, [product(f.shape)]])
     h = n[1:]-n[:-1]
     return h
-#
-# =====================================================================
-#
-#   label
-#
-# =====================================================================
+
+
 def label(f, Bc=None):
     """
         - Purpose
@@ -784,12 +733,8 @@ def label(f, Bc=None):
         y = union( y, r)             # merge them with the labeled image
         label = label + 1
     return y
-#
-# =====================================================================
-#
-#   neg
-#
-# =====================================================================
+
+
 def neg(f):
     """
         - Purpose
@@ -833,12 +778,8 @@ def neg(f):
     y = limits(f)[0] + limits(f)[1] - f
     y = y.astype(f.dtype)
     return y
-#
-# =====================================================================
-#
-#   threshad
-#
-# =====================================================================
+
+
 def threshad(f, f1, f2=None):
     """
         - Purpose
@@ -872,12 +813,8 @@ def threshad(f, f1, f2=None):
     else:
       y = binary((f1 <= f) & (f <= f2))
     return y
-#
-# =====================================================================
-#
-#   toggle
-#
-# =====================================================================
+
+
 def toggle(f, f1, f2, OPTION="GRAY"):
     """
         - Purpose
@@ -939,12 +876,8 @@ def toggle(f, f1, f2, OPTION="GRAY"):
         t=gray(y)
         y=union(intersec(neg(t),f1),intersec(t,f2))
     return y
-#
-# =====================================================================
-#
-#   addm
-#
-# =====================================================================
+
+
 def addm(f1, f2):
     """
         - Purpose
@@ -989,12 +922,8 @@ def addm(f1, f2):
     y = maximum(minimum(f1.astype('d')+f2, limits(f1)[1]),limits(f1)[0])
     y = y.astype(f1.dtype)
     return y
-#
-# =====================================================================
-#
-#   areaclose
-#
-# =====================================================================
+
+
 def areaclose(f, a, Bc=None):
     """
         - Purpose
@@ -1035,12 +964,8 @@ def areaclose(f, a, Bc=None):
     if Bc is None: Bc = secross()
     y = neg(areaopen(neg(f),a,Bc))
     return y
-#
-# =====================================================================
-#
-#   areaopen
-#
-# =====================================================================
+
+
 def areaopen(f, a, Bc=None):
     """
         - Purpose
@@ -1113,12 +1038,8 @@ def areaopen(f, a, Bc=None):
           break
         y = union(y, gray(fo,datatype(f),k))
     return y
-#
-# =====================================================================
-#
-#   flood
-#
-# =====================================================================
+
+
 def flood(fin, T, option, Bc=None):
     """
         - Purpose
@@ -1157,12 +1078,8 @@ def flood(fin, T, option, Bc=None):
     print 'Not implemented yet'
     return None
     return y
-#
-# =====================================================================
-#
-#   asf
-#
-# =====================================================================
+
+
 def asf(f, SEQ="OC", b=None, n=1):
     """
         - Purpose
@@ -1221,12 +1138,8 @@ def asf(f, SEQ="OC", b=None, n=1):
             nb = sesum(b,i)
             y = close(open(close(y,nb),nb),nb)
     return y
-#
-# =====================================================================
-#
-#   asfrec
-#
-# =====================================================================
+
+
 def asfrec(f, SEQ="OC", b=None, bc=None, n=1):
     """
         - Purpose
@@ -1274,12 +1187,8 @@ def asfrec(f, SEQ="OC", b=None, bc=None, n=1):
     else:
         assert 0,'Only accepts OC or CO for SEQ parameter'
     return y
-#
-# =====================================================================
-#
-#   binary
-#
-# =====================================================================
+
+
 def binary(f, k=1):
     """
         - Purpose
@@ -1314,12 +1223,8 @@ def binary(f, k=1):
     from numpy import asarray
     f=asarray(f)
     return (f >= k)
-#
-# =====================================================================
-#
-#   blob
-#
-# =====================================================================
+
+
 def blob(fr, measurement, option="image"):
     """
         - Purpose
@@ -1427,12 +1332,8 @@ def blob(fr, measurement, option="image"):
         y = array(y)
         if len(y.shape) == 1: y = y[:,newaxis]
     return y
-#
-# =====================================================================
-#
-#   cbisector
-#
-# =====================================================================
+
+
 def cbisector(f, B, n):
     """
         - Purpose
@@ -1471,12 +1372,8 @@ def cbisector(f, B, n):
         f3 = subm(erode(f,nb),f2)
         y  = union(y,f3)
     return y
-#
-# =====================================================================
-#
-#   cdil
-#
-# =====================================================================
+
+
 def cdilate(f, g, b=None, n=1):
     """
         - Purpose
@@ -1552,12 +1449,8 @@ def cdilate(f, g, b=None, n=1):
         y = intersec(dilate(y,b),g)
         if isequal(y,aux): break
     return y
-#
-# =====================================================================
-#
-#   cero
-#
-# =====================================================================
+
+
 def cerode(f, g, b=None, n=1):
     """
         - Purpose
@@ -1595,12 +1488,8 @@ def cerode(f, g, b=None, n=1):
         y = union(erode(y,b),g)
         if isequal(y,aux): break
     return y
-#
-# =====================================================================
-#
-#   close
-#
-# =====================================================================
+
+
 def close(f, b=None):
     """
         - Purpose
@@ -1649,12 +1538,8 @@ def close(f, b=None):
     if b is None: b = secross()
     y = erode(dilate(f,b),b)
     return y
-#
-# =====================================================================
-#
-#   closerec
-#
-# =====================================================================
+
+
 def closerec(f, bdil=None, bc=None):
     """
         - Purpose
@@ -1685,12 +1570,8 @@ def closerec(f, bdil=None, bc=None):
     if bc is None: bc = secross()
     y = suprec(dilate(f,bdil),f,bc)
     return y
-#
-# =====================================================================
-#
-#   closerecth
-#
-# =====================================================================
+
+
 def closerecth(f, bdil=None, bc=None):
     """
         - Purpose
@@ -1721,12 +1602,8 @@ def closerecth(f, bdil=None, bc=None):
     if bc is None: bc = secross()
     y = subm(closerec(f,bdil,bc), f)
     return y
-#
-# =====================================================================
-#
-#   closeth
-#
-# =====================================================================
+
+
 def closeth(f, b=None):
     """
         - Purpose
@@ -1753,12 +1630,8 @@ def closeth(f, b=None):
     if b is None: b = secross()
     y = subm( close(f,b), f)
     return y
-#
-# =====================================================================
-#
-#   cmp
-#
-# =====================================================================
+
+
 def cmp(f1, oper, f2, oper1=None, f3=None):
     """
         - Purpose
@@ -1819,12 +1692,8 @@ def cmp(f1, oper, f2, oper1=None, f3=None):
 
     y = binary(y)
     return y
-#
-# =====================================================================
-#
-#   cthick
-#
-# =====================================================================
+
+
 def cthick(f, g, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
     """
         - Purpose
@@ -1884,12 +1753,8 @@ def cthick(f, g, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
         if isequal(old,y): break
         old = y
     return y
-#
-# =====================================================================
-#
-#   cthin
-#
-# =====================================================================
+
+
 def cthin(f, g, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
     """
         - Purpose
@@ -1932,12 +1797,8 @@ def cthin(f, g, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
         if isequal(old,y): break
         old = y
     return y
-#
-# =====================================================================
-#
-#   cwatershed
-#
-# =====================================================================
+
+
 def cwatershed(f, g, Bc=None, LINEREG="LINES"):
     """
         - Purpose
@@ -2049,12 +1910,8 @@ def cwatershed(f, g, Bc=None, LINEREG="LINES"):
     else:
         Y = y
     return Y
-#
-# =====================================================================
-#
-#   dil
-#
-# =====================================================================
+
+
 def dilate(f, b=None):
     """
         - Purpose
@@ -2124,12 +1981,8 @@ def dilate(f, b=None):
                     y[mh+x[i,0]:mh+x[i,0]+h, mw+x[i,1]:mw+x[i,1]+w], add4dilate(f,v[i]))
         y = y[mh:mh+h, mw:mw+w]
     return y
-#
-# =====================================================================
-#
-#   drawv
-#
-# =====================================================================
+
+
 def drawv(f, data, value, GEOM):
     """
         - Purpose
@@ -2233,12 +2086,8 @@ def drawv(f, data, value, GEOM):
     else:
         print "GEOM should be 'POINT', 'LINE', 'RECT', or 'FRECT'."
     return y
-#
-# =====================================================================
-#
-#   dtshow
-#
-# =====================================================================
+
+
 def dtshow(f, n=10):
     """
         - Purpose
@@ -2275,12 +2124,8 @@ def dtshow(f, n=10):
     adpil.adshow(y)
     return
     return y
-#
-# =====================================================================
-#
-#   endpoints
-#
-# =====================================================================
+
+
 def endpoints(OPTION="LOOP"):
     """
         - Purpose
@@ -2343,12 +2188,8 @@ def endpoints(OPTION="LOOP"):
                                   [1,0,1],
                                   [1,1,1]]))
     return Iab
-#
-# =====================================================================
-#
-#   ero
-#
-# =====================================================================
+
+
 def erode(f, b=None):
     """
         - Purpose
@@ -2405,12 +2246,8 @@ def erode(f, b=None):
     if b is None: b = secross()
     y = neg(dilate(neg(f),sereflect(b)))
     return y
-#
-# =====================================================================
-#
-#   freedom
-#
-# =====================================================================
+
+
 def freedom(L=5):
     """
         - Purpose
@@ -2463,12 +2300,8 @@ def freedom(L=5):
 
     Y = -1
     return Y
-#
-# =====================================================================
-#
-#   gdist
-#
-# =====================================================================
+
+
 def gdist(f, g, Bc=None, METRIC=None):
     """
         - Purpose
@@ -2540,12 +2373,8 @@ def gdist(f, g, Bc=None, METRIC=None):
         i = i + 1
     y = union(y,gray(ero,'uint16'))
     return y
-#
-# =====================================================================
-#
-#   gradm
-#
-# =====================================================================
+
+
 def gradm(f, Bdil=None, Bero=None):
     """
         - Purpose
@@ -2592,12 +2421,8 @@ def gradm(f, Bdil=None, Bero=None):
     if Bero is None: Bero = secross()
     y = subm(dilate(f,Bdil),erode(f,Bero))
     return y
-#
-# =====================================================================
-#
-#   grain
-#
-# =====================================================================
+
+
 def grain(fr, f, measurement, option="image"):
     """
         - Purpose
@@ -2705,12 +2530,8 @@ def grain(fr, f, measurement, option="image"):
         y = array(y)
         if len(y.shape) == 1: y = y[:,newaxis]
     return y
-#
-# =====================================================================
-#
-#   gray
-#
-# =====================================================================
+
+
 def gray(f, TYPE="uint8", k1=None):
     """
         - Purpose
@@ -2755,12 +2576,8 @@ def gray(f, TYPE="uint8", k1=None):
     else:
         assert 0, 'type not supported:'+TYPE
     return y
-#
-# =====================================================================
-#
-#   hmin
-#
-# =====================================================================
+
+
 def hmin(f, h=1, Bc=None):
     """
         - Purpose
@@ -2804,12 +2621,8 @@ def hmin(f, h=1, Bc=None):
     g = addm(f,h)
     y = suprec(g,f,Bc);
     return y
-#
-# =====================================================================
-#
-#   vdome
-#
-# =====================================================================
+
+
 def vdome(f, v=1, Bc=None):
     """
         - Purpose
@@ -2831,12 +2644,8 @@ def vdome(f, v=1, Bc=None):
     if Bc is None: Bc = secross()
     y = hmax(f,v,Bc);
     return y
-#
-# =====================================================================
-#
-#   vmax
-#
-# =====================================================================
+
+
 def vmax(f, v=1, Bc=None):
     """
         - Purpose
@@ -2879,12 +2688,8 @@ def vmax(f, v=1, Bc=None):
     print 'Not implemented yet'
     return None
     return y
-#
-# =====================================================================
-#
-#   hmax
-#
-# =====================================================================
+
+
 def hmax(f, h=1, Bc=None):
     """
         - Purpose
@@ -2927,12 +2732,8 @@ def hmax(f, h=1, Bc=None):
     g = subm(f,h)
     y = infrec(g,f,Bc);
     return y
-#
-# =====================================================================
-#
-#   homothick
-#
-# =====================================================================
+
+
 def homothick():
     """
         - Purpose
@@ -2958,12 +2759,8 @@ def homothick():
                              [0,1,0],
                              [1,1,1]]))
     return Iab
-#
-# =====================================================================
-#
-#   homothin
-#
-# =====================================================================
+
+
 def homothin():
     """
         - Purpose
@@ -2987,12 +2784,8 @@ def homothin():
                              [0,0,0],
                              [0,0,0]]))
     return Iab
-#
-# =====================================================================
-#
-#   img2se
-#
-# =====================================================================
+
+
 def img2se(fd, FLAT="FLAT", f=None):
     """
         - Purpose
@@ -3054,12 +2847,8 @@ def img2se(fd, FLAT="FLAT", f=None):
         B = choose(fd, (limits(int32([0]))[0]*ones(fd.shape),f) )
     B = seshow(int32(B),'NON-FLAT')
     return B
-#
-# =====================================================================
-#
-#   infcanon
-#
-# =====================================================================
+
+
 def infcanon(f, Iab, theta=45, DIRECTION="CLOCKWISE"):
     """
         - Purpose
@@ -3091,12 +2880,8 @@ def infcanon(f, Iab, theta=45, DIRECTION="CLOCKWISE"):
         Irot = interot( Iab, t, DIRECTION )
         y = intersec( y, infgen(f, Irot))
     return y
-#
-# =====================================================================
-#
-#   infgen
-#
-# =====================================================================
+
+
 def infgen(f, Iab):
     """
         - Purpose
@@ -3116,14 +2901,10 @@ def infgen(f, Iab):
     """
 
     A,Bc = Iab
-    y = union(dilate( f, A),dilate( neg(f), Bc))
+    y = union(dilate(f, A),dilate(neg(f), Bc))
     return y
-#
-# =====================================================================
-#
-#   infrec
-#
-# =====================================================================
+
+
 def infrec(f, g, bc=None):
     """
         - Purpose
@@ -3172,12 +2953,8 @@ def infrec(f, g, bc=None):
     n = product(f.shape)
     y = cdilate(f,g,bc,n);
     return y
-#
-# =====================================================================
-#
-#   inpos
-#
-# =====================================================================
+
+
 def inpos(f, g, bc=None):
     """
         - Purpose
@@ -3205,12 +2982,8 @@ def inpos(f, g, bc=None):
     k1 = limits(g)[1] - 1
     y = suprec(fg, intersec(union(g, 1), k1, fg), bc)
     return y
-#
-# =====================================================================
-#
-#   interot
-#
-# =====================================================================
+
+
 def interot(Iab, theta=45, DIRECTION="CLOCKWISE"):
     """
         - Purpose
@@ -3243,12 +3016,8 @@ def interot(Iab, theta=45, DIRECTION="CLOCKWISE"):
     Irot = se2hmt(serot(A, theta),
                     serot(Bc,theta))
     return Irot
-#
-# =====================================================================
-#
-#   intersec
-#
-# =====================================================================
+
+
 def intersec(f1, f2, f3=None, f4=None, f5=None):
     """
         - Purpose
@@ -3307,12 +3076,8 @@ def intersec(f1, f2, f3=None, f4=None, f5=None):
     if f5 != None: y = minimum(y,f5)
     y = y.astype(f1.dtype)
     return y
-#
-# =====================================================================
-#
-#   intershow
-#
-# =====================================================================
+
+
 def intershow(Iab):
     """
         - Purpose
@@ -3346,12 +3111,8 @@ def intershow(Iab):
     for i in range(saux.shape[0]):
         s=s+(join(list(saux[i]))+' \n')
     return s
-#
-# =====================================================================
-#
-#   mmis
-#
-# =====================================================================
+
+
 def mmis(f1, oper, f2=None, oper1=None, f3=None):
     """
         - Purpose
@@ -3414,12 +3175,8 @@ def mmis(f1, oper, f2=None, oper1=None, f3=None):
         else:
             assert 0,'oper1 must be one of: ==, ~=, >, >=, <, <=, it was:'+oper1
     return y
-#
-# =====================================================================
-#
-#   isbinary
-#
-# =====================================================================
+
+
 def isbinary(f):
     """
         - Purpose
@@ -3441,12 +3198,8 @@ def isbinary(f):
             print isbinary(b)
     """
     return type(f) is type(binary([1])) and f.dtype == bool
-#
-# =====================================================================
-#
-#   isequal
-#
-# =====================================================================
+
+
 def isequal(f1, f2, MSG=None):
     """
         - Purpose
@@ -3489,12 +3242,8 @@ def isequal(f1, f2, MSG=None):
         else:
             print 'ERROR: ', MSG
     return bool
-#
-# =====================================================================
-#
-#   islesseq
-#
-# =====================================================================
+
+
 def islesseq(f1, f2, MSG=None):
     """
         - Purpose
@@ -3521,12 +3270,8 @@ def islesseq(f1, f2, MSG=None):
 
     bool = min(ravel(f1<=f2))
     return bool
-#
-# =====================================================================
-#
-#   labelflat
-#
-# =====================================================================
+
+
 def labelflat(f, Bc=None, _lambda=0):
     """
         - Purpose
@@ -3598,12 +3343,8 @@ def labelflat(f, Bc=None, _lambda=0):
         y = union( y, r)               # merge them with the labeled image
         label = label + 1
     return y
-#
-# =====================================================================
-#
-#   lastero
-#
-# =====================================================================
+
+
 def lastero(f, B=None):
     """
         - Purpose
@@ -3630,12 +3371,8 @@ def lastero(f, B=None):
     dt = dist(f,B)
     y = regmax(dt,B)
     return y
-#
-# =====================================================================
-#
-#   lblshow
-#
-# =====================================================================
+
+
 def lblshow(f, option='noborder'):
     """
         - Purpose
@@ -3679,12 +3416,8 @@ def lblshow(f, option='noborder'):
     adpil.adshow(y)
     return
     return y
-#
-# =====================================================================
-#
-#   open
-#
-# =====================================================================
+
+
 def open(f, b=None):
     """
         - Purpose
@@ -3734,12 +3467,8 @@ def open(f, b=None):
     if b is None: b = secross()
     y = dilate(erode(f,b),b)
     return y
-#
-# =====================================================================
-#
-#   openrec
-#
-# =====================================================================
+
+
 def openrec(f, bero=None, bc=None):
     """
         - Purpose
@@ -3765,12 +3494,8 @@ def openrec(f, bero=None, bc=None):
     if bc is None: bc = secross()
     y = infrec(erode(f,bero),f,bc)
     return y
-#
-# =====================================================================
-#
-#   openrecth
-#
-# =====================================================================
+
+
 def openrecth(f, bero=None, bc=None):
     """
         - Purpose
@@ -3797,12 +3522,8 @@ def openrecth(f, bero=None, bc=None):
     if bc is None: bc = secross()
     y = subm(f, openrec( f, bero, bc))
     return y
-#
-# =====================================================================
-#
-#   openth
-#
-# =====================================================================
+
+
 def openth(f, b=None):
     """
         - Purpose
@@ -3830,12 +3551,8 @@ def openth(f, b=None):
     if b is None: b = secross()
     y = subm(f, open(f,b))
     return y
-#
-# =====================================================================
-#
-#   opentransf
-#
-# =====================================================================
+
+
 def opentransf(f, type='OCTAGON', n=65535, Bc=None, Buser=None):
     """
         - Purpose
@@ -3943,12 +3660,8 @@ def opentransf(f, type='OCTAGON', n=65535, Bc=None, Buser=None):
     if rec_flag != -1:
         y = grain(label(f,Bc),y,'max')
     return y
-#
-# =====================================================================
-#
-#   patspec
-#
-# =====================================================================
+
+
 def patspec(f, type='OCTAGON', n=65535, Bc=None, Buser=None):
     """
         - Purpose
@@ -3983,12 +3696,8 @@ def patspec(f, type='OCTAGON', n=65535, Bc=None, Buser=None):
     h=histogram(g)
     h=h[1:]
     return h
-#
-# =====================================================================
-#
-#   readgray
-#
-# =====================================================================
+
+
 def readgray(filename):
     """
         - Purpose
@@ -4029,12 +3738,8 @@ def readgray(filename):
     else:
        raise ValueError, 'Error, it is not 2D image'
     return y
-#
-# =====================================================================
-#
-#   register
-#
-# =====================================================================
+
+
 def register(code=None, file_name=None):
     """
         - Purpose
@@ -4057,12 +3762,8 @@ def register(code=None, file_name=None):
 
     s = 'License is not required'
     return s
-#
-# =====================================================================
-#
-#   regmax
-#
-# =====================================================================
+
+
 def regmax(f, Bc=None):
     """
         - Purpose
@@ -4086,12 +3787,8 @@ def regmax(f, Bc=None):
     if Bc is None: Bc = secross()
     y = regmin(neg(f),Bc)
     return y
-#
-# =====================================================================
-#
-#   regmin
-#
-# =====================================================================
+
+
 def regmin(f, Bc=None, option="binary"):
     """
         - Purpose
@@ -4174,12 +3871,8 @@ def regmin(f, Bc=None, option="binary"):
     g = subm(suprec(fplus,f,Bc),f)
     y = union(threshad(g,1),threshad(f,0,0))
     return y
-#
-# =====================================================================
-#
-#   se2interval
-#
-# =====================================================================
+
+
 def se2interval(a, b):
     """
         - Purpose
@@ -4199,12 +3892,8 @@ def se2interval(a, b):
 
     Iab = (a,neg(b))
     return Iab
-#
-# =====================================================================
-#
-#   se2hmt
-#
-# =====================================================================
+
+
 def se2hmt(A, Bc):
     """
         - Purpose
@@ -4232,12 +3921,8 @@ def se2hmt(A, Bc):
 
     Iab = (A,Bc)
     return Iab
-#
-# =====================================================================
-#
-#   sebox
-#
-# =====================================================================
+
+
 def sebox(r=1):
     """
         - Purpose
@@ -4266,12 +3951,8 @@ def sebox(r=1):
                           [1,1,1],
                           [1,1,1]]),r)
     return B
-#
-# =====================================================================
-#
-#   secross
-#
-# =====================================================================
+
+
 def secross(r=1):
     """
         - Purpose
@@ -4300,12 +3981,8 @@ def secross(r=1):
                           [1,1,1],
                           [0,1,0]]),r)
     return B
-#
-# =====================================================================
-#
-#   sedisk
-#
-# =====================================================================
+
+
 def sedisk(r=3, DIM="2D", METRIC="EUCLIDEAN", FLAT="FLAT", h=0):
     """
         - Purpose
@@ -4405,12 +4082,8 @@ def sedisk(r=3, DIM="2D", METRIC="EUCLIDEAN", FLAT="FLAT", h=0):
     else:
         assert 0,'Non valid metric'
     return B
-#
-# =====================================================================
-#
-#   seline
-#
-# =====================================================================
+
+
 def seline(l=3, theta=0):
     """
         - Purpose
@@ -4453,12 +4126,8 @@ def seline(l=3, theta=0):
     x = int32(transpose(array([x1,x0])))
     B = set2mat((x,binary(ones((x.shape[1],1)))))
     return B
-#
-# =====================================================================
-#
-#   serot
-#
-# =====================================================================
+
+
 def serot(B, theta=45, DIRECTION="CLOCKWISE"):
     """
         - Purpose
@@ -4500,12 +4169,8 @@ def serot(B, theta=45, DIRECTION="CLOCKWISE"):
     x = transpose(array([transpose(x1),transpose(x0)]))
     BROT = set2mat((x,v))
     return BROT
-#
-# =====================================================================
-#
-#   seshow
-#
-# =====================================================================
+
+
 def seshow(B, option="NORMAL"):
     """
         - Purpose
@@ -4563,12 +4228,8 @@ def seshow(B, option="NORMAL"):
         print 'seshow: not a valid flag: NORMAL, EXPAND or NON-FLAT'
     y = sedilate(y,B)
     return y
-#
-# =====================================================================
-#
-#   sesum
-#
-# =====================================================================
+
+
 def sesum(B=None, N=1):
     """
         - Purpose
@@ -4607,12 +4268,8 @@ def sesum(B=None, N=1):
     for i in range(N-1):
         NB = sedilate(NB,B)
     return NB
-#
-# =====================================================================
-#
-#   setrans
-#
-# =====================================================================
+
+
 def setrans(Bi, t):
     """
         - Purpose
@@ -4638,12 +4295,8 @@ def setrans(Bi, t):
     Bo = set2mat((x+t,v))
     Bo = Bo.astype(Bi.dtype)
     return Bo
-#
-# =====================================================================
-#
-#   sereflect
-#
-# =====================================================================
+
+
 def sereflect(Bi):
     """
         - Purpose
@@ -4664,15 +4317,10 @@ def sereflect(Bi):
             b2 = sereflect(b1)
             print seshow(b2)
     """
-
     Bo = serot(Bi, 180)
     return Bo
-#
-# =====================================================================
-#
-#   sedil
-#
-# =====================================================================
+
+
 def sedilate(B1, B2):
     """
         - Purpose
@@ -4721,12 +4369,8 @@ def sedilate(B1, B2):
             st= setrans(s,x[i])
             Bo = seunion(Bo,st)
     return Bo
-#
-# =====================================================================
-#
-#   seunion
-#
-# =====================================================================
+
+
 def seunion(B1, B2):
     """
         - Purpose
@@ -4773,12 +4417,8 @@ def seunion(B1, B2):
         B2[ Hc-dh2s : Hc+dh2e+1  ,  Wc-dw2s : Wc+dw2e+1 ] = BB2
     B = maximum(B1,B2).astype(type1)
     return B
-#
-# =====================================================================
-#
-#   show
-#
-# =====================================================================
+
+
 def show(f, f1=None, f2=None, f3=None, f4=None, f5=None, f6=None):
     """
         - Purpose
@@ -4826,12 +4466,7 @@ def show(f, f1=None, f2=None, f3=None, f4=None, f5=None, f6=None):
     adpil.adshow(y)
     return
 
-#
-# =====================================================================
-#
-#   skelm
-#
-# =====================================================================
+
 def skelm(f, B=None, option="binary"):
     """
         - Purpose
@@ -4896,12 +4531,8 @@ def skelm(f, B=None, option="binary"):
     if option == 'BINARY':
         y = binary(y)
     return y
-#
-# =====================================================================
-#
-#   skelmrec
-#
-# =====================================================================
+
+
 def skelmrec(f, B=None):
     """
         - Purpose
@@ -4934,12 +4565,8 @@ def skelmrec(f, B=None):
         y = dilate(union(y,binary(f,r)), B)
     y = union(y, binary(f,1))
     return y
-#
-# =====================================================================
-#
-#   skiz
-#
-# =====================================================================
+
+
 def skiz(f, Bc=None, LINEREG="LINES", METRIC=None):
     """
         - Purpose
@@ -4986,12 +4613,8 @@ def skiz(f, Bc=None, LINEREG="LINES", METRIC=None):
     d = dist( neg(f), Bc, METRIC)
     return cwatershed(d,f,Bc,LINEREG)
     return y
-#
-# =====================================================================
-#
-#   stats
-#
-# =====================================================================
+
+
 def stats(f, measurement):
     """
         - Purpose
@@ -5032,12 +4655,8 @@ def stats(f, measurement):
     else:
         assert 0,'Not a valid measurement'
     return y
-#
-# =====================================================================
-#
-#   subm
-#
-# =====================================================================
+
+
 def subm(f1, f2):
     """
         - Purpose
@@ -5085,12 +4704,8 @@ def subm(f1, f2):
     y = clip(f1.astype('d') - f2, bottom, top)
     y = y.astype(f1.dtype)
     return y
-#
-# =====================================================================
-#
-#   supcanon
-#
-# =====================================================================
+
+
 def supcanon(f, Iab, theta=45, DIRECTION="CLOCKWISE"):
     """
         - Purpose
@@ -5122,12 +4737,8 @@ def supcanon(f, Iab, theta=45, DIRECTION="CLOCKWISE"):
         Irot = interot( Iab, t, DIRECTION )
         y = union( y, supgen(f, Irot))
     return y
-#
-# =====================================================================
-#
-#   supgen
-#
-# =====================================================================
+
+
 def supgen(f, INTER):
     """
         - Purpose
@@ -5173,12 +4784,8 @@ def supgen(f, INTER):
     y = intersec(erode(f,A),
                    erode(neg(f),Bc))
     return y
-#
-# =====================================================================
-#
-#   suprec
-#
-# =====================================================================
+
+
 def suprec(f, g, Bc=None):
     """
         - Purpose
@@ -5205,12 +4812,8 @@ def suprec(f, g, Bc=None):
     n = product(f.shape)
     y = cerode(f,g,Bc,n);
     return y
-#
-# =====================================================================
-#
-#   bshow
-#
-# =====================================================================
+
+
 def bshow(f1, f2=None, f3=None, factor=17):
     """
         - Purpose
@@ -5280,12 +4883,8 @@ def bshow(f1, f2=None, f3=None, factor=17):
                 y[m:m+s, n:n+s] = y[m:m+s, n:n+s] + fillrect
     y = y > 0
     return y
-#
-# =====================================================================
-#
-#   swatershed
-#
-# =====================================================================
+
+
 def swatershed(f, g, B=None, LINEREG="LINES"):
     """
         - Purpose
@@ -5336,12 +4935,8 @@ def swatershed(f, g, B=None, LINEREG="LINES"):
     print 'Not implemented yet'
     return None
     return y
-#
-# =====================================================================
-#
-#   symdif
-#
-# =====================================================================
+
+
 def symdif(f1, f2):
     """
         - Purpose
@@ -5378,12 +4973,8 @@ def symdif(f1, f2):
 
     y = union(subm(f1,f2),subm(f2,f1))
     return y
-#
-# =====================================================================
-#
-#   thick
-#
-# =====================================================================
+
+
 def thick(f, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
     """
         - Purpose
@@ -5426,12 +5017,8 @@ def thick(f, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
             y = union( y, sup)
         if isequal(aux,zero): break
     return y
-#
-# =====================================================================
-#
-#   thin
-#
-# =====================================================================
+
+
 def thin(f, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
     """
         - Purpose
@@ -5481,12 +5068,8 @@ def thin(f, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
             y = subm( y, sup)
         if isequal(aux,zero): break
     return y
-#
-# =====================================================================
-#
-#   union
-#
-# =====================================================================
+
+
 def union(f1, f2, f3=None, f4=None, f5=None):
     """
         - Purpose
@@ -5556,12 +5139,8 @@ def union(f1, f2, f3=None, f4=None, f5=None):
     if f5: y = maximum(y,f5)
     y = y.astype(f1.dtype)
     return y
-#
-# =====================================================================
-#
-#   version
-#
-# =====================================================================
+
+
 def version():
     """
         - Purpose
@@ -5580,12 +5159,8 @@ def version():
 
     return __version_string__
     return S
-#
-# =====================================================================
-#
-#   watershed
-#
-# =====================================================================
+
+
 def watershed(f, Bc=None, LINEREG="LINES"):
     """
         - Purpose
@@ -5620,12 +5195,8 @@ def watershed(f, Bc=None, LINEREG="LINES"):
     if Bc is None: Bc = secross()
     return cwatershed(f,regmin(f,Bc),upper(LINEREG))
     return y
-#
-# =====================================================================
-#
-#   bench
-#
-# =====================================================================
+
+
 def bench(count=10):
     """
         - Purpose
@@ -5708,12 +5279,8 @@ def bench(count=10):
     print '    Average                         ', average(result)
     out=[]
 
-#
-# =====================================================================
-#
-#   install
-#
-# =====================================================================
+
+
 def install(code=None):
     """
         - Purpose
@@ -5751,12 +5318,8 @@ def install(code=None):
           print 'The library file could not be registered'
           return
 
-#
-# =====================================================================
-#
-#   maxleveltype
-#
-# =====================================================================
+
+
 def maxleveltype(TYPE='uint8'):
     """
         - Purpose
@@ -5779,12 +5342,8 @@ def maxleveltype(TYPE='uint8'):
     else:
         assert 0, 'does not support this data type:'+TYPE
     return max
-#
-# =====================================================================
-#
-#   int32
-#
-# =====================================================================
+
+
 def int32(f):
     """
         - Purpose
@@ -5804,12 +5363,8 @@ def int32(f):
 
     img = array(clip(f,-2147483647,2147483647)).astype('i')
     return img
-#
-# =====================================================================
-#
-#   uint8
-#
-# =====================================================================
+
+
 def to_uint8(f):
     """
         - Purpose
@@ -5832,12 +5387,8 @@ def to_uint8(f):
 
     img = array(clip(f,0,255),uint8)
     return img
-#
-# =====================================================================
-#
-#   uint16
-#
-# =====================================================================
+
+
 def uint16(f):
     """
         - Purpose
@@ -5860,12 +5411,8 @@ def uint16(f):
 
     img = array(clip(f,0,65535)).astype('w')
     return img
-#
-# =====================================================================
-#
-#   datatype
-#
-# =====================================================================
+
+
 def datatype(f):
     """
         - Purpose
@@ -5892,12 +5439,8 @@ def datatype(f):
     else:
         assert 0,'Does not accept this typecode:'+code
     return type
-#
-# =====================================================================
-#
-#   add4dil
-#
-# =====================================================================
+
+
 def add4dilate(f, c):
     """
         - Purpose
@@ -5922,12 +5465,8 @@ def add4dilate(f, c):
     else:
        a = f
     return a
-#
-# =====================================================================
-#
-#   mat2set
-#
-# =====================================================================
+
+
 def mat2set(A):
     """
         - Purpose
@@ -5973,12 +5512,8 @@ def mat2set(A):
     x = transpose(x)
     CV = x,take(ravel(A),offsets)
     return CV
-#
-# =====================================================================
-#
-#   set2mat
-#
-# =====================================================================
+
+
 def set2mat(A):
     """
         - Purpose
@@ -6032,12 +5567,8 @@ def set2mat(A):
     put(M,offset,v)
     M = M.astype(v.dtype)
     return M
-#
-# =====================================================================
-#
-#   pad4n
-#
-# =====================================================================
+
+
 def pad4n(f, Bc, value, scale=1):
     """
         - Purpose
@@ -6064,18 +5595,10 @@ def pad4n(f, Bc, value, scale=1):
     g[ ch: -ch, cw: -cw] = f
     y = g.astype(f.dtype)
     return y
-#
-# =====================================================================
-#
-#   Global statements for plot
-#
-# =====================================================================
+
+
 __figs__ = [None]
-# =====================================================================
-#
-#   plot
-#
-# =====================================================================
+
 def plot(plotitems=[], options=[], outfig=-1, filename=None):
     """
         - Purpose
