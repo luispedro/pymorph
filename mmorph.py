@@ -507,7 +507,7 @@ def glblshow(X, border=0.0):
 
     """
     from numpy import take, resize, shape
-    from MLab import rand
+    from numpy.random import rand
 
     mmin = X.min()
     mmax = X.max()
@@ -711,7 +711,7 @@ def label(f, Bc=None):
     """
     from numpy import allclose, ravel, nonzero, array
     if Bc is None: Bc = secross()
-    assert isbinary,'Can only label binary image'
+    assert isbinary(f),'Can only label binary image'
     zero = subm(f,f)               # zero image
     faux=f
     r = array(zero)
@@ -1622,9 +1622,7 @@ def closeth(f, b=None):
     """
 
     if b is None: b = secross()
-    y = subm( close(f,b), f)
-    return y
-
+    return subm( close(f,b), f)
 
 
 def cthick(f, g, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
@@ -2108,18 +2106,18 @@ def endpoints(OPTION="LOOP"):
     OPTION = upper(OPTION)
     if OPTION == 'LOOP':
         Iab = se2hmt(binary([[0,0,0],
-                                  [0,1,0],
-                                  [0,0,0]]),
+                             [0,1,0],
+                             [0,0,0]]),
                         binary([[0,0,0],
-                                  [1,0,1],
-                                  [1,1,1]]))
+                                [1,0,1],
+                                [1,1,1]]))
     elif OPTION == 'HOMOTOPIC':
         Iab = se2hmt(binary([[0,1,0],
-                                  [0,1,0],
-                                  [0,0,0]]),
+                             [0,1,0],
+                             [0,0,0]]),
                         binary([[0,0,0],
-                                  [1,0,1],
-                                  [1,1,1]]))
+                                [1,0,1],
+                                [1,1,1]]))
     return Iab
 
 
@@ -2409,19 +2407,19 @@ def grain(fr, f, measurement, option="image"):
             show(f)
             show(g)
     """
-    from numpy import newaxis, ravel, zeros, sum, nonzero, put, take, array
-    from MLab import mean, std
+    from numpy import newaxis, ravel, zeros, sum, nonzero, put, take, array, mean, std
     from string import upper
 
     measurement = upper(measurement)
     option      = upper(option)
-    if len(fr.shape) == 1: fr = fr[newaxis,:]
+    if len(fr.shape) == 1:
+        fr = fr[newaxis,:]
     n = fr.max()
     if option == 'DATA': y = []
     else               : y = zeros(fr.shape)
     if measurement == 'MAX':
         for i in range(1,n+1):
-            aux = fr==i
+            aux = (fr==i)
             val = (aux*f).max()
             if option == 'DATA': y.append(val)
             else               : put(ravel(y), nonzero(ravel(aux)), val)
@@ -2430,7 +2428,7 @@ def grain(fr, f, measurement, option="image"):
             aux = fr==i
             lin = ravel(aux*f)
             ind = nonzero(ravel(aux))
-            val = min(take(lin,ind))
+            val = take(lin,ind).min()
             if option == 'DATA': y.append(val)
             else               : put(ravel(y), ind, val)
     elif measurement == 'SUM':
@@ -2443,7 +2441,7 @@ def grain(fr, f, measurement, option="image"):
         for i in range(1,n+1):
             aux = fr==i
             ind = nonzero(ravel(aux))
-            val = mean(take(ravel(aux*f), ind))
+            val = take(ravel(aux*f), ind).mean()
             if option == 'DATA': y.append(val)
             else               : put(ravel(y), ind, val)
     elif measurement == 'STD':
@@ -2595,7 +2593,7 @@ def vmax(f, v=1, Bc=None):
     """
 
     if Bc is None: Bc = secross()
-    print 'Not implemented yet'
+    raise 'Not implemented yet'
     return None
     return y
 
@@ -2661,14 +2659,12 @@ def homothick():
             #
             print intershow(homothick())
     """
-
-    Iab = se2hmt(binary([[1,1,1],
-                             [0,0,0],
-                             [0,0,0]]),
-                   binary([[0,0,0],
-                             [0,1,0],
-                             [1,1,1]]))
-    return Iab
+    return se2hmt(binary([[1,1,1],
+                         [0,0,0],
+                         [0,0,0]]),
+                  binary([[0,0,0],
+                          [0,1,0],
+                          [1,1,1]]))
 
 
 def homothin():
@@ -5310,8 +5306,7 @@ def set2mat(A):
             print g
             print datatype(g)
     """
-    from MLab import max
-    from numpy import put, ones, ravel, shape, newaxis, array, asarray
+    from numpy import put, ones, ravel, shape, newaxis, array, asarray, max
 
     if len(A) == 2:            
         x, v = A
