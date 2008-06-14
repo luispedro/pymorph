@@ -253,15 +253,14 @@ def limits(f):
             print limits(binary([0, 1, 0]))
             print limits(to_uint8([0, 1, 2]))
     """
-    from numpy import array
-    import numpy as N
+    from numpy import array, bool, uint8, uint16, int32
     code = f.dtype
-    if   code == N.bool: y=array([0,1])
-    elif code == N.uint8: y=array([0,255])
-    elif code == N.uint16: y=array([0,65535])
-    elif code == N.int32: y=array([-2147483647,2147483647])
+    if   code == bool: y=array([0,1])
+    elif code == uint8: y=array([0,255])
+    elif code == uint16: y=array([0,65535])
+    elif code == int32: y=array([-2147483647,2147483647])
     else:
-        assert 0,'Does not accept this typecode:'+code
+        assert 0,'Does not accept this typecode: %s' % code
     return y
 
 
@@ -385,6 +384,7 @@ def dist(f, Bc=None, METRIC=None):
             show(de%8)
     """
     from string import upper
+    import numpy
     from numpy import zeros, sqrt
     if Bc is None: Bc = secross()
     if METRIC is not None:
@@ -546,7 +546,7 @@ def gdtshow(X, N=10):
     m[0:256:d] = 1
     m = transpose([m,m,m])
     # lut gray
-    gray = floor(arange(N)*255. / (N-1) + 0.5).astype('B')
+    gray = floor(arange(N)*255. // (N-1) + 0.5).astype('B')
     gray = repeat(gray, d)[0:256]
     gray = transpose([gray,gray,gray])
     # lut jet
@@ -555,7 +555,7 @@ def gdtshow(X, N=10):
     b = 255 - r
     jet = transpose([r,g,b])
     # apply lut
-    XX  = floor((X-mini)*255. / maxi + 0.5).astype('B')
+    XX  = floor((X-mini)*255. // maxi + 0.5).astype('B')
     lut = (1-m)*gray + m*jet
     Y = apply_lut(XX, lut)
     return Y
@@ -1229,13 +1229,20 @@ def blob(fr, measurement, option="image"):
         - Output
             y: Gray-scale (uint8 or uint16) or binary image.
         - Description
-            Take measurements from the labeled image fr . The measurements
-            are: area, centroid, or bounding rectangle. The parameter option
-            controls the output format: 'IMAGE': the result is an image;
-            'DATA': the result is a double column vector with the
-            measurement for each blob. The region with label zero is not
-            measured as it is normally the background. The measurement of
-            region with label 1 appears at the first row of the output.
+            Take measurements from the labeled image fr.
+            The measurements are:
+                area,
+                centroid,
+                bounding rectangle.
+                
+            The parameter option controls the output format:
+                'IMAGE': the result is an image;
+                'DATA': the result is a double column vector with the
+                measurement for each blob.
+                
+            The region with label zero is not measured as it is normally
+            the background. The measurement of region with label 1 appears
+            at the first row of the output.
         - Examples
             #
             #   example 1
@@ -1279,34 +1286,39 @@ def blob(fr, measurement, option="image"):
             box=blob(fr,'boundingbox')
             show(f,box)
     """
-    from numpy import newaxis, ravel, zeros, sum, nonzero, sometrue, array
+    import numpy
+    from numpy import newaxis, ravel, zeros, sum, nonzero, array
     from string import upper
 
     measurement = upper(measurement)
     option      = upper(option)
     if len(fr.shape) == 1: fr = fr[newaxis,:]
     n = fr.max()
-    if option == 'DATA': y = []
-    else               : y = zeros(fr.shape)
+    if option == 'DATA':
+        y = []
+    elif measurement == 'CENTROID':
+        y = zeros(fr.shape,numpy.bool)
+    else:
+        y = zeros(fr.shape,numpy.int32)
     if measurement == 'AREA':
         for i in xrange(1,n+1):
-            aux  = fr==i
-            area = aux.ravel()
+            aux  = (fr==i)
+            area = aux.sum()
             if option == 'DATA': y.append(area)
-            else               : y = y + area*aux
+            else               : y += area*aux
     elif measurement == 'CENTROID':
         for i in xrange(1,n+1):
-            aux  = fr==i
-            ind  = nonzero(ravel(aux))
-            indx = ind / fr.shape[1]
+            aux  = (fr==i)
+            ind,  = nonzero(ravel(aux))
+            indx = ind // fr.shape[1]
             indy = ind % fr.shape[1]
-            centroid = [sum(indx)/len(ind), sum(indy)/len(ind)]
+            centroid = [sum(indx)//len(ind), sum(indy)//len(ind)]
             if option == 'DATA': y.append([centroid[1],centroid[0]])
             else               : y[centroid] = 1
     elif measurement == 'BOUNDINGBOX':
         for i in xrange(1,n+1):
             aux = fr==i
-            aux1, aux2 = sometrue(aux,0), sometrue(aux,1)
+            aux1, aux2 = aux.any(0), aux.any(1)
             col , row  = nonzero(aux1)  , nonzero(aux2)
             if option == 'DATA': y.append([col[0],row[0],col[-1],row[-1]])
             else:
@@ -1888,18 +1900,18 @@ def dilate(f, b=None):
             show(f)
             show(dilate(f,b))
     """
-    from numpy import maximum, newaxis, ones
+    from numpy import maximum, newaxis, ones, int32
     if b is None: b = secross()
     if len(f.shape) == 1: f = f[newaxis,:]
     h,w = f.shape
     x,v = mat2set(b)
     if len(x)==0:
-        y = (ones((h,w)) * limits(f)[0]).astype(f.dtype)
+        y = (ones((h,w),int32) * limits(f)[0]).astype(f.dtype)
     else:
         if isbinary(v):
             v = intersec(gray(v,'int32'),0)
         mh,mw = max(abs(x)[:,0]),max(abs(x)[:,1])
-        y = (ones((h+2*mh,w+2*mw)) * limits(f)[0]).astype(f.dtype)
+        y = (ones((h+2*mh,w+2*mw),int32) * limits(f)[0]).astype(f.dtype)
         for i in xrange(x.shape[0]):
             if v[i] > -2147483647:
                 y[mh+x[i,0]:mh+x[i,0]+h, mw+x[i,1]:mw+x[i,1]+w] = maximum(
@@ -2492,7 +2504,7 @@ def gray(f, TYPE="uint8", k1=None):
     from numpy import array
     if k1 is None: k1 = maxleveltype(TYPE)
     if type(f) is list: f = binary(f)
-    assert isbinary(f,'binary'), 'f must be binary'
+    assert isbinary(f), 'f must be binary'
     if k1==None:
         k1=maxleveltype(TYPE)
     if   TYPE == 'uint8' : y = to_uint8(f*k1)
@@ -3635,7 +3647,7 @@ def regmin(f, Bc=None, option="binary"):
             show(ws2)
     """
 
-    if options != 'binary':
+    if option != 'binary':
         raise ValueError, "mmorph.regmin only implements option 'binary'"
     if Bc is None: Bc = secross()
     fplus = addm(f,1)
@@ -3719,8 +3731,8 @@ def sebox(r=1):
     """
 
     B = sesum(binary([[1,1,1],
-                          [1,1,1],
-                          [1,1,1]]),r)
+                      [1,1,1],
+                      [1,1,1]]),r)
     return B
 
 
@@ -3839,7 +3851,7 @@ def sedisk(r=3, DIM="2D", METRIC="EUCLIDEAN", FLAT="FLAT", h=0):
                         [          0, 1,          0],
                         [-2147483647, 0,-2147483647]])
         if r==1: return b1
-        else:    return sedilate( sedilate(y,sesum(b1,r/2)) ,sesum(b2,(r+1)/2))
+        else:    return sedilate( sedilate(y,sesum(b1,r//2)) ,sesum(b2,(r+1)//2))
     elif METRIC == 'EUCLIDEAN':
         v = arange(-r,r+1)
         x = resize(v, (len(v), len(v)))
@@ -3883,9 +3895,10 @@ def seline(l=3, theta=0):
             show(a)
             show(b)
     """
+    import numpy
     from numpy import pi, tan, cos, sin, sign, floor, arange, transpose, array, ones
 
-    theta = pi*theta/180
+    theta = pi*theta//180
     if abs(tan(theta)) <= 1:
         s  = sign(cos(theta))
         x0 = arange(0, l * cos(theta)-(s*0.5),s)
@@ -3895,7 +3908,7 @@ def seline(l=3, theta=0):
         x1 = arange(0, l * sin(theta) - (s*0.5),s)
         x0 = floor(x1 / tan(theta) + 0.5)
     x = int32(transpose(array([x1,x0])))
-    B = set2mat((x,binary(ones((x.shape[1],1)))))
+    B = set2mat((x,binary(ones((x.shape[1],1),numpy.uint8))))
     return B
 
 
@@ -3930,7 +3943,7 @@ def serot(B, theta=45, DIRECTION="CLOCKWISE"):
     if DIRECTION == "ANTI-CLOCKWISE":
        theta = -theta
     SA = mat2set(B)
-    theta = pi * theta/180
+    theta = pi * theta//180
     (y,v)=SA
     if len(y)==0: return binary([0])
     x0 = y[:,1] * cos(theta) - y[:,0] * sin(theta)
@@ -4119,17 +4132,16 @@ def sedilate(B1, B2):
             b3 = sedilate(b1,b2)
             seshow(b3)
     """
-    from numpy import newaxis, array
+    from numpy import newaxis, array, int32
 
-    assert ((dataisinstance(B1, 'binary') or (datatype(B1) == 'int32')) and
-            (dataisinstance(B2, 'binary') or (datatype(B2) == 'int32'))),'SE must be binary or int32'
+    assert (isbinary(B1) or (B1.dtype == int32)) and (isbinary(B2) or B2.dtype == int32), 'pymorph.sedilate: s.e. must be binary or int32'
     if len(B1.shape) == 1: B1 = B1[newaxis,:]
     if len(B2.shape) == 1: B2 = B2[newaxis,:]
-    if (dataisinstance(B1, 'int32') or (dataisinstance(B2, 'int32'))):
+    if B1.dtype==int32 or B2.dtype == int32:
        Bo = int32([limits(int32([0]))[0]])
-       if datatype(B1) == 'binary':
+       if isbinary(B1):
           B1 = gray(B1,'int32',0)
-       if datatype(B2) == 'binary':
+       if isbinary(B2):
           B2 = gray(B2,'int32',0)
     else:
        Bo = binary([0])
@@ -4165,7 +4177,7 @@ def seunion(B1, B2):
             b3 = seunion(b1,b2)
             seshow(b3)
     """
-    from numpy import maximum, ones, asarray, newaxis
+    from numpy import maximum, ones, asarray, newaxis, int32
 
     assert B1.dtype == B2.dtype, 'Cannot have different datatypes:'
     type1 = B1.dtype
@@ -4177,13 +4189,13 @@ def seunion(B1, B2):
         h1,w1 = B1.shape
         h2,w2 = B2.shape
         H,W = max(h1,h2),max(w1,w2)
-        Hc,Wc = (H-1)/2,(W-1)/2    # center
+        Hc,Wc = (H-1)//2,(W-1)//2    # center
         BB1,BB2 = asarray(B1),asarray(B2)
-        B1, B2  = inf * ones((H,W)), inf *ones((H,W))
-        dh1s , dh1e = (h1-1)/2 , (h1-1)/2 + (h1+1)%2 # deal with even and odd dimensions
-        dw1s , dw1e = (w1-1)/2 , (w1-1)/2 + (w1+1)%2
-        dh2s , dh2e = (h2-1)/2 , (h2-1)/2 + (h2+1)%2
-        dw2s , dw2e = (w2-1)/2 , (w2-1)/2 + (w2+1)%2
+        B1, B2  = inf * ones((H,W),int32), inf *ones((H,W),int32)
+        dh1s , dh1e = (h1-1)//2 , (h1-1)//2 + (h1+1)%2 # deal with even and odd dimensions
+        dw1s , dw1e = (w1-1)//2 , (w1-1)//2 + (w1+1)%2
+        dh2s , dh2e = (h2-1)//2 , (h2-1)//2 + (h2+1)%2
+        dw2s , dw2e = (w2-1)//2 , (w2-1)//2 + (w2+1)%2
         B1[ Hc-dh1s : Hc+dh1e+1  ,  Wc-dw1s : Wc+dw1e+1 ] = BB1
         B2[ Hc-dh2s : Hc+dh2e+1  ,  Wc-dw2s : Wc+dw2e+1 ] = BB2
     B = maximum(B1,B2).astype(type1)
@@ -4574,6 +4586,7 @@ def bshow(f1, f2=None, f3=None, factor=17):
             g3=bshow(f1,f2,f3)
             show(g3);
     """
+    import numpy
     from numpy import newaxis, zeros, resize, transpose, floor, arange, array
 
     if f1.shape == (): f1 = array([f1])
@@ -4586,11 +4599,11 @@ def bshow(f1, f2=None, f3=None, factor=17):
     s = factor
     if factor < 9: s = 9
     h,w = f1.shape
-    y = zeros((s*h, s*w))
+    y = zeros((s*h, s*w),numpy.int32)
     xc = resize(range(s), (s,s))
     yc = transpose(xc)
     r  = int(floor((s-8)/2. + 0.5))
-    circle = (xc - s/2)**2 + (yc - s/2)**2 <= r**2
+    circle = (xc - s//2)**2 + (yc - s//2)**2 <= r**2
     r = arange(s) % 2
     fillrect = resize(array([r, 1-r]), (s,s))
     fillrect[0  ,:] = 0
@@ -5098,14 +5111,14 @@ def datatype(f):
             of the image f .
 
     """
-
+    from numpy import bool, uint8, uint16, int32
     code = f.dtype
     if   code == bool: type='binary'
     elif code == uint8: type='uint8'
     elif code == uint16: type='uint16'
     elif code == int32: type='int32'
     else:
-        assert 0,'Does not accept this typecode:'+code
+        assert 0,'Does not accept this typecode: %s' % code
     return type
 
 
@@ -5175,8 +5188,8 @@ def mat2set(A):
     if len(offsets) == 0: return ([],[])
     (h,w) = A.shape
     x = [0,1]
-    x[0] = offsets/w - (h-1)/2
-    x[1] = offsets%w - (w-1)/2
+    x[0] = offsets//w - (h-1)//2
+    x[1] = offsets%w - (w-1)//2
     x = transpose(x)
     CV = x,take(ravel(A),offsets)
     return CV
@@ -5215,7 +5228,7 @@ def set2mat(A):
             print g
             print datatype(g)
     """
-    from numpy import put, ones, ravel, shape, newaxis, array, asarray, max
+    from numpy import put, ones, ravel, shape, newaxis, array, asarray, max, int32
 
     if len(A) == 2:            
         x, v = A
@@ -5227,14 +5240,12 @@ def set2mat(A):
         raise TypeError, 'Argument must be a tuple of length 1 or 2'
     if len(x) == 0:  return array([0]).astype(v.dtype)
     if len(x.shape) == 1: x = x[newaxis,:]
-    dh,dw = max(abs(x))
+    dh,dw = abs(x).max(0)
     h,w = (2*dh)+1, (2*dw)+1 
-    M=ones((h,w)) * limits(v)[0]
+    M=ones((h,w),int32) * limits(v)[0]
     offset = x[:,0] * w + x[:,1] + (dh*w + dw)
     put(M,offset,v)
-    M = M.astype(v.dtype)
-    return M
-
+    return M.astype(v.dtype)
 
 def pad4n(f, Bc, value, scale=1):
     """
@@ -5308,7 +5319,7 @@ def plot(plotitems=[], options=[], outfig=-1, filename=None):
             opts.append(['replot'])
             fig2 = plot([y1_plt], opts, fig2)
     """
-    import Gnuplot
+    import matplotlib
     import numpy
 
     newfig = 0

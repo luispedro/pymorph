@@ -275,30 +275,34 @@ def pil2array(pil):
     w, h = pil.size
     binary = 0
     if pil.mode == '1':
-        binary = 1
+        binary = True
         pil = pil.convert('L')
     if pil.mode == 'L':
-        d = 1 ; shape = (h,w)
+        d = 1
+        shape = (h,w)
     elif pil.mode == 'P':
         if 0:   # len(pil.palette.data) == 2*len(pil.palette.rawmode):
-            binary = 1
+            binary = True
             pil = pil.convert('L')
-            d = 1 ; shape = (h,w)
+            d = 1
+            shape = (h,w)
         else:
             pil = pil.convert('RGB')
-            d = 3 ; shape = (h,w,d)
+            d = 3
+            shape = (h,w,d)
     elif pil.mode in ('RGB','YCbCr'):
-        d = 3 ; shape = (h,w,d)
+        d = 3
+        shape = (h,w,d)
     elif pil.mode in ('RGBA','CMYK'):
-        d = 4 ; shape = (h,w,d)
+        d = 4
+        shape = (h,w,d)
     else:
         raise TypeError, "Invalid or unimplemented PIL image mode '%s'" % pil.mode
-    arr = numpy.reshape(numpy.fromstring(pil.tostring(), 'B', w*h*d), shape)
+    arr = numpy.reshape(numpy.fromstring(pil.tostring(), numpy.uint8, w*h*d), shape)
     if d > 1:
         arr = numpy.swapaxes(numpy.swapaxes(arr, 0, 2), 1, 2)
     if binary:
-        arr = (arr > 0).astype('b')
-    # return arr
+        return (arr > 0)
     return arr
 
 

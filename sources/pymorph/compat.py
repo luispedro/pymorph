@@ -10,6 +10,7 @@ dil=dilate
 cdil=cdilate
 sedil=sedilate
 add4dil=add4dilate
+uint8=to_uint8
 
 # mmnames:
 
@@ -32,7 +33,6 @@ mmclose=close
 mmcloserec=closerec
 mmcloserecth=closerecth
 mmcloseth=closeth
-mmcmp=cmp
 mmconcat=concat
 mmcthick=cthick
 mmcthin=cthin
@@ -132,17 +132,17 @@ def mmregister(*args):
     pass
 
 
-def cmp(f1, oper, f2, oper1=None, f3=None):
+def mmcmp(f1, oper, f2, oper1=None, f3=None):
     """
         - Alternative:
             Consider using array operations directly, i.e., instead of 
-                cmp(f1, '>', f2)
+                mmcmp(f1, '>', f2)
             simply use
                 f1 > f2
         - Purpose
             Compare two images pixelwisely.
         - Synopsis
-            y = cmp(f1, oper, f2, oper1=None, f3=None)
+            y = mmcmp(f1, oper, f2, oper1=None, f3=None)
         - Input
             f1:    Gray-scale (uint8 or uint16) or binary image.
             oper:  String Default: "". relationship from: '==', '~=',
@@ -395,3 +395,6 @@ def mmstats(f, measurement):
     elif measurement == 'STD': return f.std()
     else:
         assert 0,'pymorph.compat.mmstats: Not a valid measurement'
+
+def mmsurf(f,options = None):
+    return f
