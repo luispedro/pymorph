@@ -385,7 +385,7 @@ def mmstats(f, measurement):
     """
     from string import upper
     from numpy import ravel
-    from MLab import mean, median, std
+    from numpy.oldnumeric.mlab import mean, median, std
 
     measurement = upper(measurement)
     if measurement == 'MAX': return f.max()
