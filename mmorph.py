@@ -1632,67 +1632,6 @@ def closeth(f, b=None):
     return y
 
 
-def cmp(f1, oper, f2, oper1=None, f3=None):
-    """
-        - Purpose
-            Compare two images pixelwisely.
-        - Synopsis
-            y = cmp(f1, oper, f2, oper1=None, f3=None)
-        - Input
-            f1:    Gray-scale (uint8 or uint16) or binary image.
-            oper:  String Default: "". relationship from: '==', '~=',
-                   '<','<=', '>', '>='.
-            f2:    Gray-scale (uint8 or uint16) or binary image.
-            oper1: String Default: None. relationship from: '==', '~=',
-                   '<','<=', '>', '>='.
-            f3:    Gray-scale (uint8 or uint16) or binary image. Default:
-                   None.
-        - Output
-            y: Binary image.
-        - Description
-            Apply the relation oper to each pixel of images f1 and f2 , the
-            result is a binary image with the same size. Optionally, it is
-            possible to make the comparison among three image. It is
-            possible to use a constant value in place of any image, in this
-            case the constant is treated as an image of the same size as the
-            others with all pixels with the value of the constant.
-        - Examples
-            #
-            #   example 1
-            #
-            print cmp(to_uint8([1, 2, 3]),'<', to_uint8(2))
-            print cmp(to_uint8([1, 2, 3]),'<', to_uint8([0, 2, 4]))
-            print cmp(to_uint8([1, 2, 3]),'==', to_uint8([1, 1, 3]))
-            #
-            #   example 2
-            #
-            f=readgray('keyb.tif')
-            fbin=cmp(to_uint8(10), '<', f, '<', to_uint8(50))
-            show(f)
-            show(fbin)
-    """
-
-    if   oper == '==':    y = (f1==f2)
-    elif oper == '~=':    y = (f1!=f2)
-    elif oper == '<=':    y = (f1<=f2)
-    elif oper == '>=':    y = (f1>=f2)
-    elif oper == '>':     y = (f1> f2)
-    elif oper == '<':     y = (f1< f2)
-    else:
-        assert 0, 'oper must be one of: ==, ~=, >, >=, <, <=, it was:'+oper
-    if oper1 != None:
-        if   oper1 == '==':     y = intersec(y, f2==f3)
-        elif oper1 == '~=':     y = intersec(y, f2!=f3)
-        elif oper1 == '<=':     y = intersec(y, f2<=f3)
-        elif oper1 == '>=':     y = intersec(y, f2>=f3)
-        elif oper1 == '>':      y = intersec(y, f2> f3)
-        elif oper1 == '<':      y = intersec(y, f2< f3)
-        else:
-            assert 0, 'oper1 must be one of: ==, ~=, >, >=, <, <=, it was:'+oper1
-
-    y = binary(y)
-    return y
-
 
 def cthick(f, g, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
     """
@@ -2623,29 +2562,6 @@ def hmin(f, h=1, Bc=None):
     return y
 
 
-def vdome(f, v=1, Bc=None):
-    """
-        - Purpose
-            Obsolete, use vmax.
-        - Synopsis
-            y = vdome(f, v=1, Bc=None)
-        - Input
-            f:  Gray-scale (uint8 or uint16) image.
-            v:  Default: 1. Volume parameter.
-            Bc: Structuring Element Default: None (3x3 elementary cross).
-                Structuring element (connectivity).
-        - Output
-            y: Gray-scale (uint8 or uint16) or binary image.
-        - Description
-            The correct name for this operator vdome is vmax.
-
-    """
-
-    if Bc is None: Bc = secross()
-    y = hmax(f,v,Bc);
-    return y
-
-
 def vmax(f, v=1, Bc=None):
     """
         - Purpose
@@ -3113,70 +3029,6 @@ def intershow(Iab):
     return s
 
 
-def mmis(f1, oper, f2=None, oper1=None, f3=None):
-    """
-        - Purpose
-            Verify if a relationship among images is true or false.
-        - Synopsis
-            y = mmis(f1, oper, f2=None, oper1=None, f3=None)
-        - Input
-            f1:    Gray-scale (uint8 or uint16) or binary image.
-            oper:  String relationship from: '==', '~=', '<','<=', '>',
-                   '>=', 'binary', 'gray'.
-            f2:    Gray-scale (uint8 or uint16) or binary image. Default:
-                   None.
-            oper1: String Default: None. relationship from: '==', '~=',
-                   '<','<=', '>', '>='.
-            f3:    Gray-scale (uint8 or uint16) or binary image. Default:
-                   None.
-        - Output
-            y: Bool value: 0 or 1
-        - Description
-            Verify if the property or relatioship between images is true or
-            false. The result is true if the relationship is true for all
-            the pixels in the image, and false otherwise. (Obs: This
-            function replaces is equal, is lesseq, is binary ).
-        - Examples
-            #
-            fbin=binary([0, 1])
-            f1=to_uint8([1, 2, 3])
-            f2=to_uint8([2, 2, 3])
-            f3=to_uint8([2, 3, 4])
-            mmis(fbin,'binary')
-            mmis(f1,'gray')
-            mmis(f1,'==',f2)
-            mmis(f1,'<',f3)
-            mmis(f1,'<=',f2)
-            mmis(f1,'<=',f2,'<=',f3)
-    """
-    from string import upper
-
-    if f2 == None:
-        oper=upper(oper);
-        if   oper == 'BINARY': return isbinary(f1)
-        elif oper == 'GRAY'  : return not isbinary(f1)
-        else:
-            assert 0,'oper should be BINARY or GRAY, was'+oper
-    elif oper == '==':    y = isequal(f1, f2)
-    elif oper == '~=':    y = not isequal(f1,f2)
-    elif oper == '<=':    y = islesseq(f1,f2)
-    elif oper == '>=':    y = islesseq(f2,f1)
-    elif oper == '>':     y = isequal(neg(threshad(f2,f1)),binary(1))
-    elif oper == '<':     y = isequal(neg(threshad(f1,f2)),binary(1))
-    else:
-        assert 0,'oper must be one of: ==, ~=, >, >=, <, <=, it was:'+oper
-    if oper1 != None:
-        if   oper1 == '==': y = y and isequal(f2,f3)
-        elif oper1 == '~=': y = y and (not isequal(f2,f3))
-        elif oper1 == '<=': y = y and islesseq(f2,f3)
-        elif oper1 == '>=': y = y and islesseq(f3,f2)
-        elif oper1 == '>':  y = y and isequal(neg(threshad(f3,f2)),binary(1))
-        elif oper1 == '<':  y = y and isequal(neg(threshad(f2,f3)),binary(1))
-        else:
-            assert 0,'oper1 must be one of: ==, ~=, >, >=, <, <=, it was:'+oper1
-    return y
-
-
 def isbinary(f):
     """
         - Purpose
@@ -3199,77 +3051,6 @@ def isbinary(f):
     """
     return type(f) is type(binary([1])) and f.dtype == bool
 
-
-def isequal(f1, f2, MSG=None):
-    """
-        - Purpose
-            Verify if two images are equal
-        - Synopsis
-            bool = isequal(f1, f2)
-        - Input
-            f1:  Unsigned gray-scale (uint8 or uint16), signed (int32) or
-                 binary image.
-            f2:  Unsigned gray-scale (uint8 or uint16), signed (int32) or
-                 binary image.
-        - Output
-            bool: Boolean
-        - Description
-            isequal compares the images f1 and f2 and returns true (1), if
-            f1(x)=f2(x) , for all pixel x , and false (0), otherwise.
-        - Examples
-            #
-            f1 = to_uint8(arrayrange(4))
-            print f1
-            f2 = to_uint8([9, 5, 3, 3])
-            print f2
-            f3 = f1
-            isequal(f1,f2)
-            isequal(f1,f3)
-    """
-    from numpy import ravel, alltrue, array
-
-    bool = alltrue(ravel(f1==f2))
-    bool1 = 1
-    if type(f1) is type(array([1])):
-        bool1 = type(f1) is type(f2)
-        bool1 = bool1 and ((f1.dtype == f2.dtype))
-    if MSG != None:
-        if bool:
-            if bool1:
-                print 'OK: ', MSG
-            else:
-                print 'WARNING:', MSG
-        else:
-            print 'ERROR: ', MSG
-    return bool
-
-
-def islesseq(f1, f2, MSG=None):
-    """
-        - Purpose
-            Verify if one image is less or equal another (is beneath)
-        - Synopsis
-            bool = islesseq(f1, f2)
-        - Input
-            f1:  Gray-scale (uint8 or uint16) or binary image.
-            f2:  Gray-scale (uint8 or uint16) or binary image.
-        - Output
-            bool: Boolean
-        - Description
-            islesseq compares the images f1 and f2 and returns true (1),
-            if f1(x) <= f2(x) , for every pixel x, and false (0), otherwise.
-        - Examples
-            #
-            f1 = to_uint8([0, 1, 2, 3])
-            f2 = to_uint8([9, 5, 3, 3])
-            print islesseq(f1,f2)
-            print islesseq(f2,f1)
-            print islesseq(f1,f1)
-    """
-    from numpy import ravel
-
-    bool = min(ravel(f1<=f2))
-    return bool
 
 
 def labelflat(f, Bc=None, _lambda=0):
