@@ -4121,11 +4121,11 @@ def sedilate(B1, B2):
     """
     from numpy import newaxis, array
 
-    assert ((dataisinstance(B1, 'binary') or (datatype(B1) == 'int)32')) and (
-            (dataisinstance(B2, 'binary') or (datatype(B2) == 'int)32')),'SE must be binary or int32'
+    assert ((dataisinstance(B1, 'binary') or (datatype(B1) == 'int32')) and
+            (dataisinstance(B2, 'binary') or (datatype(B2) == 'int32'))),'SE must be binary or int32'
     if len(B1.shape) == 1: B1 = B1[newaxis,:]
     if len(B2.shape) == 1: B2 = B2[newaxis,:]
-    if (dataisinstance(B1, 'int)32') or (dataisinstance(B2, 'int)32'):
+    if (dataisinstance(B1, 'int32') or (dataisinstance(B2, 'int32'))):
        Bo = int32([limits(int32([0]))[0]])
        if datatype(B1) == 'binary':
           B1 = gray(B1,'int32',0)
