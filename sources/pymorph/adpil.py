@@ -19,22 +19,11 @@
     pil2array()   -- Convert a PIL image to a Numeric array
 
 """
-#
+
 __version__ = '1.0 all'
-
 __version_string__ = 'Toolbox adpil V1.0 28Jul2003'
-
 __build_date__ = '04aug2003 11:29'
-#
 
-#
-
-#
-# =====================================================================
-#
-#   Global statements for adread
-#
-# =====================================================================
 def findImageFile(filename):
     '''Search image filename in sys.imagepath or sys.path.'''
     import sys, os.path
@@ -50,11 +39,8 @@ def findImageFile(filename):
                     filename = os.path.join(a, filename)
                     break
     return filename
-# =====================================================================
-#
-#   adread
-#
-# =====================================================================
+
+
 def adread(imagefile):
     """
         - Purpose
@@ -72,12 +58,8 @@ def adread(imagefile):
     img = findImageFile(imagefile)
     arr = pil2array(Image.open(img))
     return arr
-#
-# =====================================================================
-#
-#   adwrite
-#
-# =====================================================================
+
+
 def adwrite(imagefile, arr):
     """
         - Purpose
@@ -93,12 +75,8 @@ def adwrite(imagefile, arr):
 
     array2pil(arr).save(imagefile)
     return
-#
-# =====================================================================
-#
-#   Global statements for adimages
-#
-# =====================================================================
+
+
 def listImageFiles(glb='*'):
     '''List image files located on sys.path.'''
     import sys, os.path, glob
@@ -118,11 +96,8 @@ def listImageFiles(glb='*'):
                 for ff in glob.glob(os.path.join(dir, glb + ext)):
                     images[os.path.basename(ff)] = ff
     return images
-# =====================================================================
-#
-#   adimages
-#
-# =====================================================================
+
+
 def adimages(glob='*'):
     """
         - Purpose
@@ -141,17 +116,9 @@ def adimages(glob='*'):
     lst.sort()
     return lst
     return imglist
-#
-# =====================================================================
-#
-#   Global statements for adshow
-#
-# =====================================================================
-################################################################################
-##
-##    ImageViewer implementation. Uses Tk idle loop
-##    
-################################################################################
+
+
+
 import Numeric
 import Tkinter
 import Image, ImageTk
@@ -165,7 +132,7 @@ def tkRoot ():
     return root
 tk_root = None      # posterga a ativacao do Tk ateh que adshow seja chamado
 show_mode = 0       # qdo 1, cria sempre um novo viewer
-#
+
 class ImageViewer(Tkinter.Toplevel):
     '''The implementation base class for adshow.'''
     viewmap = {}
@@ -195,12 +162,8 @@ class ImageViewer(Tkinter.Toplevel):
         self.geomap[self.id] = self.geometry()
         del ImageViewer.viewmap[self.id]
         self.destroy()
-################################################################################
-# =====================================================================
-#
-#   adshow
-#
-# =====================================================================
+
+
 def adshow(arr, title='adshow', id=0):
     """
         - Purpose
@@ -234,12 +197,8 @@ def adshow(arr, title='adshow', id=0):
         vw = ImageViewer(id)
     vw.show(arr, title)
     return
-#
-# =====================================================================
-#
-#   adshowmode
-#
-# =====================================================================
+
+
 def adshowmode(newmode=None):
     """
         - Purpose
@@ -260,31 +219,19 @@ def adshowmode(newmode=None):
     if newmode:
         show_mode = newmode
     return show_mode
-    return mode
-#
-# =====================================================================
-#
-#   adshowclear
-#
-# =====================================================================
+
+
 def adshowclear():
     """
         - Purpose
             Close all adshow windows.
         - Synopsis
             adshowclear()
-
     """
-
     for id in ImageViewer.viewmap.keys():
         ImageViewer.viewmap[id].done()
 
-#
-# =====================================================================
-#
-#   adshowfile
-#
-# =====================================================================
+
 def adshowfile(filepath, id=0):
     """
         - Purpose
@@ -306,12 +253,8 @@ def adshowfile(filepath, id=0):
     img = adread(path)
     adshow(img, os.path.basename(filepath), id)
     return
-#
-# =====================================================================
-#
-#   pil2array
-#
-# =====================================================================
+
+
 def pil2array(pil):
     """
         - Purpose
@@ -358,12 +301,8 @@ def pil2array(pil):
         arr = (arr > 0).astype('1')
     # return arr
     return arr
-#
-# =====================================================================
-#
-#   array2pil
-#
-# =====================================================================
+
+
 def array2pil(arr):
     """
         - Purpose
@@ -402,11 +341,5 @@ def array2pil(arr):
         pil = pil.point(lambda i: i>0, '1')
     # return pil
     return pil
-#
-#
-#
-# =====================================================================
-#  Adesso -- Generated Mon Aug 04 11:29:28 Hora oficial do Brasil 2003
-# =====================================================================
-#
 
+# vim: set ts=4 sts=4 sw=4 expandtab smartindent:
