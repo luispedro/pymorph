@@ -1,22 +1,22 @@
 """
     Module adpil -- Toolbox adpil
     -------------------------------------------------------------------
-    This module provides a link between Numeric arrays and PIL, Python Imaging
+    This module provides a link between numpy arrays and PIL, Python Imaging
     Library, images. Its functions perform image file I/O (in formats supported
-    by PIL) and displaying of images represented as Numeric arrays. The layout
-    of these Numeric arrays follows the rules of the adimage toolbox images.
+    by PIL) and displaying of images represented as numpy arrays. The layout
+    of these numpy arrays follows the rules of the adimage toolbox images.
     -------------------------------------------------------------------
     adimages()    -- List image files located on sys.imagepath, if this variable
                      exists, or, otherwise, on sys.path
-    adread()      -- Read an image from a file to a Numeric array.
+    adread()      -- Read an image from a file to a numpy array.
     adshow()      -- Display an image
     adshowclear() -- Close all adshow windows.
     adshowfile()  -- Display an image file
     adshowmode()  -- Set/get the current operational mode.
-    adwrite()     -- Write an image from a Numeric array to an image file. The
+    adwrite()     -- Write an image from a numpy array to an image file. The
                      format is deduced from the filename extension.
-    array2pil()   -- Convert a Numeric array to a PIL image
-    pil2array()   -- Convert a PIL image to a Numeric array
+    array2pil()   -- Convert a numpy array to a PIL image
+    pil2array()   -- Convert a PIL image to a numpy array
 
 """
 
@@ -44,13 +44,13 @@ def findImageFile(filename):
 def adread(imagefile):
     """
         - Purpose
-            Read an image from a file to a Numeric array.
+            Read an image from a file to a numpy array.
         - Synopsis
             arr = adread(imagefile)
         - Input
             imagefile: Image file path.
         - Output
-            arr: Numeric array representing an image.
+            arr: numpy array representing an image.
 
     """
 
@@ -63,13 +63,13 @@ def adread(imagefile):
 def adwrite(imagefile, arr):
     """
         - Purpose
-            Write an image from a Numeric array to an image file. The format
+            Write an image from a numpy array to an image file. The format
             is deduced from the filename extension.
         - Synopsis
             adwrite(imagefile, arr)
         - Input
             imagefile: Image file path.
-            arr:       The Numeric array to save.
+            arr:       The numpy array to save.
 
     """
 
@@ -119,7 +119,6 @@ def adimages(glob='*'):
 
 
 
-import Numeric
 import Tkinter
 import Image, ImageTk
 def tkRoot ():
@@ -171,24 +170,24 @@ def adshow(arr, title='adshow', id=0):
         - Synopsis
             adshow(arr, title='adshow', id=0)
         - Input
-            arr:   The Numeric array to display.
+            arr:   The numpy array to display.
             title: Default: 'adshow'. Title of the view window.
             id:    Default: 0. An identification for the window.
 
         - Description
-            Display an image from a Numeric array in a Tk toplevel with
+            Display an image from a numpy array in a Tk toplevel with
             title given by argument 'title'.
 
     """
 
-    import Numeric
+    import numpy
     global tk_root
     global show_mode
     if tk_root is None:
         # ativa Tk
         tk_root = tkRoot()
-    if arr.typecode() == '1':
-        arr = Numeric.array(arr*255).astype('b')
+    if arr.dtype.char == '1':
+        arr = numpy.array(arr*255).astype('B')
     if show_mode:
         vw = ImageViewer(len(ImageViewer.viewmap.keys()))
     elif ImageViewer.viewmap.get(id):
@@ -258,21 +257,21 @@ def adshowfile(filepath, id=0):
 def pil2array(pil):
     """
         - Purpose
-            Convert a PIL image to a Numeric array
+            Convert a PIL image to a numpy array
         - Synopsis
             arr = pil2array(pil)
         - Input
             pil: The PIL image to convert.
         - Output
-            arr: Numeric array representing the PIL image.
+            arr: numpy array representing the PIL image.
         - Description
-            Convert a PIL image to a Numeric array. The array representing a
+            Convert a PIL image to a numpy array. The array representing a
             RGB(A) image is formed by images stored sequencially: R-image,
             G-image, B-image and, optionally, Alpha-image.
 
     """
 
-    import Numeric
+    import numpy
     w, h = pil.size
     binary = 0
     if pil.mode == '1':
@@ -294,11 +293,11 @@ def pil2array(pil):
         d = 4 ; shape = (h,w,d)
     else:
         raise TypeError, "Invalid or unimplemented PIL image mode '%s'" % pil.mode
-    arr = Numeric.reshape(Numeric.fromstring(pil.tostring(), 'b', w*h*d), shape)
+    arr = numpy.reshape(numpy.fromstring(pil.tostring(), 'B', w*h*d), shape)
     if d > 1:
-        arr = Numeric.swapaxes(Numeric.swapaxes(arr, 0, 2), 1, 2)
+        arr = numpy.swapaxes(numpy.swapaxes(arr, 0, 2), 1, 2)
     if binary:
-        arr = (arr > 0).astype('1')
+        arr = (arr > 0).astype('b')
     # return arr
     return arr
 
@@ -306,21 +305,21 @@ def pil2array(pil):
 def array2pil(arr):
     """
         - Purpose
-            Convert a Numeric array to a PIL image
+            Convert a numpy array to a PIL image
         - Synopsis
             pil = array2pil(arr)
         - Input
-            arr: Numeric array to convert.
+            arr: numpy array to convert.
         - Output
             pil: The resulting PIL image.
         - Description
-            Convert a Numeric array to a PIL image. Use the conventions
+            Convert a numpy array to a PIL image. Use the conventions
             explained in the pil2array docstring.
 
     """
 
     nd = len(arr.shape)
-    x = arr.astype('b')
+    x = arr.astype('B')
     if nd == 2:
         d, h, w = (1,) + arr.shape
         mode = 'L'
@@ -335,9 +334,9 @@ def array2pil(arr):
     else:
         raise TypeError, "Array must have 2 or 3 dimensions (%d)" % nd
     if d > 1:
-        x = Numeric.swapaxes(Numeric.swapaxes(x, 1, 2), 0, 2)
+        x = numpy.swapaxes(numpy.swapaxes(x, 1, 2), 0, 2)
     pil = Image.fromstring(mode, (w,h), x.tostring())
-    if arr.typecode() == '1':
+    if arr.dtype.char == '1':
         pil = pil.point(lambda i: i>0, '1')
     # return pil
     return pil
