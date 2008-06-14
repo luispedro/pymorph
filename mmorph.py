@@ -62,7 +62,6 @@
     infgen()       -- Inf-generating.
     infrec()       -- Inf-reconstruction.
     inpos()        -- Minima imposition.
-    install()      -- Verify if the Morphology Toolbox is registered.
     interot()      -- Rotate an interval
     intersec()     -- Intersection of images.
     intershow()    -- Visualize an interval.
@@ -88,7 +87,6 @@
     plot()         -- Plot a function.
     readgray()     -- Read an image from a commercial file format and stores
                       it as a gray-scale image.
-    register()     -- Register the SDC Morphology Toolbox.
     regmax()       -- Regional Maximum.
     regmin()       -- Regional Minimum (with generalized dynamics).
     se2hmt()       -- Create a Hit-or-Miss Template (or interval) from a pair
@@ -127,7 +125,6 @@
                       toggle operator.
     union()        -- Union of images.
     vdome()        -- Obsolete, use mmvmax.
-    version()      -- SDC Morphology Toolbox version.
     vmax()         -- Remove domes with volume less than v.
     watershed()    -- Watershed detection.
     uint16()         -- Convert an image to a uint16 image.
@@ -3541,31 +3538,6 @@ def readgray(filename):
        raise ValueError, 'Error, it is not 2D image'
     return y
 
-
-def register(code=None, file_name=None):
-    """
-        - Purpose
-            Register the SDC Morphology Toolbox.
-        - Synopsis
-            s = register(code=None, file_name=None)
-        - Input
-            code:      String Default: None. Authorization code.
-            file_name: String Default: None. Filename of the license file to
-                       be created.
-        - Output
-            s: String Message of the status of the license.
-        - Description
-            register licenses the copy of the SDC Morphology Toolbox by
-            entering the license code and the toolbox license file. If
-            register is called without parameters, it returns the internal
-            code that must be sent for registration.
-
-    """
-
-    s = 'License is not required'
-    return s
-
-
 def regmax(f, Bc=None):
     """
         - Purpose
@@ -4900,26 +4872,6 @@ def union(f1, f2, f3=None, f4=None, f5=None):
     return y
 
 
-def version():
-    """
-        - Purpose
-            SDC Morphology Toolbox version.
-        - Synopsis
-            S = version()
-
-        - Output
-            S: String ( description of the version).
-        - Description
-            version gives the SDC Morphology Toolbox version.
-        - Examples
-            #
-            print version()
-    """
-
-    return __version_string__
-    return S
-
-
 def watershed(f, Bc=None, LINEREG="LINES"):
     """
         - Purpose
@@ -5037,46 +4989,6 @@ def bench(count=10):
      print tasks[j][0], result[j]
     print '    Average                         ', average(result)
     out=[]
-
-
-
-def install(code=None):
-    """
-        - Purpose
-            Verify if the Morphology Toolbox is registered.
-        - Synopsis
-            install(code=None)
-        - Input
-            code: String Default: None. Authorization code.
-
-        - Description
-            install verifies if the toolbox is registered or not. If not,
-            it identifies the internal code that must be used to get the
-            authorization code from the software manufacturer.
-
-    """
-
-    ver = ''
-    if code is None:
-       s = register()
-       if s[0:8] != 'Licensed':
-          print 'Please access the web site http://www.orph.com/cgi-bin/pymorph-reg.cgi'
-          print 'and use the internal code below to obtain your license'
-          print s
-          print 'If you have any difficulty, please inform morph@orph.com'
-          return
-    else:
-       if register(code,'pymorph_license.txt'):
-          s=register()
-          if s[0:8] != 'Licensed':
-            print 'Could not license the toolbox.'
-            return
-          else:
-            print 'Toolbox registered successfully.'
-       else:
-          print 'The library file could not be registered'
-          return
-
 
 
 def maxleveltype(TYPE='uint8'):
