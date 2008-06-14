@@ -21,7 +21,7 @@
     cdil()         -- Dilate an image conditionally.
     center()       -- Center filter.
     cero()         -- Erode an image conditionally.
-    clohole()      -- Close holes of binary and gray-scale images.
+    close_holes()      -- Close holes of binary and gray-scale images.
     close()        -- Morphological closing.
     closerec()     -- Closing by reconstruction.
     closerecth()   -- Close-by-Reconstruction Top-Hat.
@@ -142,6 +142,7 @@
     ---
 
 """
+from __future__ import division
 __version__ = '0.8 pybase'
 
 __version_string__ = 'SDC Morphology Toolbox V0.8 01Aug03 (script version)'
@@ -326,15 +327,15 @@ def center(f, b=None):
 #
 # =====================================================================
 #
-#   clohole
+#   close_holes
 #
 # =====================================================================
-def clohole(f, Bc=None):
+def close_holes(f, Bc=None):
     """
         - Purpose
             Close holes of binary and gray-scale images.
         - Synopsis
-            y = clohole(f, Bc=None)
+            y = close_holes(f, Bc=None)
         - Input
             f:  Gray-scale (uint8 or uint16) or binary image.
             Bc: Structuring Element Default: None (3x3 elementary cross). (
@@ -342,7 +343,7 @@ def clohole(f, Bc=None):
         - Output
             y: (same datatype of f ).
         - Description
-            clohole creates the image y by closing the holes of the image
+            close_holes creates the image y by closing the holes of the image
             f , according with the connectivity defined by the structuring
             element Bc .The images can be either binary or gray-scale.
         - Examples
@@ -350,14 +351,14 @@ def clohole(f, Bc=None):
             #   example 1
             #
             a = readgray('pcb1bin.tif')
-            b = clohole(a)
+            b = close_holes(a)
             show(a)
             show(b)
             #
             #   example 2
             #
             a = readgray('boxdrill-B.tif')
-            b = clohole(a)
+            b = close_holes(a)
             show(a)
             show(b)
     """
@@ -4102,12 +4103,15 @@ def regmin(f, Bc=None, option="binary"):
             Bc:     Structuring Element Default: None (3x3 elementary
                     cross). (connectivity).
             option: String Default: "binary". Choose one of: BINARY: output
-                    a binary image; VALUE: output a grayscale image with
-                    points at the regional minimum with the pixel values of
-                    the input image; DYNAMICS: output a grayscale image with
-                    points at the regional minimum with its dynamics;
-                    AREA-DYN: int32 image with the area-dynamics;
-                    VOLUME-DYN: int32 image with the volume-dynamics.
+                One of:
+                    'binary': output a binary image
+                    'value': output a grayscale image with
+                        points at the regional minimum with the pixel values of
+                        the input image
+                    'dynamics':  output a grayscale image with
+                        points at the regional minimum with its dynamics;
+                    'area-dyn': int32 image with the area-dynamics;
+                    'volume-dyn': int32 image with the volume-dynamics.
         - Output
             y: Gray-scale (uint8 or uint16) or binary image.
         - Description
@@ -4163,6 +4167,8 @@ def regmin(f, Bc=None, option="binary"):
             show(ws2)
     """
 
+    if options != 'binary':
+        raise ValueError, "mmorph.regmin only implements option 'binary'"
     if Bc is None: Bc = secross()
     fplus = addm(f,1)
     g = subm(suprec(fplus,f,Bc),f)

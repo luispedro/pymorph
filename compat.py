@@ -1,6 +1,12 @@
 from mmorph import *
 from text import *
 
+# old abbreviations:
+
+clohole=close_holes
+
+# mmnames:
+
 mmadd4dil=add4dil
 mmaddm=addm
 mmareaclose=areaclose
