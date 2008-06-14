@@ -67,11 +67,7 @@
     interot()      -- Rotate an interval
     intersec()     -- Intersection of images.
     intershow()    -- Visualize an interval.
-    mmis()           -- Verify if a relationship among images is true or false.
     isbinary()     -- Check for binary image
-    isequal()      -- Verify if two images are equal
-    islesseq()     -- Verify if one image is less or equal another (is
-                      beneath)
     label()        -- Label a binary image.
     labelflat()    -- Label the flat zones of gray-scale images.
     lastero()      -- Last erosion.
