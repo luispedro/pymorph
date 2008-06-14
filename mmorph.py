@@ -26,7 +26,6 @@
     closerec()     -- Closing by reconstruction.
     closerecth()   -- Close-by-Reconstruction Top-Hat.
     closeth()      -- Closing Top Hat.
-    cmp()          -- Compare two images pixelwisely.
     concat()       -- Concatenate two or more images along width, height or
                       depth.
     cthick()       -- Image transformation by conditional thickening.
@@ -1773,7 +1772,7 @@ def cwatershed(f, g, Bc=None, LINEREG="LINES"):
                 [10,    9,    9,   15,    9,    9,   10],\
                 [10,    9,    9,   15,   12,   10,   10],\
                 [10,   10,   10,   10,   10,   10,   10]])
-            b = cmp(a,'==',to_uint8(6))
+            b = (a == 6)
             print cwatershed(a,b)
             print cwatershed(a,b,secross(),'REGIONS')
             #
@@ -1792,7 +1791,7 @@ def cwatershed(f, g, Bc=None, LINEREG="LINES"):
     return g
     print 'starting'
     withline = (LINEREG == 'LINES')
-    if mmis(g,'binary'):
+    if isbinary(g):
         g = label(g,Bc)
     print 'before 1. pad4n'
     status = pad4n(to_uint8(zeros(f.shape)),Bc, 3)
@@ -2502,7 +2501,7 @@ def gray(f, TYPE="uint8", k1=None):
     from numpy import array
     if k1 is None: k1 = maxleveltype(TYPE)
     if type(f) is list: f = binary(f)
-    assert mmis(f,'binary'), 'f must be binary'
+    assert isbinary(f,'binary'), 'f must be binary'
     if k1==None:
         k1=maxleveltype(TYPE)
     if   TYPE == 'uint8' : y = to_uint8(f*k1)
@@ -3047,6 +3046,37 @@ def isbinary(f):
     """
     return type(f) is type(binary([1])) and f.dtype == bool
 
+def isequal(f1, f2):
+    """
+        - Purpose
+            Verify if two images are equal
+        - Synopsis
+            bool = isequal(f1, f2)
+        - Input
+            f1:  Unsigned gray-scale (uint8 or uint16), signed (int32) or
+                 binary image.
+            f2:  Unsigned gray-scale (uint8 or uint16), signed (int32) or
+                 binary image.
+        - Output
+            bool: Boolean
+        - Description
+            isequal compares the images f1 and f2 and returns True, if
+            f1 and f2 have the same size and f1(x)=f2(x), for all pixel x;
+            otherwise, returns False
+        - Examples
+            #
+            f1 = to_uint8(arrayrange(4))
+            print f1
+            f2 = to_uint8([9, 5, 3, 3])
+            print f2
+            f3 = f1
+            isequal(f1,f2)
+            isequal(f1,f3)
+    """
+    import numpy
+    if f1.shape != f2.shape:
+        return False
+    return numpy.all(f1 == f2)
 
 
 def labelflat(f, Bc=None, _lambda=0):
@@ -3113,7 +3143,7 @@ def labelflat(f, Bc=None, _lambda=0):
         x=nonzero(ravel(faux))[0]        # get first unlabeled pixel
         fmark = array(zero)
         fmark.flat[x] = 1                # get the first unlabeled pixel
-        f2aux = cmp( f, '==', ravel(f)[x])
+        f2aux = (f == ravel(f)[x])
         r = infrec( fmark, f2aux, Bc)  # detects all pixels connected to it
         faux = subm( faux, r)          # remove them from faux
         r = gray( r,'uint16',label)    # label them with the value label
@@ -3387,8 +3417,8 @@ def opentransf(f, type='OCTAGON', n=65535, Bc=None, Buser=None):
             b=sedisk(3,'2D','OCTAGON')
             g1=open(f,b)
             show(g1)
-            g2=cmp(g,'>',3)
-            print mmis(g1,'==',g2)
+            g2=(g > 3)
+            print g1 == g2
     """
     from numpy import zeros
     from string import find, upper
@@ -4891,7 +4921,7 @@ def union(f1, f2, f3=None, f4=None, f5=None):
             #   example 3
             #
             d = readgray('danaus.tif')
-            e = cmp(d,'<',80)
+            e = (d < 80)
             f = union(d,gray(e))
             show(d)
             show(e)
