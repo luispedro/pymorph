@@ -255,7 +255,6 @@ def limits(f):
             print limits(to_uint8([0, 1, 2]))
     """
     from numpy import array
-
     import numpy as N
     code = f.dtype
     if   code == N.bool: y=array([0,1])
@@ -542,10 +541,10 @@ def gdtshow(X, N=10):
         return g
     np = 1  # number of pixels by isoline
     if len(X.shape) == 1: X = X[newaxis,:]
-    aux  = ravel(X)
-    maxi, mini = max(aux), min(aux)
+    maxi, mini = X.max(), X.min()
     d = int(ceil(256./N))
-    m = zeros(256); m[0:256:d] = 1
+    m = zeros(256)
+    m[0:256:d] = 1
     m = transpose([m,m,m])
     # lut gray
     gray = floor(arange(N)*255. / (N-1) + 0.5).astype('b')
@@ -557,7 +556,7 @@ def gdtshow(X, N=10):
     b = 255 - r
     jet = transpose([r,g,b])
     # apply lut
-    XX  = reshape(floor((aux-mini)*255. / maxi + 0.5).astype('b'), X.shape)
+    XX  = floor((X-mini)*255. / maxi + 0.5).astype('b')
     lut = (1-m)*gray + m*jet
     Y = apply_lut(XX, lut)
     return Y
