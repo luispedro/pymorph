@@ -149,7 +149,6 @@ except:
     sys.imagepath = [os.path.join(mydir, 'data')]
 
 
-
 def concat(DIM, X1, X2, X3=None, X4=None):
     """
         - Purpose
@@ -189,11 +188,11 @@ def concat(DIM, X1, X2, X3=None, X4=None):
     if d < 3: X2 = eval('X2[' + (3-d)*aux + ':]')
     d2,h2,w2 = X2.shape
     h3 = w3 = d3 = h4 = w4 = d4 = 0
-    if X3:
+    if X3 is not None:
        d = len(X3.shape)
        if d < 3: X3 = eval('X3[' + (3-d)*aux + ':]')
        d3,h3,w3 = X3.shape
-    if X4:
+    if X4 is not None:
        d = len(X4.shape)
        if d < 3: X4 = eval('X4[' + (3-d)*aux + ':]')
        d4,h4,w4 = X4.shape
@@ -205,27 +204,27 @@ def concat(DIM, X1, X2, X3=None, X4=None):
        Y = zeros((dy,hy,wy))
        Y[0:d1, 0:h1, 0 :w1   ] = X1
        Y[0:d2, 0:h2, w1:w1+w2] = X2
-       if X3:
+       if X3 is not None:
           Y[0:d3, 0:h3, w1+w2:w1+w2+w3] = X3
-          if X4:
+          if X4 is not None:
               Y[0:d4, 0:h4, w1+w2+w3::] = X4
     elif DIM in ['HEIGHT', 'H', 'h', 'height']:
        hy, wy, dy = sum(h), max(w), max(d)
        Y = zeros((dy,hy,wy))
        Y[0:d1, 0 :h1   , 0:w1] = X1
        Y[0:d2, h1:h1+h2, 0:w2] = X2
-       if X3:
+       if X3 is not None:
            Y[0:d3, h1+h2:h1+h2+h3, 0:w3] = X3
-           if X4:
+           if X4 is not None:
                Y[0:d4, h1+h2+h3::, 0:w4] = X4
     elif DIM in ['DEPTH', 'D', 'd', 'depth']:
        hy, wy, dy = max(h), max(w), sum(d)
        Y = zeros((dy,hy,wy))
        Y[0:d1    , 0:h1, 0:w1   ] = X1
        Y[d1:d1+d2, 0:h2, 0:w2] = X2
-       if X3:
+       if X3 is not None:
            Y[d1+d2:d1+d2+d3, 0:h3, 0:w3] = X3
-           if X4:
+           if X4 is not None:
                Y[d1+d2+d3::, 0:h4, 0:w4] = X4
     if Y.shape[0] == 1: # adjustment
        Y = Y[0,:,:]
@@ -624,7 +623,6 @@ def gshow(X, X1=None, X2=None, X3=None, X4=None, X5=None, X6=None):
       g = union(g,x6)
       b = union(b,x6)
     return concat('d',r,g,b)
-    return Y
 
 
 def histogram(f, option="uint16"):
