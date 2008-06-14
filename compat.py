@@ -4,6 +4,12 @@ from text import *
 # old abbreviations:
 
 clohole=close_holes
+ero=erode
+cero=cerode
+dil=dilate
+cdil=cdilate
+sedil=sedilate
+add4dil=add4dilate
 
 # mmnames:
 

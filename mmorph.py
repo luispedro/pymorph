@@ -6,7 +6,7 @@
     segmentation, non-linear filtering, pattern recognition and image analysis.
     -------------------------------------------------------------------
     int32()          -- Convert an image to an int32 image.
-    add4dil()      -- Addition for dilation
+    add4dilate()      -- Addition for dilation
     addm()         -- Addition of two images, with saturation.
     areaclose()    -- Area closing
     areaopen()     -- Area opening
@@ -18,9 +18,9 @@
     bshow()        -- Generate a graphical representation of overlaid binary
                       images.
     cbisector()    -- N-Conditional bisector.
-    cdil()         -- Dilate an image conditionally.
+    cdilate()         -- Dilate an image conditionally.
     center()       -- Center filter.
-    cero()         -- Erode an image conditionally.
+    cerode()         -- Erode an image conditionally.
     close_holes()      -- Close holes of binary and gray-scale images.
     close()        -- Morphological closing.
     closerec()     -- Closing by reconstruction.
@@ -33,14 +33,14 @@
     cthin()        -- Image transformation by conditional thinning.
     cwatershed()   -- Detection of watershed from markers.
     datatype()     -- Return the image datatype string
-    dil()          -- Dilate an image by a structuring element.
+    dilate()          -- Dilate an image by a structuring element.
     dist()         -- Distance transform.
     drawv()        -- Superpose points, rectangles and lines on an image.
     dtshow()       -- Display a distance transform image with an iso-line
                       color table.
     edgeoff()      -- Eliminate the objects that hit the image frame.
     endpoints()    -- Interval to detect end-points.
-    ero()          -- Erode an image by a structuring element.
+    erode()          -- Erode an image by a structuring element.
     flood()        -- Flooding filter- h,v,a-basin and dynamics (depth, area,
                       volume)
     frame()        -- Create a frame image.
@@ -101,7 +101,7 @@
     se2interval()  -- Create an interval from a pair of structuring elements.
     sebox()        -- Create a box structuring element.
     secross()      -- Diamond structuring element and elementary 3x3 cross.
-    sedil()        -- Dilate one structuring element by another
+    sedilate()        -- Dilate one structuring element by another
     sedisk()       -- Create a disk or a semi-sphere structuring element.
     seline()       -- Create a line structuring element.
     sereflect()    -- Reflect a structuring element
@@ -435,7 +435,7 @@ def dist(f, Bc=None, METRIC=None):
                        [a4,a2,a4]])
             y=f
             i+=1
-            f = ero(f,b)
+            f = erode(f,b)
         if METRIC == 'EUCLIDEAN':
             f = uint16(sqrt(f)+0.5)
     else:
@@ -450,7 +450,7 @@ def dist(f, Bc=None, METRIC=None):
         else: b = Bc
         while not isequal(f,y):
             y=f
-            f = ero(f,b)
+            f = erode(f,b)
     return y
 #
 # =====================================================================
@@ -917,8 +917,8 @@ def toggle(f, f1, f2, OPTION="GRAY"):
             #   example 2
             #
             a = readgray('angiogr.tif')
-            b = ero(a,sedisk(2))
-            c = dil(a,sedisk(2))
+            b = erode(a,sedisk(2))
+            c = dilate(a,sedisk(2))
             d = toggle(a,b,c)
             show(a)
             show(d)
@@ -926,8 +926,8 @@ def toggle(f, f1, f2, OPTION="GRAY"):
             #   example 3
             #
             e = readgray('lenina.tif')
-            f = ero(e,sedisk(2))
-            g = dil(e,sedisk(2))
+            f = erode(e,sedisk(2))
+            g = dilate(e,sedisk(2))
             h = toggle(e,f,g,'BINARY')
             show(e)
             show(h)
@@ -1377,7 +1377,7 @@ def blob(fr, measurement, option="image"):
             f=readgray('blob3.tif')
             fr=label(f)
             centr=blob(fr,'centroid')
-            show(f,dil(centr))
+            show(f,dilate(centr))
             #
             #   example 4
             #
@@ -1466,9 +1466,9 @@ def cbisector(f, B, n):
     for i in range(n):
         nb = sesum(B,i)
         nbp = sesum(B,i+1)
-        f1 = ero(f,nbp)
-        f2 = cdil(f1,f,B,n)
-        f3 = subm(ero(f,nb),f2)
+        f1 = erode(f,nbp)
+        f2 = cdilate(f1,f,B,n)
+        f3 = subm(erode(f,nb),f2)
         y  = union(y,f3)
     return y
 #
@@ -1477,12 +1477,12 @@ def cbisector(f, B, n):
 #   cdil
 #
 # =====================================================================
-def cdil(f, g, b=None, n=1):
+def cdilate(f, g, b=None, n=1):
     """
         - Purpose
             Dilate an image conditionally.
         - Synopsis
-            y = cdil(f, g, b=None, n=1)
+            y = cdilate(f, g, b=None, n=1)
         - Input
             f: Gray-scale (uint8 or uint16) or binary image.
             g: Gray-scale (uint8 or uint16) or binary image. Conditioning
@@ -1505,8 +1505,8 @@ def cdil(f, g, b=None, n=1):
             g = binary(to_uint8([[1, 1, 1, 0, 0, 1, 1],\
                 [1, 0, 1, 1, 1, 0, 0],\
                 [0, 0, 0, 0, 1, 0, 0]]));
-            y1=cdil(f,g,secross())
-            y2=cdil(f,g,secross(),3)
+            y1=cdilate(f,g,secross())
+            y2=cdilate(f,g,secross(),3)
             #
             #   example 2
             #
@@ -1518,15 +1518,15 @@ def cdil(f, g, b=None, n=1):
                 [   0,    1,   2,   50,   4,   5],\
                 [   2,    3,   4,    0,   0,   0],\
                 [  12,  255,  14,   15,  16,  17]])
-            y1=cdil(f,g,secross())
-            y2=cdil(f,g,secross(),3)
+            y1=cdilate(f,g,secross())
+            y2=cdilate(f,g,secross(),3)
             #
             #   example 3
             #
             g=readgray('pcb1bin.tif')
             f=frame(g,5,5)
-            y5=cdil(f,g,secross(),5)
-            y25=cdil(f,g,secross(),25)
+            y5=cdilate(f,g,secross(),5)
+            y25=cdilate(f,g,secross(),25)
             show(g)
             show(g,f)
             show(g,y5)
@@ -1537,8 +1537,8 @@ def cdil(f, g, b=None, n=1):
             g=neg(readgray('n2538.tif'))
             f=intersec(g,0)
             f=draw(f,'LINE:40,30,60,30:END')
-            y1=cdil(f,g,sebox())
-            y30=cdil(f,g,sebox(),30)
+            y1=cdilate(f,g,sebox())
+            y30=cdilate(f,g,sebox(),30)
             show(g)
             show(f)
             show(y1)
@@ -1549,7 +1549,7 @@ def cdil(f, g, b=None, n=1):
     y = intersec(f,g)
     for i in range(n):
         aux = y
-        y = intersec(dil(y,b),g)
+        y = intersec(dilate(y,b),g)
         if isequal(y,aux): break
     return y
 #
@@ -1558,12 +1558,12 @@ def cdil(f, g, b=None, n=1):
 #   cero
 #
 # =====================================================================
-def cero(f, g, b=None, n=1):
+def cerode(f, g, b=None, n=1):
     """
         - Purpose
             Erode an image conditionally.
         - Synopsis
-            y = cero(f, g, b=None, n=1)
+            y = cerode(f, g, b=None, n=1)
         - Input
             f: Gray-scale (uint8 or uint16) or binary image.
             g: Gray-scale (uint8 or uint16) or binary image. Conditioning
@@ -1580,11 +1580,11 @@ def cero(f, g, b=None, n=1):
             #
             f = neg(text('hello'))
             show(f)
-            g = dil(f,seline(7,90))
+            g = dilate(f,seline(7,90))
             show(g)
-            a1=cero(g,f,sebox())
+            a1=cerode(g,f,sebox())
             show(a1)
-            a13=cero(a1,f,sebox(),13)
+            a13=cerode(a1,f,sebox(),13)
             show(a13)
     """
 
@@ -1592,7 +1592,7 @@ def cero(f, g, b=None, n=1):
     y = union(f,g)
     for i in range(n):
         aux = y
-        y = union(ero(y,b),g)
+        y = union(erode(y,b),g)
         if isequal(y,aux): break
     return y
 #
@@ -1647,7 +1647,7 @@ def close(f, b=None):
     """
 
     if b is None: b = secross()
-    y = ero(dil(f,b),b)
+    y = erode(dilate(f,b),b)
     return y
 #
 # =====================================================================
@@ -1683,7 +1683,7 @@ def closerec(f, bdil=None, bc=None):
 
     if bdil is None: bdil = secross()
     if bc is None: bc = secross()
-    y = suprec(dil(f,bdil),f,bc)
+    y = suprec(dilate(f,bdil),f,bc)
     return y
 #
 # =====================================================================
@@ -2055,12 +2055,12 @@ def cwatershed(f, g, Bc=None, LINEREG="LINES"):
 #   dil
 #
 # =====================================================================
-def dil(f, b=None):
+def dilate(f, b=None):
     """
         - Purpose
             Dilate an image by a structuring element.
         - Synopsis
-            y = dil(f, b=None)
+            y = dilate(f, b=None)
         - Input
             f: Gray-scale (uint8 or uint16) or binary image.
             b: Structuring Element Default: None (3x3 elementary cross).
@@ -2083,12 +2083,12 @@ def dil(f, b=None):
                [0, 1, 0, 0, 0, 0, 0],
                [0, 0, 0, 0, 1, 0, 0]])
             b=binary([1, 1, 0])
-            dil(f,b)
+            dilate(f,b)
             f=to_uint8([
                [ 0,   1,  2, 50,  4,  5],
                [ 2,   3,  4,  0,  0,  0],
                [12, 255, 14, 15, 16, 17]])
-            dil(f,b)
+            dilate(f,b)
             #
             #   example 2
             #
@@ -2096,15 +2096,15 @@ def dil(f, b=None):
             bimg=binary(readgray('blob1.tif'))
             b=img2se(bimg)
             show(f)
-            show(dil(f,b))
-            show(dil(f,b),gradm(f))
+            show(dilate(f,b))
+            show(dilate(f,b),gradm(f))
             #
             #   example 3
             #
             f=readgray('pcb_gray.tif')
             b=sedisk(5)
             show(f)
-            show(dil(f,b))
+            show(dilate(f,b))
     """
     from numpy import maximum, newaxis, ones
     if b is None: b = secross()
@@ -2121,7 +2121,7 @@ def dil(f, b=None):
         for i in range(x.shape[0]):
             if v[i] > -2147483647:
                 y[mh+x[i,0]:mh+x[i,0]+h, mw+x[i,1]:mw+x[i,1]+w] = maximum(
-                    y[mh+x[i,0]:mh+x[i,0]+h, mw+x[i,1]:mw+x[i,1]+w], add4dil(f,v[i]))
+                    y[mh+x[i,0]:mh+x[i,0]+h, mw+x[i,1]:mw+x[i,1]+w], add4dilate(f,v[i]))
         y = y[mh:mh+h, mw:mw+w]
     return y
 #
@@ -2322,7 +2322,7 @@ def endpoints(OPTION="LOOP"):
             #   example 4
             #
             fn = thin(f1,endpoints('HOMOTOPIC'))
-            show(dil(fn))
+            show(dilate(fn))
     """
     from string import upper
 
@@ -2349,12 +2349,12 @@ def endpoints(OPTION="LOOP"):
 #   ero
 #
 # =====================================================================
-def ero(f, b=None):
+def erode(f, b=None):
     """
         - Purpose
             Erode an image by a structuring element.
         - Synopsis
-            y = ero(f, b=None)
+            y = erode(f, b=None)
         - Input
             f: Gray-scale (uint8 or uint16) or binary image.
             b: Structuring Element Default: None (3x3 elementary cross).
@@ -2377,19 +2377,19 @@ def ero(f, b=None):
                [1, 0, 1, 1, 1, 0, 0],
                [0, 0, 0, 0, 1, 0, 0]])
             b=binary([1, 1, 0])
-            ero(f,b)
+            erode(f,b)
             f=to_uint8([
                [ 0,   1,  2, 50,  4,  5],
                [ 2,   3,  4,  0,  0,  0],
                [12, 255, 14, 15, 16, 17]])
-            ero(f,b)
+            erode(f,b)
             #
             #   example 2
             #
             f=binary(readgray('blob.tif'))
             bimg=binary(readgray('blob1.tif'))
             b=img2se(bimg)
-            g=ero(f,b)
+            g=erode(f,b)
             show(f)
             show(g)
             show(g,gradm(f))
@@ -2399,11 +2399,11 @@ def ero(f, b=None):
             f=readgray('pcb_gray.tif')
             b=sedisk(3)
             show(f)
-            show(ero(f,b))
+            show(erode(f,b))
     """
 
     if b is None: b = secross()
-    y = neg(dil(neg(f),sereflect(b)))
+    y = neg(dilate(neg(f),sereflect(b)))
     return y
 #
 # =====================================================================
@@ -2535,7 +2535,7 @@ def gdist(f, g, Bc=None, METRIC=None):
     i = 1
     while not isequal(ero,aux):
         aux = ero
-        ero = cero(gneg,fneg,Bc,i)
+        ero = cerode(gneg,fneg,Bc,i)
         y = addm(y,gray(ero,'uint16',1))
         i = i + 1
     y = union(y,gray(ero,'uint16'))
@@ -2590,7 +2590,7 @@ def gradm(f, Bdil=None, Bero=None):
 
     if Bdil is None: Bdil = secross()
     if Bero is None: Bero = secross()
-    y = subm(dil(f,Bdil),ero(f,Bero))
+    y = subm(dilate(f,Bdil),erode(f,Bero))
     return y
 #
 # =====================================================================
@@ -3116,7 +3116,7 @@ def infgen(f, Iab):
     """
 
     A,Bc = Iab
-    y = union(dil( f, A),dil( neg(f), Bc))
+    y = union(dilate( f, A),dilate( neg(f), Bc))
     return y
 #
 # =====================================================================
@@ -3149,7 +3149,7 @@ def infrec(f, g, bc=None):
             #   example 1
             #
             g=readgray('text_128.tif')
-            f=ero(g,seline(9,90))
+            f=erode(g,seline(9,90))
             y=infrec(f,g,sebox())
             show(g)
             show(f)
@@ -3160,7 +3160,7 @@ def infrec(f, g, bc=None):
             g=neg(readgray('n2538.tif'))
             f=intersec(g,0)
             f=draw(f,'LINE:40,30,60,30:END')
-            y30=cdil(f,g,sebox(),30)
+            y30=cdilate(f,g,sebox(),30)
             y=infrec(f,g,sebox())
             show(g)
             show(f)
@@ -3170,7 +3170,7 @@ def infrec(f, g, bc=None):
     from numpy import product
     if bc is None: bc = secross()
     n = product(f.shape)
-    y = cdil(f,g,bc,n);
+    y = cdilate(f,g,bc,n);
     return y
 #
 # =====================================================================
@@ -3732,7 +3732,7 @@ def open(f, b=None):
     """
 
     if b is None: b = secross()
-    y = dil(ero(f,b),b)
+    y = dilate(erode(f,b),b)
     return y
 #
 # =====================================================================
@@ -3763,7 +3763,7 @@ def openrec(f, bero=None, bc=None):
 
     if bero is None: bero = secross()
     if bc is None: bc = secross()
-    y = infrec(ero(f,bero),f,bc)
+    y = infrec(erode(f,bero),f,bc)
     return y
 #
 # =====================================================================
@@ -4373,7 +4373,7 @@ def sedisk(r=3, DIM="2D", METRIC="EUCLIDEAN", FLAT="FLAT", h=0):
             b = int32([[-2147483647, 0,-2147483647],
                        [          0, 1,          0],
                        [-2147483647, 0,-2147483647]])
-        return sedil(y,sesum(b,r))
+        return sedilate(y,sesum(b,r))
     elif METRIC == 'CHESSBOARD':
         if FLAT == 'FLAT':
             b = sebox(1)
@@ -4381,7 +4381,7 @@ def sedisk(r=3, DIM="2D", METRIC="EUCLIDEAN", FLAT="FLAT", h=0):
             b = int32([[1,1,1],
                        [1,1,1],
                        [1,1,1]])
-        return sedil(y,sesum(b,r))
+        return sedilate(y,sesum(b,r))
     elif METRIC == 'OCTAGON':
         if FLAT == 'FLAT':
             b1,b2 = sebox(1),secross(1)
@@ -4391,7 +4391,7 @@ def sedisk(r=3, DIM="2D", METRIC="EUCLIDEAN", FLAT="FLAT", h=0):
                         [          0, 1,          0],
                         [-2147483647, 0,-2147483647]])
         if r==1: return b1
-        else:    return sedil( sedil(y,sesum(b1,r/2)) ,sesum(b2,(r+1)/2))
+        else:    return sedilate( sedilate(y,sesum(b1,r/2)) ,sesum(b2,(r+1)/2))
     elif METRIC == 'EUCLIDEAN':
         v = arange(-r,r+1)
         x = resize(v, (len(v), len(v)))
@@ -4435,7 +4435,7 @@ def seline(l=3, theta=0):
             b2 = seline(4,-180)
             seshow(b2)
             a=text('Line')
-            b=dil(a,b1)
+            b=dilate(a,b1)
             show(a)
             show(b)
     """
@@ -4554,14 +4554,14 @@ def seshow(B, option="NORMAL"):
            y=int32([0])
     elif option=='EXPAND':
         assert isbinary(B), 'This option is only available with flat SE'
-        y = sedil(binary([1]),B)
+        y = sedilate(binary([1]),B)
         b1= binary(y>=0)
-        b0= ero(y,B)
+        b0= erode(y,B)
         y = bshow(b1,y,b0)
         return y
     else:
         print 'seshow: not a valid flag: NORMAL, EXPAND or NON-FLAT'
-    y = sedil(y,B)
+    y = sedilate(y,B)
     return y
 #
 # =====================================================================
@@ -4605,7 +4605,7 @@ def sesum(B=None, N=1):
         else:             return int32([0]) # identity
     NB = B
     for i in range(N-1):
-        NB = sedil(NB,B)
+        NB = sedilate(NB,B)
     return NB
 #
 # =====================================================================
@@ -4673,12 +4673,12 @@ def sereflect(Bi):
 #   sedil
 #
 # =====================================================================
-def sedil(B1, B2):
+def sedilate(B1, B2):
     """
         - Purpose
             Dilate one structuring element by another
         - Synopsis
-            Bo = sedil(B1, B2)
+            Bo = sedilate(B1, B2)
         - Input
             B1: Structuring Element
             B2: Structuring Element
@@ -4697,7 +4697,7 @@ def sedil(B1, B2):
             seshow(b1)
             b2 = sedisk(2)
             seshow(b2)
-            b3 = sedil(b1,b2)
+            b3 = sedilate(b1,b2)
             seshow(b3)
     """
     from numpy import newaxis, array
@@ -4717,7 +4717,7 @@ def sedil(B1, B2):
     x,v = mat2set(B2)
     if len(x):
         for i in range(x.shape[0]):
-            s = add4dil(B1,v[i])
+            s = add4dilate(B1,v[i])
             st= setrans(s,x[i])
             Bo = seunion(Bo,st)
     return Bo
@@ -4888,10 +4888,10 @@ def skelm(f, B=None, option="binary"):
     iszero = asarray(y)
     nb = sesum(B,0)
     for r in range(1,65535):
-        ero = ero( f, nb)
+        ero = erode(f,nb)
         if isequal(ero, iszero): break
         f1 = openth( ero, B)
-        nb = sedil(nb, B)
+        nb = sedilate(nb, B)
         y = union(y, gray(f1,'uint16',r))
     if option == 'BINARY':
         y = binary(y)
@@ -4931,7 +4931,7 @@ def skelmrec(f, B=None):
     if B is None: B = secross()
     y = binary(intersec(f, 0))
     for r in range(max(ravel(f)),1,-1):
-        y = dil(union(y,binary(f,r)), B)
+        y = dilate(union(y,binary(f,r)), B)
     y = union(y, binary(f,1))
     return y
 #
@@ -5166,12 +5166,12 @@ def supgen(f, INTER):
             a=readgray('gear.tif')
             b=supgen(a,endpoints())
             show(a)
-            show(dil(b))
+            show(dilate(b))
     """
 
     A,Bc = INTER
-    y = intersec(ero( f, A),
-                   ero( neg(f), Bc))
+    y = intersec(erode(f,A),
+                   erode(neg(f),Bc))
     return y
 #
 # =====================================================================
@@ -5203,7 +5203,7 @@ def suprec(f, g, Bc=None):
     from numpy import product
     if Bc is None: Bc = secross()
     n = product(f.shape)
-    y = cero(f,g,Bc,n);
+    y = cerode(f,g,Bc,n);
     return y
 #
 # =====================================================================
@@ -5672,9 +5672,9 @@ def bench(count=10):
     tasks=[
        [' 1. Union  bin                      ','union(fbin,fbin)'],
        [' 2. Union  gray-scale               ','union(f,f)'],
-       [' 3. Dilation  bin, secross        ','dil(fbin)'],
-       [' 4. Dilation  gray, secross       ','dil(f)'],
-       [' 5. Dilation  gray, non-flat 3x3 SE ','dil(f,se)'],
+       [' 3. Dilation  bin, secross        ','dilate(fbin)'],
+       [' 4. Dilation  gray, secross       ','dilate(f)'],
+       [' 5. Dilation  gray, non-flat 3x3 SE ','dilate(f,se)'],
        [' 6. Open      bin, secross        ','open(fbin)'],
        [' 7. Open      gray-scale, secross ','open(f)'],
        [' 8. Open      gray, non-flat 3x3 SE ','open(f,se)'],
@@ -5898,12 +5898,12 @@ def datatype(f):
 #   add4dil
 #
 # =====================================================================
-def add4dil(f, c):
+def add4dilate(f, c):
     """
         - Purpose
             Addition for dilation
         - Synopsis
-            a = add4dil(f, c)
+            a = add4dilate(f, c)
         - Input
             f: Gray-scale (uint8 or uint16) or binary image. Image
             c: Gray-scale (uint8 or uint16) or binary image. Constant
