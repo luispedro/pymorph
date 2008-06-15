@@ -286,51 +286,6 @@ def mmis(f1, oper, f2=None, oper1=None, f3=None):
             assert 0,'oper1 must be one of: ==, ~=, >, >=, <, <=, it was:'+oper1
     return y
 
-def isequal(f1, f2, MSG=None):
-    """
-        - Alternative
-            Consider using array operations
-        - Purpose
-            Verify if two images are equal
-        - Synopsis
-            bool = isequal(f1, f2)
-        - Input
-            f1:  Unsigned gray-scale (uint8 or uint16), signed (int32) or
-                 binary image.
-            f2:  Unsigned gray-scale (uint8 or uint16), signed (int32) or
-                 binary image.
-        - Output
-            bool: Boolean
-        - Description
-            isequal compares the images f1 and f2 and returns true (1), if
-            f1(x)=f2(x) , for all pixel x , and false (0), otherwise.
-        - Examples
-            #
-            f1 = to_uint8(arrayrange(4))
-            print f1
-            f2 = to_uint8([9, 5, 3, 3])
-            print f2
-            f3 = f1
-            isequal(f1,f2)
-            isequal(f1,f3)
-    """
-    from numpy import ravel, alltrue, array
-
-    bool = alltrue(ravel(f1==f2))
-    bool1 = 1
-    if type(f1) is type(array([1])):
-        bool1 = type(f1) is type(f2)
-        bool1 = bool1 and ((f1.dtype == f2.dtype))
-    if MSG != None:
-        if bool:
-            if bool1:
-                print 'OK: ', MSG
-            else:
-                print 'WARNING:', MSG
-        else:
-            print 'ERROR: ', MSG
-    return bool
-
 
 def mmislesseq(f1, f2, MSG=None):
     """
