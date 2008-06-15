@@ -1,0 +1,26 @@
+===========================
+Changes Since Version 0.80
+===========================
+
+ + numpy is used (instead of Numeric).
+
+ + Function names no longer start with mm.
+    A function name  prefix is matlabish and not pythonic.
+ 
+ + Some function names have changed:
+    clohole -> close_holes
+    ero -> erode
+    cero -> cerode
+    dil -> dilate
+    cdil -> cdilate
+    sedil -> sedilate
+    add4dil -> add4dilate
+    uint8 -> to_uint8
+ 
+ + Some functions were removed:
+    * Registration functions
+        mminstall, mmversion, mmregister
+    * Functions which are easily replaced with array operations:
+        mmcmp, mmis, mmislesseq, mmstats
+
+The pymorph.compat module contains the old names and removed functions. Its use for new code is discouraged
