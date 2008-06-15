@@ -134,11 +134,9 @@
 
 """
 from __future__ import division
-__version__ = '0.8 pybase'
+__version__ = '0.88'
 
-__version_string__ = 'SDC Morphology Toolbox V0.8 01Aug03 (script version)'
-
-__build_date__ = '04aug2003 12:07'
+__build_date__ = '16 June 2008'
 
 
 import sys, os
