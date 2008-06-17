@@ -8,6 +8,8 @@ Changes Since Version 0.80
     A function name  prefix is matlabish and not pythonic.
  
  + Some function names have changed:
+
+   * Over-abbreviated function names:
     clohole -> close_holes
     ero -> erode
     cero -> cerode
@@ -15,6 +17,10 @@ Changes Since Version 0.80
     cdil -> cdilate
     sedil -> sedilate
     add4dil -> add4dilate
+
+   * Functions with names that conflict with numpy names:
+    int32 -> to_uint32
+    uint16 -> to_uint16
     uint8 -> to_uint8
  
  + Some functions were removed:

@@ -5,8 +5,7 @@
     state-of-the-art gray-scale morphological tools that can be applied to image
     segmentation, non-linear filtering, pattern recognition and image analysis.
     -------------------------------------------------------------------
-    int32()          -- Convert an image to an int32 image.
-    add4dilate()      -- Addition for dilation
+    add4dilate()   -- Addition for dilation
     addm()         -- Addition of two images, with saturation.
     areaclose()    -- Area closing
     areaopen()     -- Area opening
@@ -18,10 +17,10 @@
     bshow()        -- Generate a graphical representation of overlaid binary
                       images.
     cbisector()    -- N-Conditional bisector.
-    cdilate()         -- Dilate an image conditionally.
+    cdilate()      -- Dilate an image conditionally.
     center()       -- Center filter.
-    cerode()         -- Erode an image conditionally.
-    close_holes()      -- Close holes of binary and gray-scale images.
+    cerode()       -- Erode an image conditionally.
+    close_holes()  -- Close holes of binary and gray-scale images.
     close()        -- Morphological closing.
     closerec()     -- Closing by reconstruction.
     closerecth()   -- Close-by-Reconstruction Top-Hat.
@@ -32,14 +31,14 @@
     cthin()        -- Image transformation by conditional thinning.
     cwatershed()   -- Detection of watershed from markers.
     datatype()     -- Return the image datatype string
-    dilate()          -- Dilate an image by a structuring element.
+    dilate()       -- Dilate an image by a structuring element.
     dist()         -- Distance transform.
     drawv()        -- Superpose points, rectangles and lines on an image.
     dtshow()       -- Display a distance transform image with an iso-line
                       color table.
     edgeoff()      -- Eliminate the objects that hit the image frame.
     endpoints()    -- Interval to detect end-points.
-    erode()          -- Erode an image by a structuring element.
+    erode()        -- Erode an image by a structuring element.
     flood()        -- Flooding filter- h,v,a-basin and dynamics (depth, area,
                       volume)
     frame()        -- Create a frame image.
@@ -94,7 +93,7 @@
     se2interval()  -- Create an interval from a pair of structuring elements.
     sebox()        -- Create a box structuring element.
     secross()      -- Diamond structuring element and elementary 3x3 cross.
-    sedilate()        -- Dilate one structuring element by another
+    sedilate()     -- Dilate one structuring element by another
     sedisk()       -- Create a disk or a semi-sphere structuring element.
     seline()       -- Create a line structuring element.
     sereflect()    -- Reflect a structuring element
@@ -127,10 +126,9 @@
     vdome()        -- Obsolete, use mmvmax.
     vmax()         -- Remove domes with volume less than v.
     watershed()    -- Watershed detection.
-    uint16()         -- Convert an image to a uint16 image.
-    to_uint8()          -- Convert an image to an uint8 image.
-
-    ---
+    to_int32()     -- Convert an image to an int32 image.
+    to_uint16()    -- Convert an image to a uint16 image.
+    to_uint8()     -- Convert an image to an uint8 image.
 
 """
 from __future__ import division
@@ -394,21 +392,21 @@ def dist(f, Bc=None, METRIC=None):
         i=1
         while not isequal(f,y):
             a4,a2 = -4*i+2, -2*i+1
-            b = int32([[a4,a2,a4],
+            b = to_int32([[a4,a2,a4],
                        [a2, 0,a2],
                        [a4,a2,a4]])
             y=f
             i+=1
             f = erode(f,b)
         if METRIC == 'EUCLIDEAN':
-            f = uint16(sqrt(f)+0.5)
+            f = to_uint16(sqrt(f)+0.5)
     else:
         if isequal(Bc, secross()):
-            b = int32([[-2147483647,  -1, -2147483647],
+            b = to_int32([[-2147483647,  -1, -2147483647],
                        [         -1,   0,          -1],
                        [-2147483647,  -1, -2147483647]])
         elif isequal(Bc, sebox()):
-            b = int32([[-1,-1,-1],
+            b = to_int32([[-1,-1,-1],
                        [-1, 0,-1],
                        [-1,-1,-1]])
         else: b = Bc
@@ -505,9 +503,9 @@ def glblshow(X, border=0.0):
     mmin = X.min()
     mmax = X.max()
     ncolors = mmax - mmin + 1
-    R = int32(rand(ncolors)*255)
-    G = int32(rand(ncolors)*255)
-    B = int32(rand(ncolors)*255)
+    R = to_int32(rand(ncolors)*255)
+    G = to_int32(rand(ncolors)*255)
+    B = to_int32(rand(ncolors)*255)
     if mmin == 0:
        R[0],G[0],B[0] = 0,0,0
     r=resize(take(R, X.ravel() - mmin),X.shape)
@@ -744,7 +742,7 @@ def neg(f):
             f=to_uint8([255, 255, 0, 10, 20, 10, 0, 255, 255])
             print neg(f)
             print neg(to_uint8([0, 1]))
-            print neg(int32([0, 1]))
+            print neg(to_int32([0, 1]))
             #
             #   example 2
             #
@@ -1958,16 +1956,16 @@ def drawv(f, data, value, GEOM):
             #   example 1
             #
             f=to_uint8(zeros((3,5)))
-            pcoords=uint16([[0,2,4],
+            pcoords=to_uint16([[0,2,4],
                             [0,0,2]])
-            pvalue=uint16([1,2,3])
+            pvalue=to_uint16([1,2,3])
             print drawv(f,pcoords,pvalue,'point')
             print drawv(f,pcoords,pvalue,'line')
-            rectcoords=uint16([[0],
+            rectcoords=to_uint16([[0],
                                [0],
                                [3],
                                [2]])
-            print drawv(f,rectcoords, uint16(5), 'rect')
+            print drawv(f,rectcoords, to_uint16(5), 'rect')
             #
             #   example 2
             #
@@ -2288,7 +2286,7 @@ def gdist(f, g, Bc=None, METRIC=None):
             #
             f=readgray('maze_bw.tif')
             g=intersec(f,0)
-            g=drawv(g,uint16([[2],[2],[6],[6]]),uint16(1),'frect')
+            g=drawv(g,to_uint16([[2],[2],[6],[6]]),to_uint16(1),'frect')
             y=gdist(f,g,sebox(),'EUCLIDEAN')
             show(f,g)
             dtshow(y,200)
@@ -2506,8 +2504,8 @@ def gray(f, TYPE="uint8", k1=None):
     if k1==None:
         k1=maxleveltype(TYPE)
     if   TYPE == 'uint8' : y = to_uint8(f*k1)
-    elif TYPE == 'uint16': y = uint16(f*k1)
-    elif TYPE == 'int32' : y = int32(f*k1) - int32(neg(f)*maxleveltype(TYPE))
+    elif TYPE == 'uint16': y = to_uint16(f*k1)
+    elif TYPE == 'int32' : y = to_int32(f*k1) - to_int32(neg(f)*maxleveltype(TYPE))
     else:
         assert 0, 'type not supported:'+TYPE
     return y
@@ -2739,7 +2737,7 @@ def img2se(fd, FLAT="FLAT", f=None):
               [0,1,0],
               [1,1,1],
               [0,1,0]])
-            d = int32([
+            d = to_int32([
               [0,0,0],
               [0,1,0],
               [0,0,0]])
@@ -2754,8 +2752,8 @@ def img2se(fd, FLAT="FLAT", f=None):
     if FLAT == 'FLAT':
         return seshow(fd)
     else:
-        B = choose(fd, (limits(int32([0]))[0]*ones(fd.shape),f) )
-    B = seshow(int32(B),'NON-FLAT')
+        B = choose(fd, (limits(to_int32([0]))[0]*ones(fd.shape),f) )
+    B = seshow(to_int32(B),'NON-FLAT')
     return B
 
 
@@ -3419,7 +3417,7 @@ def opentransf(f, type='OCTAGON', n=65535, Bc=None, Buser=None):
             g2=(g > 3)
             print g1 == g2
     """
-    from numpy import zeros
+    import numpy
     from string import find, upper
     if Bc is None: Bc = secross()
     if Buser is None: Buser = secross()
@@ -3452,7 +3450,7 @@ def opentransf(f, type='OCTAGON', n=65535, Bc=None, Buser=None):
         print 'Error: only accepts OCTAGON, CHESSBOARD, CITY-BLOCK, LINEAR-H, LINEAR-V, LINEAR-45R, LINEAR-45L, or USER as type, or with suffix -REC.'
         return []
     k = 0
-    y = uint16(zeros(f.shape))
+    y = numpy.zeros(f.shape,numpy.uint16)
     a = binary([1])
     z = binary([0])
     while not (isequal(a,z) or (k>=n)):
@@ -3822,32 +3820,32 @@ def sedisk(r=3, DIM="2D", METRIC="EUCLIDEAN", FLAT="FLAT", h=0):
     FLAT   = upper(FLAT)            
     assert DIM=='2D','Supports only 2D structuring elements'
     if FLAT=='FLAT': y = binary([1])
-    else:            y = int32([h])
+    else:            y = to_int32([h])
     if r==0: return y
     if METRIC == 'CITY-BLOCK':
         if FLAT == 'FLAT':
             b = secross(1)
         else:
-            b = int32([[-2147483647, 0,-2147483647],
-                       [          0, 1,          0],
-                       [-2147483647, 0,-2147483647]])
+            b = to_int32([[-2147483647, 0,-2147483647],
+                          [          0, 1,          0],
+                          [-2147483647, 0,-2147483647]])
         return sedilate(y,sesum(b,r))
     elif METRIC == 'CHESSBOARD':
         if FLAT == 'FLAT':
             b = sebox(1)
         else:
-            b = int32([[1,1,1],
-                       [1,1,1],
-                       [1,1,1]])
+            b = to_int32([[1,1,1],
+                          [1,1,1],
+                          [1,1,1]])
         return sedilate(y,sesum(b,r))
     elif METRIC == 'OCTAGON':
         if FLAT == 'FLAT':
             b1,b2 = sebox(1),secross(1)
         else:
-            b1 = int32([[1,1,1],[1,1,1],[1,1,1]])
-            b2 = int32([[-2147483647, 0,-2147483647],
-                        [          0, 1,          0],
-                        [-2147483647, 0,-2147483647]])
+            b1 = to_int32([[1,1,1],[1,1,1],[1,1,1]])
+            b2 = to_int32([[-2147483647, 0,-2147483647],
+                           [          0, 1,          0],
+                           [-2147483647, 0,-2147483647]])
         if r==1: return b1
         else:    return sedilate( sedilate(y,sesum(b1,r//2)) ,sesum(b2,(r+1)//2))
     elif METRIC == 'EUCLIDEAN':
@@ -3857,7 +3855,7 @@ def sedisk(r=3, DIM="2D", METRIC="EUCLIDEAN", FLAT="FLAT", h=0):
         Be = binary(sqrt(x*x + y*y) <= (r+0.5))
         if FLAT=='FLAT':
             return Be
-        be = h + int32( sqrt( maximum((r+0.5)*(r+0.5) - (x*x) - (y*y),0)))
+        be = h + to_int32( sqrt( maximum((r+0.5)*(r+0.5) - (x*x) - (y*y),0)))
         be = intersec(gray(Be,'int32'),be)
         return be
     else:
@@ -3905,7 +3903,7 @@ def seline(l=3, theta=0):
         s  = sign(sin(theta))
         x1 = arange(0, l * sin(theta) - (s*0.5),s)
         x0 = floor(x1 / tan(theta) + 0.5)
-    x = int32(transpose(array([x1,x0])))
+    x = to_int32(transpose(array([x1,x0])))
     B = set2mat((x,binary(ones((x.shape[1],1),numpy.uint8))))
     return B
 
@@ -3946,8 +3944,8 @@ def serot(B, theta=45, DIRECTION="CLOCKWISE"):
     if len(y)==0: return binary([0])
     x0 = y[:,1] * cos(theta) - y[:,0] * sin(theta)
     x1 = y[:,1] * sin(theta) + y[:,0] * cos(theta)
-    x0 = int32((x0 +0.5)*(x0>=0) + (x0-0.5)*(x0<0))
-    x1 = int32((x1 +0.5)*(x1>=0) + (x1-0.5)*(x1<0))
+    x0 = to_int32((x0 +0.5)*(x0>=0) + (x0-0.5)*(x0<0))
+    x1 = to_int32((x1 +0.5)*(x1>=0) + (x1-0.5)*(x1<0))
     x = transpose(array([transpose(x1),transpose(x0)]))
     BROT = set2mat((x,v))
     return BROT
@@ -3992,13 +3990,13 @@ def seshow(B, option="NORMAL"):
 
     option = upper(option)            
     if option=='NON-FLAT': 
-        y=int32([0])
+        y=to_int32([0])
         if isbinary(B):
             B = intersec(gray(B,'int32'),0)
     elif option=='NORMAL':
         if isbinary(B):    y=binary([1])
         else:
-           y=int32([0])
+           y=to_int32([0])
     elif option=='EXPAND':
         assert isbinary(B), 'This option is only available with flat SE'
         y = sedilate(binary([1]),B)
@@ -4045,7 +4043,7 @@ def sesum(B=None, N=1):
     if B is None: B = secross()
     if N==0:
         if isbinary(B): return binary([1])
-        else:           return int32([0]) # identity
+        else:           return to_int32([0]) # identity
     NB = B
     for i in xrange(N-1):
         NB = sedilate(NB,B)
@@ -4136,7 +4134,7 @@ def sedilate(B1, B2):
     if len(B1.shape) == 1: B1 = B1[newaxis,:]
     if len(B2.shape) == 1: B2 = B2[newaxis,:]
     if B1.dtype==int32 or B2.dtype == int32:
-       Bo = int32([limits(int32([0]))[0]])
+       Bo = to_int32([limits(to_int32([0]))[0]])
        if isbinary(B1):
           B1 = gray(B1,'int32',0)
        if isbinary(B2):
@@ -4957,7 +4955,7 @@ def bench(count=10):
     filename = 'csample.jpg'
     f = readgray(filename)
     fbin=threshad(f,150)
-    se = img2se(binary([[0,1,0],[1,1,1],[0,1,0]]),'NON-FLAT',int32([[0,1,0],[1,2,1],[0,1,0]]))
+    se = img2se(binary([[0,1,0],[1,1,1],[0,1,0]]),'NON-FLAT',to_int32([[0,1,0],[1,2,1],[0,1,0]]))
     m=thin(fbin)
     tasks=[
        [' 1. Union  bin                      ','union(fbin,fbin)'],
@@ -5023,12 +5021,12 @@ def maxleveltype(TYPE='uint8'):
     return max
 
 
-def int32(f):
+def to_int32(f):
     """
         - Purpose
             Convert an image to an int32 image.
         - Synopsis
-            img = int32(f)
+            img = to_int32(f)
         - Input
             f: Any image
         - Output
@@ -5059,7 +5057,7 @@ def to_uint8(f):
             converts it to the unsigned 8-bit datatype.
         - Examples
             #
-            a = int32([-3,0,8,600])
+            a = to_int32([-3,0,8,600])
             print to_uint8(a)
     """
     from numpy import array, clip, uint8
@@ -5068,12 +5066,12 @@ def to_uint8(f):
     return img
 
 
-def uint16(f):
+def to_uint16(f):
     """
         - Purpose
             Convert an image to a uint16 image.
         - Synopsis
-            img = uint16(f)
+            img = to_uint16(f)
         - Input
             f: Any image
         - Output
@@ -5083,8 +5081,8 @@ def uint16(f):
             converts it to the unsigned 16-bit datatype.
         - Examples
             #
-            a = int32([-3,0,8,100000])
-            print uint16(a)
+            a = to_int32([-3,0,8,100000])
+            print to_uint16(a)
     """
     from numpy import array, clip
 
@@ -5210,7 +5208,7 @@ def set2mat(A):
             values
         - Examples
             #
-            coord=int32([
+            coord=to_int32([
               [ 0,0],
               [-1,0],
               [ 1,1]])
@@ -5221,7 +5219,7 @@ def set2mat(A):
             f=set2mat((coord,vu))
             print f
             print datatype(f)
-            vi = int32([1,2,3])
+            vi = to_int32([1,2,3])
             g=set2mat((coord,vi))
             print g
             print datatype(g)
