@@ -2501,13 +2501,11 @@ def gray(f, TYPE="uint8", k1=None):
     if k1 is None: k1 = maxleveltype(TYPE)
     if type(f) is list: f = binary(f)
     assert isbinary(f), 'f must be binary'
-    if k1==None:
-        k1=maxleveltype(TYPE)
     if   TYPE == 'uint8' : y = to_uint8(f*k1)
     elif TYPE == 'uint16': y = to_uint16(f*k1)
     elif TYPE == 'int32' : y = to_int32(f*k1) - to_int32(neg(f)*maxleveltype(TYPE))
     else:
-        assert 0, 'type not supported:'+TYPE
+        assert 0, 'pymorph.gray: type not supported: %s' % TYPE
     return y
 
 
