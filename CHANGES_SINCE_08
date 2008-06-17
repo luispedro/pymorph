@@ -29,4 +29,6 @@ Changes Since Version 0.80
     * Functions which are easily replaced with array operations:
         mmcmp, mmis, mmislesseq, mmstats
 
+ + Small fixes here and there in the code
+
 The pymorph.compat module contains the old names and removed functions. Its use for new code is discouraged
