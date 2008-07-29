@@ -123,7 +123,6 @@
     toggle()       -- Image contrast enhancement or classification by the
                       toggle operator.
     union()        -- Union of images.
-    vdome()        -- Obsolete, use mmvmax.
     vmax()         -- Remove domes with volume less than v.
     watershed()    -- Watershed detection.
     to_int32()     -- Convert an image to an int32 image.
