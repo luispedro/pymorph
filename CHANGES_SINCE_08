@@ -26,8 +26,10 @@ Changes Since Version 0.80
  + Some functions were removed:
     * Registration functions
         mminstall, mmversion, mmregister
-    * Functions which are easily replaced with array operations:
+    * Functions which are easily replaced with array operations
         mmcmp, mmis, mmislesseq, mmstats
+    * Other functions which could be replaced
+        plot (use matplotlib, for example)
 
  + Small fixes here and there in the code
 

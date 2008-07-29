@@ -355,3 +355,148 @@ def mmstats(f, measurement):
 
 def mmsurf(f,options = None):
     return f
+
+_figs = [None]
+
+def plot(plotitems=[], options=[], outfig=-1, filename=None):
+    """
+        - Purpose
+            Plot a function.
+        - Synopsis
+            fig = plot(plotitems=[], options=[], outfig=-1, filename=None)
+        - Input
+            plotitems: Default: []. List of plotitems.
+            options:   Default: []. List of options.
+            outfig:    Default: -1. Integer. Figure number. 0 creates a new
+                       figure.
+            filename:  Default: None. String. Name of the PNG output file.
+        - Output
+            fig: Figure number.
+
+        - Examples
+            #
+            import numpy
+            #
+            x = numpy.arange(0, 2*numpy.pi, 0.1)
+            plot([[x]])
+            y1 = numpy.sin(x)
+            y2 = numpy.cos(x)
+            opts = [['title', 'Example Plot'],\
+                    ['grid'],\
+                    ['style', 'linespoints'],\
+                    ['xlabel', '"X values"'],\
+                    ['ylabel', '"Y Values"']]
+            y1_plt = [x, y1, None,    'sin(X)']
+            y2_plt = [x, y2, 'lines', 'cos(X)']
+            #
+            # plotting two graphs using one step
+            fig1 = plot([y1_plt, y2_plt], opts, 0)
+            #
+            # plotting the same graphs using two steps
+            fig2 = plot([y1_plt], opts, 0)
+            fig2 = plot([y2_plt], opts, fig2)
+            #
+            # first function has been lost, lets recover it
+            opts.append(['replot'])
+            fig2 = plot([y1_plt], opts, fig2)
+    """
+    import Gnuplot
+    import numpy
+
+    newfig = 0
+    if (plotitems == 'reset'):
+        _figs[0] = None
+        _figs[1:] = []
+        return 0
+    if len(plotitems) == 0:
+        # no plotitems specified: replot current figure
+        if _figs[0]:
+            outfig = _figs[0]
+            g = _figs[outfig]
+            g.replot()
+            return outfig
+        else:
+            #assert 0, "plot error: There is no current figure\n"
+            print "plot error: There is no current figure\n"
+            return 0
+    # figure to be plotted
+    if ((outfig < 0) and _figs[0]):
+        # current figure
+        outfig = _figs[0]
+    elif ( (outfig == 0) or ( (outfig == -1) and not _figs[0] )  ):
+        # new figure
+        newfig = 1
+        outfig = len(_figs)
+    elif outfig >= len(_figs):
+        #assert 0, 'plot error: Figure ' + str(outfig) + 'does not exist\n'
+        print 'plot error: Figure ' + str(outfig) + 'does not exist\n'
+        return 0
+    #current figure
+    _figs[0] = outfig
+    # Gnuplot pointer
+    if newfig:
+        if len(_figs) > 20:
+            print '''plot error: could not create figure. Too many PlotItems in memory (20). Use
+                     plot('reset') to clear table'''
+            return 0
+
+        g = Gnuplot.Gnuplot()
+        _figs.append(g)
+    else:
+        g = _figs[outfig]
+
+    # options
+    try:
+        options.remove(['replot'])
+    except:
+        g.reset()
+    try:
+        #default style
+        g('set data style lines')
+        for option in options:
+            if option[0] == 'grid':
+                g('set grid')
+            elif option[0] == 'title':
+                g('set title "' + option[1] + '"')
+            elif option[0] == 'xlabel':
+                g('set xlabel ' + option[1])
+            elif option[0] == 'ylabel':
+                g('set ylabel ' + option[1])
+            elif option[0] == 'style':
+                g('set data style ' + option[1])
+            else:
+                print "plot warning: Unknown option: " + option[0]
+    except:
+        print "plot warning: Bad usage in options! Using default values. Please, use help.\n"
+    # Plot items: item[0]=x, item[1]=y, item[2]=style
+    for item in plotitems:
+        try:
+            title = None
+            style = None
+            x = numpy.ravel(item[0])
+            if len(item) > 1:
+                # y axis specified
+                y = numpy.ravel(item[1])
+                if len(item) > 2:
+                    # style specified
+                    style = item[2]
+                    if len(item) > 3:
+                        title = item[3]
+            else:
+                # no y axis specified
+                y = x
+                x = numpy.arange(len(y))
+            g.replot(Gnuplot.Data(x, y, title=title, with=style))
+        except:
+            g.reset()
+            if newfig:
+                _figs.pop()
+            #assert 0, "plot error: Bad usage in plotitems! Impossible to plot graph. Please, use help.\n"
+            print "plot error: Bad usage in plotitems! Impossible to plot graph. Please, use help.\n"
+            return 0
+    # PNG file
+    if filename:
+        g.hardcopy(filename, terminal='png', color=1)
+    fig = outfig
+    return fig
+
