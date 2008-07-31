@@ -1731,7 +1731,7 @@ def cthin(f, g, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
     return y
 
 
-def cwatershed(f, g, Bc=None, LINEREG="LINES"):
+def cwatershed(f, g, Bc=None, return_lines=False,is_gvoronoi=False):
     """
         - Purpose
             Detection of watershed from markers.
@@ -1784,60 +1784,54 @@ def cwatershed(f, g, Bc=None, LINEREG="LINES"):
             show(mark)
             show(w)
     """
-    from numpy import ones, zeros, nonzero, array, put, take, argmin, transpose, compress, concatenate
+    from numpy import ones, zeros, nonzero, array, put, take, argmin, transpose, compress, concatenate, where
+    from heapq import heapify, heappush, heappop
     if Bc is None: Bc = secross()
-    return g
-    print 'starting'
-    withline = (LINEREG == 'LINES')
     if isbinary(g):
         g = label(g,Bc)
-    print 'before 1. pad4n'
     status = pad4n(to_uint8(zeros(f.shape)),Bc, 3)
-    f = pad4n( f,Bc,0)                 #pad input image
-    print 'before 2. pad4n'
-    y = pad4n( g,Bc,0)                  # pad marker image with 0
-    if withline:
+    f = pad4n(f,Bc,0)                 # pad input image with 0
+    y = pad4n(g,Bc,0)                 # pad marker image with 0
+    if return_lines:
         y1 = intersec(binary(y), 0)
-    costM = limits(f)[1] * ones(f.shape)  # cuulative cost function image
-    mi = nonzero(gradm(y,sebox(0),Bc).ravel())  # 1D index of internal contour of marker
-    print 'before put costM'
-    put(costM.ravel(),mi, 0)
-    HQueue=transpose([mi, take(costM.ravel(), mi)])       # init hierarquical queue: index,value
-    print 'before se2list0'
-    Bi=se2list0(f,Bc)                # get 1D displacement neighborhood pixels
-    x,v = mat2set(Bc)
-    while HQueue:
-        print 'Hq=',HQueue
-        i = argmin(HQueue[:,1])           # i is the index of minimum value
-        print 'imin=',i
-        pi = HQueue[i,0]
-        print 'pi=',pi
-        ii = ones(HQueue.shape[0])
-        ii[i] = 0
-        print 'ii=',ii
-        HQueue = transpose(array([compress(ii,HQueue[:,0]),
-                                  compress(ii,HQueue[:,1])])) # remove this pixel from queue
-        print 'H=',HQueue
-        put(status.ravel(), pi, 1)          # make it a permanent label
-        for qi in pi+Bi :                # for each neighbor of pi
+    costM = limits(f)[1] * ones(f.shape)  # cummulative cost function image
+    mi, = nonzero(gradm(y,sebox(0),Bc).ravel())  # 1D index of internal contour of marker
+    costM.flat[mi]=f.flat[mi]
+    # get 1D displacement neighborhood pixels
+    hw,hh=Bc.shape
+    hw //= 2
+    hh //= 2
+    Bi=[]
+    for i,j in zip(*where(Bc)):
+        Bi.append( (j-hw)+(i-hh)*f.shape[1] )
+    Bi=array(Bi)
+    # I sort in order of insertion for the simple reason that that's what
+    # the original code intended to do (although that code was not functional)
+    hqueue=[(costM.flat[i],idx,i) for idx,i in enumerate(mi)]
+    heapify(hqueue)
+    while hqueue:
+        #print 'Hq=',hqueue
+        cost,_,pi = heappop(hqueue)
+        #print 'H=',hqueue
+        status.flat[pi]=1          # make it a permanent label
+        for qi in Bi+pi:                # for each neighbor of pi
             if (status.flat[qi] != 3):          # not image border
                 if (status.flat[qi] != 1):        # if not permanent
-                    cost_M = max(costM.flat[pi], f.flat[qi])
-                    if cost_M < costM.flat[qi]:
-                        print 'qi=',qi
-                        costM.flat[qi] = cost_M
+                    if costM.flat[pi] < costM.flat[qi]:
+                        #print 'qi=',qi
+                        if is_gvoronoi:
+                            costM.flat[qi] = costM.flat[pi]
+                        else:
+                            costM.flat[qi] = f.flat[qi]
                         y.flat[qi] = y.flat[pi]                  # propagate the label
-                        aux = zeros(array(HQueue.shape) + [1,0])
-                        aux[:-1,:] = HQueue
-                        aux[-1,:]=[qi, cost_M]
-                        HQueue = aux # insert pixel in the queue
-                        print 'insert H=',HQueue
-                elif (withline        and
+                        heappush(hqueue,(costM.flat[qi],idx,qi))
+                        idx += 1
+                elif (return_lines  and
                      (y.flat[qi] != y.flat[pi]) and
                      (y1.flat[pi] == 0)    and
                      (y1.flat[qi] == 0)     ):
                     y1.flat[pi] = 1
-    if withline:
+    if return_lines:
         Y = y1
     else:
         Y = y
@@ -4388,7 +4382,6 @@ def skiz(f, Bc=None, LINEREG="LINES", METRIC=None):
     if METRIC is not None: METRIC = upper(METRIC)
     d = dist( neg(f), Bc, METRIC)
     return cwatershed(d,f,Bc,LINEREG)
-    return y
 
 def subm(f1, f2):
     """
@@ -4908,7 +4901,6 @@ def watershed(f, Bc=None, LINEREG="LINES"):
     from string import upper
     if Bc is None: Bc = secross()
     return cwatershed(f,regmin(f,Bc),upper(LINEREG))
-    return y
 
 
 def bench(count=10):
@@ -5248,7 +5240,7 @@ def pad4n(f, Bc, value, scale=1):
             y = pad4n(f, Bc, value, scale=1)
         - Input
             f:     Image
-            Bc:    Structuring Element ( connectivity).
+            Bc:    Structuring Element (connectivity).
             value: 
             scale: Default: 1.
         - Output
