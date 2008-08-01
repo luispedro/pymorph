@@ -1,9 +1,9 @@
 """
-    Module morph -- SDC Morphology Toolbox
+    Module pymorph
     -------------------------------------------------------------------
-    The pymorph Morphology Toolbox for Python is a powerful collection of latest
-    state-of-the-art gray-scale morphological tools that can be applied to image
-    segmentation, non-linear filtering, pattern recognition and image analysis.
+    pymorph a powerful collection of state-of-the-art gray-scale morphological
+    tools that can be applied to image segmentation, non-linear filtering,
+    pattern recognition and image analysis.
     -------------------------------------------------------------------
     add4dilate()   -- Addition for dilation
     addm()         -- Addition of two images, with saturation.
@@ -390,10 +390,11 @@ def dist(f, Bc=None, METRIC=None):
         b = zeros((3,3),numpy.int32)
         i=1
         while not isequal(f,y):
-            a4,a2 = -4*i+2, -2*i+1
+            a4 = -4*i+2
+            a2 = -2*i+1
             b = to_int32([[a4,a2,a4],
-                       [a2, 0,a2],
-                       [a4,a2,a4]])
+                          [a2, 0,a2],
+                          [a4,a2,a4]])
             y=f
             i+=1
             f = erode(f,b)
@@ -402,12 +403,12 @@ def dist(f, Bc=None, METRIC=None):
     else:
         if isequal(Bc, secross()):
             b = to_int32([[-2147483647,  -1, -2147483647],
-                       [         -1,   0,          -1],
-                       [-2147483647,  -1, -2147483647]])
+                          [         -1,   0,          -1],
+                          [-2147483647,  -1, -2147483647]])
         elif isequal(Bc, sebox()):
             b = to_int32([[-1,-1,-1],
-                       [-1, 0,-1],
-                       [-1,-1,-1]])
+                          [-1, 0,-1],
+                          [-1,-1,-1]])
         else: b = Bc
         while not isequal(f,y):
             y=f
@@ -1731,7 +1732,7 @@ def cthin(f, g, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
     return y
 
 
-def cwatershed(f, g, Bc=None, return_lines=False,is_gvoronoi=False):
+def cwatershed(f, markers, Bc=None, return_lines=False,is_gvoronoi=False):
     """
         - Purpose
             Detection of watershed from markers.
@@ -1739,7 +1740,7 @@ def cwatershed(f, g, Bc=None, return_lines=False,is_gvoronoi=False):
             Y = cwatershed(f, g, Bc=None, LINEREG="LINES")
         - Input
             f:       Gray-scale (uint8 or uint16) image.
-            g:       Gray-scale (uint8 or uint16) or binary image. marker
+            markers: Gray-scale (uint8 or uint16) or binary image. marker
                      image: binary or labeled.
             Bc:      Structuring Element Default: None (3x3 elementary
                      cross). (watershed connectivity)
@@ -1784,19 +1785,18 @@ def cwatershed(f, g, Bc=None, return_lines=False,is_gvoronoi=False):
             show(mark)
             show(w)
     """
-    from numpy import ones, zeros, nonzero, array, put, take, argmin, transpose, compress, concatenate, where
+    from numpy import ones, zeros, nonzero, array, put, take, argmin, transpose, compress, concatenate, where, uint8
     from heapq import heapify, heappush, heappop
     if Bc is None: Bc = secross()
-    if isbinary(g):
-        g = label(g,Bc)
-    status = pad4n(to_uint8(zeros(f.shape)),Bc, 3)
+    if isbinary(markers):
+        markers = label(markers,Bc)
+    status = pad4n(zeros(f.shape,uint8),Bc, 3)
     f = pad4n(f,Bc,0)                 # pad input image with 0
-    y = pad4n(g,Bc,0)                 # pad marker image with 0
+    y = pad4n(markers,Bc,0)                 # pad marker image with 0
     if return_lines:
         y1 = intersec(binary(y), 0)
+        y1flat=y1.ravel()
     costM = limits(f)[1] * ones(f.shape)  # cummulative cost function image
-    mi, = nonzero(gradm(y,sebox(0),Bc).ravel())  # 1D index of internal contour of marker
-    costM.flat[mi]=f.flat[mi]
     # get 1D displacement neighborhood pixels
     hw,hh=Bc.shape
     hw //= 2
@@ -1805,37 +1805,40 @@ def cwatershed(f, g, Bc=None, return_lines=False,is_gvoronoi=False):
     for i,j in zip(*where(Bc)):
         Bi.append( (j-hw)+(i-hh)*f.shape[1] )
     Bi=array(Bi)
+    status=status.ravel()
+    f=f.ravel()
+    costM=costM.ravel()
+    yflat=y.ravel()
+
+    initial, = where(yflat > 0)
+    costM[initial]=f[initial]
     # I sort in order of insertion for the simple reason that that's what
     # the original code intended to do (although that code was not functional)
-    hqueue=[(costM.flat[i],idx,i) for idx,i in enumerate(mi)]
+    hqueue=[(costM[idx],i,idx) for i,idx in enumerate(initial)]
     heapify(hqueue)
     while hqueue:
-        #print 'Hq=',hqueue
         cost,_,pi = heappop(hqueue)
-        #print 'H=',hqueue
-        status.flat[pi]=1          # make it a permanent label
-        for qi in Bi+pi:                # for each neighbor of pi
-            if (status.flat[qi] != 3):          # not image border
-                if (status.flat[qi] != 1):        # if not permanent
-                    if costM.flat[pi] < costM.flat[qi]:
-                        #print 'qi=',qi
-                        if is_gvoronoi:
-                            costM.flat[qi] = costM.flat[pi]
-                        else:
-                            costM.flat[qi] = f.flat[qi]
-                        y.flat[qi] = y.flat[pi]                  # propagate the label
-                        heappush(hqueue,(costM.flat[qi],idx,qi))
-                        idx += 1
+        status[pi]=1                                            # make it a permanent label
+        for qi in Bi+pi:                                        # for each neighbor of pi
+            if (status[qi] != 3):                               # not image border
+                if (status[qi] != 1):                           # if not permanent
+                    if is_gvoronoi:
+                        ncost=costM[pi]
+                    else:
+                        ncost=f[qi]
+                    if ncost < costM[qi]:
+                        costM[qi]=ncost
+                        yflat[qi] = yflat[pi]                   # propagate the label
+                        heappush(hqueue,(ncost,i,qi))
+                        i += 1
                 elif (return_lines  and
-                     (y.flat[qi] != y.flat[pi]) and
-                     (y1.flat[pi] == 0)    and
-                     (y1.flat[qi] == 0)     ):
-                    y1.flat[pi] = 1
+                     (yflat[qi] != yflat[pi]) and
+                     (y1flat[pi] == 0)    and
+                     (y1flat[qi] == 0)     ):
+                    y1flat[pi] = 1
     if return_lines:
-        Y = y1
-    else:
-        Y = y
-    return Y
+        return y1
+    return y
 
 
 def dilate(f, b=None):
@@ -2804,24 +2807,24 @@ def infgen(f, Iab):
     return y
 
 
-def infrec(f, g, bc=None):
+def infrec(f, g, Bc=None):
     """
         - Purpose
             Inf-reconstruction.
         - Synopsis
-            y = infrec(f, g, bc=None)
+            y = infrec(f, g, Bc=None)
         - Input
             f:  Gray-scale (uint8 or uint16) or binary image. Marker image.
             g:  Gray-scale (uint8 or uint16) or binary image. Conditioning
                 image.
-            bc: Structuring Element Default: None (3x3 elementary cross).
+            Bc: Structuring Element Default: None (3x3 elementary cross).
                 Structuring element ( connectivity).
         - Output
             y: Image
         - Description
             infrec creates the image y by an infinite number of recursive
             iterations (iterations until stability) of the dilation of f by
-            bc conditioned to g . We say the y is the inf-reconstruction of
+            Bc conditioned to g . We say the y is the inf-reconstruction of
             g from the marker f . For algorithms and applications, see
             Vinc:93b .
         - Examples
@@ -2847,23 +2850,22 @@ def infrec(f, g, bc=None):
             show(y30)
             show(y)
     """
-    from numpy import product
-    if bc is None: bc = secross()
-    n = product(f.shape)
-    y = cdilate(f,g,bc,n);
+    if Bc is None: Bc = secross()
+    n = f.size
+    y = cdilate(f,g,Bc,n);
     return y
 
 
-def inpos(f, g, bc=None):
+def inpos(f, g, Bc=None):
     """
         - Purpose
             Minima imposition.
         - Synopsis
-            y = inpos(f, g, bc=None)
+            y = inpos(f, g, Bc=None)
         - Input
             f:  Binary image. Marker image.
             g:  Gray-scale (uint8 or uint16) image. input image.
-            bc: Structuring Element Default: None (3x3 elementary cross).
+            Bc: Structuring Element Default: None (3x3 elementary cross).
                 (connectivity).
         - Output
             y: Gray-scale (uint8 or uint16) image.
@@ -2875,11 +2877,11 @@ def inpos(f, g, bc=None):
 
     """
 
-    if bc is None: bc = secross()
+    if Bc is None: Bc = secross()
     assert isbinary(f),'First parameter must be binary image'
     fg = gray(neg(f),datatype(g))
     k1 = limits(g)[1] - 1
-    y = suprec(fg, intersec(union(g, 1), k1, fg), bc)
+    y = suprec(fg, intersec(union(g, 1), k1, fg), Bc)
     return y
 
 
@@ -3635,7 +3637,7 @@ def regmin(f, Bc=None, option="binary"):
     """
 
     if option != 'binary':
-        raise ValueError, "mmorph.regmin only implements option 'binary'"
+        raise ValueError, "pymorph.regmin only implements option 'binary'"
     if Bc is None: Bc = secross()
     fplus = addm(f,1)
     g = subm(suprec(fplus,f,Bc),f)
@@ -4797,7 +4799,7 @@ def thin(f, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
     return y
 
 
-def union(f1, f2, f3=None, f4=None, f5=None):
+def union(f1, f2, *args):
     """
         - Purpose
             Union of images.
@@ -4806,18 +4808,13 @@ def union(f1, f2, f3=None, f4=None, f5=None):
         - Input
             f1: Gray-scale (uint8 or uint16) or binary image.
             f2: Gray-scale (uint8 or uint16) or binary image. Or constant
-            f3: Gray-scale (uint8 or uint16) or binary image. Default: None.
-                Or constant.
-            f4: Gray-scale (uint8 or uint16) or binary image. Default: None.
-                Or constant.
-            f5: Gray-scale (uint8 or uint16) or binary image. Default: None.
-                Or constant.
+            args: Gray-scale (uint8 or uint16) or binary images.
         - Output
             y: Image
         - Description
             union creates the image y by taking the pixelwise maximum
-            between the images f1, f2, f3, f4, and f5 . When f1, f2, f3, f4,
-            and f5 are binary images, y represents the union of them.
+            between the images given. When the images are binary images,
+            y represents the union of them.
         - Examples
             #
             #   example 1
@@ -4861,24 +4858,23 @@ def union(f1, f2, f3=None, f4=None, f5=None):
     from numpy import maximum
 
     y = maximum(f1,f2)
-    if f3: y = maximum(y,f3)
-    if f4: y = maximum(y,f4)
-    if f5: y = maximum(y,f5)
+    for f in args:
+        y = maximum(y,f)
     y = y.astype(f1.dtype)
     return y
 
 
-def watershed(f, Bc=None, LINEREG="LINES"):
+def watershed(f, Bc=None, return_lines=False):
     """
         - Purpose
             Watershed detection.
         - Synopsis
-            y = watershed(f, Bc=None, LINEREG="LINES")
+            y = watershed(f, Bc=None, return_lines=False)
         - Input
             f:       Gray-scale (uint8 or uint16) or binary image.
             Bc:      Structuring Element Default: None (3x3 elementary
                      cross). ( connectivity)
-            LINEREG: String Default: "LINES". 'LINES' or ' REGIONS'.
+            return_lines: Whether to return the boundaries (default: returns segmentation)
         - Output
             y: Gray-scale (uint8 or uint16) or binary image.
         - Description
@@ -4900,7 +4896,7 @@ def watershed(f, Bc=None, LINEREG="LINES"):
     """
     from string import upper
     if Bc is None: Bc = secross()
-    return cwatershed(f,regmin(f,Bc),upper(LINEREG))
+    return cwatershed(f,regmin(f,Bc),Bc,return_lines=return_lines)
 
 
 def bench(count=10):
@@ -5235,7 +5231,7 @@ def set2mat(A):
 def pad4n(f, Bc, value, scale=1):
     """
         - Purpose
-            pad4n
+            pads f with value so that Bc can be applied scaled by scale.
         - Synopsis
             y = pad4n(f, Bc, value, scale=1)
         - Input
@@ -5244,7 +5240,7 @@ def pad4n(f, Bc, value, scale=1):
             value: 
             scale: Default: 1.
         - Output
-            y: The converted image
+            The converted image
 
     """
     from numpy import ones, array
@@ -5256,8 +5252,7 @@ def pad4n(f, Bc, value, scale=1):
     ch, cw = scale * Bh/2, scale * Bw/2
     g = value * ones( f.shape + scale * (array(Bc.shape) - 1))
     g[ ch: -ch, cw: -cw] = f
-    y = g.astype(f.dtype)
-    return y
+    return g.astype(f.dtype)
 
 
 # vim: set ts=4 sts=4 sw=4 expandtab smartindent:

@@ -500,3 +500,10 @@ def plot(plotitems=[], options=[], outfig=-1, filename=None):
     fig = outfig
     return fig
 
+
+def mmwatershed(f,Bc=None,linereg='LINES'):
+    return watershed(f,Bc,(linereg == 'LINES')
+
+def mmcwatershed(f,Bc=None,linereg='LINES'):
+    return cwatershed(f,Bc,(linereg == 'LINES')
+

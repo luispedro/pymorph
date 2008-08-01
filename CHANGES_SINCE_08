@@ -2,7 +2,9 @@
 Changes Since Version 0.80
 ===========================
 
- + Watershed is now implememented.
+ + Watershed is now implememented. The interface is slightly different: it takes a
+    Boolean return_lines parameter instead of the the LINEREG parameter.
+    This applies to watershed(), cwatershed
 
  + numpy is used (instead of Numeric).
 
