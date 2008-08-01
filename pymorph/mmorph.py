@@ -1836,7 +1836,7 @@ def cwatershed(f, markers, Bc=None, return_lines=False,is_gvoronoi=False):
                      (y1flat[qi] == 0)     ):
                     y1flat[pi] = 1
     if return_lines:
-        return y1
+        return y,y1
     return y
 
 
@@ -4363,18 +4363,20 @@ def skelmrec(f, B=None):
     return y
 
 
-def skiz(f, Bc=None, LINEREG="LINES", METRIC=None):
+def skiz(f, Bc=None, return_lines=False, METRIC=None):
     """
         - Purpose
             Skeleton of Influence Zone - also know as Generalized Voronoi
             Diagram
         - Synopsis
-            y = skiz(f, Bc=None, LINEREG="LINES", METRIC=None)
+            y = skiz(f, Bc=None, return_lines=False, METRIC=None)
+            y,lines = skiz(f, Bc=None, return_lines=True, METRIC=None)
         - Input
             f:       Binary image.
             Bc:      Structuring Element Default: None (3x3 elementary
                      cross). Connectivity for the distance measurement.
-            LINEREG: String Default: "LINES". 'LINES' or 'REGIONS'.
+            return_lines: Whether to return the lines separating regions
+                    in the image. Default=False
             METRIC:  String Default: None. 'EUCLIDEAN' if specified.
         - Output
             y: Gray-scale (uint8 or uint16) or binary image.
@@ -4404,10 +4406,9 @@ def skiz(f, Bc=None, LINEREG="LINES", METRIC=None):
     """
     from string import upper
     if Bc is None: Bc = secross()
-    LINEREG = upper(LINEREG)
     if METRIC is not None: METRIC = upper(METRIC)
-    d = dist( neg(f), Bc, METRIC)
-    return cwatershed(d,f,Bc,LINEREG)
+    d = dist(neg(f), Bc, METRIC)
+    return cwatershed(d,f,Bc,return_lines)
 
 def subm(f1, f2):
     """

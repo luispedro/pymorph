@@ -507,3 +507,6 @@ def mmwatershed(f,Bc=None,linereg='LINES'):
 def mmcwatershed(f,Bc=None,linereg='LINES'):
     return cwatershed(f,Bc,(linereg == 'LINES')
 
+def mmskiz(f,Bc=None,LINEREG='LINES',METRIC=None):
+    return skiz(f,Bc,(LINEREG=='LINES'),METRIC)
+
