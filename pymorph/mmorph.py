@@ -699,24 +699,29 @@ def label(f, Bc=None):
             show(f)
             lblshow(g)
     """
-    from numpy import allclose, ravel, nonzero, array
     if Bc is None: Bc = secross()
-    assert isbinary(f),'Can only label binary image'
-    zero = subm(f,f)               # zero image
-    faux=f
-    r = array(zero)
+    if not isbinary(f):
+        f = (f > 0)
+    f=pad4n(f,Bc,0)
+    neighbours=se2flatidx(f,Bc)
+    labeled = f * 0
+    f=f.ravel()
+    labeledflat=labeled.ravel()
     label = 1
-    y = gray( f,'uint16',0)        # zero image (output)
-    while not allclose(faux,0):
-        x=nonzero(ravel(faux))[0]      # get first unlabeled pixel
-        fmark = array(zero)
-        fmark.flat[x] = 1              # get the first unlabeled pixel
-        r = infrec( fmark, faux, Bc) # detects all pixels connected to it
-        faux = subm( faux, r)        # remove them from faux
-        r = gray( r,'uint16',label)  # label them with the value label
-        y = union( y, r)             # merge them with the labeled image
-        label = label + 1
-    return y
+    queue=[]
+    for i in xrange(f.size):
+        if f[i] and labeledflat[i] == 0:
+            labeledflat[i]=label
+            queue=[i+bi for bi in neighbours]
+            while queue:
+                ni=queue.pop()
+                if labeledflat[ni] == 0:
+                    labeledflat[ni]=label
+                    for n in neighbours+ni:
+                        if f[n] and labeledflat[n] == 0:
+                            queue.append(n)
+            label += 1
+    return labeled[1:-1,1:-1] # revert the pad4n() call above
 
 
 def neg(f):
@@ -1798,13 +1803,7 @@ def cwatershed(f, markers, Bc=None, return_lines=False,is_gvoronoi=False):
         y1flat=y1.ravel()
     costM = limits(f)[1] * ones(f.shape)  # cummulative cost function image
     # get 1D displacement neighborhood pixels
-    hw,hh=Bc.shape
-    hw //= 2
-    hh //= 2
-    Bi=[]
-    for i,j in zip(*where(Bc)):
-        Bi.append( (j-hw)+(i-hh)*f.shape[1] )
-    Bi=array(Bi)
+    Bi=se2flatidx(f,Bc)
     status=status.ravel()
     f=f.ravel()
     costM=costM.ravel()
@@ -3695,6 +3694,31 @@ def se2hmt(A, Bc):
     return Iab
 
 
+def se2flatidx(f,Bc):
+    """
+    Bi = se2flatidx(f,Bc)
+
+    Transforms the Bc structuring element into an array of indices so that
+    f.flat[Bi[i]] corresponds to the i-th element where Bc is true
+
+    Equivalent of
+
+    g = zeros(f.shape)
+    h,w=Bc.shape
+    g[:h,:w]=Bc
+    Bi, = where(g.ravel())
+
+    This is useful for implementing many functions. See the implementation of
+    label() for an example.
+    """
+    from numpy import array, where
+    h,w=Bc.shape
+    h //= 2
+    w //= 2
+    Bi=[]
+    for i,j in zip(*where(Bc)):
+        Bi.append( (j-w)+(i-h)*f.shape[1] )
+    return array(Bi)
 def sebox(r=1):
     """
         - Purpose
