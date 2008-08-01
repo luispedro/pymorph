@@ -2,6 +2,8 @@
 Changes Since Version 0.80
 ===========================
 
+ + Watershed is now implememented.
+
  + numpy is used (instead of Numeric).
 
  + Function names no longer start with mm.
