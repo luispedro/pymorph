@@ -510,3 +510,5 @@ def mmcwatershed(f,Bc=None,linereg='LINES'):
 def mmskiz(f,Bc=None,LINEREG='LINES',METRIC=None):
     return skiz(f,Bc,(LINEREG=='LINES'),METRIC)
 
+def mmdist(f,Bc=None,METRIC=None):
+    return dist(f,Bc,metric=METRIC)

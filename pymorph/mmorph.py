@@ -333,20 +333,20 @@ def close_holes(f, Bc=None):
     return y
 
 
-def dist(f, Bc=None, METRIC=None):
+def dist(f, Bc=None, metric=None):
     """
         - Purpose
             Distance transform.
         - Synopsis
-            y = dist(f, Bc=None, METRIC=None)
+            y = dist(f, Bc=None, metric=None)
         - Input
             f:      Binary image.
             Bc:     Structuring Element Default: None (3x3 elementary
                     cross). (connectivity)
-            METRIC: String Default: None. 'EUCLIDEAN', or 'EUC2' for squared
+            metric: String Default: None. 'euclidean', or 'euclidean2' for squared
                     Euclidean.
         - Output
-            y: distance image in uint16, or in int32 datatype with EUC2
+            y: distance image in uint16, or in int32 datatype with euclidean2
                option.
         - Description
             dist creates the distance image y of the binary image f . The
@@ -378,15 +378,15 @@ def dist(f, Bc=None, METRIC=None):
             show(d8%8)
             show(de%8)
     """
-    from string import upper
+    from string import lower
     import numpy
     from numpy import zeros, sqrt
     if Bc is None: Bc = secross()
-    if METRIC is not None:
-       METRIC = upper(METRIC)
+    if metric is not None:
+       metric = lower(metric)
     f = gray(f,'uint16')
     y = intersec(f,0)
-    if (METRIC == 'EUCLIDEAN') or (METRIC == 'EUC2'):
+    if (metric == 'euclidean') or (metric == 'euc2') or (metric == 'euclidean2'):
         b = zeros((3,3),numpy.int32)
         i=1
         while not isequal(f,y):
@@ -398,7 +398,7 @@ def dist(f, Bc=None, METRIC=None):
             y=f
             i+=1
             f = erode(f,b)
-        if METRIC == 'EUCLIDEAN':
+        if metric == 'euclidean':
             f = to_uint16(sqrt(f)+0.5)
     else:
         if isequal(Bc, secross()):
@@ -1739,19 +1739,21 @@ def cthin(f, g, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
 
 def cwatershed(f, markers, Bc=None, return_lines=False,is_gvoronoi=False):
     """
-        - Purpose
+        R = cwatershed(f, g, Bc=None, return_lines=False)
+        R,L = cwatershed(f, g, Bc=None, return_lines=True)
             Detection of watershed from markers.
-        - Synopsis
-            Y = cwatershed(f, g, Bc=None, LINEREG="LINES")
+
         - Input
             f:       Gray-scale (uint8 or uint16) image.
             markers: Gray-scale (uint8 or uint16) or binary image. marker
                      image: binary or labeled.
             Bc:      Structuring Element Default: None (3x3 elementary
                      cross). (watershed connectivity)
+            return_lines: Whether to return lines instead of regions (default: False)
             LINEREG: String Default: "LINES". 'LINES' or ' REGIONS'.
         - Output
             Y: Gray-scale (uint8 or uint16) or binary image.
+
         - Description
             cwatershed creates the image y by detecting the domain of the
             catchment basins of f indicated by the marker image g ,
@@ -1759,12 +1761,14 @@ def cwatershed(f, markers, Bc=None, return_lines=False,is_gvoronoi=False):
             flag LINEREG y will be a labeled image of the catchment basins
             domain or just a binary image that presents the watershed lines.
             To know more about watershed and watershed from markers, see
-            BeucMeye:93 . The implementation of this function is based on
-            LotuFalc:00 . WARNING: There is a coon mistake related to the
+            BeucMeye:93. The implementation of this function is based on
+            LotuFalc:00.
+            
+            WARNING: There is a common mistake related to the
             marker image g . If this image contains only zeros and ones, but
             it is not a binary image, the result will be an image with all
             ones. If the marker image is binary, you have to set this
-            explicitly using the logical function.
+            explicitly (e.g., cwatershed(f,g>0) or cwatershed(f,g.astype(bool)))
         - Examples
             #
             #   example 1
