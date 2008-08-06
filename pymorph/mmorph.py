@@ -797,11 +797,9 @@ def threshad(f, f1, f2=None):
             show(c)
     """
 
-    if f2 is None: 
-      y = binary(f1 <= f)
-    else:
-      y = binary((f1 <= f) & (f <= f2))
-    return y
+    if f2 is None:
+        return f1 <= f
+    return (f1 <= f) & (f <= f2)
 
 
 def toggle(f, f1, f2, OPTION="GRAY"):
