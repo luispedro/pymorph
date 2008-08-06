@@ -5160,16 +5160,18 @@ def add4dilate(f, c):
 
 def mat2set(A):
     """
-        - Purpose
+            C,V = mat2set(A)
+
             Converts image representation from matrix to set
-        - Synopsis
-            CV = mat2set(A)
         - Input
             A: Image in matrix format, where the origin (0,0) is at the
                center of the matrix.
+
         - Output
-            CV: Image Tuple with array of pixel coordinates and array of
-                corresponding pixel values
+            C: array of pixel coordinates
+
+            V: array of pixel values corresponding to the coordinates of C
+
         - Description
             Return tuple with array of pixel coordinates and array of
             corresponding pixel values. The input image is in the matrix
@@ -5196,13 +5198,12 @@ def mat2set(A):
     if len(A.shape) == 1: A = A[newaxis,:]
     offsets = nonzero(ravel(A) - limits(A)[0])[0]
     if len(offsets) == 0: return ([],[])
-    (h,w) = A.shape
+    h,w = A.shape
     x = [0,1]
     x[0] = offsets//w - (h-1)//2
     x[1] = offsets%w - (w-1)//2
     x = transpose(x)
-    CV = x,take(ravel(A),offsets)
-    return CV
+    return x,take(ravel(A),offsets)
 
 
 def set2mat(A):
