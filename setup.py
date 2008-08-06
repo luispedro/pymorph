@@ -2,7 +2,7 @@
 from setuptools import setup, find_packages
 
 setup(name='pymorph',
-      version='0.88',
+      version='0.89',
       description='Image Morphology Toolbox',
       author='Luís Pedro Coelho',
       author_email='lpc@mcu.edu',
