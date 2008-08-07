@@ -37,4 +37,7 @@ Changes Since Version 0.80
 
  + Small fixes here and there in the code
 
+ + NEW functions:
+    cdist (conditional distance transform)
+
 The pymorph.compat module contains the old names and removed functions. Its use for new code is discouraged
