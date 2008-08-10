@@ -1877,7 +1877,9 @@ def cwatershed(f, markers, Bc=None, return_lines=False,is_gvoronoi=False):
                      (y1flat[pi] == 0)    and
                      (y1flat[qi] == 0)     ):
                     y1flat[pi] = 1
+    y=y[1:-1,1:-1]
     if return_lines:
+        y1=y1[1:-1,1:-1]
         return y,y1
     return y
 
