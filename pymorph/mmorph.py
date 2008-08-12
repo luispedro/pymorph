@@ -5187,15 +5187,13 @@ def add4dilate(f, c):
     """
     from numpy import asarray, minimum, maximum
 
-    if c:            
-       y = asarray(f,'d') + c
-       k1,k2 = limits(f)
-       y = ((f==k1) * k1) + ((f!=k1) * y)
-       y = maximum(minimum(y,k2),k1)
-       a = y.astype(f.dtype)
-    else:
-       a = f
-    return a
+    if not c:
+        return f
+    y = asarray(f,'d') + c
+    k1,k2 = limits(f)
+    y = ((f==k1) * k1) + ((f!=k1) * y)
+    y = maximum(minimum(y,k2),k1)
+    return y.astype(f.dtype)
 
 
 def mat2set(A):
