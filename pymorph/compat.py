@@ -45,7 +45,6 @@ mmdist=dist
 mmdrawv=drawv
 mmdtshow=dtshow
 mmedgeoff=edgeoff
-mmendpoints=endpoints
 mmero=ero
 mmflood=flood
 mmframe=frame
@@ -512,3 +511,6 @@ def mmskiz(f,Bc=None,LINEREG='LINES',METRIC=None):
 
 def mmdist(f,Bc=None,METRIC=None):
     return dist(f,Bc,metric=METRIC)
+
+def mmendpoints(OPTION='LOOP'):
+    return endpoints(option=OPTION)

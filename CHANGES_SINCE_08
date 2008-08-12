@@ -11,6 +11,10 @@ Changes Since Version 0.80
  + Function names no longer start with mm.
     A function name  prefix is matlabish and not pythonic.
  
+ + No argument names are uppercase anymore. This affects:
+    endpoints()
+   Use the old mm* for the old argument names
+
  + Some function names have changed:
 
    * Over-abbreviated function names:
