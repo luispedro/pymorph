@@ -2098,14 +2098,14 @@ def dtshow(f, n=10):
     return y
 
 
-def endpoints(OPTION="LOOP"):
+def endpoints(option="loop"):
     """
         - Purpose
             Interval to detect end-points.
         - Synopsis
-            Iab = endpoints(OPTION="LOOP")
+            iab = endpoints(option="loop")
         - Input
-            OPTION: String Default: "LOOP". 'LOOP' or 'HOMOTOPIC'
+            option: string default: "loop". 'loop' or 'homotopic'
         - Output
             Iab: Interval
         - Description
@@ -2114,8 +2114,8 @@ def endpoints(OPTION="LOOP"):
             components) in binary images. It can be used to prune skeletons
             and to mark objects transforming them in a single pixel or
             closed loops if they have holes. There are two options
-            available: LOOP, deletes all points but preserves loops if used
-            in thin ; HOMOTOPIC, deletes all points but preserves the last
+            available: 'loop', deletes all points but preserves loops if used
+            in thin ; 'homotopic', deletes all points but preserves the last
             single point or loops.
         - Examples
             #
@@ -2125,7 +2125,7 @@ def endpoints(OPTION="LOOP"):
             #
             #   example 2
             #
-            print intershow(endpoints('HOMOTOPIC'))
+            print intershow(endpoints('homotopic'))
             #
             #   example 3
             #
@@ -2138,28 +2138,31 @@ def endpoints(OPTION="LOOP"):
             #
             #   example 4
             #
-            fn = thin(f1,endpoints('HOMOTOPIC'))
+            fn = thin(f1,endpoints('homotopic'))
             show(dilate(fn))
     """
     from string import upper
 
-    Iab = None
-    OPTION = upper(OPTION)
-    if OPTION == 'LOOP':
-        Iab = se2hmt(binary([[0,0,0],
+    option = upper(option)
+    if option == 'loop':
+        return se2hmt(binary([[0,0,0],
                              [0,1,0],
                              [0,0,0]]),
-                        binary([[0,0,0],
-                                [1,0,1],
-                                [1,1,1]]))
-    elif OPTION == 'HOMOTOPIC':
-        Iab = se2hmt(binary([[0,1,0],
-                             [0,1,0],
-                             [0,0,0]]),
-                        binary([[0,0,0],
-                                [1,0,1],
-                                [1,1,1]]))
-    return Iab
+
+                      binary([[0,0,0],
+                              [1,0,1],
+                              [1,1,1]]))
+    elif option == 'homotopic':
+        return se2hmt(binary([[0,1,0],
+                            [0,1,0],
+                            [0,0,0]]),
+
+                      binary([[0,0,0],
+                              [1,0,1],
+                              [1,1,1]]))
+    from warning import warn
+    warn('pymorph.endpoints: Did not understand argument "%s".' % option)
+    return None
 
 
 def erode(f, b=None):
