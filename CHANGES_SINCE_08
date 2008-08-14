@@ -13,6 +13,7 @@ Changes Since Version 0.80
  
  + No argument names are uppercase anymore. This affects:
     endpoints()
+    gray()
    Use the old mm* for the old argument names
 
  + Some function names have changed:
@@ -30,6 +31,9 @@ Changes Since Version 0.80
     int32 -> to_uint32
     uint16 -> to_uint16
     uint8 -> to_uint8
+
+   * Other:
+    gshow -> overlay
  
  + Some functions were removed:
     * Registration functions
@@ -44,7 +48,7 @@ Changes Since Version 0.80
  + NEW functions:
     cdist (conditional distance transform)
 
- + gshow() & glblshow() now return (h,w,3) instead of (3,h,w). This makes it easy to use matplotlib to
+ + gshow(), glblshow(), and gdtshow() now return (h,w,3) instead of (3,h,w). This makes it easy to use matplotlib to
  display the results.
 
 The pymorph.compat module contains the old names and removed functions. Its use for new code is heavily discouraged.

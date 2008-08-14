@@ -103,8 +103,6 @@
     set2mat()      -- Converts image representation from set to matrix
     setrans()      -- Translate a structuring element
     seunion()      -- Union of structuring elements
-    show()         -- Display binary or gray-scale images and optionally
-                      overlay it with binary images.
     skelm()        -- Morphological skeleton (Medial Axis Transform).
     skelmrec()     -- Morphological skeleton reconstruction (Inverse Medial
                       Axis Transform).
@@ -568,9 +566,8 @@ def gdtshow(X, N=10):
     from numpy import newaxis, ravel, ceil, zeros, ones, transpose, repeat, concatenate, arange, reshape, floor
 
     def apply_lut(img, lut):
-        def lut_map(intens, lut=lut): return lut[intens]
-        g = reshape(transpose(map(lut_map, ravel(img))), (3,img.shape[0],img.shape[1]))
-        return g
+        h,w=img.shape
+        return reshape(map(lut.__getitem__, img.ravel()),(h,w,3))
     np = 1  # number of pixels by isoline
     if len(X.shape) == 1: X = X[newaxis,:]
     maxi, mini = X.max(), X.min()
@@ -593,7 +590,7 @@ def gdtshow(X, N=10):
     return apply_lut(XX, lut)
 
 
-def gshow(X, X1=None, X2=None, X3=None, X4=None, X5=None, X6=None):
+def overlay(X, Red=None, Green=None, Blue=None, Magenta=None, Yellow=None, Cyan=None):
     """
         - Purpose
             Apply binary overlays as color layers on a binary or gray-scale
@@ -602,12 +599,12 @@ def gshow(X, X1=None, X2=None, X3=None, X4=None, X5=None, X6=None):
             Y = gshow(X, Red=None, Green=None, Blue=None, Magenta=None, Yellow=None, Cyan=None)
         - Input
             X:  Gray-scale (uint8 or uint16) or binary image.
-            X1: Binary image. Default: None. Red overlay.
-            X2: Binary image. Default: None. Green overlay.
-            X3: Binary image. Default: None. Blue overlay.
-            X4: Binary image. Default: None. Magenta overlay.
-            X5: Binary image. Default: None. Yellow overlay.
-            X6: Binary image. Default: None. Cyan overlay.
+            Red: Binary image. Default: None. Red overlay.
+            Green: Binary image. Default: None. Green overlay.
+            Blue: Binary image. Default: None. Blue overlay.
+            Magenta: Binary image. Default: None. Magenta overlay.
+            Yellow: Binary image. Default: None. Yellow overlay.
+            Cyan: Binary image. Default: None. Cyan overlay.
         - Output
             Y: Gray-scale (uint8 or uint16) or binary image.
 
@@ -617,42 +614,42 @@ def gshow(X, X1=None, X2=None, X3=None, X4=None, X5=None, X6=None):
     r = X
     g = X
     b = X
-    if X1 is not None: # red 1 0 0
-      assert isbinary(X1),'X1 must be binary overlay'
-      x1 = gray(X1,'uint8')
-      r = union(r,x1)
-      g = intersec(g,neg(x1))
-      b = intersec(b,neg(x1))
-    if X2 is not None: # green 0 1 0
-      assert isbinary(X2),'X2 must be binary overlay'
-      x2 = gray(X2,'uint8')
-      r = intersec(r,neg(x2))
-      g = union(g,x2)
-      b = intersec(b,neg(x2))
-    if X3 is not None: # blue 0 0 1
-      assert isbinary(X3),'X3 must be binary overlay'
-      x3 = gray(X3,'uint8')
-      r = intersec(r,neg(x3))
-      g = intersec(g,neg(x3))
-      b = union(b,x3)
-    if X4 is not None: # magenta 1 0 1
-      assert isbinary(X4),'X4 must be binary overlay'
-      x4 = gray(X4,'uint8')
-      r = union(r,x4)
-      g = intersec(g,neg(x4))
-      b = union(b,x4)
-    if X5 is not None: # yellow 1 1 0
-      assert isbinary(X5),'X5 must be binary overlay'
-      x5 = gray(X5,'uint8')
-      r = union(r,x5)
-      g = union(g,x5)
-      b = intersec(b,neg(x5))
-    if X6 is not None: # cyan 0 1 1
-      assert isbinary(X6),'X6 must be binary overlay'
-      x6 = gray(X6,'uint8')
-      r = intersec(r,neg(x6))
-      g = union(g,x6)
-      b = union(b,x6)
+    if Red is not None: # red 1 0 0
+      assert isbinary(Red),'Red must be binary overlay'
+      Red = gray(Red,'uint8')
+      r = union(r,Red)
+      g = intersec(g,neg(Red))
+      b = intersec(b,neg(Red))
+    if Green is not None: # green 0 1 0
+      assert isbinary(Green),'Green must be binary overlay'
+      Green = gray(Green,'uint8')
+      r = intersec(r,neg(Green))
+      g = union(g,Green)
+      b = intersec(b,neg(Green))
+    if Blue is not None: # blue 0 0 1
+      assert isbinary(Blue),'Blue must be binary overlay'
+      Blue = gray(Blue,'uint8')
+      r = intersec(r,neg(Blue))
+      g = intersec(g,neg(Blue))
+      b = union(b,Blue)
+    if Magenta is not None: # magenta 1 0 1
+      assert isbinary(Magenta),'Magenta must be binary overlay'
+      Magenta = gray(Magenta,'uint8')
+      r = union(r,Magenta)
+      g = intersec(g,neg(Magenta))
+      b = union(b,Magenta)
+    if Yellow is not None: # yellow 1 1 0
+      assert isbinary(Yellow),'Yellow must be binary overlay'
+      Yellow = gray(Yellow,'uint8')
+      r = union(r,Yellow)
+      g = union(g,Yellow)
+      b = intersec(b,neg(Yellow))
+    if Cyan is not None: # cyan 0 1 1
+      assert isbinary(Cyan),'Cyan must be binary overlay'
+      Cyan = gray(Cyan,'uint8')
+      r = intersec(r,neg(Cyan))
+      g = union(g,Cyan)
+      b = union(b,Cyan)
     return dstack((r,g,b))
 
 

@@ -120,6 +120,8 @@ mmunion=union
 mmvmax=vmax
 mmwatershed=watershed
 
+gshow=overlay
+
 # Functions which were removed:
 
 def mminstall(*args):
