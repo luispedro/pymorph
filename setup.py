@@ -10,9 +10,18 @@ hold image data.
 This is a pure Python package which is the companion package
 to the book "Hands-on Morphological Image Processing."
 '''
+classifiers = [
+    'Development Status :: 5 - Production/Stable',
+    'Intended Audience :: Developers',
+    'License :: OSI Approved :: BSD License',
+    'Operating System :: OS Independent',
+    'Programming Language :: Python',
+    'Topic :: Scientific/Engineering :: Image Recognition',
+    'Topic :: Software Development :: Libraries :: Python Modules',
+    ]
 
 setup(name='pymorph',
-      version='0.90b',
+      version='0.91',
       description='Image Morphology Toolbox',
       long_description=long_description,
       author='Luis Pedro Coelho',

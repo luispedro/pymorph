@@ -51,11 +51,9 @@ mmframe=frame
 mmfreedom=freedom
 mmgdist=gdist
 mmgdtshow=gdtshow
-mmglblshow=glblshow
 mmgradm=gradm
 mmgrain=grain
 mmgray=gray
-mmgshow=gshow
 mmhistogram=histogram
 mmhmax=hmax
 mmhmin=hmin
@@ -104,7 +102,6 @@ mmsesum=sesum
 mmset2mat=set2mat
 mmsetrans=setrans
 mmseunion=seunion
-mmshow=show
 mmskelm=skelm
 mmskelmrec=skelmrec
 mmskiz=skiz
@@ -514,3 +511,143 @@ def mmdist(f,Bc=None,METRIC=None):
 
 def mmendpoints(OPTION='LOOP'):
     return endpoints(option=OPTION)
+
+def mmshow(f, f1=None, f2=None, f3=None, f4=None, f5=None, f6=None):
+    """
+        - Purpose
+            Display binary or gray-scale images and optionally overlay it
+            with binary images.
+        - Synopsis
+            show(f, f1=None, f2=None, f3=None, f4=None, f5=None, f6=None)
+        - Input
+            f:  Gray-scale (uint8 or uint16) or binary image.
+            f1: Binary image. Default: None. Red overlay.
+            f2: Binary image. Default: None. Green overlay.
+            f3: Binary image. Default: None. Blue overlay.
+            f4: Binary image. Default: None. Magenta overlay.
+            f5: Binary image. Default: None. Yellow overlay.
+            f6: Binary image. Default: None. Cyan overlay.
+
+        - Description
+            Displays the binary or gray-scale (uint8 or uint16) image f ,
+            and optionally overlay it with up to six binary images f1 to f6
+            in the following colors: f1 as red, f2 as green, f3 as blue, f4
+            as yellow, f5 as magenta, and f6 as cian. The image is displayed
+            in the MATLAB figure only if no output parameter is given.
+        - Examples
+            #
+            f=readgray('mribrain.tif');
+            f150=threshad(f,150);
+            f200=threshad(f,200);
+            show(f);
+            show(f150);
+            show(f,f150,f200);
+    """
+    import adpil
+
+    if len(f.shape) != 2:
+       print "Error, show: can only process gray-scale and binary images."
+       return
+    if   f1 == None: y = gshow(f)
+    elif f2 == None: y = gshow(f,f1)
+    elif f3 == None: y = gshow(f,f1,f2)
+    elif f4 == None: y = gshow(f,f1,f2,f3)
+    elif f5 == None: y = gshow(f,f1,f2,f3,f4)
+    elif f6 == None: y = gshow(f,f1,f2,f3,f4,f5)
+    elif f6 == None: y = gshow(f,f1,f2,f3,f4,f5)
+    else:            y = gshow(f,f1,f2,f3,f4,f5,f6)
+    adpil.adshow(y)
+
+
+def mmgshow(X, X1=None, X2=None, X3=None, X4=None, X5=None, X6=None):
+    """
+        - Purpose
+            Apply binary overlays as color layers on a binary or gray-scale
+            image
+        - Synopsis
+            Y = gshow(X, X1=None, X2=None, X3=None, X4=None, X5=None,
+            X6=None)
+        - Input
+            X:  Gray-scale (uint8 or uint16) or binary image.
+            X1: Binary image. Default: None. Red overlay.
+            X2: Binary image. Default: None. Green overlay.
+            X3: Binary image. Default: None. Blue overlay.
+            X4: Binary image. Default: None. Magenta overlay.
+            X5: Binary image. Default: None. Yellow overlay.
+            X6: Binary image. Default: None. Cyan overlay.
+        - Output
+            Y: Gray-scale (uint8 or uint16) or binary image.
+
+    """
+
+    if isbinary(X): X = gray(X,'uint8')
+    r = X
+    g = X
+    b = X
+    if X1 is not None: # red 1 0 0
+      assert isbinary(X1),'X1 must be binary overlay'
+      x1 = gray(X1,'uint8')
+      r = union(r,x1)
+      g = intersec(g,neg(x1))
+      b = intersec(b,neg(x1))
+    if X2 is not None: # green 0 1 0
+      assert isbinary(X2),'X2 must be binary overlay'
+      x2 = gray(X2,'uint8')
+      r = intersec(r,neg(x2))
+      g = union(g,x2)
+      b = intersec(b,neg(x2))
+    if X3 is not None: # blue 0 0 1
+      assert isbinary(X3),'X3 must be binary overlay'
+      x3 = gray(X3,'uint8')
+      r = intersec(r,neg(x3))
+      g = intersec(g,neg(x3))
+      b = union(b,x3)
+    if X4 is not None: # magenta 1 0 1
+      assert isbinary(X4),'X4 must be binary overlay'
+      x4 = gray(X4,'uint8')
+      r = union(r,x4)
+      g = intersec(g,neg(x4))
+      b = union(b,x4)
+    if X5 is not None: # yellow 1 1 0
+      assert isbinary(X5),'X5 must be binary overlay'
+      x5 = gray(X5,'uint8')
+      r = union(r,x5)
+      g = union(g,x5)
+      b = intersec(b,neg(x5))
+    if X6 is not None: # cyan 0 1 1
+      assert isbinary(X6),'X6 must be binary overlay'
+      x6 = gray(X6,'uint8')
+      r = intersec(r,neg(x6))
+      g = union(g,x6)
+      b = union(b,x6)
+    return concat('d',r,g,b)
+
+def mmglblshow(X, border=0.0):
+    """
+        - Purpose
+            Apply a random color table to a gray-scale image.
+        - Synopsis
+            Y = glblshow(X, border=0.0)
+        - Input
+            X:      Gray-scale (uint8 or uint16) image. Labeled image.
+            border: Boolean Default: 0.0. Labeled image.
+        - Output
+            Y: Gray-scale (uint8 or uint16) or binary image.
+
+    """
+    from numpy import take, resize, shape
+    from numpy.random import rand
+
+    mmin = X.min()
+    mmax = X.max()
+    ncolors = mmax - mmin + 1
+    R = to_int32(rand(ncolors)*255)
+    G = to_int32(rand(ncolors)*255)
+    B = to_int32(rand(ncolors)*255)
+    if mmin == 0:
+       R[0],G[0],B[0] = 0,0,0
+    r=resize(take(R, X.ravel() - mmin),X.shape)
+    g=resize(take(G, X.ravel() - mmin),X.shape)
+    b=resize(take(B, X.ravel() - mmin),X.shape)
+    Y=concat('d',r,g,b)
+    return Y

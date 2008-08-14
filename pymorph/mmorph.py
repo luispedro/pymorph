@@ -535,7 +535,7 @@ def glblshow(X, border=0.0):
             Y: Gray-scale (uint8 or uint16) or binary image.
 
     """
-    from numpy import take, resize, shape
+    from numpy import take, resize, shape, dstack
     from numpy.random import rand
 
     mmin = X.min()
@@ -549,8 +549,7 @@ def glblshow(X, border=0.0):
     r=resize(take(R, X.ravel() - mmin),X.shape)
     g=resize(take(G, X.ravel() - mmin),X.shape)
     b=resize(take(B, X.ravel() - mmin),X.shape)
-    Y=concat('d',r,g,b)
-    return Y
+    return dstack((r,g,b))
 
 
 def gdtshow(X, N=10):
@@ -600,8 +599,7 @@ def gshow(X, X1=None, X2=None, X3=None, X4=None, X5=None, X6=None):
             Apply binary overlays as color layers on a binary or gray-scale
             image
         - Synopsis
-            Y = gshow(X, X1=None, X2=None, X3=None, X4=None, X5=None,
-            X6=None)
+            Y = gshow(X, Red=None, Green=None, Blue=None, Magenta=None, Yellow=None, Cyan=None)
         - Input
             X:  Gray-scale (uint8 or uint16) or binary image.
             X1: Binary image. Default: None. Red overlay.
@@ -614,7 +612,7 @@ def gshow(X, X1=None, X2=None, X3=None, X4=None, X5=None, X6=None):
             Y: Gray-scale (uint8 or uint16) or binary image.
 
     """
-
+    from numpy import dstack
     if isbinary(X): X = gray(X,'uint8')
     r = X
     g = X
@@ -655,7 +653,7 @@ def gshow(X, X1=None, X2=None, X3=None, X4=None, X5=None, X6=None):
       r = intersec(r,neg(x6))
       g = union(g,x6)
       b = union(b,x6)
-    return concat('d',r,g,b)
+    return dstack((r,g,b))
 
 
 def histogram(f, option="uint16"):
@@ -4231,54 +4229,6 @@ def seunion(B1, B2):
         B2[ Hc-dh2s : Hc+dh2e+1  ,  Wc-dw2s : Wc+dw2e+1 ] = BB2
     B = maximum(B1,B2).astype(type1)
     return B
-
-
-def show(f, f1=None, f2=None, f3=None, f4=None, f5=None, f6=None):
-    """
-        - Purpose
-            Display binary or gray-scale images and optionally overlay it
-            with binary images.
-        - Synopsis
-            show(f, f1=None, f2=None, f3=None, f4=None, f5=None, f6=None)
-        - Input
-            f:  Gray-scale (uint8 or uint16) or binary image.
-            f1: Binary image. Default: None. Red overlay.
-            f2: Binary image. Default: None. Green overlay.
-            f3: Binary image. Default: None. Blue overlay.
-            f4: Binary image. Default: None. Magenta overlay.
-            f5: Binary image. Default: None. Yellow overlay.
-            f6: Binary image. Default: None. Cyan overlay.
-
-        - Description
-            Displays the binary or gray-scale (uint8 or uint16) image f ,
-            and optionally overlay it with up to six binary images f1 to f6
-            in the following colors: f1 as red, f2 as green, f3 as blue, f4
-            as yellow, f5 as magenta, and f6 as cian. The image is displayed
-            in the MATLAB figure only if no output parameter is given.
-        - Examples
-            #
-            f=readgray('mribrain.tif');
-            f150=threshad(f,150);
-            f200=threshad(f,200);
-            show(f);
-            show(f150);
-            show(f,f150,f200);
-    """
-    import adpil
-
-    if len(f.shape) != 2:
-       print "Error, show: can only process gray-scale and binary images."
-       return
-    if   f1 == None: y = gshow(f)
-    elif f2 == None: y = gshow(f,f1)
-    elif f3 == None: y = gshow(f,f1,f2)
-    elif f4 == None: y = gshow(f,f1,f2,f3)
-    elif f5 == None: y = gshow(f,f1,f2,f3,f4)
-    elif f6 == None: y = gshow(f,f1,f2,f3,f4,f5)
-    elif f6 == None: y = gshow(f,f1,f2,f3,f4,f5)
-    else:            y = gshow(f,f1,f2,f3,f4,f5,f6)
-    adpil.adshow(y)
-    return
 
 
 def skelm(f, B=None, option="binary"):
