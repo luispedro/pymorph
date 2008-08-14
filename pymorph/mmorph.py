@@ -329,8 +329,7 @@ def close_holes(f, Bc=None):
 
     if Bc is None: Bc = secross()
     delta_f = frame(f)
-    y = neg( infrec( delta_f, neg(f), Bc))
-    return y
+    return neg( infrec( delta_f, neg(f), Bc))
 
 
 def dist(f, Bc=None, metric=None):
@@ -483,8 +482,7 @@ def edgeoff(f, Bc=None):
 
     if Bc is None: Bc = secross()
     edge = frame(f)
-    y = subm( f, infrec(edge, f, Bc))
-    return y
+    return subm( f, infrec(edge, f, Bc))
 
 
 def frame(f, WT=1, HT=1, DT=0, k1=None, k2=None):
@@ -593,8 +591,7 @@ def gdtshow(X, N=10):
     # apply lut
     XX  = floor((X-mini)*255. // maxi + 0.5).astype('B')
     lut = (1-m)*gray + m*jet
-    Y = apply_lut(XX, lut)
-    return Y
+    return apply_lut(XX, lut)
 
 
 def gshow(X, X1=None, X2=None, X3=None, X4=None, X5=None, X6=None):
@@ -805,8 +802,7 @@ def neg(f):
     """
 
     y = limits(f)[0] + limits(f)[1] - f
-    y = y.astype(f.dtype)
-    return y
+    return y.astype(f.dtype)
 
 
 def threshad(f, f1, f2=None):
@@ -947,8 +943,7 @@ def addm(f1, f2):
     if type(f2) is array:
         assert f1.dtype == f2.dtype, 'Cannot have different datatypes:'
     y = maximum(minimum(f1.astype('d')+f2, limits(f1)[1]),limits(f1)[0])
-    y = y.astype(f1.dtype)
-    return y
+    return y.astype(f1.dtype)
 
 
 def areaclose(f, a, Bc=None):
@@ -989,8 +984,7 @@ def areaclose(f, a, Bc=None):
     """
 
     if Bc is None: Bc = secross()
-    y = neg(areaopen(neg(f),a,Bc))
-    return y
+    return neg(areaopen(neg(f),a,Bc))
 
 
 def areaopen(f, a, Bc=None):
@@ -1575,8 +1569,7 @@ def close(f, b=None):
     """
 
     if b is None: b = secross()
-    y = erode(dilate(f,b),b)
-    return y
+    return erode(dilate(f,b),b)
 
 
 def closerec(f, bdil=None, bc=None):
@@ -1607,8 +1600,7 @@ def closerec(f, bdil=None, bc=None):
 
     if bdil is None: bdil = secross()
     if bc is None: bc = secross()
-    y = suprec(dilate(f,bdil),f,bc)
-    return y
+    return suprec(dilate(f,bdil),f,bc)
 
 
 def closerecth(f, bdil=None, bc=None):
@@ -1639,8 +1631,7 @@ def closerecth(f, bdil=None, bc=None):
 
     if bdil is None: bdil = secross()
     if bc is None: bc = secross()
-    y = subm(closerec(f,bdil,bc), f)
-    return y
+    return subm(closerec(f,bdil,bc), f)
 
 
 def closeth(f, b=None):
@@ -1874,7 +1865,6 @@ def cwatershed(f, markers, Bc=None, return_lines=False,is_gvoronoi=False):
                         i += 1
                 elif (return_lines  and
                      (yflat[qi] != yflat[pi]) and
-                     (y1flat[pi] == 0)    and
                      (y1flat[qi] == 0)     ):
                     y1flat[pi] = 1
     y=y[1:-1,1:-1]
@@ -2219,8 +2209,7 @@ def erode(f, b=None):
     """
 
     if b is None: b = secross()
-    y = neg(dilate(neg(f),sereflect(b)))
-    return y
+    return neg(dilate(neg(f),sereflect(b)))
 
 
 def freedom(L=5):
@@ -2272,9 +2261,7 @@ def freedom(L=5):
             print a
             print datatype(a)
     """
-
-    Y = -1
-    return Y
+    return -1
 
 
 def gdist(f, g, Bc=None, METRIC=None):
@@ -2346,8 +2333,7 @@ def gdist(f, g, Bc=None, METRIC=None):
         ero = cerode(gneg,fneg,Bc,i)
         y = addm(y,gray(ero,'uint16',1))
         i = i + 1
-    y = union(y,gray(ero,'uint16'))
-    return y
+    return union(y,gray(ero,'uint16'))
 
 
 def gradm(f, Bdil=None, Bero=None):
@@ -2394,8 +2380,7 @@ def gradm(f, Bdil=None, Bero=None):
 
     if Bdil is None: Bdil = secross()
     if Bero is None: Bero = secross()
-    y = subm(dilate(f,Bdil),erode(f,Bero))
-    return y
+    return subm(dilate(f,Bdil),erode(f,Bero))
 
 
 def grain(fr, f, measurement, option="image"):
@@ -2592,8 +2577,7 @@ def hmin(f, h=1, Bc=None):
 
     if Bc is None: Bc = secross()
     g = addm(f,h)
-    y = suprec(g,f,Bc);
-    return y
+    return suprec(g,f,Bc);
 
 
 def vmax(f, v=1, Bc=None):
@@ -2680,8 +2664,7 @@ def hmax(f, h=1, Bc=None):
 
     if Bc is None: Bc = secross()
     g = subm(f,h)
-    y = infrec(g,f,Bc);
-    return y
+    return infrec(g,f,Bc);
 
 
 def homothick():
@@ -2849,8 +2832,7 @@ def infgen(f, Iab):
     """
 
     A,Bc = Iab
-    y = union(dilate(f, A),dilate(neg(f), Bc))
-    return y
+    return union(dilate(f, A),dilate(neg(f), Bc))
 
 
 def infrec(f, g, Bc=None):
@@ -2898,8 +2880,7 @@ def infrec(f, g, Bc=None):
     """
     if Bc is None: Bc = secross()
     n = f.size
-    y = cdilate(f,g,Bc,n);
-    return y
+    return cdilate(f,g,Bc,n);
 
 
 def inpos(f, g, Bc=None):
@@ -2927,8 +2908,7 @@ def inpos(f, g, Bc=None):
     assert isbinary(f),'First parameter must be binary image'
     fg = gray(neg(f),datatype(g))
     k1 = limits(g)[1] - 1
-    y = suprec(fg, intersec(union(g, 1), k1, fg), Bc)
-    return y
+    return suprec(fg, intersec(union(g, 1), k1, fg), Bc)
 
 
 def interot(Iab, theta=45, DIRECTION="CLOCKWISE"):
@@ -3021,8 +3001,7 @@ def intersec(f1, f2, f3=None, f4=None, f5=None):
     if f3 != None: y = minimum(y,f3)
     if f4 != None: y = minimum(y,f4)
     if f5 != None: y = minimum(y,f5)
-    y = y.astype(f1.dtype)
-    return y
+    return y.astype(f1.dtype)
 
 
 def intershow(Iab):
@@ -3212,8 +3191,7 @@ def lastero(f, B=None):
     if B is None: B = secross()
     assert isbinary(f),'Can only process binary images'
     dt = dist(f,B)
-    y = regmax(dt,B)
-    return y
+    return regmax(dt,B)
 
 
 def lblshow(f, option='noborder'):
@@ -3308,8 +3286,7 @@ def open(f, b=None):
     """
 
     if b is None: b = secross()
-    y = dilate(erode(f,b),b)
-    return y
+    return dilate(erode(f,b),b)
 
 
 def openrec(f, bero=None, bc=None):
@@ -3335,8 +3312,7 @@ def openrec(f, bero=None, bc=None):
 
     if bero is None: bero = secross()
     if bc is None: bc = secross()
-    y = infrec(erode(f,bero),f,bc)
-    return y
+    return infrec(erode(f,bero),f,bc)
 
 
 def openrecth(f, bero=None, bc=None):
@@ -3363,8 +3339,7 @@ def openrecth(f, bero=None, bc=None):
 
     if bero is None: bero = secross()
     if bc is None: bc = secross()
-    y = subm(f, openrec( f, bero, bc))
-    return y
+    return subm(f, openrec( f, bero, bc))
 
 
 def openth(f, b=None):
@@ -3392,8 +3367,7 @@ def openth(f, b=None):
     """
 
     if b is None: b = secross()
-    y = subm(f, open(f,b))
-    return y
+    return subm(f, open(f,b))
 
 
 def opentransf(f, type='OCTAGON', n=65535, Bc=None, Buser=None):
@@ -3603,8 +3577,7 @@ def regmax(f, Bc=None):
     """
 
     if Bc is None: Bc = secross()
-    y = regmin(neg(f),Bc)
-    return y
+    return regmin(neg(f),Bc)
 
 
 def regmin(f, Bc=None, option="binary"):
@@ -3687,8 +3660,7 @@ def regmin(f, Bc=None, option="binary"):
     if Bc is None: Bc = secross()
     fplus = addm(f,1)
     g = subm(suprec(fplus,f,Bc),f)
-    y = union(threshad(g,1),threshad(f,0,0))
-    return y
+    return union(threshad(g,1),threshad(f,0,0))
 
 
 def se2interval(a, b):
@@ -4070,8 +4042,7 @@ def seshow(B, option="NORMAL"):
         return y
     else:
         print 'seshow: not a valid flag: NORMAL, EXPAND or NON-FLAT'
-    y = sedilate(y,B)
-    return y
+    return sedilate(y,B)
 
 
 def sesum(B=None, N=1):
@@ -4406,8 +4377,7 @@ def skelmrec(f, B=None):
     y = binary(intersec(f, 0))
     for r in xrange(f.max(),1,-1):
         y = dilate(union(y,binary(f,r)), B)
-    y = union(y, binary(f,1))
-    return y
+    return union(y, binary(f,1))
 
 
 def skiz(f, Bc=None, return_lines=False, METRIC=None):
@@ -4502,8 +4472,7 @@ def subm(f1, f2):
         assert f1.dtype == f2.dtype, 'Cannot have different datatypes:'
     bottom,top=limits(f1)
     y = clip(f1.astype('d') - f2, bottom, top)
-    y = y.astype(f1.dtype)
-    return y
+    return y.astype(f1.dtype)
 
 
 def supcanon(f, Iab, theta=45, DIRECTION="CLOCKWISE"):
@@ -4610,8 +4579,7 @@ def suprec(f, g, Bc=None):
     from numpy import product
     if Bc is None: Bc = secross()
     n = product(f.shape)
-    y = cerode(f,g,Bc,n);
-    return y
+    return cerode(f,g,Bc,n);
 
 
 def bshow(f1, f2=None, f3=None, factor=17):
@@ -4682,8 +4650,7 @@ def bshow(f1, f2=None, f3=None, factor=17):
                 y[m:m+s, n:n+s] = y[m:m+s, n:n+s] + circle
             if f3 and f3[i,j]:
                 y[m:m+s, n:n+s] = y[m:m+s, n:n+s] + fillrect
-    y = y > 0
-    return y
+    return (y > 0)
 
 
 def swatershed(f, g, B=None, LINEREG="LINES"):
@@ -4772,8 +4739,7 @@ def symdif(f1, f2):
             show(e)
     """
 
-    y = union(subm(f1,f2),subm(f2,f1))
-    return y
+    return union(subm(f1,f2),subm(f2,f1))
 
 
 def thick(f, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
@@ -4932,8 +4898,7 @@ def union(f1, f2, *args):
     y = maximum(f1,f2)
     for f in args:
         y = maximum(y,f)
-    y = y.astype(f1.dtype)
-    return y
+    return y.astype(f1.dtype)
 
 
 def watershed(f, Bc=None, return_lines=False):
