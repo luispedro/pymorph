@@ -12,7 +12,7 @@ to the book "Hands-on Morphological Image Processing."
 '''
 
 setup(name='pymorph',
-      version='0.90',
+      version='0.90b',
       description='Image Morphology Toolbox',
       long_description=long_description,
       author='Luis Pedro Coelho',
