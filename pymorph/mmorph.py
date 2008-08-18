@@ -129,9 +129,9 @@
 
 """
 from __future__ import division
-__version__ = '0.88'
+__version__ = '0.91'
 
-__build_date__ = '16 June 2008'
+__build_date__ = '18 August 2008'
 
 
 import sys, os
@@ -511,7 +511,7 @@ def frame(f, WT=1, HT=1, DT=0, k1=None, k2=None):
 
     if k1 is None: k1 = limits(f)[1]
     if k2 is None: k2 = limits(f)[0]
-    assert len(f.shape)<3,'Supports 2D only'
+    assert len(f.shape)==2,'Supports 2D only'
     y = union(intersec(f,limits(f)[0]),k2)
     y[:,0:WT] = k1
     y[:,-WT:] = k1
@@ -1773,8 +1773,7 @@ def cwatershed(f, markers, Bc=None, return_lines=False,is_gvoronoi=False):
                      image: binary or labeled.
             Bc:      Structuring Element Default: None (3x3 elementary
                      cross). (watershed connectivity)
-            return_lines: Whether to return lines instead of regions (default: False)
-            LINEREG: String Default: "LINES". 'LINES' or ' REGIONS'.
+            return_lines: Whether to return lines as well as regions (default: False)
         - Output
             Y: Gray-scale (uint8 or uint16) or binary image.
 
@@ -1806,7 +1805,7 @@ def cwatershed(f, markers, Bc=None, return_lines=False,is_gvoronoi=False):
                 [10,   10,   10,   10,   10,   10,   10]])
             b = (a == 6)
             print cwatershed(a,b)
-            print cwatershed(a,b,secross(),'REGIONS')
+            print cwatershed(a,b,secross(),return_lines=True)[1]
             #
             #   example 2
             #
