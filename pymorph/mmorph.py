@@ -747,11 +747,10 @@ def label(f, Bc=None):
             queue=[i+bi for bi in neighbours]
             while queue:
                 ni=queue.pop()
-                if labeledflat[ni] == 0:
+                if f[ni] and labeledflat[ni] == 0:
                     labeledflat[ni]=label
                     for n in neighbours+ni:
-                        if f[n] and labeledflat[n] == 0:
-                            queue.append(n)
+                        queue.append(n)
             label += 1
     return labeled[1:-1,1:-1] # revert the pad4n() call above
 
@@ -4415,7 +4414,7 @@ def subm(f1, f2):
     from numpy import array, clip
 
     if type(f2) is array:
-        assert f1.dtype == f2.dtype, 'Cannot have different datatypes:'
+        assert f1.dtype == f2.dtype, 'pymorph.subm(): arguments cannot have different datatypes.'
     bottom,top=limits(f1)
     y = clip(f1.astype('d') - f2, bottom, top)
     return y.astype(f1.dtype)
@@ -5099,11 +5098,11 @@ def add4dilate(f, c):
             a: Image f + c
 
     """
-    from numpy import asarray, minimum, maximum
+    from numpy import asarray, minimum, maximum, float64
 
     if not c:
         return f
-    y = asarray(f,'d') + c
+    y = asarray(f,float64) + c
     k1,k2 = limits(f)
     y = ((f==k1) * k1) + ((f!=k1) * y)
     y = maximum(minimum(y,k2),k1)
