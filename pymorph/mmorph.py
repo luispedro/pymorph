@@ -248,13 +248,12 @@ def limits(f):
     """
     from numpy import array, bool, uint8, uint16, int32
     code = f.dtype
-    if   code == bool: y=array([0,1])
-    elif code == uint8: y=array([0,255])
-    elif code == uint16: y=array([0,65535])
-    elif code == int32: y=array([-2147483647,2147483647])
-    else:
-        assert 0,'Does not accept this typecode: %s' % code
-    return y
+    if code == bool: return array([0,1])
+    if code == uint8: return array([0,255])
+    if code == uint16: return array([0,65535])
+    if code == int32: return array([-2147483647,2147483647])
+
+    assert False,'Does not accept this typecode: %s' % code
 
 
 def center(f, b=None):
@@ -4999,14 +4998,12 @@ def to_int32(f):
         - Output
             img: The converted image
         - Description
-            int32 clips the input image between the values -2147483647 and
+            int32 clips the input image between the values -2147483648 and
             2147483647 and converts it to the signed 32-bit datatype.
 
     """
-    from numpy import array, clip
-
-    img = array(clip(f,-2147483647,2147483647)).astype('i')
-    return img
+    from numpy import int32
+    return img.astype(int32)
 
 
 def to_uint8(f):
