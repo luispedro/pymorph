@@ -614,38 +614,34 @@ def overlay(X, Red=None, Green=None, Blue=None, Magenta=None, Yellow=None, Cyan=
     g = X
     b = X
     if Red is not None: # red 1 0 0
-      assert isbinary(Red),'Red must be binary overlay'
-      Red = gray(Red,'uint8')
+      Red = gray(asbinary(Red),'uint8')
       r = union(r,Red)
       g = intersec(g,neg(Red))
       b = intersec(b,neg(Red))
     if Green is not None: # green 0 1 0
-      assert isbinary(Green),'Green must be binary overlay'
-      Green = gray(Green,'uint8')
+      Green = gray(asbinary(Green),'uint8')
       r = intersec(r,neg(Green))
       g = union(g,Green)
       b = intersec(b,neg(Green))
     if Blue is not None: # blue 0 0 1
-      assert isbinary(Blue),'Blue must be binary overlay'
-      Blue = gray(Blue,'uint8')
+      Blue = gray(asbinary(Blue),'uint8')
       r = intersec(r,neg(Blue))
       g = intersec(g,neg(Blue))
       b = union(b,Blue)
     if Magenta is not None: # magenta 1 0 1
-      assert isbinary(Magenta),'Magenta must be binary overlay'
       Magenta = gray(Magenta,'uint8')
       r = union(r,Magenta)
       g = intersec(g,neg(Magenta))
       b = union(b,Magenta)
     if Yellow is not None: # yellow 1 1 0
-      assert isbinary(Yellow),'Yellow must be binary overlay'
-      Yellow = gray(Yellow,'uint8')
+      #assert isbinary(Yellow),'Yellow must be binary overlay'
+      Yellow = gray(asbinary(Yellow),'uint8')
       r = union(r,Yellow)
       g = union(g,Yellow)
       b = intersec(b,neg(Yellow))
     if Cyan is not None: # cyan 0 1 1
-      assert isbinary(Cyan),'Cyan must be binary overlay'
-      Cyan = gray(Cyan,'uint8')
+      #assert isbinary(Cyan),'Cyan must be binary overlay'
+      Cyan = gray(asbinary(Cyan),'uint8')
       r = intersec(r,neg(Cyan))
       g = union(g,Cyan)
       b = union(b,Cyan)
@@ -3052,6 +3048,20 @@ def isbinary(f):
             print isbinary(b)
     """
     return f.dtype == bool
+
+def asbinary(f):
+    """
+        fbin = asbinary(f)
+
+        Transforms f into a binary image
+
+        Input: f image of any type, consisting only of 0s and 1s.
+        Output: binary image
+    """
+    import numpy
+    if isbinary(f): return f
+    assert ( (f == 0) | (f == 1) ).sum() == f.size, 'pymorph.asbinary: f has values that are not 0 or 1.'
+    return (f != 0)
 
 def isequal(f1, f2):
     """
