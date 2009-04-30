@@ -5013,7 +5013,7 @@ def to_int32(f):
 
     """
     from numpy import int32
-    return img.astype(int32)
+    return f.astype(int32)
 
 
 def to_uint8(f):
