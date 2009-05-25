@@ -129,9 +129,9 @@
 
 """
 from __future__ import division
-__version__ = '0.91'
+__version__ = '0.91.1'
 
-__build_date__ = '18 August 2008'
+__build_date__ = '25 May 2009'
 
 
 import sys, os
