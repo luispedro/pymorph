@@ -45,7 +45,6 @@
     freedom()      -- Control automatic data type conversion.
     gdist()        -- Geodesic Distance Transform.
     gdtshow()      -- Apply an iso-line color table to a gray-scale image.
-    glblshow()     -- Apply a random color table to a gray-scale image.
     gradm()        -- Morphological gradient.
     grain()        -- Gray-scale statistics for each labeled region.
     gray()         -- Convert a binary image into a gray-scale image.
@@ -84,6 +83,7 @@
     patspec()      -- Pattern spectrum (also known as granulometric size
                       density).
     plot()         -- Plot a function.
+    randomcolor()  -- Apply a random color table to a gray-scale image.
     readgray()     -- Read an image from a commercial file format and stores
                       it as a gray-scale image.
     regmax()       -- Regional Maximum.
@@ -519,12 +519,12 @@ def frame(f, WT=1, HT=1, DT=0, k1=None, k2=None):
     return y
 
 
-def glblshow(X, border=0.0):
+def randomcolor(X, border=0.0):
     """
         - Purpose
             Apply a random color table to a gray-scale image.
         - Synopsis
-            Y = glblshow(X, border=0.0)
+            Y = randomcolor(X, border=0.0)
         - Input
             X:      Gray-scale (uint8 or uint16) image. Labeled image.
             border: Boolean Default: 0.0. Labeled image.
@@ -3235,9 +3235,8 @@ def lblshow(f, option='noborder'):
       border = 1.0;
     else:
       print 'Error: option must be BORDER or NOBORDER'
-    y=glblshow(f, border);
+    y = randomcolor(f, border);
     adpil.adshow(y)
-    return
     return y
 
 

@@ -13,6 +13,8 @@ add4dil=add4dilate
 uint8=to_uint8
 uint16=to_uint16
 int32=to_int32
+glblshow=randomcolor
+randomcolour=randomcolor
 
 # mmnames:
 
