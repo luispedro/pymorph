@@ -253,7 +253,7 @@ def limits(f):
     if code == uint16: return array([0,65535])
     if code == int32: return array([-2147483647,2147483647])
 
-    assert False,'Does not accept this typecode: %s' % code
+    raise ValueError('pymorph.limits: does not accept this typecode: %s' % code)
 
 
 def center(f, b=None):
