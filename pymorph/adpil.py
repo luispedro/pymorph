@@ -20,6 +20,17 @@
 
 """
 
+import warnings
+warnings.warn('''\
+pymorph.adpil is deprecated and un-maintained (with lurking bugs).
+
+Consider the following (more feature-full) alternatives:
+    * matplotlib to display images (http://matplotlib.sourceforge.net/)
+    * readmagick (http://pypi.python.org/pypi/readmagick)
+        or scipy.misc.pilutil to read/write images to/from disk.
+
+''', DeprecationWarning)
+
 __version__ = '1.0 all'
 __version_string__ = 'Toolbox adpil V1.0 28Jul2003'
 __build_date__ = '04aug2003 11:29'
