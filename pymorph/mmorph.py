@@ -2138,7 +2138,7 @@ def endpoints(option="loop"):
                       binary([[0,0,0],
                               [1,0,1],
                               [1,1,1]]))
-    from warning import warn
+    from warnings import warn
     warn('pymorph.endpoints: Did not understand argument "%s".' % option)
     return None
 
