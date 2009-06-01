@@ -86,7 +86,6 @@ mmopenth=openth
 mmopentransf=opentransf
 mmpad4n=pad4n
 mmpatspec=patspec
-mmplot=plot
 mmreadgray=readgray
 mmregmax=regmax
 mmregmin=regmin
@@ -486,7 +485,7 @@ def plot(plotitems=[], options=[], outfig=-1, filename=None):
                 # no y axis specified
                 y = x
                 x = numpy.arange(len(y))
-            g.replot(Gnuplot.Data(x, y, title=title, with=style))
+            g.replot(Gnuplot.Data(x, y, title=title, with_=style))
         except:
             g.reset()
             if newfig:
@@ -499,6 +498,7 @@ def plot(plotitems=[], options=[], outfig=-1, filename=None):
         g.hardcopy(filename, terminal='png', color=1)
     fig = outfig
     return fig
+mmplot=plot
 
 
 def mmwatershed(f,Bc=None,linereg='LINES'):
