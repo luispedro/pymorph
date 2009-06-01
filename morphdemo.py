@@ -38,6 +38,11 @@
 """
 from pymorph.compat import *
 import numpy
+def mmshow(f, f1=None, f2=None, f3=None, f4=None, f5=None, f6=None):
+    from pylab import imshow, show, ion
+    ion()
+    imshow(overlay(f,f1,f2,f3,f4,f5,f6))
+    show()
 # =========================================================================
 #
 #   mmdairport - Detecting runways in satellite airport imagery.
