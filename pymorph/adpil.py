@@ -341,7 +341,7 @@ def array2pil(arr):
     elif nd == 3:
         if arr.dtype == 'b':
             raise TypeError, "Binary array cannot be RGB"
-        d, h, w = arr.shape
+        h, w, d = arr.shape
         if d == 3:   mode = 'RGB'
         elif d == 4: mode = 'RGBA'
         else:
