@@ -3158,50 +3158,6 @@ def lastero(f, B=None):
     return regmax(dt,B)
 
 
-def lblshow(f, option='noborder'):
-    """
-        - Purpose
-            Display a labeled image assigning a random color for each label.
-        - Synopsis
-            y = lblshow(f, option='noborder')
-        - Input
-            f:      Gray-scale (uint8 or uint16) image. Labeled image.
-            option: String Default: 'noborder'. BORDER or NOBORDER: includes
-                    or not a white border around each labeled region
-        - Output
-            y: Gray-scale (uint8 or uint16) or binary image. Optionally
-               return RGB uint8 image
-        - Description
-            Displays the labeled image f (uint8 or uint16) with a pseudo
-            color where each label appears with a random color. The image is
-            displayed in the MATLAB figure only if no output parameter is
-            given.
-        - Examples
-            #
-            f=readgray('blob3.tif')
-            f1=label(f,sebox())
-            show(f1)
-            lblshow(f1)
-            lblshow(f1,'border')
-    """
-    import string
-    import adpil
-
-    if (isbinary(f)) or (len(f.shape) != 2):
-      print 'Error, lblshow: works only for grayscale labeled image'
-      return
-    option = string.upper(option);
-    if option == 'NOBORDER':
-      border = 0.0;
-    elif option == 'BORDER':
-      border = 1.0;
-    else:
-      print 'Error: option must be BORDER or NOBORDER'
-    y = randomcolor(f, border);
-    adpil.adshow(y)
-    return y
-
-
 def open(f, b=None):
     """
         - Purpose
