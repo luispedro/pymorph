@@ -692,3 +692,46 @@ def dtshow(f, n=10):
       return
     y=gdtshow(f, n)
     adpil.adshow(y)
+
+def readgray(filename):
+    """
+        - Purpose
+            Read an image from a coercial file format and stores it as a
+            gray-scale image.
+        - Synopsis
+            y = readgray(filename)
+        - Input
+            filename: String Name of file to read.
+        - Output
+            y: Gray-scale (uint8 or uint16) or binary image.
+        - Description
+            readgray reads the image in filename and stores it in y , an
+            uint8 gray-scale image (without colormap). If the input file is
+            a color RGB image, it is converted to gray-scale using the
+            equation: y = 0.2989 R + 0.587 G + 0.114 B. This functions uses
+            de PIL module.
+        - Examples
+            #
+            a=readgray('cookies.tif')
+            show(a)
+    """
+    import adpil
+    import numpy
+
+    y = adpil.adread(filename)
+    if (len(y.shape) == 3) and (y.shape[0] == 3):
+       if numpy.alltrue(numpy.alltrue(y[0,:,:] == y[1,:,:] and
+                                          y[0,:,:] == y[2,:,:])):
+          y = y[0,:,:]
+       else:
+          print 'Warning: converting true-color RGB image to gray'
+          y = ubyte(0.2989 * y[0,:,:] + 
+                      0.5870 * y[1,:,:] + 
+                      0.1140 * y[2,:,:])
+    elif (len(y.shape) == 2):
+       pass
+    else:
+       raise ValueError, 'Error, it is not 2D image'
+    return y
+
+

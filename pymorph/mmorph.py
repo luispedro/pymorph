@@ -82,8 +82,6 @@
                       density).
     plot()         -- Plot a function.
     randomcolor()  -- Apply a random color table to a gray-scale image.
-    readgray()     -- Read an image from a commercial file format and stores
-                      it as a gray-scale image.
     regmax()       -- Regional Maximum.
     regmin()       -- Regional Minimum (with generalized dynamics).
     se2hmt()       -- Create a Hit-or-Miss Template (or interval) from a pair
@@ -517,20 +515,21 @@ def frame(f, WT=1, HT=1, DT=0, k1=None, k2=None):
     return y
 
 
-def randomcolor(X, border=0.0):
+def randomcolor(X):
     """
-        - Purpose
-            Apply a random color table to a gray-scale image.
-        - Synopsis
-            Y = randomcolor(X, border=0.0)
-        - Input
-            X:      Gray-scale (uint8 or uint16) image. Labeled image.
-            border: Boolean Default: 0.0. Labeled image.
-        - Output
-            Y: Gray-scale (uint8 or uint16) or binary image.
+    Y = randomcolor(X)
 
+    Apply a random color table to a gray-scale image.
+
+    Parameters
+    ----------
+        * X:      Gray-scale (uint8 or uint16) image. Labeled image.
+
+    Output
+    ------
+        Y: Colour-scale (uint8 or uint16) or binary image.
     """
-    from numpy import take, resize, shape, dstack
+    from numpy import take, reshape, shape, dstack
     from numpy.random import rand
 
     mmin = X.min()
@@ -541,9 +540,9 @@ def randomcolor(X, border=0.0):
     B = to_int32(rand(ncolors)*255)
     if mmin == 0:
        R[0],G[0],B[0] = 0,0,0
-    r=resize(take(R, X.ravel() - mmin),X.shape)
-    g=resize(take(G, X.ravel() - mmin),X.shape)
-    b=resize(take(B, X.ravel() - mmin),X.shape)
+    r = reshape(take(R, X.ravel() - mmin),X.shape)
+    g = reshape(take(G, X.ravel() - mmin),X.shape)
+    b = reshape(take(B, X.ravel() - mmin),X.shape)
     return dstack((r,g,b))
 
 
@@ -3479,47 +3478,6 @@ def patspec(f, type='OCTAGON', n=65535, Bc=None, Buser=None):
     return h
 
 
-def readgray(filename):
-    """
-        - Purpose
-            Read an image from a coercial file format and stores it as a
-            gray-scale image.
-        - Synopsis
-            y = readgray(filename)
-        - Input
-            filename: String Name of file to read.
-        - Output
-            y: Gray-scale (uint8 or uint16) or binary image.
-        - Description
-            readgray reads the image in filename and stores it in y , an
-            uint8 gray-scale image (without colormap). If the input file is
-            a color RGB image, it is converted to gray-scale using the
-            equation: y = 0.2989 R + 0.587 G + 0.114 B. This functions uses
-            de PIL module.
-        - Examples
-            #
-            a=readgray('cookies.tif')
-            show(a)
-    """
-    import adpil
-    import numpy
-
-    y = adpil.adread(filename)
-    if (len(y.shape) == 3) and (y.shape[0] == 3):
-       if numpy.alltrue(numpy.alltrue(y[0,:,:] == y[1,:,:] and
-                                          y[0,:,:] == y[2,:,:])):
-          y = y[0,:,:]
-       else:
-          print 'Warning: converting true-color RGB image to gray'
-          y = ubyte(0.2989 * y[0,:,:] + 
-                      0.5870 * y[1,:,:] + 
-                      0.1140 * y[2,:,:])
-    elif (len(y.shape) == 2):
-       pass
-    else:
-       raise ValueError, 'Error, it is not 2D image'
-    return y
-
 def regmax(f, Bc=None):
     """
         - Purpose
@@ -5024,6 +4982,39 @@ def to_uint16(f):
 
     img = array(clip(f,0,65535)).astype('H')
     return img
+
+
+def to_gray(f):
+    """
+    g = to_gray(f)
+
+    Transform (possibly colour) image to gray image.
+
+    If input file is a color RGB image, it is converted to gray-scale using the
+    equation:
+        I = 0.2989 * R + 0.587 * G + 0.114 * B
+
+    Parameters
+    ----------
+        * f: image
+
+    Outputs
+    -------
+        * g: gray image of same type as input
+    """
+    import numpy as np
+
+    if len(f.shape) == 2:
+        return f
+    if len(f.shape) != 3:
+        raise ValueError, 'pymorph.to_gray: can only handle gray and colour images'
+    r = f[:,:,0]
+    g = f[:,:,1]
+    b = f[:,:,2]
+    if np.all( (r == g) & (r == b) ):
+        return r
+    g = (0.2989 * r + 0.5870 * g  +  0.1140 * b)
+    return g.astype(f.dtype)
 
 
 def datatype(f):
