@@ -1086,9 +1086,7 @@ def flood(fin, T, option, Bc=None):
     """
 
     if Bc is None: Bc = secross()
-    print 'Not implemented yet'
-    return None
-    return y
+    raise NotImplementedError, 'pymorph.flood'
 
 
 def asf(f, SEQ="OC", b=None, n=1):
