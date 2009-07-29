@@ -125,9 +125,9 @@
 
 """
 from __future__ import division
-__version__ = '0.91.1'
+__version__ = '0.91.3'
 
-__build_date__ = '25 May 2009'
+__build_date__ = '30 July 2009'
 
 
 import sys, os
@@ -4093,7 +4093,7 @@ def seunion(B1, B2):
     if len(B1) == 0: return B2
     if len(B1.shape) == 1: B1 = B1[newaxis,:]
     if len(B2.shape) == 1: B2 = B2[newaxis,:]
-    if B1.shape <> B2.shape:
+    if B1.shape != B2.shape:
         inf = limits(B1)[0]
         h1,w1 = B1.shape
         h2,w2 = B2.shape
