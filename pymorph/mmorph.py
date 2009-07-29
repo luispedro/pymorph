@@ -439,10 +439,7 @@ def cdist(f, g=None, Bc=None,metric=None):
         else: b = Bc # This seems wrong, but it's the original code
         while not isequal(f,y):
             y=f
-            if g is not None:
-                f = union(erode(f,b),g)
-            else:
-                f = union(erode(f,b),g)
+            f = union(erode(f,b),g)
     if g is not None:
         return y * (g==0)
     return y
