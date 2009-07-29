@@ -589,23 +589,25 @@ def gdtshow(X, N=10):
     return apply_lut(XX, lut)
 
 
-def overlay(X, Red=None, Green=None, Blue=None, Magenta=None, Yellow=None, Cyan=None):
+def overlay(X, red=None, green=None, blue=None, magenta=None, yellow=None, cyan=None):
     """
-        - Purpose
-            Apply binary overlays as color layers on a binary or gray-scale
-            image
-        - Synopsis
-            Y = gshow(X, Red=None, Green=None, Blue=None, Magenta=None, Yellow=None, Cyan=None)
-        - Input
-            X:  Gray-scale (uint8 or uint16) or binary image.
-            Red: Binary image. Default: None. Red overlay.
-            Green: Binary image. Default: None. Green overlay.
-            Blue: Binary image. Default: None. Blue overlay.
-            Magenta: Binary image. Default: None. Magenta overlay.
-            Yellow: Binary image. Default: None. Yellow overlay.
-            Cyan: Binary image. Default: None. Cyan overlay.
-        - Output
-            Y: Gray-scale (uint8 or uint16) or binary image.
+    Y = overlay(X, red=None, green=None, blue=None, magenta=None, yellow=None, cyan=None)
+
+    Apply binary overlays as color layers on a binary or gray-scale image
+
+    Parameters
+    ----------
+      * X:  Gray-scale (uint8 or uint16) or binary image.
+      * red: Binary image. Default: None. Red overlay.
+      * green: Binary image. Default: None. Green overlay.
+      * blue: Binary image. Default: None. Blue overlay.
+      * magenta: Binary image. Default: None. Magenta overlay.
+      * yellow: Binary image. Default: None. Yellow overlay.
+      * cyan: Binary image. Default: None. Cyan overlay.
+
+    Output
+    ------
+      * Y: Gray-scale (uint8 or uint16) or binary image.
 
     """
     from numpy import dstack
@@ -613,38 +615,38 @@ def overlay(X, Red=None, Green=None, Blue=None, Magenta=None, Yellow=None, Cyan=
     r = X
     g = X
     b = X
-    if Red is not None: # red 1 0 0
-      Red = gray(asbinary(Red),'uint8')
-      r = union(r,Red)
-      g = intersec(g,neg(Red))
-      b = intersec(b,neg(Red))
-    if Green is not None: # green 0 1 0
-      Green = gray(asbinary(Green),'uint8')
-      r = intersec(r,neg(Green))
-      g = union(g,Green)
-      b = intersec(b,neg(Green))
-    if Blue is not None: # blue 0 0 1
-      Blue = gray(asbinary(Blue),'uint8')
-      r = intersec(r,neg(Blue))
-      g = intersec(g,neg(Blue))
-      b = union(b,Blue)
-    if Magenta is not None: # magenta 1 0 1
-      Magenta = gray(Magenta,'uint8')
-      r = union(r,Magenta)
-      g = intersec(g,neg(Magenta))
-      b = union(b,Magenta)
-    if Yellow is not None: # yellow 1 1 0
-      #assert isbinary(Yellow),'Yellow must be binary overlay'
-      Yellow = gray(asbinary(Yellow),'uint8')
-      r = union(r,Yellow)
-      g = union(g,Yellow)
-      b = intersec(b,neg(Yellow))
-    if Cyan is not None: # cyan 0 1 1
-      #assert isbinary(Cyan),'Cyan must be binary overlay'
-      Cyan = gray(asbinary(Cyan),'uint8')
-      r = intersec(r,neg(Cyan))
-      g = union(g,Cyan)
-      b = union(b,Cyan)
+    if red is not None: # red 1 0 0
+      red = gray(asbinary(red),'uint8')
+      r = union(r,red)
+      g = intersec(g,neg(red))
+      b = intersec(b,neg(red))
+    if green is not None: # green 0 1 0
+      green = gray(asbinary(green),'uint8')
+      r = intersec(r,neg(green))
+      g = union(g,green)
+      b = intersec(b,neg(green))
+    if blue is not None: # blue 0 0 1
+      blue = gray(asbinary(blue),'uint8')
+      r = intersec(r,neg(blue))
+      g = intersec(g,neg(blue))
+      b = union(b,blue)
+    if magenta is not None: # magenta 1 0 1
+      magenta = gray(magenta,'uint8')
+      r = union(r,magenta)
+      g = intersec(g,neg(magenta))
+      b = union(b,magenta)
+    if yellow is not None: # yellow 1 1 0
+      #assert isbinary(yellow),'yellow must be binary overlay'
+      yellow = gray(asbinary(yellow),'uint8')
+      r = union(r,yellow)
+      g = union(g,yellow)
+      b = intersec(b,neg(yellow))
+    if cyan is not None: # cyan 0 1 1
+      #assert isbinary(cyan),'cyan must be binary overlay'
+      cyan = gray(asbinary(cyan),'uint8')
+      r = intersec(r,neg(cyan))
+      g = union(g,cyan)
+      b = union(b,cyan)
     return dstack((r,g,b))
 
 
