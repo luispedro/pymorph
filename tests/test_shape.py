@@ -15,3 +15,6 @@ def test_randomcolor():
 def test_label():
     assert (h,w) == pymorph.label(pieces > 0).shape
 
+def test_overlay():
+    img = readmagick.readimg('pymorph/data/fabric.tif')
+    assert pymorph.overlay(img, img == 255).shape == (img.shape + (3,))
