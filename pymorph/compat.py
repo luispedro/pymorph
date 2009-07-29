@@ -122,6 +122,7 @@ mmvmax=vmax
 mmwatershed=watershed
 
 gshow=overlay
+gdtshow=isolines
 
 # Functions which were removed:
 
@@ -655,3 +656,39 @@ def mmglblshow(X, border=0.0):
     b=resize(take(B, X.ravel() - mmin),X.shape)
     Y=concat('d',r,g,b)
     return Y
+
+
+def dtshow(f, n=10):
+    """
+        - Purpose
+            Display a distance transform image with an iso-line color table.
+        - Synopsis
+            y = dtshow(f, n=10)
+        - Input
+            f: Gray-scale (uint8 or uint16) image. Distance transform.
+            n: Boolean Default: 10. Number of iso-contours.
+        - Output
+            y: Gray-scale (uint8 or uint16) or binary image. Optionally
+               return RGB uint8 image
+        - Description
+            Displays the distance transform image f (uint8 or uint16) with a
+            special gray-scale color table with n pseudo-color equaly
+            spaced. The final appearance of this display is similar to an
+            iso-contour image display. The infinity value, which is the
+            maximum level allowed in the image, is displayed as black. The
+            image is displayed in the MATLAB figure only if no output
+            parameter is given.
+        - Examples
+            #
+            f=readgray('blob.tif')
+            fd=dist(f)
+            show(fd)
+            dtshow(fd)
+    """
+    import adpil
+
+    if (isbinary(f)) or (len(f.shape) != 2):
+      print 'Error, dtshow: works only for grayscale labeled image'
+      return
+    y=gdtshow(f, n)
+    adpil.adshow(y)

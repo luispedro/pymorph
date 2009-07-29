@@ -34,8 +34,6 @@
     dilate()       -- Dilate an image by a structuring element.
     dist()         -- Distance transform.
     drawv()        -- Superpose points, rectangles and lines on an image.
-    dtshow()       -- Display a distance transform image with an iso-line
-                      color table.
     edgeoff()      -- Eliminate the objects that hit the image frame.
     endpoints()    -- Interval to detect end-points.
     erode()        -- Erode an image by a structuring element.
@@ -44,7 +42,6 @@
     frame()        -- Create a frame image.
     freedom()      -- Control automatic data type conversion.
     gdist()        -- Geodesic Distance Transform.
-    gdtshow()      -- Apply an iso-line color table to a gray-scale image.
     gradm()        -- Morphological gradient.
     grain()        -- Gray-scale statistics for each labeled region.
     gray()         -- Convert a binary image into a gray-scale image.
@@ -64,6 +61,7 @@
     intersec()     -- Intersection of images.
     intershow()    -- Visualize an interval.
     isbinary()     -- Check for binary image
+    isolines()     -- Apply an iso-line color table to a gray-scale image.
     label()        -- Label a binary image.
     labelflat()    -- Label the flat zones of gray-scale images.
     lastero()      -- Last erosion.
@@ -549,18 +547,20 @@ def randomcolor(X, border=0.0):
     return dstack((r,g,b))
 
 
-def gdtshow(X, N=10):
+def isolines(X, N=10):
     """
-        - Purpose
-            Apply an iso-line color table to a gray-scale image.
-        - Synopsis
-            Y = gdtshow(X, N=10)
-        - Input
-            X: Gray-scale (uint8 or uint16) image. Distance transform image.
-            N: Default: 10. Number of iso-contours.
-        - Output
-            Y: Gray-scale (uint8 or uint16) or binary image.
+    Y = isolines(X, N=10)
+    
+    Apply an iso-contour color table to a gray-scale image.
+    
+    Parameters
+    ----------
+        * X: Gray-scale (uint8 or uint16) image. Distance transform image.
+        * N: Default: 10. Number of iso-contours.
 
+    Output
+    ------
+        Y: Gray-scale (uint8 or uint16) or binary image.
     """
     from numpy import newaxis, ravel, ceil, zeros, ones, transpose, repeat, concatenate, arange, reshape, floor
 
@@ -2040,44 +2040,6 @@ def drawv(f, data, value, GEOM):
     return y
 
 
-def dtshow(f, n=10):
-    """
-        - Purpose
-            Display a distance transform image with an iso-line color table.
-        - Synopsis
-            y = dtshow(f, n=10)
-        - Input
-            f: Gray-scale (uint8 or uint16) image. Distance transform.
-            n: Boolean Default: 10. Number of iso-contours.
-        - Output
-            y: Gray-scale (uint8 or uint16) or binary image. Optionally
-               return RGB uint8 image
-        - Description
-            Displays the distance transform image f (uint8 or uint16) with a
-            special gray-scale color table with n pseudo-color equaly
-            spaced. The final appearance of this display is similar to an
-            iso-contour image display. The infinity value, which is the
-            maximum level allowed in the image, is displayed as black. The
-            image is displayed in the MATLAB figure only if no output
-            parameter is given.
-        - Examples
-            #
-            f=readgray('blob.tif')
-            fd=dist(f)
-            show(fd)
-            dtshow(fd)
-    """
-    import adpil
-
-    if (isbinary(f)) or (len(f.shape) != 2):
-      print 'Error, dtshow: works only for grayscale labeled image'
-      return
-    y=gdtshow(f, n)
-    adpil.adshow(y)
-    return
-    return y
-
-
 def endpoints(option="loop"):
     """
         - Purpose
@@ -2308,7 +2270,6 @@ def gdist(f, g, Bc=None, METRIC=None):
             g=drawv(g,to_uint16([[2],[2],[6],[6]]),to_uint16(1),'frect')
             y=gdist(f,g,sebox(),'EUCLIDEAN')
             show(f,g)
-            dtshow(y,200)
     """
 
     if Bc is None: Bc = secross()
@@ -5013,8 +4974,8 @@ def to_int32(f):
             2147483647 and converts it to the signed 32-bit datatype.
 
     """
-    from numpy import int32
-    return f.astype(int32)
+    from numpy import int32, asanyarray
+    return asanyarray(f).astype(int32)
 
 
 def to_uint8(f):
