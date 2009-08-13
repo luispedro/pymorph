@@ -1511,28 +1511,24 @@ def close(f, b=None):
 
 def closerec(f, bdil=None, bc=None):
     """
-        - Purpose
-            Closing by reconstruction.
-        - Synopsis
-            y = closerec(f, bdil=None, bc=None)
-        - Input
-            f:    Gray-scale (uint8 or uint16) or binary image.
-            bdil: Structuring Element Default: None (3x3 elementary cross).
-                  (dilation).
-            bc:   Structuring Element Default: None (3x3 elementary cross).
-                  ( connectivity).
-        - Output
-            y: Same type of f .
-        - Description
-            closerec creates the image y by a sup-reconstruction ( with
-            the connectivity defined by the structuring element bc ) of the
-            image f from its dilation by bdil .
-        - Examples
-            #
-            a = readgray('danaus.tif')
-            show(a)
-            b = closerec(a,sebox(4))
-            show(b)
+    y = closerec(f, bdil=None, bc=None)
+
+    Closing by reconstruction.
+
+    closerec() creates the image y by a sup-reconstruction ( with
+    the connectivity defined by the structuring element bc ) of the
+    image f from its dilation by bdil .
+
+    Parameters
+    ------
+        * f:    Gray-scale (uint8 or uint16) or binary image.
+        * bdil: Structuring Element Default: None (3x3 elementary cross).
+              (dilation).
+        * bc:   Structuring Element Default: None (3x3 elementary cross).
+              ( connectivity).
+    Output
+    ------
+        y: Same type of f .
     """
 
     if bdil is None: bdil = secross()
