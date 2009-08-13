@@ -4357,46 +4357,38 @@ def suprec(f, g, Bc=None):
 
 def bshow(f1, f2=None, f3=None, factor=17):
     """
-        - Purpose
-            Generate a graphical representation of overlaid binary images.
-        - Synopsis
-            y = bshow(f1, f2=None, f3=None, factor=17)
-        - Input
-            f1:     Binary image.
-            f2:     Binary image. Default: None.
-            f3:     Binary image. Default: None.
-            factor: Double Default: 17. Expansion factor for the output
-                    image. Use odd values above 9.
-        - Output
-            y: Binary image. shaded image.
-        - Description
-            Generate an expanded binary image as a graphical representation
-            of up to three binary input images. The 1-pixels of the first
-            image are represented by square contours, the pixels of the
-            optional second image are represented by circles and for the
-            third image they are represented by shaded squares. This
-            function is useful to create graphical illustration of small
-            images.
-        - Examples
-            #
-            f1=text('b')
-            f2=text('w')
-            g2=bshow(f1,f2)
-            show(g2)
-            f3=text('x')
-            g3=bshow(f1,f2,f3)
-            show(g3);
+    y = bshow(f1, f2=None, f3=None, factor=17)
+
+    Generate a graphical representation of overlaid binary images.
+
+    Generate an expanded binary image as a graphical representation
+    of up to three binary input images. The 1-pixels of the first
+    image are represented by square contours, the pixels of the
+    optional second image are represented by circles and for the
+    third image they are represented by shaded squares. This
+    function is useful to create graphical illustration of small
+    images.
+
+    Parameters
+    ----------
+        * f1:     Binary image.
+        * f2:     Binary image. Default: None.
+        * f3:     Binary image. Default: None.
+        * factor: Double Default: 17. Expansion factor for the output
+                  image. Use odd values above 9.
+    Output
+    ------
+        y: Binary image.
     """
     import numpy
     from numpy import newaxis, zeros, resize, transpose, floor, arange, array
 
     if f1.shape == (): f1 = array([f1])
     if len(f1.shape) == 1: f1 = f1[newaxis,:]
-    if (`f1.shape` != `f2.shape`) or \
-       (`f1.shape` != `f3.shape`) or \
-       (`f2.shape` != `f3.shape`):
-        print 'Different sizes.'
-        return None
+    if f2 is not None and f1.shape != f2.shape or \
+        f3 is not None and f1.shape != f3.shape or \
+        f2 is not None and f3 is not None and f2.shape != f3.shape:
+        raise ValueError, 'pymorph.bshow: arguments must have the same shape'
     s = factor
     if factor < 9: s = 9
     h,w = f1.shape
@@ -4407,10 +4399,10 @@ def bshow(f1, f2=None, f3=None, factor=17):
     circle = (xc - s//2)**2 + (yc - s//2)**2 <= r**2
     r = arange(s) % 2
     fillrect = resize(array([r, 1-r]), (s,s))
-    fillrect[0  ,:] = 0
-    fillrect[s-1,:] = 0
-    fillrect[:  ,0] = 0
-    fillrect[:  ,s-1] = 0
+    fillrect[ 0 , : ] = 0
+    fillrect[s-1, : ] = 0
+    fillrect[ : , 0 ] = 0
+    fillrect[ : ,s-1] = 0
     for i in xrange(h):
         for j in xrange(w):
             m, n = s*i, s*j
@@ -4420,9 +4412,9 @@ def bshow(f1, f2=None, f3=None, factor=17):
                 y[m:m+s ,n    ] = 1
                 y[m:m+s ,n+s-1] = 1
             if f2 and f2[i,j]:
-                y[m:m+s, n:n+s] = y[m:m+s, n:n+s] + circle
+                y[m:m+s, n:n+s] += circle
             if f3 and f3[i,j]:
-                y[m:m+s, n:n+s] = y[m:m+s, n:n+s] + fillrect
+                y[m:m+s, n:n+s] += fillrect
     return (y > 0)
 
 
