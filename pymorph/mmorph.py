@@ -615,44 +615,27 @@ def overlay(X, red=None, green=None, blue=None, magenta=None, yellow=None, cyan=
     return dstack((r,g,b))
 
 
-def histogram(f, option="uint16"):
+def histogram(f):
     """
-        - Purpose
-            Find the histogram of the image f.
-        - Synopsis
-            h = histogram(f, option="uint16")
-        - Input
-            f:      Gray-scale (uint8 or uint16) or binary image.
-            option: String Default: "uint16". Values: "uint16" or "int32".
-        - Output
-            h: Gray-scale (uint8 or uint16) image. Histogram in a uint16 or
-               an int32 vector.
-        - Description
-            Finds the histogram of the image f and returns the result in the
-            vector h . For binary image the vector size is 2, for gray-scale
-            uint8 and uint16 images, the vector size is the maximum pixel
-            value plus one. h[0] gives the number of pixels with value 0.
-        - Examples
-            #
-            #   example 1
-            #
-            f=to_uint8([0, 1, 1, 2, 2, 2, 5, 3, 5])
-            h=histogram(f)
-            print h
-            #
-            #   example 2
-            #
-            f=readgray('lenina.tif')
-            show(f)
-            h=histogram(f)
-            plot([[h]],[['style', 'impulses']])
-    """
-    from numpy import searchsorted, sort, ravel, concatenate, product
+    h = histogram(f)
 
-    n = searchsorted(sort(ravel(f)), range(f.max()+1))
-    n = concatenate([n, [product(f.shape)]])
-    h = n[1:]-n[:-1]
-    return h
+    Find the histogram of the image f.
+
+    Finds the histogram of the image f and returns the result in the
+    vector h . For binary image the vector size is 2. For gray-scale
+    uint8 and uint16 images, the vector size is the maximum pixel
+    value plus one. h[0] gives the number of pixels with value 0.
+
+     Parameters
+     ----------
+         * f: Input image (of any integer type).
+
+     Output
+     ------
+         h: Histogram in a uint16 or an int32 vector.
+    """
+    import numpy as np
+    return np.histogram(f, np.arange(f.max() + 2))[0]
 
 
 def label(f, Bc=None):
