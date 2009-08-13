@@ -138,86 +138,55 @@ except:
     sys.imagepath = [os.path.join(mydir, 'data')]
 
 
-def concat(DIM, X1, X2, X3=None, X4=None):
+def concat(dim, *imgs):
     """
-        - Purpose
-            Concatenate two or more images along width, height or depth.
-        - Synopsis
-            Y = concat(DIM, X1, X2, X3=None, X4=None)
-        - Input
-            DIM: String Dimension to concatenate. 'WIDTH' or 'W', 'HEIGHT'
-                 or 'H', or ' DEPTH' or 'D'.
-            X1:  Gray-scale (uint8 or uint16) or binary image.
-            X2:  Gray-scale (uint8 or uint16) or binary image.
-            X3:  Gray-scale (uint8 or uint16) or binary image. Default:
-                 None.
-            X4:  Gray-scale (uint8 or uint16) or binary image. Default:
-                 None.
-        - Output
-            Y: Gray-scale (uint8 or uint16) or binary image.
-        - Description
-            Concatenate two or more images in any of the dimensions: width,
-            height or depth. If the images do not match the dimension, a
-            larger image is create with zero pixels to accommodate them. The
-            images must have the same datatype.
-        - Examples
-            #
-            f1=readgray('cameraman.tif')
-            f2=readgray('blob.tif')
-            g=concat('W',f1,gray(neg(f2)))
-            show(g);
-    """
-    from numpy import newaxis, sum, zeros
+    img = concat(dim, img0, img1, ...)
 
-    aux = 'newaxis,'
-    d = len(X1.shape)
-    if d < 3: X1 = eval('X1[' + (3-d)*aux + ':]')
-    d1,h1,w1 = X1.shape
-    d = len(X2.shape)
-    if d < 3: X2 = eval('X2[' + (3-d)*aux + ':]')
-    d2,h2,w2 = X2.shape
-    h3 = w3 = d3 = h4 = w4 = d4 = 0
-    if X3 is not None:
-       d = len(X3.shape)
-       if d < 3: X3 = eval('X3[' + (3-d)*aux + ':]')
-       d3,h3,w3 = X3.shape
-    if X4 is not None:
-       d = len(X4.shape)
-       if d < 3: X4 = eval('X4[' + (3-d)*aux + ':]')
-       d4,h4,w4 = X4.shape
-    h = [h1, h2, h3, h4]
-    w = [w1, w2, w3, w4]
-    d = [d1, d2, d3, d4]
-    if DIM in ['WIDTH', 'W', 'w', 'width']:
-       hy, wy, dy = max(h), sum(w), max(d)
-       Y = zeros((dy,hy,wy))
-       Y[0:d1, 0:h1, 0 :w1   ] = X1
-       Y[0:d2, 0:h2, w1:w1+w2] = X2
-       if X3 is not None:
-          Y[0:d3, 0:h3, w1+w2:w1+w2+w3] = X3
-          if X4 is not None:
-              Y[0:d4, 0:h4, w1+w2+w3::] = X4
-    elif DIM in ['HEIGHT', 'H', 'h', 'height']:
-       hy, wy, dy = sum(h), max(w), max(d)
-       Y = zeros((dy,hy,wy))
-       Y[0:d1, 0 :h1   , 0:w1] = X1
-       Y[0:d2, h1:h1+h2, 0:w2] = X2
-       if X3 is not None:
-           Y[0:d3, h1+h2:h1+h2+h3, 0:w3] = X3
-           if X4 is not None:
-               Y[0:d4, h1+h2+h3::, 0:w4] = X4
-    elif DIM in ['DEPTH', 'D', 'd', 'depth']:
-       hy, wy, dy = max(h), max(w), sum(d)
-       Y = zeros((dy,hy,wy))
-       Y[0:d1    , 0:h1, 0:w1   ] = X1
-       Y[d1:d1+d2, 0:h2, 0:w2] = X2
-       if X3 is not None:
-           Y[d1+d2:d1+d2+d3, 0:h3, 0:w3] = X3
-           if X4 is not None:
-               Y[d1+d2+d3::, 0:h4, 0:w4] = X4
-    if Y.shape[0] == 1: # adjustment
-       Y = Y[0,:,:]
-    return Y
+    Concatenate two or more images along width, height or depth.
+
+    Concatenate two or more images in any of the dimensions: width,
+    height or depth. If the images do not match the dimension, a
+    larger image is create with zero pixels to accommodate them. The
+    images must have the same datatype.
+
+    Parameters
+    ----------
+        * dim: Dimension to concatenate (string):
+                    ['width', 'height', 'depth'] or just the initial letter
+        * img0, img1, ...: Images to concatenate
+    
+    Output
+    ------
+        * img: resulting image (of the same type as inputs).
+    """
+    import numpy as np
+    import string
+    dimcode = string.lower(dim)[0]
+    h,w = imgs[0].shape
+    reshape = False
+    for img in imgs:
+        cur_h,cur_w = img.shape
+        if cur_h != h or cur_w != w:
+            h = max(h, cur_h)
+            w = max(w, cur_w)
+            reshape = True
+    if reshape:
+        imgs = list(imgs)
+        for i,img in enumerate(imgs):
+            if img.shape != (h,w):
+                imgs[i] = np.zeros((h,w),img.dtype)
+                cur_h,cur_w = img.shape
+                imgs[i][:cur_h,:cur_w] = img
+
+    if dimcode == 'w':
+      return np.hstack(imgs)
+    elif dimcode == 'h':
+      return np.vstack(imgs)
+    elif dimcode == 'd':
+      return np.dstack(imgs)
+    else:
+      raise ValueError, 'pymorph.concat: Unknown direction "%s"' % dim
+
 
 def limits(f):
     """

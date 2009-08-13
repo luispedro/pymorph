@@ -6,6 +6,8 @@ Changes Since Version 0.80
     Boolean return_lines parameter instead of the the LINEREG parameter.
     This applies to watershed(), cwatershed
 
+ + concat() now returns np.dstack() for 'depth' dimension!
+
  + numpy is used (instead of Numeric).
 
  + Function names no longer start with mm.
