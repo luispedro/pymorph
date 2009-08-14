@@ -223,37 +223,32 @@ def limits(f):
 
 def center(f, b=None):
     """
-        - Purpose
-            Center filter.
-        - Synopsis
-            y = center(f, b=None)
-        - Input
-            f: Gray-scale (uint8 or uint16) or binary image.
-            b: Structuring Element Default: None (3x3 elementary cross).
-        - Output
-            y: Image
-        - Description
-            center creates the image y by computing recursively the
-            morphological center, relative to the structuring element b , of
-            the image f .
-        - Examples
-            #
-            f=readgray('gear.tif')
-            g=center(f,sedisk(2))
-            show(f)
-            show(g)
+    centered = center(f, b=None)
+
+    Center filter.
+
+    center() computes the morphological center of f w.r.t. to the 
+    structuring element b.
+
+    Inputs
+    ------
+      * f: Gray-scale (uint8 or uint16) or binary image.
+      * b: Structuring Element (Default: 3x3 elementary cross).
+
+    Output
+    ------
+      y: Image
     """
 
     if b is None: b = secross()
-    y = f
-    diff = 0
-    while not diff:
-        aux = y
-        beta1 = asf(y,'COC',b,1)
-        beta2 = asf(y,'OCO',b,1)
-        y = union(intersec(y,beta1),beta2)
-        diff = isequal(aux,y)
-    return y
+    while True:
+        beta1 = asf(f,'COC',b,1)
+        beta2 = asf(f,'OCO',b,1)
+
+        prev = f
+        f = union(intersec(y,beta1),beta2)
+        if isequal(prev,f):
+            return f
 
 
 def close_holes(f, Bc=None):
