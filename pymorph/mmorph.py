@@ -772,64 +772,72 @@ def threshad(f, f1, f2=None):
     return (f1 <= f) & (f <= f2)
 
 
-def toggle(f, f1, f2, OPTION="GRAY"):
+def toggle(f, f1, f2, option="gray"):
     """
-        - Purpose
-            Image contrast enhancement or classification by the toggle
-            operator.
-        - Synopsis
-            y = toggle(f, f1, f2, OPTION="GRAY")
-        - Input
-            f:      Gray-scale (uint8 or uint16) image.
-            f1:     Gray-scale (uint8 or uint16) image.
-            f2:     Gray-scale (uint8 or uint16) image.
-            OPTION: String Default: "GRAY". Values: 'BINARY' or 'GRAY'.
-        - Output
-            y: Image binary image if option is 'BINARY' or same type as f
-        - Description
-            toggle creates the image y that is an enhancement or
-            classification of the image f by the toggle operator, with
-            parameters f1 and f2 . If the OPTION is 'GRAY', it performs an
-            enhancement and, if the OPTION is 'BINARY', it performs a binary
-            classification. In the enhancement, a pixel takes the value of
-            the corresponding pixel in f1 or f2 , according to a minimum
-            distance criterion from f to f1 or f to f2 . In the
-            classification, the pixels in f nearest to f1 receive the value
-            0 , while the ones nearest to f2 receive the value 1.
-        - Examples
-            #
-            #   example 1
-            #
-            f = to_uint8([0,1,2,3,4,5,6])
-            print f
-            f1 = to_uint8([0,0,0,0,0,0,0])
-            print f1
-            f2 = to_uint8([6,6,6,6,6,6,6])
-            print f2
-            print toggle(f,f1,f2)
-            #
-            #   example 2
-            #
-            a = readgray('angiogr.tif')
-            b = erode(a,sedisk(2))
-            c = dilate(a,sedisk(2))
-            d = toggle(a,b,c)
-            show(a)
-            show(d)
-            #
-            #   example 3
-            #
-            e = readgray('lenina.tif')
-            f = erode(e,sedisk(2))
-            g = dilate(e,sedisk(2))
-            h = toggle(e,f,g,'BINARY')
-            show(e)
-            show(h)
+    y = toggle(f, f1, f2, option="GRAY")
+
+    Toggle operator
+
+    Image contrast enhancement or classification by the toggle
+    operator.
+
+    toggle creates the image y that is an enhancement or
+    classification of the image f by the toggle operator, with
+    parameters f1 and f2 . if option is 'iray', it performs an
+    enhancement and, if the option is 'binary', it performs a binary
+    classification.
+    
+    In the enhancement, a pixel takes the value of
+    the corresponding pixel in f1 or f2 , according to a minimum
+    distance criterion from f to f1 or f to f2 . In the
+    classification, the pixels in f nearest to f1 receive the value
+    0 , while the ones nearest to f2 receive the value 1.
+    
+    Inputs
+    ------
+        * f:      Gray-scale (uint8 or uint16) image.
+        * f1:     Gray-scale (uint8 or uint16) image.
+        * f2:     Gray-scale (uint8 or uint16) image.
+        * option: One of ('gray', 'binary'). Default: 'gray'
+
+    Examples
+    --------
+    
+    ..
+        #
+        #   example 1
+        #
+        f = to_uint8([0,1,2,3,4,5,6])
+        print f
+        f1 = to_uint8([0,0,0,0,0,0,0])
+        print f1
+        f2 = to_uint8([6,6,6,6,6,6,6])
+        print f2
+        print toggle(f,f1,f2)
+        #
+        #   example 2
+        #
+        a = readgray('angiogr.tif')
+        b = erode(a,sedisk(2))
+        c = dilate(a,sedisk(2))
+        d = toggle(a,b,c)
+        show(a)
+        show(d)
+        #
+        #   example 3
+        #
+        e = readgray('lenina.tif')
+        f = erode(e,sedisk(2))
+        g = dilate(e,sedisk(2))
+        h = toggle(e,f,g,'BINARY')
+        show(e)
+        show(h)
+
     """
-    from string import upper
+    from string import lower
 
     y=binary(subm(f,f1),subm(f2,f))
-    if upper(OPTION) == 'GRAY':
+    if lower(option) in ('gray', 'grey'):
         t=gray(y)
         y=union(intersec(neg(t),f1),intersec(t,f2))
     return y
