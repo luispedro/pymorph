@@ -162,6 +162,8 @@ def concat(dim, *imgs):
     import numpy as np
     import string
     dimcode = string.lower(dim)[0]
+    if not imgs:
+        raise ValueError, 'pymorph.concat: received empty image list'
     h,w = imgs[0].shape
     reshape = False
     for img in imgs:
@@ -179,13 +181,13 @@ def concat(dim, *imgs):
                 imgs[i][:cur_h,:cur_w] = img
 
     if dimcode == 'w':
-      return np.hstack(imgs)
+        return np.hstack(imgs)
     elif dimcode == 'h':
-      return np.vstack(imgs)
+        return np.vstack(imgs)
     elif dimcode == 'd':
-      return np.dstack(imgs)
+        return np.dstack(imgs)
     else:
-      raise ValueError, 'pymorph.concat: Unknown direction "%s"' % dim
+        raise ValueError, 'pymorph.concat: Unknown direction "%s"' % dim
 
 
 def limits(f):
