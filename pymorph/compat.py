@@ -18,6 +18,11 @@ randomcolour=randomcolor
 
 # mmnames:
 
+def _not_implemented(msg):
+    def f():
+        raise NotImplementedError, msg
+    return f
+
 mmadd4dil=add4dil
 mmaddm=addm
 mmareaclose=areaclose
@@ -45,14 +50,14 @@ mmdatatype=datatype
 mmdil=dil
 mmdist=dist
 mmdrawv=drawv
-mmdtshow=dtshow
+mmdtshow=_not_implemented('dtshow: use matplotlib')
 mmedgeoff=edgeoff
 mmero=ero
 mmflood=flood
 mmframe=frame
 mmfreedom=freedom
 mmgdist=gdist
-mmgdtshow=gdtshow
+mmgdtshow=_not_implemented('gdtshow: use matplotlib')
 mmgradm=gradm
 mmgrain=grain
 mmgray=gray
@@ -74,7 +79,7 @@ mmisequal=isequal
 mmlabel=label
 mmlabelflat=labelflat
 mmlastero=lastero
-mmlblshow=lblshow
+mmlblshow=_not_implemented('lblshow: use matplotlib')
 mmlimits=limits
 mmmat2set=mat2set
 mmmaxleveltype=maxleveltype
@@ -86,7 +91,7 @@ mmopenth=openth
 mmopentransf=opentransf
 mmpad4n=pad4n
 mmpatspec=patspec
-mmreadgray=readgray
+mmreadgray=_not_implemented('readgray: use PIL or readmagick')
 mmregmax=regmax
 mmregmin=regmin
 mmse2hmt=se2hmt
