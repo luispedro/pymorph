@@ -26,7 +26,7 @@ setup(name='pymorph',
       long_description=long_description,
       author='Luis Pedro Coelho',
       author_email='lpc@mcu.edu',
-      url='http://luispedro.org/pymorph/',
+      url='http://luispedro.org/software/pymorph/',
       license='BSD',
       packages=find_packages(),
       )
