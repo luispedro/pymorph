@@ -1,127 +1,116 @@
 """
-    Module pymorph
-    -------------------------------------------------------------------
-    pymorph a powerful collection of state-of-the-art gray-scale morphological
-    tools that can be applied to image segmentation, non-linear filtering,
-    pattern recognition and image analysis.
-    -------------------------------------------------------------------
-    add4dilate()   -- Addition for dilation
-    addm()         -- Addition of two images, with saturation.
-    areaclose()    -- Area closing
-    areaopen()     -- Area opening
-    asf()          -- Alternating Sequential Filtering
-    asfrec()       -- Reconstructive Alternating Sequential Filtering
-    bench()        -- benchmarking main functions of the toolbox.
-    binary()       -- Convert a gray-scale image into a binary image
-    blob()         -- Blob measurements from a labeled image.
-    bshow()        -- Generate a graphical representation of overlaid binary
-                      images.
-    cbisector()    -- N-Conditional bisector.
-    cdilate()      -- Dilate an image conditionally.
-    center()       -- Center filter.
-    cerode()       -- Erode an image conditionally.
-    close_holes()  -- Close holes of binary and gray-scale images.
-    close()        -- Morphological closing.
-    closerec()     -- Closing by reconstruction.
-    closerecth()   -- Close-by-Reconstruction Top-Hat.
-    closeth()      -- Closing Top Hat.
-    concat()       -- Concatenate two or more images along width, height or
-                      depth.
-    cthick()       -- Image transformation by conditional thickening.
-    cthin()        -- Image transformation by conditional thinning.
-    cwatershed()   -- Detection of watershed from markers.
-    datatype()     -- Return the image datatype string
-    dilate()       -- Dilate an image by a structuring element.
-    dist()         -- Distance transform.
-    drawv()        -- Superpose points, rectangles and lines on an image.
-    edgeoff()      -- Eliminate the objects that hit the image frame.
-    endpoints()    -- Interval to detect end-points.
-    erode()        -- Erode an image by a structuring element.
-    flood()        -- Flooding filter- h,v,a-basin and dynamics (depth, area,
-                      volume)
-    frame()        -- Create a frame image.
-    freedom()      -- Control automatic data type conversion.
-    gdist()        -- Geodesic Distance Transform.
-    gradm()        -- Morphological gradient.
-    grain()        -- Gray-scale statistics for each labeled region.
-    gray()         -- Convert a binary image into a gray-scale image.
-    gshow()        -- Apply binary overlays as color layers on a binary or
-                      gray-scale image
-    histogram()    -- Find the histogram of the image f.
-    hmax()         -- Remove peaks with contrast less than h.
-    hmin()         -- Remove basins with contrast less than h.
-    homothick()    -- Interval for homotopic thickening.
-    homothin()     -- Interval for homotopic thinning.
-    img2se()       -- Create a structuring element from a pair of images.
-    infcanon()     -- Intersection of inf-generating operators.
-    infgen()       -- Inf-generating.
-    infrec()       -- Inf-reconstruction.
-    inpos()        -- Minima imposition.
-    interot()      -- Rotate an interval
-    intersec()     -- Intersection of images.
-    intershow()    -- Visualize an interval.
-    isbinary()     -- Check for binary image
-    isolines()     -- Apply an iso-line color table to a gray-scale image.
-    label()        -- Label a binary image.
-    labelflat()    -- Label the flat zones of gray-scale images.
-    lastero()      -- Last erosion.
-    lblshow()      -- Display a labeled image assigning a random color for
-                      each label.
-    limits()       -- Get the possible minimum and maximum of an image.
-    mat2set()      -- Converts image representation from matrix to set
-    maxleveltype() -- Returns the maximum value associated to an image
-                      datatype
-    neg()          -- Negate an image.
-    open()         -- Morphological opening.
-    openrec()      -- Opening by reconstruction.
-    openrecth()    -- Open-by-Reconstruction Top-Hat.
-    openth()       -- Opening Top Hat.
-    opentransf()   -- Open transform.
-    pad4n()        -- pad4n
-    patspec()      -- Pattern spectrum (also known as granulometric size
-                      density).
-    plot()         -- Plot a function.
-    randomcolor()  -- Apply a random color table to a gray-scale image.
-    regmax()       -- Regional Maximum.
-    regmin()       -- Regional Minimum (with generalized dynamics).
-    se2hmt()       -- Create a Hit-or-Miss Template (or interval) from a pair
-                      of structuring elements.
-    se2interval()  -- Create an interval from a pair of structuring elements.
-    sebox()        -- Create a box structuring element.
-    secross()      -- Diamond structuring element and elementary 3x3 cross.
-    sedilate()     -- Dilate one structuring element by another
-    sedisk()       -- Create a disk or a semi-sphere structuring element.
-    seline()       -- Create a line structuring element.
-    sereflect()    -- Reflect a structuring element
-    serot()        -- Rotate a structuring element.
-    seshow()       -- Display a structuring element as an image.
-    sesum()        -- N-1 iterative Minkowski additions
-    set2mat()      -- Converts image representation from set to matrix
-    setrans()      -- Translate a structuring element
-    seunion()      -- Union of structuring elements
-    skelm()        -- Morphological skeleton (Medial Axis Transform).
-    skelmrec()     -- Morphological skeleton reconstruction (Inverse Medial
-                      Axis Transform).
-    skiz()         -- Skeleton of Influence Zone - also know as Generalized
-                      Voronoi Diagram
-    subm()         -- Subtraction of two images, with saturation.
-    supcanon()     -- Union of sup-generating or hit-miss operators.
-    supgen()       -- Sup-generating (hit-miss).
-    suprec()       -- Sup-reconstruction.
-    swatershed()   -- Detection of similarity-based watershed from markers.
-    symdif()       -- Symmetric difference between two images
-    text()         -- Create a binary image of a text.
-    thick()        -- Image transformation by thickening.
-    thin()         -- Image transformation by thinning.
-    threshad()     -- Threshold (adaptive)
-    toggle()       -- Image contrast enhancement or classification by the
-                      toggle operator.
-    union()        -- Union of images.
-    vmax()         -- Remove domes with volume less than v.
-    watershed()    -- Watershed detection.
-    to_int32()     -- Convert an image to an int32 image.
-    to_uint16()    -- Convert an image to a uint16 image.
-    to_uint8()     -- Convert an image to an uint8 image.
+Module pymorph
+==============
+pymorph a powerful collection of state-of-the-art gray-scale morphological
+tools that can be applied to image segmentation, non-linear filtering,
+pattern recognition and image analysis.
+
+- `add4dilate()`   : Addition for dilation
+- `addm()`         : Addition of two images, with saturation.
+- `areaclose()`    : Area closing
+- `areaopen()`     : Area opening
+- `asf()`          : Alternating Sequential Filtering
+- `asfrec()`       : Reconstructive Alternating Sequential Filtering
+- `bench()`        : benchmarking main functions of the toolbox.
+- `binary()`       : Convert a gray-scale image into a binary image
+- `blob()`         : Blob measurements from a labeled image.
+- `bshow()`        : Generate a graphical representation of overlaid binary images.
+- `cbisector()`    : N-Conditional bisector.
+- `cdilate()`      : Dilate an image conditionally.
+- `center()`       : Center filter.
+- `cerode()`       : Erode an image conditionally.
+- `close_holes()`  : Close holes of binary and gray-scale images.
+- `close()`        : Morphological closing.
+- `closerec()`     : Closing by reconstruction.
+- `closerecth()`   : Close-by-Reconstruction Top-Hat.
+- `closeth()`      : Closing Top Hat.
+- `concat()`       : Concatenate two or more images along width, height or depth.
+- `cthick()`       : Image transformation by conditional thickening.
+- `cthin()`        : Image transformation by conditional thinning.
+- `cwatershed()`   : Detection of watershed from markers.
+- `datatype()`     : Return the image datatype string
+- `dilate()`       : Dilate an image by a structuring element.
+- `dist()`         : Distance transform.
+- `drawv()`        : Superpose points, rectangles and lines on an image.
+- `edgeoff()`      : Eliminate the objects that hit the image frame.
+- `endpoints()`    : Interval to detect end-points.
+- `erode()`        : Erode an image by a structuring element.
+- `flood()`        : Flooding filter- h,v,a-basin and dynamics (depth, area, volume)
+- `frame()`        : Create a frame image.
+- `freedom()`      : Control automatic data type conversion.
+- `gdist()`        : Geodesic Distance Transform.
+- `gradm()`        : Morphological gradient.
+- `grain()`        : Gray-scale statistics for each labeled region.
+- `gray()`         : Convert a binary image into a gray-scale image.
+- `gshow()`        : Apply binary overlays as color layers on a binary or gray-scale image
+- `histogram()`    : Find the histogram of the image f.
+- `hmax()`         : Remove peaks with contrast less than h.
+- `hmin()`         : Remove basins with contrast less than h.
+- `homothick()`    : Interval for homotopic thickening.
+- `homothin()`     : Interval for homotopic thinning.
+- `img2se()`       : Create a structuring element from a pair of images.
+- `infcanon()`     : Intersection of inf-generating operators.
+- `infgen()`       : Inf-generating.
+- `infrec()`       : Inf-reconstruction.
+- `inpos()`        : Minima imposition.
+- `interot()`      : Rotate an interval
+- `intersec()`     : Intersection of images.
+- `intershow()`    : Visualize an interval.
+- `isbinary()`     : Check for binary image
+- `isolines()`     : Apply an iso-line color table to a gray-scale image.
+- `label()`        : Label a binary image.
+- `labelflat()`    : Label the flat zones of gray-scale images.
+- `lastero()`      : Last erosion.
+- `lblshow()`      : Display a labeled image assigning a random color for each label.
+- `limits()`       : Get the possible minimum and maximum of an image.
+- `mat2set()`      : Converts image representation from matrix to set
+- `maxleveltype()` : Returns the maximum value associated to an image datatype
+- `neg()`          : Negate an image.
+- `open()`         : Morphological opening.
+- `openrec()`      : Opening by reconstruction.
+- `openrecth()`    : Open-by-Reconstruction Top-Hat.
+- `openth()`       : Opening Top Hat.
+- `opentransf()`   : Open transform.
+- `pad4n()`        : pad4n
+- `patspec()`      : Pattern spectrum (also known as granulometric size density).
+- `plot()`         : Plot a function.
+- `randomcolor()`  : Apply a random color table to a gray-scale image.
+- `regmax()`       : Regional Maximum.
+- `regmin()`       : Regional Minimum (with generalized dynamics).
+- `se2hmt()`       : Create a Hit-or-Miss Template (or interval) from a pair of structuring elements.
+- `se2interval()`  : Create an interval from a pair of structuring elements.
+- `sebox()`        : Create a box structuring element.
+- `secross()`      : Diamond structuring element and elementary 3x3 cross.
+- `sedilate()`     : Dilate one structuring element by another
+- `sedisk()`       : Create a disk or a semi-sphere structuring element.
+- `seline()`       : Create a line structuring element.
+- `sereflect()`    : Reflect a structuring element
+- `serot()`        : Rotate a structuring element.
+- `seshow()`       : Display a structuring element as an image.
+- `sesum()`        : N-1 iterative Minkowski additions
+- `set2mat()`      : Converts image representation from set to matrix
+- `setrans()`      : Translate a structuring element
+- `seunion()`      : Union of structuring elements
+- `skelm()`        : Morphological skeleton (Medial Axis Transform).
+- `skelmrec()`     : Morphological skeleton reconstruction (Inverse Medial Axis Transform).
+- `skiz()`         : Skeleton of Influence Zone - also know as Generalized Voronoi Diagram
+- `subm()`         : Subtraction of two images, with saturation.
+- `supcanon()`     : Union of sup-generating or hit-miss operators.
+- `supgen()`       : Sup-generating (hit-miss).
+- `suprec()`       : Sup-reconstruction.
+- `swatershed()`   : Detection of similarity-based watershed from markers.
+- `symdif()`       : Symmetric difference between two images
+- `text()`         : Create a binary image of a text.
+- `thick()`        : Image transformation by thickening.
+- `thin()`         : Image transformation by thinning.
+- `threshad()`     : Threshold (adaptive)
+- `toggle()`       : Image contrast enhancement or classification by the toggle operator.
+- `union()`        : Union of images.
+- `vmax()`         : Remove domes with volume less than v.
+- `watershed()`    : Watershed detection.
+- `to_int32()`     : Convert an image to an int32 image.
+- `to_uint16()`    : Convert an image to a uint16 image.
+- `to_uint8()`     : Convert an image to an uint8 image.
 
 """
 from __future__ import division
@@ -151,13 +140,14 @@ def concat(dim, *imgs):
 
     Parameters
     ----------
-        * dim: Dimension to concatenate (string):
+    dim : Dimension to concatenate (string):
                     ['width', 'height', 'depth'] or just the initial letter
-        * img0, img1, ...: Images to concatenate
+    img0, img1, ... : Images to concatenate
     
-    Output
-    ------
-        * img: resulting image (of the same type as inputs).
+    Returns
+    -------
+    img : resulting image (of the same type as inputs).
+
     """
     import numpy as np
     import string
@@ -1520,20 +1510,21 @@ def closerec(f, bdil=None, bc=None):
 
     Closing by reconstruction.
 
-    closerec() creates the image y by a sup-reconstruction ( with
-    the connectivity defined by the structuring element bc ) of the
-    image f from its dilation by bdil .
+    `closerec()` creates the image `y` by a sup-reconstruction (with
+    the connectivity defined by the structuring element `bc`) of the
+    image `f` from its dilation by `bdil`.
 
     Parameters
-    ------
-        * f:    Gray-scale (uint8 or uint16) or binary image.
-        * bdil: Structuring Element Default: None (3x3 elementary cross).
-              (dilation).
-        * bc:   Structuring Element Default: None (3x3 elementary cross).
-              ( connectivity).
-    Output
-    ------
-        y: Same type of f .
+    ----------
+
+    f :    Gray-scale (uint8 or uint16) or binary image
+    bdil : Dilation structuring element (default 3x3 elementary cross)
+    bc :  Connectivity structuring element (default: 3x3 elementary cross)
+
+    Returns
+    -------
+
+    y : Image (same type as f)
     """
 
     if bdil is None: bdil = secross()
@@ -4376,14 +4367,14 @@ def bshow(f1, f2=None, f3=None, factor=17):
 
     Parameters
     ----------
-        * f1:     Binary image.
-        * f2:     Binary image. Default: None.
-        * f3:     Binary image. Default: None.
-        * factor: Double Default: 17. Expansion factor for the output
+    f1 :     Binary image.
+    f2 :     Binary image. Default: None.
+    f3 :     Binary image. Default: None.
+    factor : Double Default: 17. Expansion factor for the output
                   image. Use odd values above 9.
-    Output
-    ------
-        y: Binary image.
+    Returns
+    -------
+    y : Binary image.
     """
     import numpy
     from numpy import newaxis, zeros, resize, transpose, floor, arange, array
