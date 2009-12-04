@@ -19,8 +19,12 @@ randomcolour=randomcolor
 # mmnames:
 
 def _not_implemented(msg):
-    def f():
+    def f(*args, **kwargs):
         raise NotImplementedError, msg
+    f.__doc__ = '''\
+This function is not implemented anymore.
+
+%s''' % msg
     return f
 
 mmadd4dil=add4dil
