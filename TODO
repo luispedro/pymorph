@@ -1,5 +1,13 @@
-* Implement surf()
-* Implement plot using matplotlib
-* Change colour images to be H x W x 3, instead of 3 x H x W.
+For 1.0:
+
+- Convert all docstrings to numpy format. Regenerate docs [December 8 2009]
+
+- Remove compat.py [December 8 2009]
+
+- Change colour images to be H x W x 3, instead of 3 x H x W.
     Be consistent with matplotlib.
     [Fixed in overlay() & randomcolor()]
+
+For later:
+
+- Implement surf()
