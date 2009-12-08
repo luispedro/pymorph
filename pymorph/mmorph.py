@@ -143,7 +143,7 @@ def concat(dim, *imgs):
     dim : Dimension to concatenate (string):
                     ['width', 'height', 'depth'] or just the initial letter
     img0, img1, ... : Images to concatenate
-    
+
     Returns
     -------
     img : resulting image (of the same type as inputs).
@@ -219,7 +219,7 @@ def center(f, b=None):
 
     Center filter.
 
-    center() computes the morphological center of f w.r.t. to the 
+    center() computes the morphological center of f w.r.t. to the
     structuring element b.
 
     Inputs
@@ -346,7 +346,7 @@ def cdist(f, g=None, Bc=None,metric=None):
                option.
         - Description
             cdist creates the conditional distance image y of the binary image f.
-            
+
             y[y,x] = distance of (y,x) to foreground in a path through complement(c)
             y[y,x] = 0, if f[y,x] == 0 or c[y,x] == 1
 
@@ -502,9 +502,9 @@ def randomcolor(X):
 def isolines(X, N=10):
     """
     Y = isolines(X, N=10)
-    
+
     Apply an iso-contour color table to a gray-scale image.
-    
+
     Parameters
     ----------
         * X: Gray-scale (uint8 or uint16) image. Distance transform image.
@@ -778,13 +778,13 @@ def toggle(f, f1, f2, option="gray"):
     parameters f1 and f2 . if option is 'iray', it performs an
     enhancement and, if the option is 'binary', it performs a binary
     classification.
-    
+
     In the enhancement, a pixel takes the value of
     the corresponding pixel in f1 or f2 , according to a minimum
     distance criterion from f to f1 or f to f2 . In the
     classification, the pixels in f nearest to f1 receive the value
     0 , while the ones nearest to f2 receive the value 1.
-    
+
     Inputs
     ------
         * f:      Gray-scale (uint8 or uint16) image.
@@ -794,7 +794,7 @@ def toggle(f, f1, f2, option="gray"):
 
     Examples
     --------
-    
+
     ..
         #
         #   example 1
@@ -837,40 +837,40 @@ def toggle(f, f1, f2, option="gray"):
 
 def addm(f1, f2):
     """
-        - Purpose
-            Addition of two images, with saturation.
-        - Synopsis
-            y = addm(f1, f2)
-        - Input
-            f1: Unsigned gray-scale (uint8 or uint16), signed (int32) or
-                binary image.
-            f2: Unsigned gray-scale (uint8 or uint16), signed (int32) or
-                binary image. Or constant.
-        - Output
-            y: Unsigned gray-scale (uint8 or uint16), signed (int32) or
-               binary image.
-        - Description
-            addm creates the image y by pixelwise addition of images f1
-            and f2 . When the addition of the values of two pixels saturates
-            the image data type considered, the greatest value of this type
-            is taken as the result of the addition.
-        - Examples
-            #
-            #   example 1
-            #
-            f = to_uint8([255,   255,    0,   10,    0,   255,   250])
-            g = to_uint8([ 0,    40,   80,   140,  250,    10,    30])
-            y1 = addm(f,g)
-            print y1
-            y2 = addm(g, 100)
-            print y2
-            #
-            #   example 2
-            #
-            a = readgray('keyb.tif')
-            b = addm(a,128)
-            show(a)
-            show(b)
+    y = addm(f1, f2)
+
+    Addition of two images, with saturation.
+
+    addm creates the image y by pixelwise addition of images f1
+    and f2 . When the addition of the values of two pixels saturates
+    the image data type considered, the greatest value of this type
+    is taken as the result of the addition.
+
+    Parameters
+    ----------
+        f1 : Unsigned gray-scale (uint8 or uint16), signed (int32) or
+            binary image.
+        f2 : Unsigned gray-scale (uint8 or uint16), signed (int32) or
+            binary image. Or constant.
+    Returns
+    -------
+        y: Unsigned gray-scale (uint8 or uint16), signed (int32) or
+           binary image.
+    Examples
+    --------
+    ::
+
+        f = to_uint8([255,   255,    0,   10,    0,   255,   250])
+        g = to_uint8([ 0,    40,   80,   140,  250,    10,    30])
+        print addm(f,g)
+        print addm(g, 100)
+
+    prints out
+
+    ::
+
+        [255 255  80 150 250 255 255]
+        [100 140 180 240 255 110 130]
     """
     from numpy import array, minimum, maximum
 
@@ -1199,12 +1199,12 @@ def blob(fr, measurement, option="image"):
                 area,
                 centroid,
                 bounding rectangle.
-                
+
             The parameter option controls the output format:
                 'IMAGE': the result is an image;
                 'DATA': the result is a double column vector with the
                 measurement for each blob.
-                
+
             The region with label zero is not measured as it is normally
             the background. The measurement of region with label 1 appears
             at the first row of the output.
@@ -1637,7 +1637,7 @@ def cthick(f, g, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
     from numpy import product
     from string import upper
     if Iab is None: Iab = homothick()
-    DIRECTION = upper(DIRECTION)            
+    DIRECTION = upper(DIRECTION)
     assert isbinary(f),'f must be binary image'
     if n == -1: n = product(f.shape)
     y = f
@@ -1681,7 +1681,7 @@ def cthin(f, g, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
     from numpy import product
     from string import upper
     if Iab is None: Iab = homothin()
-    DIRECTION = upper(DIRECTION)            
+    DIRECTION = upper(DIRECTION)
     assert isbinary(f),'f must be binary image'
     if n == -1: n = product(f.shape)
     y = f
@@ -1720,7 +1720,7 @@ def cwatershed(f, markers, Bc=None, return_lines=False,is_gvoronoi=False):
             To know more about watershed and watershed from markers, see
             BeucMeye:93. The implementation of this function is based on
             LotuFalc:00.
-            
+
             WARNING: There is a common mistake related to the
             marker image g . If this image contains only zeros and ones, but
             it is not a binary image, the result will be an image with all
@@ -2694,7 +2694,7 @@ def infcanon(f, Iab, theta=45, DIRECTION="CLOCKWISE"):
     """
     from string import upper
 
-    DIRECTION = upper(DIRECTION)            
+    DIRECTION = upper(DIRECTION)
     y = union(f,1)
     for t in xrange(0,360,theta):
         Irot = interot( Iab, t, DIRECTION )
@@ -3670,7 +3670,7 @@ def sedisk(r=3, DIM="2D", METRIC="EUCLIDEAN", FLAT="FLAT", h=0):
     from numpy import sqrt, arange, transpose, maximum
 
     METRIC = upper(METRIC)
-    FLAT   = upper(FLAT)            
+    FLAT   = upper(FLAT)
     assert DIM=='2D','Supports only 2D structuring elements'
     if FLAT=='FLAT': y = binary([1])
     else:            y = to_int32([h])
@@ -3788,7 +3788,7 @@ def serot(B, theta=45, DIRECTION="CLOCKWISE"):
     from numpy import array, sin, cos, transpose
     from numpy import cos, sin, pi, concatenate, transpose, array
 
-    DIRECTION = upper(DIRECTION)            
+    DIRECTION = upper(DIRECTION)
     if DIRECTION == "ANTI-CLOCKWISE":
        theta = -theta
     SA = mat2set(B)
@@ -3841,8 +3841,8 @@ def seshow(B, option="NORMAL"):
     """
     from string import upper
 
-    option = upper(option)            
-    if option=='NON-FLAT': 
+    option = upper(option)
+    if option=='NON-FLAT':
         y=to_int32([0])
         if isbinary(B):
             B = intersec(gray(B,'int32'),0)
@@ -4269,7 +4269,7 @@ def supcanon(f, Iab, theta=45, DIRECTION="CLOCKWISE"):
     """
     from string import upper
 
-    DIRECTION = upper(DIRECTION)            
+    DIRECTION = upper(DIRECTION)
     y = intersec(f,0)
     for t in xrange(0,360,theta):
         Irot = interot( Iab, t, DIRECTION )
@@ -4532,7 +4532,7 @@ def thick(f, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
     from numpy import product
     from string import upper
     if Iab is None: Iab = homothick()
-    DIRECTION = upper(DIRECTION)            
+    DIRECTION = upper(DIRECTION)
     assert isbinary(f),'f must be binary image'
     if n == -1: n = product(f.shape)
     y = f
@@ -4583,7 +4583,7 @@ def thin(f, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
     from numpy import product
     from string import upper
     if Iab is None: Iab = homothin()
-    DIRECTION = upper(DIRECTION)            
+    DIRECTION = upper(DIRECTION)
     assert isbinary(f),'f must be binary image'
     if n == -1: n = product(f.shape)
     y = f
@@ -4934,15 +4934,19 @@ def datatype(f):
 
 def add4dilate(f, c):
     """
-        - Purpose
-            Addition for dilation
-        - Synopsis
-            a = add4dilate(f, c)
-        - Input
-            f: Gray-scale (uint8 or uint16) or binary image. Image
-            c: Gray-scale (uint8 or uint16) or binary image. Constant
-        - Output
-            a: Image f + c
+    a = add4dilate(f, c)
+
+    Addition for dilation. Assumes that the minimum value of dtype(f) is
+    to represent -inf (where -inf + c == -inf, for all c)
+
+    Parameters
+    ----------
+      f : Gray-scale or binary image.
+      c : Gray-scale, binary image, or constant.
+
+    Returns
+    -------
+      a : f + c (but with correct implementation of -inf)
 
     """
     from numpy import asarray, minimum, maximum, float64
@@ -4958,38 +4962,28 @@ def add4dilate(f, c):
 
 def mat2set(A):
     """
-            C,V = mat2set(A)
+    C,V = mat2set(A)
 
-            Converts image representation from matrix to set
-        - Input
-            A: Image in matrix format, where the origin (0,0) is at the
+    Converts image representation from matrix to set
+
+    Return tuple with array of pixel coordinates and array of
+    corresponding pixel values. The input image is in the matrix
+    format, like the structuring element, where the origin (0,0) is
+    at the center of the matrix.
+
+    Parameters
+    ----------
+      A : Image in matrix format, where the origin (0,0) is at the
                center of the matrix.
 
-        - Output
-            C: array of pixel coordinates
+    Returns
+    -------
+      C : array of pixel coordinates
+      V : array of pixel values corresponding to the coordinates of C
 
-            V: array of pixel values corresponding to the coordinates of C
-
-        - Description
-            Return tuple with array of pixel coordinates and array of
-            corresponding pixel values. The input image is in the matrix
-            format, like the structuring element, where the origin (0,0) is
-            at the center of the matrix.
-        - Examples
-            #
-            #   example 1
-            #
-            f=to_uint8([[1,2,3],[4,5,6],[7,8,9]])
-            i,v=mat2set(f)
-            print i
-            print v
-            #
-            #   example 2
-            #
-            f=to_uint8([[1,2,3,4],[5,6,7,8]])
-            i,v=mat2set(f)
-            print i
-            print v
+    See also
+    --------
+     set2mat
     """
     from numpy import take, ravel, nonzero, transpose, newaxis
 
@@ -5006,51 +5000,54 @@ def mat2set(A):
 
 def set2mat(A):
     """
-        - Purpose
-            Converts image representation from set to matrix
-        - Synopsis
-            M = set2mat(A)
-        - Input
-            A: Tuple with array of pixel coordinates and optional array of
-               corresponding pixel values
-        - Output
-            M: Image in matrix format, origin (0,0) at the matrix center
-        - Description
-            Return an image in the matrix format built from a tuple of an
-            array of pixel coordinates and a corresponding array of pixel
-            values
-        - Examples
-            #
-            coord=to_int32([
-              [ 0,0],
-              [-1,0],
-              [ 1,1]])
-            A=set2mat((coord,))
-            print A
-            print datatype(A)
-            vu = to_uint8([1,2,3])
-            f=set2mat((coord,vu))
-            print f
-            print datatype(f)
-            vi = to_int32([1,2,3])
-            g=set2mat((coord,vi))
-            print g
-            print datatype(g)
+    M = set2mat(A)
+
+    Converts image representation from set to matrix
+
+    Return an image in the matrix format built from a tuple of an
+    array of pixel coordinates and a corresponding array of pixel
+    values
+
+    Parameters
+    ----------
+      A : Tuple with array of pixel coordinates and optional array of
+          corresponding pixel values
+
+    Returns
+    -------
+      M : Image in matrix format, origin (0,0) at the matrix center
+
+
+    Example:
+
+    ::
+
+        coords = to_int32([ [0,0] , [-1,0] , [1,1]]),
+        print set2mat( (coords,) )
+
+    prints out
+
+    ::
+
+        [0,1,0]
+        [0,1,0]
+        [0,0,1]
     """
     from numpy import put, ones, ravel, shape, newaxis, array, asarray, max, int32
+    import numpy as np
 
-    if len(A) == 2:            
+    if len(A) == 2:
         x, v = A
         v = asarray(v)
     elif len(A) == 1:
         x = A[0]
-        v = ones((len(x),), '1')
+        v = np.ones((len(x),), np.uint8)
     else:
-        raise TypeError, 'Argument must be a tuple of length 1 or 2'
+        raise TypeError, 'pymorph.set2mat: argument must be a tuple of length 1 or 2'
     if len(x) == 0:  return array([0]).astype(v.dtype)
     if len(x.shape) == 1: x = x[newaxis,:]
     dh,dw = abs(x).max(0)
-    h,w = (2*dh)+1, (2*dw)+1 
+    h,w = (2*dh)+1, (2*dw)+1
     M=ones((h,w),int32) * limits(v)[0]
     offset = x[:,0] * w + x[:,1] + (dh*w + dw)
     put(M,offset,v)
@@ -5058,29 +5055,29 @@ def set2mat(A):
 
 def pad4n(f, Bc, value, scale=1):
     """
-        - Purpose
-            pads f with value so that Bc can be applied scaled by scale.
-        - Synopsis
-            y = pad4n(f, Bc, value, scale=1)
-        - Input
-            f:     Image
-            Bc:    Structuring Element (connectivity).
-            value: 
-            scale: Default: 1.
-        - Output
-            The converted image
+    y = pad4n(f, Bc, value, scale=1)
 
+    pads f with value so that Bc can be applied scaled by scale.
+
+    Parameters
+    ----------
+      f :     Image
+      Bc :    Structuring Element (connectivity).
+      value :
+      scale : (default=1).
+    Returns
+    -------
+      The converted image
     """
     from numpy import ones, array
 
     if type(Bc) is not array:
-      Bc = seshow(Bc)            
+      Bc = seshow(Bc)
     Bh, Bw = Bc.shape
     assert Bh%2 and Bw%2, 'structuring element must be odd sized'
     ch, cw = scale * Bh/2, scale * Bw/2
     g = value * ones( f.shape + scale * (array(Bc.shape) - 1))
     g[ ch: -ch, cw: -cw] = f
     return g.astype(f.dtype)
-
 
 # vim: set ts=4 sts=4 sw=4 expandtab smartindent:
