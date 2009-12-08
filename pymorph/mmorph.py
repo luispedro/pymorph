@@ -2952,12 +2952,17 @@ def isbinary(f):
 
 def asbinary(f):
     """
-        fbin = asbinary(f)
+    fbin = asbinary(f)
 
-        Transforms f into a binary image
+    Transforms f into a binary image
 
-        Input: f image of any type, consisting only of 0s and 1s.
-        Output: binary image
+    Parameters
+    ----------
+      f : image of any type, consisting only of 0s and 1s.
+
+    Returns
+    -------
+      fbin : binary image
     """
     import numpy
     if isbinary(f): return f
@@ -3072,27 +3077,29 @@ def labelflat(f, Bc=None, _lambda=0):
 
 def lastero(f, B=None):
     """
-        - Purpose
-            Last erosion.
-        - Synopsis
-            y = lastero(f, B=None)
-        - Input
-            f: Binary image.
-            B: Structuring Element Default: None (3x3 elementary cross).
-        - Output
-            y: Binary image.
-        - Description
-            lastero creates the image y by computing the last erosion by
-            the structuring element B of the image f . The objects found in
-            y are the objects of the erosion by nB that can not be
-            reconstructed from the erosion by (n+1)B , where n is a generic
-            non negative integer. The image y is a proper subset of the
-            morphological skeleton by B of f .
+    Last erosion.
 
+    y = lastero(f, B=None)
+
+    `lastero` creates the image y by computing the last erosion by
+    the structuring element B of the image f . The objects found in
+    y are the objects of the erosion by nB that can not be
+    reconstructed from the erosion by (n+1)B , where n is a generic
+    non negative integer. The image y is a proper subset of the
+    morphological skeleton by B of f .
+
+    Parameters
+    ----------
+      f : Binary image.
+      B : Structuring Element (default: 3x3 elementary cross).
+
+    Returns
+    -------
+      y : Binary image.
     """
 
+    assert isbinary(f),'pymorph.lastero: can only process binary images'
     if B is None: B = secross()
-    assert isbinary(f),'Can only process binary images'
     dt = dist(f,B)
     return regmax(dt,B)
 
@@ -3149,23 +3156,23 @@ def open(f, b=None):
 
 def openrec(f, bero=None, bc=None):
     """
-        - Purpose
-            Opening by reconstruction.
-        - Synopsis
-            y = openrec(f, bero=None, bc=None)
-        - Input
-            f:    Gray-scale (uint8 or uint16) or binary image.
-            bero: Structuring Element Default: None (3x3 elementary cross).
-                  (erosion).
-            bc:   Structuring Element Default: None (3x3 elementary cross).
-                  (connectivity).
-        - Output
-            y: Image (same type of f ).
-        - Description
-            openrec creates the image y by an inf-reconstruction of the
-            image f from its erosion by bero , using the connectivity
-            defined by Bc .
+    y = openrec(f, bero=None, bc=None)
 
+    Opening by reconstruction.
+
+    `openrec` creates the image `y` by an inf-reconstruction of the
+    image `f` from its erosion by `bero`, using the connectivity
+    defined by `Bc`.
+
+    Parameters
+    ----------
+      f :    Gray-scale (uint8 or uint16) or binary image.
+      bero : Eroding structuring element (default: 3x3 cross).
+      bc :   Connecting structuring element (default: 3x3 cross).
+
+    Returns
+    -------
+      y : Image (same type as f).
     """
 
     if bero is None: bero = secross()
@@ -4356,6 +4363,7 @@ def bshow(f1, f2=None, f3=None, factor=17):
     y = bshow(f1, f2=None, f3=None, factor=17)
 
     Generate a graphical representation of overlaid binary images.
+    Does **not** actually display the image anywhere!
 
     Generate an expanded binary image as a graphical representation
     of up to three binary input images. The 1-pixels of the first
