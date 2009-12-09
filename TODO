@@ -8,6 +8,9 @@ For 1.0:
     Be consistent with matplotlib.
     [Fixed in overlay() & randomcolor()]
 
+- Have at least one unit test for all functions with more than one
+    line of code [December 9 2009]
+
 For later:
 
 - Implement surf()
