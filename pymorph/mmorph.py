@@ -688,42 +688,23 @@ def label(f, Bc=None):
 
 def neg(f):
     """
-        - Purpose
-            Negate an image.
-        - Synopsis
-            y = neg(f)
-        - Input
-            f: Unsigned gray-scale (uint8 or uint16), signed (int32) or
-               binary image.
-        - Output
-            y: Unsigned gray-scale (uint8 or uint16), signed (int32) or
-               binary image.
-        - Description
-            neg returns an image y that is the negation (i.e., inverse or
-            involution) of the image f . In the binary case, y is the
-            complement of f .
-        - Examples
-            #
-            #   example 1
-            #
-            f=to_uint8([255, 255, 0, 10, 20, 10, 0, 255, 255])
-            print neg(f)
-            print neg(to_uint8([0, 1]))
-            print neg(to_int32([0, 1]))
-            #
-            #   example 2
-            #
-            a = readgray('gear.tif')
-            b = neg(a)
-            show(a)
-            show(b)
-            #
-            #   example 3
-            #
-            c = readgray('astablet.tif')
-            d = neg(c)
-            show(c)
-            show(d)
+    y = neg(f)
+
+    Negate an image.
+
+    `neg` returns an image `y` that is the negation (i.e., inverse or
+    involution) of the image `f`. In the binary case, `y` is the
+    complement of `f`.
+
+    Parameters
+    ----------
+      f : Unsigned gray-scale (uint8 or uint16), signed (int32) or
+         binary image.
+
+    Returns
+    -------
+      y : Unsigned gray-scale (uint8 or uint16), signed (int32) or
+            binary image.
     """
 
     y = limits(f)[0] + limits(f)[1] - f
