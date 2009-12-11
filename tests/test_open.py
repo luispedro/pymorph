@@ -11,6 +11,8 @@ def test_open():
     expected = np.array(pyplot.imread(path.join(_basedir, 'expected.png')), dtype=bool)
 
     se = pymorph.img2se(ref)
-    img = pymorph.open(img, se)
-    assert np.all(img == expected)
+    res = pymorph.open(img, se)
+
+    assert np.all(img[85:99,280:289] == ref)
+    assert np.all(res == expected)
 
