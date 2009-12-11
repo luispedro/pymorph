@@ -3864,18 +3864,17 @@ def sereflect(Bi):
 
     Reflect a structuring element
 
-    `sereflect` reflects a structuring element by rotating it 180
-    degrees.
+    `sereflect` reflects a structuring element about the origin
 
     Parameters
     ----------
       Bi : Structuring Element
+
     Returns
     -------
       Bo : Structuring Element
     """
-    Bo = serot(Bi, 180)
-    return Bo
+    return Bi[::-1, ::-1]
 
 
 def sedilate(B1, B2):
