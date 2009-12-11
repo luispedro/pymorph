@@ -2046,55 +2046,26 @@ def endpoints(option="loop"):
 
 def erode(f, b=None):
     """
-        - Purpose
-            Erode an image by a structuring element.
-        - Synopsis
-            y = erode(f, b=None)
-        - Input
-            f: Gray-scale (uint8 or uint16) or binary image.
-            b: Structuring Element Default: None (3x3 elementary cross).
-        - Output
-            y: Image
-        - Description
-            ero performs the erosion of the image f by the structuring
-            element b . Erosion is a neighbourhood operator that compairs
-            locally b with f , according to an inclusion rule. Since erosion
-            is a fundamental operator to the construction of all other
-            morphological operators, it is also called an elementary
-            operator of Mathematical Morphology. When f is a gray-scale
-            image, b may be a flat or non-flat structuring element.
-        - Examples
-            #
-            #   example 1
-            #
-            f=binary([
-               [1, 1, 1, 0, 0, 1, 1],
-               [1, 0, 1, 1, 1, 0, 0],
-               [0, 0, 0, 0, 1, 0, 0]])
-            b=binary([1, 1, 0])
-            erode(f,b)
-            f=to_uint8([
-               [ 0,   1,  2, 50,  4,  5],
-               [ 2,   3,  4,  0,  0,  0],
-               [12, 255, 14, 15, 16, 17]])
-            erode(f,b)
-            #
-            #   example 2
-            #
-            f=binary(readgray('blob.tif'))
-            bimg=binary(readgray('blob1.tif'))
-            b=img2se(bimg)
-            g=erode(f,b)
-            show(f)
-            show(g)
-            show(g,gradm(f))
-            #
-            #   example 3
-            #
-            f=readgray('pcb_gray.tif')
-            b=sedisk(3)
-            show(f)
-            show(erode(f,b))
+    y = erode(f, b=None)
+
+    Erode an image by a structuring element.
+
+    `erode` performs the erosion of the image `f` by the structuring
+    element `b`. Erosion is a neighbourhood operator that compairs
+    locally `b` with `f`, according to an inclusion rule. Since erosion
+    is a fundamental operator to the construction of all other
+    morphological operators, it is called an elementary
+    operator of Mathematical Morphology. When `f` is a gray-scale
+    image, `b` may be a flat or non-flat structuring element.
+
+    Parameters
+    ----------
+      f : Gray-scale (uint8 or uint16) or binary image.
+      b : Structuring Element Default: None (3x3 elementary cross).
+
+    Returns
+    -------
+      y : Image
     """
 
     if b is None: b = secross()
@@ -3744,37 +3715,31 @@ def seline(l=3, theta=0):
     return B
 
 
-def serot(B, theta=45, DIRECTION="CLOCKWISE"):
+def serot(b, theta=45, direction="clockwise"):
     """
-        - Purpose
-            Rotate a structuring element.
-        - Synopsis
-            BROT = serot(B, theta=45, DIRECTION="CLOCKWISE")
-        - Input
-            B:         Structuring Element
-            theta:     Double Default: 45. Degrees of rotation. Available
-                       values are multiple of 45 degrees.
-            DIRECTION: String Default: "CLOCKWISE". 'CLOCKWISE' or '
-                       ANTI-CLOCKWISE'.
-        - Output
-            BROT: Structuring Element
-        - Description
-            serot rotates a structuring element B of an angle theta .
-        - Examples
-            #
-            b = img2se(binary([[0, 0, 0], [0, 1, 1], [0, 0, 0]]));
-            seshow(b)
-            seshow(serot(b))
-            seshow(serot(b,45,'ANTI-CLOCKWISE'))
+    brot = serot(b, theta=45, direction="clockwise")
+
+    Rotate a structuring element.
+    `serot` rotates structuring element `b` by `theta` degrees.
+
+    Parameters
+    ----------
+      B :       Structuring Element
+      theta :   Degrees of rotation. Should be a multiple of 45 degrees. If not,
+                the rotation is approximate (default: 45).
+      direction : one of ('clockwise', 'anti-clockwise'), default is 'clockwise'
+    Returns
+    -------
+      brot : structuring element
     """
-    from string import upper
+    from string import lower
     from numpy import array, sin, cos, transpose
     from numpy import cos, sin, pi, concatenate, transpose, array
 
-    DIRECTION = upper(DIRECTION)
-    if DIRECTION == "ANTI-CLOCKWISE":
+    direction = lower(direction)
+    if direction == "anti-clockwise":
        theta = -theta
-    SA = mat2set(B)
+    SA = mat2set(b)
     theta = pi * theta//180
     (y,v)=SA
     if len(y)==0: return binary([0])
@@ -3783,8 +3748,8 @@ def serot(B, theta=45, DIRECTION="CLOCKWISE"):
     x0 = to_int32((x0 +0.5)*(x0>=0) + (x0-0.5)*(x0<0))
     x1 = to_int32((x1 +0.5)*(x1>=0) + (x1-0.5)*(x1<0))
     x = transpose(array([transpose(x1),transpose(x0)]))
-    BROT = set2mat((x,v))
-    return BROT
+    brot = set2mat((x,v))
+    return brot
 
 
 def seshow(B, option="NORMAL"):
@@ -3914,23 +3879,19 @@ def setrans(Bi, t):
 
 def sereflect(Bi):
     """
-        - Purpose
-            Reflect a structuring element
-        - Synopsis
-            Bo = sereflect(Bi)
-        - Input
-            Bi: Structuring Element
-        - Output
-            Bo: Structuring Element
-        - Description
-            sereflect reflects a structuring element by rotating it 180
-            degrees.
-        - Examples
-            #
-            b1 = seline(5,30)
-            print seshow(b1)
-            b2 = sereflect(b1)
-            print seshow(b2)
+    Bo = sereflect(Bi)
+
+    Reflect a structuring element
+
+    `sereflect` reflects a structuring element by rotating it 180
+    degrees.
+
+    Parameters
+    ----------
+      Bi : Structuring Element
+    Returns
+    -------
+      Bo : Structuring Element
     """
     Bo = serot(Bi, 180)
     return Bo
