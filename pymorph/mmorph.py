@@ -3106,48 +3106,25 @@ def lastero(f, B=None):
 
 def open(f, b=None):
     """
-        - Purpose
-            Morphological opening.
-        - Synopsis
-            y = open(f, b=None)
-        - Input
-            f: Gray-scale (uint8 or uint16) or binary image.
-            b: Structuring Element Default: None (3x3 elementary cross).
-        - Output
-            y: Image
-        - Description
-            open creates the image y by the morphological opening of the
-            image f by the structuring element b . In the binary case, the
-            opening by the structuring element B may be interpreted as the
-            union of translations of B included in f . In the gray-scale
-            case, there is a similar interpretation taking the functions
-            umbra.
-        - Examples
-            #
-            #   example 1
-            #
-            f=binary(readgray('blob.tif'))
-            bimg=binary(readgray('blob1.tif'))
-            b=img2se(bimg)
-            show(f)
-            show(open(f,b))
-            show(open(f,b),gradm(f))
-            #
-            #   example 2
-            #
-            a=binary(readgray('pcb1bin.tif'))
-            b=open(a,sebox(2))
-            c=open(a,sebox(4))
-            show(a)
-            show(b)
-            show(c)
-            #
-            #   example 3
-            #
-            a=readgray('astablet.tif')
-            b=open(a,sedisk(18))
-            show(a)
-            show(b)
+    y = open(f, b=None)
+
+    Morphological opening.
+
+    `open` creates the image y by the morphological opening of the
+    image `f` by the structuring element `b`. In the binary case, the
+    opening by the structuring element `b` may be interpreted as the
+    union of translations of `b` included in `f`. In the gray-scale
+    case, there is a similar interpretation taking the functions
+    umbra.
+
+    Parameters
+    ----------
+      f : Gray-scale (uint8 or uint16) or binary image.
+      b : Structuring element (default: 3x3 elementary cross).
+
+    Returns
+    -------
+      y : Image
     """
 
     if b is None: b = secross()
