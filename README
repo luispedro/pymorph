@@ -4,7 +4,16 @@ PYMORPH
 
 This is a collection of pure python implementations of many image morphology functions.
 
-http://luispedro.org/pymorph
+Includes basic operations such as
+    - erode
+    - dilate
+    - open
+    - tophat opening
+    - watershed
+    - ...
+
+
+*Website*: `http://luispedro.org/software/pymorph <http://luispedro.org/software/pymorph>`_
 
 ========
 INSTALL
