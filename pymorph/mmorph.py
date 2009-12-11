@@ -154,22 +154,21 @@ def concat(dim, *imgs):
     dimcode = string.lower(dim)[0]
     if not imgs:
         raise ValueError, 'pymorph.concat: received empty image list'
-    h,w = imgs[0].shape
-    reshape = False
-    for img in imgs:
-        cur_h,cur_w = img.shape
-        if cur_h != h or cur_w != w:
-            h = max(h, cur_h)
-            w = max(w, cur_w)
-            reshape = True
-    if reshape:
+    shapes = np.array([img.shape for img in imgs])
+    varies = shapes.var(0).astype(bool)
+    if  (dimcode == 'w' and varies[0]) or \
+        (dimcode == 'h' and varies[1]) or \
+        (dimcode == 'd' and varies.any()):
+        max0,max1 = shapes.max(1)
         imgs = list(imgs)
-        for i,img in enumerate(imgs):
-            if img.shape != (h,w):
-                imgs[i] = np.zeros((h,w),img.dtype)
-                cur_h,cur_w = img.shape
-                imgs[i][:cur_h,:cur_w] = img
-
+        for (i,img),(s0,s1) in zip(enumerate(imgs), shapes):
+            if dimcode == 'w':
+                imgs[i] = np.zeros((s0,max1), img.dtype)
+            elif dimcode == 'h':
+                imgs[i] = np.zeros((max0,s1), img.dtype)
+            else:
+                imgs[i] = np.zeros((max0,max1), img.dtype)
+            imgs[i][:s0,:s1] = img
     if dimcode == 'w':
         return np.hstack(imgs)
     elif dimcode == 'h':
