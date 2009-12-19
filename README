@@ -2,7 +2,7 @@
 PYMORPH
 ========
 
-This is a collection of pure python implementations of many image morphology functions.
+Pymorph is a collection of pure python implementations of many image morphology functions.
 
 Includes basic operations such as
     - erode
