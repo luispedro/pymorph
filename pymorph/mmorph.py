@@ -3734,92 +3734,69 @@ def serot(b, theta=45, direction="clockwise"):
     return brot
 
 
-def seshow(B, option="NORMAL"):
+def seshow(b, option="normal"):
     """
-        - Purpose
-            Display a structuring element as an image.
-        - Synopsis
-            y = seshow(B, option="NORMAL")
-        - Input
-            B:      Structuring Element
-            option: String Default: "NORMAL". 'NORMAL', ' EXPAND' or '
-                    NON-FLAT'
-        - Output
-            y: Gray-scale (uint8 or uint16) or binary image.
-        - Description
-            seshow used with the option EXPAND generates an image y that
-            is a suitable graphical representation of the structuring
-            element B . This function is useful to convert a structuring
-            element to an image. The origin of the structuring element is at
-            the center of the image. If B is flat, y is binary, otherwise, y
-            is signed int32 image. When using the option NON-FLAT, the
-            output y is always a signed int32 image.
-        - Examples
-            #
-            #   example 1
-            #
-            b=secross(3);
-            print seshow(b)
-            a = seshow(b,'EXPAND')
-            show(a)
-            print seshow(b,'NON-FLAT')
-            #
-            #   example 2
-            #
-            b=sedisk(2,'2D','EUCLIDEAN','NON-FLAT')
-            print seshow(b)
+    y = seshow(b, option="NORMAL")
+
+    Display a structuring element as an image.
+
+    `seshow` used with the option 'expand' generates an image `y` that
+    is a suitable graphical representation of the structuring
+    element `b`. This function is useful to convert a structuring
+    element to an image. The origin of the structuring element is at
+    the center of the image. If `b` is flat, y is binary, otherwise, y
+    is signed `int32 image. When using the option 'non-flat', the
+    output `y` is always a signed `int32` image.
+
+    Parameters
+    ----------
+      b :      Structuring element
+      option : One of ('normal', 'expand', 'non-flat').
+              Default: 'normal'
+    Returns
+    -------
+      y : Gray-scale (uint8 or uint16) or binary image.
     """
     from string import upper
 
     option = upper(option)
     if option=='NON-FLAT':
-        y=to_int32([0])
-        if isbinary(B):
-            B = intersec(gray(B,'int32'),0)
+        y = to_int32([0])
+        if isbinary(b):
+            b = intersec(gray(b,'int32'),0)
     elif option=='NORMAL':
-        if isbinary(B):    y=binary([1])
+        if isbinary(b):
+            y = binary([1])
         else:
-           y=to_int32([0])
+           y = to_int32([0])
     elif option=='EXPAND':
-        assert isbinary(B), 'This option is only available with flat SE'
-        y = sedilate(binary([1]),B)
-        b1= binary(y>=0)
-        b0= erode(y,B)
-        y = bshow(b1,y,b0)
-        return y
+        assert isbinary(b), 'pymorph.seshow: \'expand\' option is only available with flat SE'
+        y = sedilate(binary([1]),b)
+        b1 = (y>=0)
+        b0 = erode(y,b)
+        return bshow(b1,y,b0)
     else:
-        print 'seshow: not a valid flag: NORMAL, EXPAND or NON-FLAT'
-    return sedilate(y,B)
+        assert False, 'pymorph.seshow: not a valid flag: NORMAL, EXPAND or NON-FLAT'
+    return sedilate(y,b)
 
 
 def sesum(B=None, N=1):
     """
-        - Purpose
-            N-1 iterative Minkowski additions
-        - Synopsis
-            NB = sesum(B=None, N=1)
-        - Input
-            B: Structuring Element Default: None (3x3 elementary cross).
-            N: Non-negative integer. Default: 1.
-        - Output
-            NB: Structuring Element
-        - Description
-            sesum creates the structuring element NB from N - 1 iterative
-            Minkowski additions with the structuring element B .
-        - Examples
-            #
-            #   example 1
-            #
-            b = img2se(binary([[1, 1, 1], [1, 1, 1], [0, 1, 0]]))
-            seshow(b)
-            b3 = sesum(b,3)
-            seshow(b3)
-            #
-            #   example 2
-            #
-            b = sedisk(1,'2D','CITY-BLOCK','NON-FLAT');
-            seshow(b)
-            seshow(sesum(b,2))
+    NB = sesum(B=None, N=1)
+
+    N-1 iterative Minkowski additions
+
+    `sesum` creates the structuring element `NB` from `N` - 1 iterative
+    Minkowski additions with the structuring element `B`.
+
+    Parameters
+    ----------
+      b : Structuring element (Default: 3x3 elementary cross).
+      N : Non-negative integer. Default: 1.
+
+    Returns
+    -------
+      NB : Structuring Element
     """
 
     if B is None: B = secross()
@@ -3834,29 +3811,24 @@ def sesum(B=None, N=1):
 
 def setrans(Bi, t):
     """
-        - Purpose
-            Translate a structuring element
-        - Synopsis
-            Bo = setrans(Bi, t)
-        - Input
-            Bi: Structuring Element
-            t:
-        - Output
-            Bo: Structuring Element
-        - Description
-            setrans translates a structuring element by a specific value.
-        - Examples
-            #
-            b1 = seline(5)
-            seshow(b1)
-            b2 = setrans(b1,[2,-2])
-            seshow(b2)
+    Bo = setrans(Bi, t)
+
+    Translate a structuring element
+
+    setrans translates a structuring element by a specific value.
+
+    Parameters
+    ----------
+      Bi : Structuring Element
+      t : translation amount
+    Returns
+    -------
+      Bo : Structuring Element
     """
 
     x,v=mat2set(Bi)
     Bo = set2mat((x+t,v))
-    Bo = Bo.astype(Bi.dtype)
-    return Bo
+    return Bo.astype(Bi.dtype)
 
 
 def sereflect(Bi):
@@ -3880,30 +3852,24 @@ def sereflect(Bi):
 
 def sedilate(B1, B2):
     """
-        - Purpose
-            Dilate one structuring element by another
-        - Synopsis
-            Bo = sedilate(B1, B2)
-        - Input
-            B1: Structuring Element
-            B2: Structuring Element
-        - Output
-            Bo: Structuring Element
-        - Description
-            sedil dilates an structuring element by another. The main
-            difference between this dilation and dil is that the dilation
-            between structuring elements are not bounded, returning another
-            structuring element usually larger than anyone of them. This
-            gives the composition of the two structuring elements by
-            Minkowski addition.
-        - Examples
-            #
-            b1 = seline(5)
-            seshow(b1)
-            b2 = sedisk(2)
-            seshow(b2)
-            b3 = sedilate(b1,b2)
-            seshow(b3)
+    Bo = sedilate(B1, B2)
+
+    Dilate one structuring element by another
+
+    `sedilate` dilates an structuring element by another. The main
+    difference between this dilation and `dilate` is that the dilation
+    between structuring elements are not bounded, returning another
+    structuring element usually larger than anyone of them. This
+    gives the composition of the two structuring elements by
+    Minkowski addition.
+
+    Parameters
+    ----------
+      B1 : Structuring Element
+      B2 : Structuring Element
+    Returns
+    -------
+    Bo: Structuring Element
     """
     from numpy import newaxis, array, int32
 
@@ -4037,7 +4003,7 @@ def skelm(f, B=None, option="binary"):
         nb = sedilate(nb, B)
         y = union(y, gray(f1,'uint16',r))
     if option == 'BINARY':
-        y = binary(y)
+        return binary(y)
     return y
 
 
@@ -4244,10 +4210,8 @@ def supgen(f, INTER):
     """
 
     A,Bc = INTER
-    y = intersec(erode(f,A),
+    return intersec(erode(f,A),
                    erode(neg(f),Bc))
-    return y
-
 
 def suprec(f, g, Bc=None):
     """
@@ -4706,44 +4670,41 @@ def bench(count=10):
     out=[]
 
 
-def maxleveltype(TYPE='uint8'):
+def maxleveltype(type='uint8'):
     """
-        - Purpose
-            Returns the maximum value associated to an image datatype
-        - Synopsis
-            max = maxleveltype(TYPE='uint8')
-        - Input
-            TYPE: String Default: 'uint8'. One of the strings 'uint8',
-                  'uint16' or 'int32', specifying the image type
-        - Output
-            max: the maximum level value of type TYPE
+    max = maxleveltype(type='uint8')
 
+    Returns the maximum value supported by a datatype
+
+    Parameters
+    ----------
+      type : one of ('uint8', 'uint16', 'int32'). Default: uint8
+    Returns
+    -------
+      The maximum level value of `type`
     """
-
-    max = 0
-    if   TYPE == 'uint8'  : max=255
-    elif TYPE == 'binary' : max=1
-    elif TYPE == 'uint16' : max=65535
-    elif TYPE == 'int32'  : max=2147483647
-    else:
-        assert 0, 'does not support this data type:'+TYPE
-    return max
+    if type == 'uint8': return 255
+    if type == 'binary': return 1
+    if type == 'uint16': return 65535
+    if type == 'int32': return 2147483647
+    assert False, 'pymorph.maxleveltype: does not support this data type:'+TYPE
 
 
 def to_int32(f):
     """
-        - Purpose
-            Convert an image to an int32 image.
-        - Synopsis
-            img = to_int32(f)
-        - Input
-            f: Any image
-        - Output
-            img: The converted image
-        - Description
-            int32 clips the input image between the values -2147483648 and
-            2147483647 and converts it to the signed 32-bit datatype.
+    Convert an image to an int32 image.
 
+    img = to_int32(f)
+
+    `to_int32` clips the input image between the values -2147483648 and
+    2147483647 and converts it to the signed 32-bit datatype.
+
+    Parameters
+    ----------
+      f : Any image
+    Returns
+    -------
+      img : The converted image
     """
     from numpy import int32, asanyarray
     return asanyarray(f).astype(int32)
@@ -4751,21 +4712,31 @@ def to_int32(f):
 
 def to_uint8(f):
     """
-        - Purpose
-            Convert an image to an uint8 image.
-        - Synopsis
-            img = to_uint8(f)
-        - Input
-            f: Any image
-        - Output
-            img: Gray-scale uint8 image. The converted image
-        - Description
-            uint8 clips the input image between the values 0 and 255 and
-            converts it to the unsigned 8-bit datatype.
-        - Examples
-            #
-            a = to_int32([-3,0,8,600])
-            print to_uint8(a)
+    img = to_uint8(f)
+
+    Convert an image to an uint8 image.
+
+    `to_uint8` clips the input image between the values 0 and 255 and
+    converts it to the unsigned 8-bit datatype.
+
+    Parameters
+    ----------
+      f : Any image
+    Returns
+    -------
+      img : Gray-scale uint8 image. The converted image
+
+    Examples
+    --------
+    ::
+
+        print to_uint8([-3, 0, 8, 600])
+
+    prints out
+
+    ::
+
+        [  0   0   8 255]
     """
     from numpy import array, clip, uint8
 
@@ -4775,21 +4746,19 @@ def to_uint8(f):
 
 def to_uint16(f):
     """
-        - Purpose
-            Convert an image to a uint16 image.
-        - Synopsis
-            img = to_uint16(f)
-        - Input
-            f: Any image
-        - Output
-            img: The converted image
-        - Description
-            uint16 clips the input image between the values 0 and 65535 and
-            converts it to the unsigned 16-bit datatype.
-        - Examples
-            #
-            a = to_int32([-3,0,8,100000])
-            print to_uint16(a)
+    img = to_uint16(f)
+
+    Convert an image to a uint16 image.
+
+    `to_uint16` clips the input image between the values 0 and 65535 and
+    converts it to the unsigned 16-bit datatype.
+
+    Parameters
+    ----------
+      f : Any image
+    Returns
+    -------
+      img : The converted image
     """
     from numpy import array, clip
 
@@ -4809,11 +4778,11 @@ def to_gray(f):
 
     Parameters
     ----------
-        * f: image
+      f : image
 
     Outputs
     -------
-        * g: gray image of same type as input
+      g : gray image of same type as input
     """
     import numpy as np
 
@@ -4832,20 +4801,23 @@ def to_gray(f):
 
 def datatype(f):
     """
-        - Purpose
-            Return the image datatype string
-        - Synopsis
-            type = datatype(f)
-        - Input
-            f: Unsigned gray-scale (uint8 or uint16), signed (int32) or
-               binary image. Any image
-        - Output
-            type: String String representation of image type: 'binary',
-                  'uint8', 'uint16' or 'int32'
-        - Description
-            datatype returns a string that identifies the pixel datatype
-            of the image f .
+    type = datatype(f)
 
+    Return the image datatype string
+
+    datatype returns a string that identifies the pixel datatype
+    of the image `f`.
+
+    Consider using f.dtype.
+
+    Parameters
+    ----------
+      f : Unsigned gray-scale (uint8 or uint16), signed (int32) or
+         binary image. Any image
+    Returns
+    -------
+      type : String String representation of image type: 'binary',
+          'uint8', 'uint16' or 'int32'
     """
     from numpy import bool, uint8, uint16, int32
     code = f.dtype
