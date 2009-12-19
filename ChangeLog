@@ -1,0 +1,4 @@
+2009-12-18 Luis Pedro Coelho <luis@luispedro.org>
+	* Version 0.91.8
+	* Fix serot()
+

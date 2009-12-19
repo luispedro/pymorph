@@ -42,7 +42,7 @@ classifiers = [
     ]
 
 setup(name='pymorph',
-      version='0.91.7',
+      version='0.91.8',
       description='Image Morphology Toolbox',
       long_description=long_description,
       author='Luis Pedro Coelho',
