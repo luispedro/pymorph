@@ -3714,15 +3714,16 @@ def serot(b, theta=45, direction="clockwise"):
       brot : structuring element
     """
     from string import lower
-    from numpy import array, sin, cos, transpose
-    from numpy import cos, sin, pi, concatenate, transpose, array
+    from numpy import array, transpose, concatenate
+    from numpy import cos, sin, pi
 
     direction = lower(direction)
     if direction == "anti-clockwise":
        theta = -theta
-    SA = mat2set(b)
-    theta = pi * theta//180
-    (y,v)=SA
+    theta = pi * theta/180.
+    ct = cos(theta)
+    st = sin(theta)
+    y,v = mat2set(b)
     if len(y)==0: return binary([0])
     x0 = y[:,1] * cos(theta) - y[:,0] * sin(theta)
     x1 = y[:,1] * sin(theta) + y[:,0] * cos(theta)
