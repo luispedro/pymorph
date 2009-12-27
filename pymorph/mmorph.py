@@ -1275,166 +1275,118 @@ def closeth(f, B=None):
     return subm(close(f, B), f)
 
 
-def cthick(f, g, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
+def cthick(f, g, Iab=None, n=-1, theta=45, direction="clockwise"):
     """
-        - Purpose
-            Image transformation by conditional thickening.
-        - Synopsis
-            y = cthick(f, g, Iab=None, n=-1, theta=45,
-            DIRECTION="CLOCKWISE")
-        - Input
-            f:         Binary image.
-            g:         Binary image.
-            Iab:       Interval Default: None (homothick).
-            n:         Non-negative integer. Default: -1. Number of
-                       iterations.
-            theta:     Double Default: 45. Degrees of rotation: 45, 90, or
-                       180.
-            DIRECTION: String Default: "CLOCKWISE". 'CLOCKWISE' or
-                       'ANTI-CLOCKWISE'.
-        - Output
-            y: Binary image.
-        - Description
-            cthick creates the binary image y by performing a thickening
-            of the binary image f conditioned to the binary image g . The
-            number of iterations of the conditional thickening is n and in
-            each iteration the thickening is characterized by rotations of
-            theta of the interval Iab .
-        - Examples
-            #
-            #   example 1
-            #
-            f=readgray('blob2.tif')
-            show(f)
-            t=se2hmt(binary([[0,0,0],[0,0,1],[1,1,1]]),
-                                      binary([[0,0,0],[0,1,0],[0,0,0]]))
-            print intershow(t)
-            f1=thick(f,t,40); # The thickening makes the image border grow
-            show(f1)
-            #
-            #   example 2
-            #
-            f2=cthick(f,neg(frame(f)),t,40) # conditioning to inner pixels
-            fn=cthick(f,neg(frame(f)),t) #pseudo convex hull
-            show(f2)
-            show(fn,f)
+    y = cthick(f, g, Iab={Homothick interval}, n={infinite}, theta=45, direction="clockwise")
+
+    Image transformation by conditional thickening.
+
+    `cthick` creates the binary image `y` by performing a thickening
+    of the binary image `f` conditioned to the binary image `g`. The
+    number of iterations of the conditional thickening is `n` and in
+    each iteration the thickening is characterized by rotations of
+    `theta` of the interval `Iab`.
+
+    Parameters
+    ----------
+      f :         Binary image.
+      g :         Binary image.
+      Iab :       Interval (default: homothick).
+      n :         Number of iterations, -1 for infinite (default: -1)
+      theta :     Degrees of rotation, 45 (default), 90, or 180.
+      direction: 'clockwise' or 'anti-clockwise'.
+    Returns
+    -------
+      y : Binary image.
     """
-    from numpy import product
     from string import upper
+
     if Iab is None: Iab = homothick()
-    DIRECTION = upper(DIRECTION)
-    assert isbinary(f),'f must be binary image'
-    if n == -1: n = product(f.shape)
-    y = f
-    old = y
+    if n == -1: n = f.size
+    assert isbinary(f), 'pymorph.cthick: f must be binary image'
+
+    direction = upper(direction)
     for i in xrange(n):
+        prev = f
         for t in xrange(0,360,theta):
-            sup = supgen( y, interot(Iab, t, DIRECTION))
-            y = intersec(union( y, sup),g)
-        if isequal(old,y): break
-        old = y
-    return y
+            sup = supgen(f, interot(iab, t, direction))
+            f = intersec(union(f, sup),g)
+        if isequal(prev, f): break
+    return f
 
 
-def cthin(f, g, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
+def cthin(f, g, Iab=None, n=-1, theta=45, direction="clockwise"):
     """
-        - Purpose
-            Image transformation by conditional thinning.
-        - Synopsis
-            y = cthin(f, g, Iab=None, n=-1, theta=45,
-            DIRECTION="CLOCKWISE")
-        - Input
-            f:         Binary image.
-            g:         Binary image.
-            Iab:       Interval Default: None (homothin).
-            n:         Non-negative integer. Default: -1. Number of
-                       iterations.
-            theta:     Double Default: 45. Degrees of rotations: 45, 90, or
-                       180.
-            DIRECTION: String Default: "CLOCKWISE". 'CLOCKWISE' or '
-                       ANTI-CLOCKWISE'.
-        - Output
-            y: Binary image.
-        - Description
-            cthin creates the binary image y by performing a thinning of
-            the binary image f conditioned to the binary image g . The
-            number of iterations of the conditional thinning is n and in
-            each iteration the thinning is characterized by rotations of
-            theta of the interval Iab .
+    y = cthin(f, g, Iab={Homothin interval}, n={infinite}, theta=45, direction="clockwise")
 
+    Image transformation by conditional thinning.
+
+    `cthin` creates the binary image y by performing a thinning of
+    the binary image `f` conditioned to the binary image `g`. The
+    number of iterations of the conditional thinning is `n` and in
+    each iteration the thinning is characterized by rotations of
+    `theta` of the interval `Iab`.
+
+    Parameters
+    ----------
+      f :         Binary image.
+      g :         Binary image.
+      Iab :       Interval (default: homothin()).
+      n :         Number of iterations, -1 for infinite (default: -1)
+      theta :     Degrees of rotation, 45 (default), 90, or 180.
+      direction: 'clockwise' or 'anti-clockwise'.
+    Returns
+    -------
+      y : Binary image.
     """
-    from numpy import product
     from string import upper
     if Iab is None: Iab = homothin()
-    DIRECTION = upper(DIRECTION)
     assert isbinary(f),'f must be binary image'
-    if n == -1: n = product(f.shape)
-    y = f
-    old = y
+    direction = upper(direction)
+    if n == -1: n = f.size
     for i in xrange(n):
+        prev = f
         for t in xrange(0,360,theta):
-            sup = supgen( y, interot(Iab, t, DIRECTION))
-            y = union(subm( y, sup),g)
-        if isequal(old,y): break
-        old = y
-    return y
+            sup = supgen(f, interot(iab, t, direction))
+            y = union(subm(f, sup),g)
+        if isequal(prev, f): break
+    return f
 
 
 def cwatershed(f, markers, Bc=None, return_lines=False,is_gvoronoi=False):
     """
-        R = cwatershed(f, g, Bc=None, return_lines=False)
-        R,L = cwatershed(f, g, Bc=None, return_lines=True)
-            Detection of watershed from markers.
+    R = cwatershed(f, g, Bc=None, return_lines=False)
+    R,L = cwatershed(f, g, Bc=None, return_lines=True)
 
-        - Input
-            f:       Gray-scale (uint8 or uint16) image.
-            markers: Gray-scale (uint8 or uint16) or binary image. marker
+    Detection of watershed from markers.
+
+    `cwatershed` creates the image `R` by detecting the domain of the
+    catchment basins of `f` indicated by the marker image `g`,
+    according to the connectivity defined by `Bc`.
+
+    If `return_lines`, `L` will be a labeled image of the catchment basins
+    domain or just a binary image that presents the watershed lines.
+    To know more about watershed and watershed from markers, see
+    BeucMeye:93. The implementation of this function is based on
+    LotuFalc:00.
+
+    WARNING: There is a common mistake related to the
+    marker image `g`. If this image contains only zeros and ones, but
+    it is not a binary image, the result will be an image with all
+    ones. If the marker image is binary, you have to set this
+    explicitly (e.g., `cwatershed(f,g>0)` or `cwatershed(f,g.astype(bool))`)
+
+    Parameters
+    ----------
+      f :       Gray-scale (uint8 or uint16) image.
+      markers : Gray-scale (uint8 or uint16) or binary image. marker
                      image: binary or labeled.
-            Bc:      Structuring Element Default: None (3x3 elementary
-                     cross). (watershed connectivity)
-            return_lines: Whether to return lines as well as regions (default: False)
-        - Output
-            Y: Gray-scale (uint8 or uint16) or binary image.
-
-        - Description
-            cwatershed creates the image y by detecting the domain of the
-            catchment basins of f indicated by the marker image g ,
-            according to the connectivity defined by Bc . According to the
-            flag LINEREG y will be a labeled image of the catchment basins
-            domain or just a binary image that presents the watershed lines.
-            To know more about watershed and watershed from markers, see
-            BeucMeye:93. The implementation of this function is based on
-            LotuFalc:00.
-
-            WARNING: There is a common mistake related to the
-            marker image g . If this image contains only zeros and ones, but
-            it is not a binary image, the result will be an image with all
-            ones. If the marker image is binary, you have to set this
-            explicitly (e.g., cwatershed(f,g>0) or cwatershed(f,g.astype(bool)))
-        - Examples
-            #
-            #   example 1
-            #
-            a = to_uint8([\
-                [10,   10,   10,   10,   10,   10,   10],\
-                [10,    9,    6,   18,    6,    5,   10],\
-                [10,    9,    6,   18,    6,    8,   10],\
-                [10,    9,    9,   15,    9,    9,   10],\
-                [10,    9,    9,   15,   12,   10,   10],\
-                [10,   10,   10,   10,   10,   10,   10]])
-            b = (a == 6)
-            print cwatershed(a,b)
-            print cwatershed(a,b,secross(),return_lines=True)[1]
-            #
-            #   example 2
-            #
-            f=readgray('astablet.tif')
-            grad=gradm(f)
-            mark=regmin(hmin(grad,17))
-            w=cwatershed(grad,mark)
-            show(grad)
-            show(mark)
-            show(w)
+      Bc :      Watershed connectivity (default: 3x3 cross)
+      return_lines : Whether to return lines as well as regions (default: False)
+    Returns
+    -------
+      R : Gray-scale (uint8 or uint16) or binary image.
+      L : Binary line image
     """
     from numpy import ones, zeros, nonzero, array, put, take, argmin, transpose, compress, concatenate, where, uint8
     from heapq import heapify, heappush, heappop
@@ -2406,23 +2358,19 @@ def intershow(Iab):
 
 def isbinary(f):
     """
-        - Purpose
-            Check for binary image
-        - Synopsis
-            bool = isbinary(f)
-        - Input
-            f:
-        - Output
-            bool: Boolean
-        - Description
-            isbinary returns True if the datatype of the input image is
-            binary. A binary image has just the values 0 and 1.
-        - Examples
-            #
-            a=to_uint8([0, 1, 0, 1])
-            print isbinary(a)
-            b=(a)
-            print isbinary(b)
+    bool = isbinary(f)
+
+    Check for binary image
+
+    `isbinary` returns True if the datatype of the input image is
+    binary. A binary image has just the values `0` and `1`.
+
+    Parameters
+    ----------
+      f : Image
+    Returns
+    -------
+      bool : whether `f` is a binary image
     """
     return f.dtype == bool
 
@@ -2447,30 +2395,23 @@ def asbinary(f):
 
 def isequal(f1, f2):
     """
-        - Purpose
-            Verify if two images are equal
-        - Synopsis
-            bool = isequal(f1, f2)
-        - Input
-            f1:  Unsigned gray-scale (uint8 or uint16), signed (int32) or
-                 binary image.
-            f2:  Unsigned gray-scale (uint8 or uint16), signed (int32) or
-                 binary image.
-        - Output
-            bool: Boolean
-        - Description
-            isequal compares the images f1 and f2 and returns True, if
-            f1 and f2 have the same size and f1(x)=f2(x), for all pixel x;
-            otherwise, returns False
-        - Examples
-            #
-            f1 = to_uint8(arrayrange(4))
-            print f1
-            f2 = to_uint8([9, 5, 3, 3])
-            print f2
-            f3 = f1
-            isequal(f1,f2)
-            isequal(f1,f3)
+    bool = isequal(f1, f2)
+
+    Check if two images are equal
+
+    `isequal` compares the images `f1` and f2 and returns `True`, if
+    `f1 and `f2` have the same size and `f1(x) == f2(x)`, for all pixel `x`;
+    otherwise, returns `False`.
+
+    Parameters
+    ----------
+      f1 :  Unsigned gray-scale (uint8 or uint16), signed (int32) or
+             binary image.
+      f2 :  Unsigned gray-scale (uint8 or uint16), signed (int32) or
+             binary image.
+    Returns
+    -------
+      bool : Whether the two images are equal
     """
     import numpy
     if f1.shape != f2.shape:
@@ -3006,6 +2947,14 @@ def se2flatidx(f,Bc):
 
     This is useful for implementing many functions. See the implementation of
     label() for an example.
+
+    Parameters
+    ----------
+      f : image
+      Bc : structuring element
+    Returns
+    -------
+      Bi : array of indice offsets.
     """
     from numpy import array, where
     h,w=Bc.shape
@@ -3298,21 +3247,21 @@ def seshow(b, option="normal"):
 
 def sesum(B=None, N=1):
     """
-    NB = sesum(B=None, N=1)
+    Bn = sesum(B=None, N=1)
 
     N-1 iterative Minkowski additions
 
-    `sesum` creates the structuring element `NB` from `N` - 1 iterative
+    `sesum` creates the structuring element `Bn` from `N - 1` iterative
     Minkowski additions with the structuring element `B`.
 
     Parameters
     ----------
-      b : Structuring element (Default: 3x3 elementary cross).
+      B : Structuring element (Default: 3x3 elementary cross).
       N : Non-negative integer. Default: 1.
 
     Returns
     -------
-      NB : Structuring Element
+      Bn : Structuring Element
     """
 
     if B is None: B = secross()
@@ -3411,26 +3360,20 @@ def sedilate(B1, B2):
 
 def seunion(B1, B2):
     """
-        - Purpose
-            Union of structuring elements
-        - Synopsis
-            B = seunion(B1, B2)
-        - Input
-            B1: Structuring Element
-            B2: Structuring Element
-        - Output
-            B: Structuring Element
-        - Description
-            seunion creates a structuring element from the union of two
-            structuring elements.
-        - Examples
-            #
-            b1 = seline(5)
-            seshow(b1)
-            b2 = sedisk(3)
-            seshow(b2)
-            b3 = seunion(b1,b2)
-            seshow(b3)
+    B = seunion(B1, B2)
+
+    Union of structuring elements
+
+    `seunion` creates a structuring element from the union of two
+    structuring elements.
+
+    Parameters
+    ----------
+      B1 : Structuring element
+      B2 : Structuring element
+    Returns
+    -------
+      B : union of B1 and B2
     """
     from numpy import maximum, ones, asarray, newaxis, int32
 
