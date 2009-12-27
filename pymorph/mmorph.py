@@ -241,35 +241,21 @@ def center(f, b=None):
 
 def close_holes(f, Bc=None):
     """
-        - Purpose
-            Close holes of binary and gray-scale images.
-        - Synopsis
-            y = close_holes(f, Bc=None)
-        - Input
-            f:  Gray-scale (uint8 or uint16) or binary image.
-            Bc: Structuring Element Default: None (3x3 elementary cross). (
-                connectivity).
-        - Output
-            y: (same datatype of f ).
-        - Description
-            close_holes creates the image y by closing the holes of the image
-            f , according with the connectivity defined by the structuring
-            element Bc .The images can be either binary or gray-scale.
-        - Examples
-            #
-            #   example 1
-            #
-            a = readgray('pcb1bin.tif')
-            b = close_holes(a)
-            show(a)
-            show(b)
-            #
-            #   example 2
-            #
-            a = readgray('boxdrill-B.tif')
-            b = close_holes(a)
-            show(a)
-            show(b)
+    y = close_holes(f, Bc={3x3 cross})
+
+    Close holes of binary and gray-scale images.
+
+    `close_holes` creates the image `y` by closing the holes of the image
+    `f`, according with the connectivity defined by the structuring
+    element `Bc`.The images can be either binary or gray-scale.
+
+    Parameters
+    ----------
+      f :  Gray-scale (uint8 or uint16) or binary image.
+      Bc : Connectivity (default: 3x3 cross).
+    Returns
+    -------
+      y : image of same type as `f`.
     """
 
     if Bc is None: Bc = secross()
