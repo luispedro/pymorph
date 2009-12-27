@@ -862,98 +862,88 @@ def addm(f1, f2):
 
 def areaclose(f, a, Bc=None):
     """
-        - Purpose
-            Area closing
-        - Synopsis
-            y = areaclose(f, a, Bc=None)
-        - Input
-            f:  Gray-scale (uint8 or uint16) or binary image.
-            a:  Double non negative integer.
-            Bc: Structuring Element Default: None (3x3 elementary cross). (
-                connectivity).
-        - Output
-            y: Same type of f
-        - Description
-            areaclose removes any pore (i.e., background connected
-            component) with area less than a of a binary image f . The
-            connectivity is given by the structuring element Bc . This
-            operator is generalized to gray-scale images by applying the
-            binary operator successively on slices of f taken from higher
-            threshold levels to lower threshold levels.
-        - Examples
-            #
-            #   example 1
-            #
-            a=readgray('form-1.tif')
-            b=areaclose(a,400)
-            show(a)
-            show(b)
-            #
-            #   example 2
-            #
-            a=readgray('n2538.tif')
-            b=areaclose(a,400)
-            show(a)
-            show(b)
-    """
+    y = areaclose(f, a, Bc={3x3 cross})
 
+    Area closing
+
+    `areaclose` removes any pore (i.e., background connected
+    component) with area less than `a` in binary image `f`. The
+    connectivity is given by the structuring element `Bc`. This
+    operator is generalized to gray-scale images by applying the
+    binary operator successively on slices of `f` taken from higher
+    threshold levels to lower threshold levels.
+
+    Parameters
+    ----------
+      f :  Gray-scale (uint8 or uint16) or binary image.
+      a :  Non negative integer.
+      Bc : Structuring element (default: 3x3 cross).
+    Returns
+    -------
+      y : Same type of f
+    """
     if Bc is None: Bc = secross()
     return neg(areaopen(neg(f),a,Bc))
 
 
 def areaopen(f, a, Bc=None):
     """
-        - Purpose
-            Area opening
-        - Synopsis
-            y = areaopen(f, a, Bc=None)
-        - Input
-            f:  Gray-scale (uint8 or uint16) or binary image.
-            a:  Double non negative integer.
-            Bc: Structuring Element Default: None (3x3 elementary cross). (
-                connectivity).
-        - Output
-            y: Same type of f
-        - Description
-            areaopen removes any grain (i.e., connected component) with
-            area less than a of a binary image f . The connectivity is given
-            by the structuring element Bc . This operator is generalized to
-            gray-scale images by applying the binary operator successively
-            on slices of f taken from higher threshold levels to lower
-            threshold levels.
-        - Examples
-            #
-            #   example 1
-            #
-            f=binary(to_uint8([
-             [1, 1, 0, 0, 0, 0, 1],
-             [1, 0, 1, 1, 1, 0, 1],
-             [0, 0, 0, 0, 1, 0, 0]]))
-            y=areaopen(f,4,secross())
-            print y
-            #
-            #   example 2
-            #
-            f=to_uint8([
-               [10,   11,   0,    0,   0,   0,  20],
-               [10,    0,   5,    8,   9,   0,  15],
-               [10,    0,   0,    0,  10,   0,   0]])
-            y=areaopen(f,4,secross())
-            print y
-            #
-            #   example 3
-            #
-            a=readgray('form-1.tif');
-            b=areaopen(a,500);
-            show(a);
-            show(b);
-            #
-            #   example 4
-            #
-            a=readgray('bloodcells.tif');
-            b=areaopen(a,500);
-            show(a);
-            show(b);
+    y = areaopen(f, a, Bc=None)
+
+    Area opening
+
+    `areaopen` removes any grain (i.e., connected component) with
+    area less than `a` of a binary image `f`. The connectivity is given
+    by the structuring element `Bc`. This operator is generalized to
+    gray-scale images by applying the binary operator successively
+    on slices of `f` taken from higher threshold levels to lower
+    threshold levels.
+
+    Parameters
+    ----------
+      f :  Gray-scale (uint8 or uint16) or binary image.
+      a :  Double non negative integer.
+      Bc : Structuring element (default: 3x3 cross).
+
+    Returns
+    -------
+      y : Same type of f
+    """
+
+    """
+    - Examples
+    #
+    #   example 1
+    #
+    f=binary(to_uint8([
+     [1, 1, 0, 0, 0, 0, 1],
+     [1, 0, 1, 1, 1, 0, 1],
+     [0, 0, 0, 0, 1, 0, 0]]))
+    y=areaopen(f,4,secross())
+    print y
+    #
+    #   example 2
+    #
+    f=to_uint8([
+       [10,   11,   0,    0,   0,   0,  20],
+       [10,    0,   5,    8,   9,   0,  15],
+       [10,    0,   0,    0,  10,   0,   0]])
+    y=areaopen(f,4,secross())
+    print y
+    #
+    #   example 3
+    #
+    a=readgray('form-1.tif');
+    b=areaopen(a,500);
+    show(a);
+    show(b);
+    #
+    #   example 4
+    #
+    a=readgray('bloodcells.tif');
+    b=areaopen(a,500);
+    show(a);
+    show(b);
     """
 
     if Bc is None: Bc = secross()
@@ -977,36 +967,37 @@ def areaopen(f, a, Bc=None):
 
 def flood(fin, T, option, Bc=None):
     """
-        - Purpose
-            Flooding filter- h,v,a-basin and dynamics (depth, area, volume)
-        - Synopsis
-            y = flood(fin, T, option, Bc=None)
-        - Input
-            fin:    Gray-scale (uint8 or uint16) image.
-            T:      Criterion value. If T==-1, then the dynamics is
-                    determined, not the flooding at this criterion. This was
-                    selected just to use the same algoritm to compute two
-                    completely distinct functions.
-            option: String Default: "". criterion: 'AREA', 'VOLUME', 'H'.
-            Bc:     Structuring Element Default: None (3x3 elementary
-                    cross). Connectivity.
-        - Output
-            y: Gray-scale (uint8 or uint16) image.
-        - Description
-            This is a flooding algorithm. It is the basis to implement many
-            topological functions. It is a connected filter that floods an
-            image following some topological criteria: area, volume, depth.
-            These filters are equivalent to area-close, volume-basin or
-            h-basin, respectively. This code may be difficult to understand
-            because of its many options. Basically, when t is negative, the
-            generalized dynamics: area, volume, h is computed. When the
-            flooding is computed, every time a new level in the flooding
-            happens, a test is made to verify if the criterion has reached.
-            This is used to set the value to that height. This value image
-            will be used later for sup-reconstruction (flooding) at that
-            particular level. This test happens in the raising of the water
-            and in the merging of basins.
+    y = flood(fin, T, option, Bc=None)
 
+    Flooding filter h,v,a-basin and dynamics (depth, area, volume)
+
+    This is a flooding algorithm. It is the basis to implement many
+    topological functions. It is a connected filter that floods an
+    image following some topological criteria: area, volume, depth.
+    These filters are equivalent to area-close, volume-basin or
+    h-basin, respectively. This code may be difficult to understand
+    because of its many options. Basically, when t is negative, the
+    generalized dynamics: area, volume, h is computed. When the
+    flooding is computed, every time a new level in the flooding
+    happens, a test is made to verify if the criterion has reached.
+    This is used to set the value to that height. This value image
+    will be used later for sup-reconstruction (flooding) at that
+    particular level. This test happens in the raising of the water
+    and in the merging of basins.
+
+    Parameters
+    ---------
+      fin :    Gray-scale image (uint8 or uint16).
+      T :      Criterion value. If T==-1, then the dynamics is
+                 determined, not the flooding at this criterion. This was
+                 selected just to use the same algoritm to compute two
+                 completely distinct functions.
+      option : One of ('AREA', 'VOLUME', 'H').
+      Bc :     Structuring element (default: 3x3 cross)
+
+    Returns
+    -------
+      y : Gray-scale image (same type as input).
     """
 
     if Bc is None: Bc = secross()
@@ -1073,88 +1064,69 @@ def asf(f, SEQ="OC", b=None, n=1):
     return y
 
 
-def asfrec(f, SEQ="OC", b=None, bc=None, n=1):
+def asfrec(f, seq="OC", B=None, Bc=None, N=1):
     """
-        - Purpose
-            Reconstructive Alternating Sequential Filtering
-        - Synopsis
-            y = asfrec(f, SEQ="OC", b=None, bc=None, n=1)
-        - Input
-            f:   Gray-scale (uint8 or uint16) or binary image.
-            SEQ: String Default: "OC". Values: "OC" or "CO".
-            b:   Structuring Element Default: None (3x3 elementary cross).
-            bc:  Structuring Element Default: None (3x3 elementary cross).
-            n:   Non-negative integer. Default: 1. (number of iterations).
-        - Output
-            y: Same type of f
-        - Description
-            asf creates the image y by filtering the image f by n
-            iterations of the close by reconstruction and open by
-            reconstruction alternating sequential filter characterized by
-            the structuring element b . The structure element bc is used in
-            the reconstruction. The sequence of opening and closing is
-            controlled by the parameter SEQ . 'OC' performs opening after
-            closing, and 'CO' performs closing after opening.
-        - Examples
-            #
-            f=readgray('fabric.tif')
-            g=asfrec(f,'oc',secross(),secross(),3)
-            show(f)
-            show(g)
+    y = asfrec(f, seq="OC", B={3x3 cross}, Bc={3x3 cross}, N=1)
+
+    Reconstructive Alternating Sequential Filtering
+
+    `asf` creates the image `y` by filtering the image `f` by `n`
+    iterations of the close by reconstruction and open by
+    reconstruction alternating sequential filter characterized by
+    the structuring element `b`. The structure element `bc` is used in
+    the reconstruction. The sequence of opening and closing is
+    controlled by the parameter `SEQ`. 'OC' performs opening after
+    closing, and 'CO' performs closing after opening.
+
+    Parameters
+    ----------
+      f :   Gray-scale (uint8 or uint16) or binary image.
+      SEQ : Order of operations, one of ('OC', 'CO'), default: 'OC'.
+      B :   Structuring element (default: 3x3 cross).
+      Bc :  Structuring element (default: 3x3 cross).
+      N :   Number of iterations (default: 1).
+
+    Returns
+    -------
+      y : Same type of f
     """
     from string import upper
     if b is None: b = secross()
     if bc is None: bc = secross()
-    SEQ = upper(SEQ)
-    y = f
-    if SEQ == 'OC':
-        for i in xrange(1,n+1):
-            nb = sesum(b,i)
-            y = closerec(y,nb,bc)
-            y = openrec(y,nb,bc)
-    elif SEQ == 'CO':
-        for i in xrange(1,n+1):
-            nb = sesum(b,i)
-            y = openrec(y,nb,bc)
-            y = closerec(y,nb,bc)
-    else:
-        assert 0,'Only accepts OC or CO for SEQ parameter'
+    seq = upper(seq)
+    assert seq in ('OC', 'CO'),'pymorph.asfrec: only accepts OC or CO for SEQ parameter'
+    firstop = closerec
+    secondop = openrec
+    if seq == 'CO':
+        firstop, secondop = secondop, firstop
+    for i in xrange(N):
+        Bn = sesum(B, i+1)
+        f = firstop(f, Bn, Bc)
+        f = secondop(f, Bn, Bc)
     return y
 
 
 def binary(f, k=1):
     """
-        - Purpose
-            Convert a gray-scale image into a binary image
-        - Synopsis
-            y = binary(f, k1=1)
-        - Input
-            f:  Unsigned gray-scale (uint8 or uint16), signed (int32) or
+    y = binary(f, k=1)
+
+    Convert a gray-scale image into a binary image
+
+    `binary` converts a gray-scale image `f` into a binary image `y` by
+    a threshold rule. A pixel in `y` has the value 1 if and only if
+    the corresponding pixel in `f` has a value greater or equal to `k`.
+
+    Parameters
+    ----------
+      f :  Unsigned gray-scale (uint8 or uint16), signed (int32) or
                 binary image.
-            k1: Double Default: 1. Threshold value.
-        - Output
-            y: Binary image.
-        - Description
-            binary converts a gray-scale image f into a binary image y by
-            a threshold rule. A pixel in y has the value 1 if and only if
-            the corresponding pixel in f has a value greater or equal k1 .
-        - Examples
-            #
-            #   example 1
-            #
-            a = array([0, 1, 2, 3, 4])
-            b=binary(a)
-            print b
-            #
-            #   example 2
-            #
-            a=readgray('3.tif')
-            b=binary(a,82)
-            show(a)
-            show(b)
+      k1 : Threshold (default: 1)
+    Returns
+    -------
+      y : Binary image.
     """
-    from numpy import asarray
-    f=asarray(f)
+    from numpy import asanyarray
+    f = asanyarray(f)
     return (f >= k)
 
 
@@ -2422,46 +2394,27 @@ def hmin(f, h=1, Bc=None):
 
 def vmax(f, v=1, Bc=None):
     """
-        - Purpose
-            Remove domes with volume less than v.
-        - Synopsis
-            y = vmax(f, v=1, Bc=None)
-        - Input
-            f:  Gray-scale (uint8 or uint16) image.
-            v:  Default: 1. Volume parameter.
-            Bc: Structuring Element Default: None (3x3 elementary cross).
-                Structuring element (connectivity).
-        - Output
-            y: Gray-scale (uint8 or uint16) or binary image.
-        - Description
-            vmax This operator removes connected domes with volume less
-            than v . This function is very similar to hmax , but instead
-            of using a gray scale criterion (contrast) for the dome, it uses
-            a volume criterion.
-        - Examples
-            #
-            #   example 1
-            #
-            a = to_uint8([
-                [4,  3,  6,  1,  3,  5,  2],
-                [2,  9,  6,  1,  6,  7,  3],
-                [8,  9,  3,  2,  4,  9,  4],
-                [3,  1,  2,  1,  2,  4,  2]])
-            print vmax(a,10,sebox())
-            #
-            #   example 2
-            #
-            f = readgray('astablet.tif')
-            show(f)
-            fb = vmax(f,80000)
-            show(fb)
-            show(regmax(fb))
+    y = vmax(f, v=1, Bc={3x3 cross})
+
+    Remove domes with volume less than v.
+
+    This operator removes connected domes with volume less
+    than `v`. This function is very similar to `hmax`, but instead
+    of using a gray scale criterion (contrast) for the dome, it uses
+    a volume criterion.
+
+    Parameters
+    ----------
+      f :  Gray-scale (uint8 or uint16) image.
+      v :  Volume parameter (default: 1).
+      Bc : Structuring element (default: 3x3 cross).
+    Returns
+    -------
+      y : Gray-scale (uint8 or uint16) or binary image.
     """
 
     if Bc is None: Bc = secross()
-    raise 'Not implemented yet'
-    return None
-    return y
+    raise NotImplementedError, 'Not implemented yet'
 
 
 def hmax(f, h=1, Bc=None):
@@ -4554,33 +4507,25 @@ def union(f1, f2, *args):
 
 def watershed(f, Bc=None, return_lines=False):
     """
-        - Purpose
-            Watershed detection.
-        - Synopsis
-            y = watershed(f, Bc=None, return_lines=False)
-        - Input
-            f:       Gray-scale (uint8 or uint16) or binary image.
-            Bc:      Structuring Element Default: None (3x3 elementary
-                     cross). ( connectivity)
-            return_lines: Whether to return the boundaries (default: returns segmentation)
-        - Output
-            y: Gray-scale (uint8 or uint16) or binary image.
-        - Description
-            watershed creates the image y by detecting the domain of the
-            catchment basins of f , according to the connectivity defined by
-            Bc . According to the flag LINEREG y will be a labeled image of
-            the catchment basins domain or just a binary image that presents
-            the watershed lines. The implementation of this function is
-            based on VincSoil:91 .
-        - Examples
-            #
-            f=readgray('astablet.tif')
-            grad=gradm(f)
-            w1=watershed(grad,sebox())
-            w2=watershed(grad,sebox(),'REGIONS')
-            show(grad)
-            show(w1)
-            lblshow(w2)
+    W = watershed(f, Bc={3x3 cross}, return_lines=False)
+    W,Wl = watershed(f, Bc={3x3 cross}, return_lines=True)
+
+    Watershed transform.
+
+    `watershed` creates the image y by detecting the domain of the
+    catchment basins of `f`, according to the connectivity defined by
+    `Bc`.
+
+    The implementation of this function is based on VincSoil:91.
+
+    Parameters
+    ----------
+      f :       Gray-scale (uint8 or uint16) or binary image.
+      return_lines: Whether to return the boundaries (default: returns segmentation)
+    Returns
+    -------
+      W : labeled image
+      Wl : separation lines
     """
     from string import upper
     if Bc is None: Bc = secross()
