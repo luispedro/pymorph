@@ -903,64 +903,45 @@ def flood(fin, T, option, Bc=None):
     raise NotImplementedError, 'pymorph.flood'
 
 
-def asf(f, SEQ="OC", b=None, n=1):
+def asf(f, seq="OC", B=None, n=1):
     """
-        - Purpose
-            Alternating Sequential Filtering
-        - Synopsis
-            y = asf(f, SEQ="OC", b=None, n=1)
-        - Input
-            f:   Gray-scale (uint8 or uint16) or binary image.
-            SEQ: String Default: "OC". 'OC', 'CO', 'OCO', 'COC'.
-            b:   Structuring Element Default: None (3x3 elementary cross).
-            n:   Non-negative integer. Default: 1. (number of iterations).
-        - Output
-            y: Image
-        - Description
-            asf creates the image y by filtering the image f by n
-            iterations of the close and open alternating sequential filter
-            characterized by the structuring element b . The sequence of
-            opening and closing is controlled by the parameter SEQ . 'OC'
-            performs opening after closing, 'CO' performs closing after
-            opening, 'OCO' performs opening after closing after opening, and
-            'COC' performs closing after opening after closing.
-        - Examples
-            #
-            #   example 1
-            #
-            f=readgray('gear.tif')
-            g=asf(f,'oc',secross(),2)
-            show(f)
-            show(g)
-            #
-            #   example 2
-            #
-            f=readgray('fabric.tif')
-            g=asf(f,'oc',secross(),3)
-            show(f)
-            show(g)
+    y = asf(f, seq="OC", B={3x3 cross}, n=1)
+
+    Alternating Sequential Filtering
+
+    `asf` creates the image `y` by filtering the image `f` by n
+    iterations of the close and open alternating sequential filter
+    characterized by the structuring element `B`. The sequence of
+    opening and closing is controlled by the parameter `seq`. 'OC'
+    performs opening after closing, 'CO' performs closing after
+    opening, 'OCO' performs opening after closing after opening, and
+    'COC' performs closing after opening after closing.
+
+    Parameters
+    ----------
+      f :   Gray-scale (uint8 or uint16) or binary image.
+      seq : Order of operations, one of ('OC', 'CO', 'OCO', 'COC'), default: 'OC'.
+      B :   Structuring element (default: 3x3  cross).
+      n :   Number of iterations (default: 1).
+    Returns
+    -------
+      y : Image
     """
     from string import upper
-    if b is None: b = secross()
-    SEQ=upper(SEQ)
-    y = f
-    if SEQ == 'OC':
-        for i in xrange(1,n+1):
-            nb = sesum(b,i)
-            y = open(close(y,nb),nb)
-    elif SEQ == 'CO':
-        for i in xrange(1,n+1):
-            nb = sesum(b,i)
-            y = close(open(y,nb),nb)
-    elif SEQ == 'OCO':
-        for i in xrange(1,n+1):
-            nb = sesum(b,i)
-            y = open(close(open(y,nb),nb),nb)
-    elif SEQ == 'COC':
-        for i in xrange(1,n+1):
-            nb = sesum(b,i)
-            y = close(open(close(y,nb),nb),nb)
-    return y
+    if B is None: B = secross()
+    seq=upper(seq)
+    ops = { 'O' : open, 'C' : close }
+    first = ops[seq[-1]]
+    second = ops[seq[-2]]
+    third = (lambda f,_: f)
+    if len(seq) == 3: third =ops[third[-3]]
+
+    for i in xrange(n):
+        Bn = sesum(B, i+1)
+        f = first(f, Bn)
+        f = second(f, Bn)
+        f = third(f, Bn)
+    return f
 
 
 def asfrec(f, seq="OC", B=None, Bc=None, N=1):
@@ -974,13 +955,13 @@ def asfrec(f, seq="OC", B=None, Bc=None, N=1):
     reconstruction alternating sequential filter characterized by
     the structuring element `b`. The structure element `bc` is used in
     the reconstruction. The sequence of opening and closing is
-    controlled by the parameter `SEQ`. 'OC' performs opening after
+    controlled by the parameter `seq`. 'OC' performs opening after
     closing, and 'CO' performs closing after opening.
 
     Parameters
     ----------
       f :   Gray-scale (uint8 or uint16) or binary image.
-      SEQ : Order of operations, one of ('OC', 'CO'), default: 'OC'.
+      seq : Order of operations, one of ('OC', 'CO'), default: 'OC'.
       B :   Structuring element (default: 3x3 cross).
       Bc :  Structuring element (default: 3x3 cross).
       N :   Number of iterations (default: 1).
@@ -1291,7 +1272,7 @@ def closeth(f, B=None):
     """
 
     if B is None: B = secross()
-    return subm( close(f, B), f)
+    return subm(close(f, B), f)
 
 
 def cthick(f, g, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
