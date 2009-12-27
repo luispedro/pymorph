@@ -1203,33 +1203,25 @@ def blob(f, measurement, output="image"):
 
 def cbisector(f, B, n):
     """
-        - Purpose
-            N-Conditional bisector.
-        - Synopsis
-            y = cbisector(f, B, n)
-        - Input
-            f: Binary image.
-            B: Structuring Element
-            n: positive integer ( filtering rate)
-        - Output
-            y: Binary image.
-        - Description
-            cbisector creates the binary image y by performing a filtering
-            of the morphological skeleton of the binary image f , relative
-            to the structuring element B . The strength of this filtering is
-            controlled by the parameter n. Particularly, if n=0 , y is the
-            morphological skeleton of f itself.
-        - Examples
-            #
-            a=readgray('blob2.tif')
-            b=cbisector(a,sebox(),1)
-            c=cbisector(a,sebox(),3)
-            d=cbisector(a,sebox(),10)
-            show(a,b)
-            show(a,c)
-            show(a,d)
-    """
+    y = cbisector(f, B, n)
 
+    N-Conditional bisector.
+
+    `cbisector` creates the binary image `y` by performing a filtering
+    of the morphological skeleton of the binary image `f`, relative
+    to the structuring element `B`. The strength of this filtering is
+    controlled by the parameter `n`. Particularly, if `n==0` , `y` is the
+    morphological skeleton of `f` itself.
+
+    Parameters
+    ----------
+      f : Binary image.
+      B : Structuring element
+      n : filtering rate (positive integer)
+    Returns
+    -------
+      y : Binary image.
+    """
     y = intersec(f,0)
     for i in xrange(n):
         nb = sesum(B,i)
@@ -1241,187 +1233,109 @@ def cbisector(f, B, n):
     return y
 
 
-def cdilate(f, g, b=None, n=1):
+def cdilate(f, g, Bc=None, n=1):
     """
-        - Purpose
-            Dilate an image conditionally.
-        - Synopsis
-            y = cdilate(f, g, b=None, n=1)
-        - Input
-            f: Gray-scale (uint8 or uint16) or binary image.
-            g: Gray-scale (uint8 or uint16) or binary image. Conditioning
-               image.
-            b: Structuring Element Default: None (3x3 elementary cross).
-            n: Non-negative integer. Default: 1. (number of iterations).
-        - Output
-            y: Image
-        - Description
-            cdil creates the image y by dilating the image f by the
-            structuring element b conditionally to the image g . This
-            operator may be applied recursively n times.
-        - Examples
-            #
-            #   example 1
-            #
-            f = binary(to_uint8([[1, 0, 0, 0, 0, 0, 0],\
-                [0, 0, 0, 0, 0, 0, 0],\
-                [0, 0, 0, 0, 1, 0, 0,]]))
-            g = binary(to_uint8([[1, 1, 1, 0, 0, 1, 1],\
-                [1, 0, 1, 1, 1, 0, 0],\
-                [0, 0, 0, 0, 1, 0, 0]]));
-            y1=cdilate(f,g,secross())
-            y2=cdilate(f,g,secross(),3)
-            #
-            #   example 2
-            #
-            f = to_uint8([\
-                [   0,    0,   0,   80,   0,   0],\
-                [   0,    0,   0,    0,   0,   0],\
-                [  10,   10,   0,  255,   0,   0]])
-            g = to_uint8([\
-                [   0,    1,   2,   50,   4,   5],\
-                [   2,    3,   4,    0,   0,   0],\
-                [  12,  255,  14,   15,  16,  17]])
-            y1=cdilate(f,g,secross())
-            y2=cdilate(f,g,secross(),3)
-            #
-            #   example 3
-            #
-            g=readgray('pcb1bin.tif')
-            f=frame(g,5,5)
-            y5=cdilate(f,g,secross(),5)
-            y25=cdilate(f,g,secross(),25)
-            show(g)
-            show(g,f)
-            show(g,y5)
-            show(g,y25)
-            #
-            #   example 4
-            #
-            g=neg(readgray('n2538.tif'))
-            f=intersec(g,0)
-            f=draw(f,'LINE:40,30,60,30:END')
-            y1=cdilate(f,g,sebox())
-            y30=cdilate(f,g,sebox(),30)
-            show(g)
-            show(f)
-            show(y1)
-            show(y30)
+    y = cdilate(f, g, Bc={3x3 cross}, n=1)
+
+    Conditional dilation
+
+    `cdilate` creates the image `y` by dilating the image `f` by the
+    structuring element `Bc` conditionally to the image `g`. This
+    operator may be applied recursively `n` times.
+
+    Parameters
+    ----------
+      f : Gray-scale (uint8 or uint16) or binary image.
+      g : Conditioning image. (Gray-scale or binary).
+      Bc : Structuring element (default: 3x3 cross)
+      n : Number of iterations (default: 1)
+    Returns
+    -------
+      y : Image
     """
 
-    if b is None: b = secross()
-    y = intersec(f,g)
+    if Bc is None: Bc = secross()
+    f = intersec(f,g)
     for i in xrange(n):
-        aux = y
-        y = intersec(dilate(y,b),g)
-        if isequal(y,aux): break
+        prev = f
+        f = intersec(dilate(f, Bc), g)
+        if isequal(f, prev): break
+    return f
+
+
+def cerode(f, g, Bc=None, n=1):
+    """
+    y = cerode(f, g, Bc=None, n=1)
+
+    Conditional erosion
+
+    `cerode` creates the image `y` by eroding the image `f` by the
+    structuring element `Bc` conditionally to `g`. This operator may be
+    applied recursively `n` times.
+
+    Parameters
+    ----------
+      f : Gray-scale (uint8 or uint16) or binary image.
+      g : Conditioning image.
+      Bc : Structuring element (default: 3x3 cross)
+      n : Number of iterations (default: 1)
+    Returns
+    -------
+      y : Image
+    """
+
+    if Bc is None: Bc = secross()
+    f = union(f,g)
+    for i in xrange(n):
+        prev = y
+        f = union(erode(f,Bc),g)
+        if isequal(f, prev): break
     return y
 
 
-def cerode(f, g, b=None, n=1):
+def close(f, Bc =None):
     """
-        - Purpose
-            Erode an image conditionally.
-        - Synopsis
-            y = cerode(f, g, b=None, n=1)
-        - Input
-            f: Gray-scale (uint8 or uint16) or binary image.
-            g: Gray-scale (uint8 or uint16) or binary image. Conditioning
-               image.
-            b: Structuring Element Default: None (3x3 elementary cross).
-            n: Non-negative integer. Default: 1. (number of iterations).
-        - Output
-            y: Image
-        - Description
-            cero creates the image y by eroding the image f by the
-            structuring element b conditionally to g . This operator may be
-            applied recursively n times.
-        - Examples
-            #
-            f = neg(text('hello'))
-            show(f)
-            g = dilate(f,seline(7,90))
-            show(g)
-            a1=cerode(g,f,sebox())
-            show(a1)
-            a13=cerode(a1,f,sebox(),13)
-            show(a13)
+    y = close(f, Bc={3x3 cross})
+
+    Morphological closing.
+
+    `close` creates the image `y` by the morphological closing of the
+    image `f` by the structuring element `Bc`. In the binary case, the
+    closing by a structuring element `Bc` may be interpreted as the
+    intersection of all the binary images that contain the image `f`
+    and have a hole equal to a translation of `Bc`. In the gray-scale
+    case, there is a similar interpretation taking the functions
+    umbra.
+
+    Parameters
+    ----------
+      f : Gray-scale (uint8 or uint16) or binary image.
+      Bc : Structuring Element Default: None (3x3 elementary cross).
+    Returns
+    -------
+      y : Image
     """
 
-    if b is None: b = secross()
-    y = union(f,g)
-    for i in xrange(n):
-        aux = y
-        y = union(erode(y,b),g)
-        if isequal(y,aux): break
-    return y
+    if Bc  is None: Bc  = secross()
+    return erode(dilate(f,Bc ),Bc )
 
 
-def close(f, b=None):
+def closerec(f, Bdil=None, Bc=None):
     """
-        - Purpose
-            Morphological closing.
-        - Synopsis
-            y = close(f, b=None)
-        - Input
-            f: Gray-scale (uint8 or uint16) or binary image.
-            b: Structuring Element Default: None (3x3 elementary cross).
-        - Output
-            y: Image
-        - Description
-            close creates the image y by the morphological closing of the
-            image f by the structuring element b . In the binary case, the
-            closing by a structuring element B may be interpreted as the
-            intersection of all the binary images that contain the image f
-            and have a hole equal to a translation of B . In the gray-scale
-            case, there is a similar interpretation taking the functions
-            umbra.
-        - Examples
-            #
-            #   example 1
-            #
-            f=readgray('blob.tif')
-            bimg=readgray('blob1.tif')
-            b=img2se(bimg)
-            show(f)
-            show(close(f,b))
-            show(close(f,b),gradm(f))
-            #
-            #   example 2
-            #
-            f = readgray('form-1.tif')
-            show(f)
-            y = close(f,sedisk(4))
-            show(y)
-            #
-            #   example 3
-            #
-            f = readgray('n2538.tif')
-            show(f)
-            y = close(f,sedisk(3))
-            show(y)
-    """
-
-    if b is None: b = secross()
-    return erode(dilate(f,b),b)
-
-
-def closerec(f, bdil=None, bc=None):
-    """
-    y = closerec(f, bdil=None, bc=None)
+    y = closerec(f, Bdil=None, Bc=None)
 
     Closing by reconstruction.
 
     `closerec()` creates the image `y` by a sup-reconstruction (with
-    the connectivity defined by the structuring element `bc`) of the
-    image `f` from its dilation by `bdil`.
+    the connectivity defined by the structuring element `Bc`) of the
+    image `f` from its dilation by `Bdil`.
 
     Parameters
     ----------
 
     f :    Gray-scale (uint8 or uint16) or binary image
-    bdil : Dilation structuring element (default 3x3 elementary cross)
-    bc :  Connectivity structuring element (default: 3x3 elementary cross)
+    Bdil : Dilation structuring element (default 3x3 elementary cross)
+    Bc :  Connectivity structuring element (default: 3x3 elementary cross)
 
     Returns
     -------
@@ -1429,67 +1343,56 @@ def closerec(f, bdil=None, bc=None):
     y : Image (same type as f)
     """
 
-    if bdil is None: bdil = secross()
-    if bc is None: bc = secross()
-    return suprec(dilate(f,bdil),f,bc)
+    if Bdil is None: Bdil = secross()
+    if Bc is None: Bc = secross()
+    return suprec(dilate(f,Bdil),f,Bc)
 
 
-def closerecth(f, bdil=None, bc=None):
+def closerecth(f, Bdil=None, Bc=None):
     """
-        - Purpose
-            Close-by-Reconstruction Top-Hat.
-        - Synopsis
-            y = closerecth(f, bdil=None, bc=None)
-        - Input
-            f:    Gray-scale (uint8 or uint16) or binary image.
-            bdil: Structuring Element Default: None (3x3 elementary cross).
-                  (dilation)
-            bc:   Structuring Element Default: None (3x3 elementary cross).
-                  ( connectivity)
-        - Output
-            y: Gray-scale (uint8 or uint16) or binary image.
-        - Description
-            closerecth creates the image y by subtracting the image f of
-            its closing by reconstruction, defined by the structuring
-            elements bc and bdil .
-        - Examples
-            #
-            a = readgray('danaus.tif')
-            show(a)
-            b = closerecth(a,sebox(4))
-            show(b)
+    y = closerecth(f, Bdil=None, Bc=None)
+
+    Close-by-Reconstruction Top-Hat.
+
+    `closerecth` creates the image `y` by subtracting the image `f` of
+    its closing by reconstruction, defined by the structuring
+    elements `Bc` and `Bdil`.
+
+    Parameters
+    ----------
+      f :    Gray-scale (uint8 or uint16) or binary image.
+      Bdil : Dilation structuring element (default: 3x3 cross)
+      Bc :   Connectivity structuring element (default: 3x3 cross)
+    Returns
+    -------
+      y : Gray-scale (uint8 or uint16) or binary image.
     """
 
-    if bdil is None: bdil = secross()
-    if bc is None: bc = secross()
-    return subm(closerec(f,bdil,bc), f)
+    if Bdil is None: Bdil = secross()
+    if Bc is None: Bc = secross()
+    return subm(closerec(f, Bdil, Bc), f)
 
 
-def closeth(f, b=None):
+def closeth(f, B=None):
     """
-        - Purpose
-            Closing Top Hat.
-        - Synopsis
-            y = closeth(f, b=None)
-        - Input
-            f: Gray-scale (uint8 or uint16) or binary image.
-            b: Structuring Element Default: None (3x3 elementary cross).
-        - Output
-            y: Gray-scale (uint8 or uint16) or binary image. (Same type of f
-               ).
-        - Description
-            closeth creates the image y by subtracting the image f of its
-            morphological closing by the structuring element b .
-        - Examples
-            #
-            a = readgray('danaus.tif')
-            show(a)
-            b = closeth(a,sebox(5))
-            show(b)
+    y = closeth(f, B={3x3 cross})
+
+    Closing Top Hat.
+
+    `closeth` creates the image `y` by subtracting the image `f` of its
+    morphological closing by the structuring element `B`.
+
+    Parameters
+    ----------
+      f : Gray-scale (uint8 or uint16) or binary image.
+      B : Structuring Element Default: None (3x3 elementary cross).
+    Returns
+    -------
+      y : Same type as `f`
     """
 
-    if b is None: b = secross()
-    return subm( close(f,b), f)
+    if B is None: B = secross()
+    return subm( close(f, B), f)
 
 
 def cthick(f, g, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
@@ -1704,62 +1607,33 @@ def cwatershed(f, markers, Bc=None, return_lines=False,is_gvoronoi=False):
     return y
 
 
-def dilate(f, b=None):
+def dilate(f, B=None):
     """
-        - Purpose
-            Dilate an image by a structuring element.
-        - Synopsis
-            y = dilate(f, b=None)
-        - Input
-            f: Gray-scale (uint8 or uint16) or binary image.
-            b: Structuring Element Default: None (3x3 elementary cross).
-        - Output
-            y: Image
-        - Description
-            dil performs the dilation of image f by the structuring
-            element b . Dilation is a neighbourhood operator that compares
-            locally b with f , according to an intersection rule. Since
-            Dilation is a fundamental operator to the construction of all
-            other morphological operators, it is also called an elementary
-            operator of Mathematical Morphology. When f is a gray-scale
-            image, b may be a flat or non-flat structuring element.
-        - Examples
-            #
-            #   example 1
-            #
-            f=binary([
-               [0, 0, 0, 0, 0, 0, 1],
-               [0, 1, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 1, 0, 0]])
-            b=binary([1, 1, 0])
-            dilate(f,b)
-            f=to_uint8([
-               [ 0,   1,  2, 50,  4,  5],
-               [ 2,   3,  4,  0,  0,  0],
-               [12, 255, 14, 15, 16, 17]])
-            dilate(f,b)
-            #
-            #   example 2
-            #
-            f=binary(readgray('blob.tif'))
-            bimg=binary(readgray('blob1.tif'))
-            b=img2se(bimg)
-            show(f)
-            show(dilate(f,b))
-            show(dilate(f,b),gradm(f))
-            #
-            #   example 3
-            #
-            f=readgray('pcb_gray.tif')
-            b=sedisk(5)
-            show(f)
-            show(dilate(f,b))
+    y = dilate(f, B={3x3 cross})
+
+    Dilate an image by a structuring element.
+
+    `dilate` performs the dilation of image `f` by the structuring
+    element `B`. Dilation is a neighbourhood operator that compares
+    locally `B` with `f`, according to an intersection rule. Since
+    Dilation is a fundamental operator to the construction of all
+    other morphological operators, it is also called an elementary
+    operator of Mathematical Morphology. When f is a gray-scale
+    image, `B` may be a flat or non-flat structuring element.
+
+    Parameters
+    ----------
+      f : Gray-scale (uint8 or uint16) or binary image.
+      B : Structuring element (default: 3x3 cross).
+    Returns
+    -------
+      y: Same type as `f`
     """
     from numpy import maximum, newaxis, ones, int32
-    if b is None: b = secross()
+    if B is None: B = secross()
     if len(f.shape) == 1: f = f[newaxis,:]
     h,w = f.shape
-    x,v = mat2set(b)
+    x,v = mat2set(B)
     if len(x)==0:
         y = (ones((h,w),int32) * limits(f)[0]).astype(f.dtype)
     else:
@@ -1882,62 +1756,40 @@ def drawv(f, data, value, GEOM):
 
 def endpoints(option="loop"):
     """
-        - Purpose
-            Interval to detect end-points.
-        - Synopsis
-            iab = endpoints(option="loop")
-        - Input
-            option: string default: "loop". 'loop' or 'homotopic'
-        - Output
-            Iab: Interval
-        - Description
-            endpoints creates an interval that is useful to detect
-            end-points of curves (i.e., one pixel thick connected
-            components) in binary images. It can be used to prune skeletons
-            and to mark objects transforming them in a single pixel or
-            closed loops if they have holes. There are two options
-            available: 'loop', deletes all points but preserves loops if used
-            in thin ; 'homotopic', deletes all points but preserves the last
-            single point or loops.
-        - Examples
-            #
-            #   example 1
-            #
-            print intershow(endpoints())
-            #
-            #   example 2
-            #
-            print intershow(endpoints('homotopic'))
-            #
-            #   example 3
-            #
-            f = readgray('pcbholes.tif')
-            show(f)
-            f1 = thin(f)
-            show(f1)
-            f2 = thin(f1,endpoints(),20)
-            show(f2)
-            #
-            #   example 4
-            #
-            fn = thin(f1,endpoints('homotopic'))
-            show(dilate(fn))
-    """
-    from string import upper
+    iab = endpoints(option="loop")
 
-    option = upper(option)
+    Interval to detect end-points.
+
+    `endpoints` creates an interval that is useful to detect
+    end-points of curves (i.e., one pixel thick connected
+    components) in binary images. It can be used to prune skeletons
+    and to mark objects transforming them in a single pixel or
+    closed loops if they have holes. There are two options
+    available: 'loop', deletes all points but preserves loops if used
+    in thin ; 'homotopic', deletes all points but preserves the last
+    single point or loops.
+
+    Parameters
+    ----------
+      option : type, one of ('loop' 'homotopic'). default: 'loop'
+    Returns
+    -------
+      Iab : Interval
+    """
+    from string import lower
+    option = lower(option)
     if option == 'loop':
         return se2hmt(binary([[0,0,0],
-                             [0,1,0],
-                             [0,0,0]]),
+                              [0,1,0],
+                              [0,0,0]]),
 
                       binary([[0,0,0],
                               [1,0,1],
                               [1,1,1]]))
     elif option == 'homotopic':
         return se2hmt(binary([[0,1,0],
-                            [0,1,0],
-                            [0,0,0]]),
+                              [0,1,0],
+                              [0,0,0]]),
 
                       binary([[0,0,0],
                               [1,0,1],
@@ -2412,24 +2264,21 @@ def hmax(f, h=1, Bc=None):
 
 def homothick():
     """
-        - Purpose
-            Interval for homotopic thickening.
-        - Synopsis
-            Iab = homothick()
+    Iab = homothick()
 
-        - Output
-            Iab: Interval
-        - Description
-            homothick creates an interval that is useful for the homotopic
-            (i.e., that conserves the relation between objects and holes)
-            thickening of binary images.
-        - Examples
-            #
-            print intershow(homothick())
+    Interval for homotopic thickening.
+
+    `homothick` creates an interval that is useful for the homotopic
+    (i.e., that conserves the relation between objects and holes)
+    thickening of binary images.
+
+    Returns
+    -------
+      Iab: Interval
     """
     return se2hmt(binary([[1,1,1],
-                         [0,0,0],
-                         [0,0,0]]),
+                          [0,0,0],
+                          [0,0,0]]),
                   binary([[0,0,0],
                           [0,1,0],
                           [1,1,1]]))
@@ -2437,90 +2286,56 @@ def homothick():
 
 def homothin():
     """
-        - Purpose
-            Interval for homotopic thinning.
-        - Synopsis
-            Iab = homothin()
+    Iab = homothin()
 
-        - Output
-            Iab: Interval
-        - Description
-            homothin creates an interval that is useful for the homotopic
-            (i.e., that conserves the relation between objects and holes)
-            thinning of binary images.
+    Interval for homotopic thinning.
 
+    `homothin` creates an interval that is useful for the homotopic
+    (i.e., that conserves the relation between objects and holes)
+    thinning of binary images.
+
+    Returns
+    -------
+      Iab : Interval
     """
+    return se2hmt(binary([[0,0,0],
+                          [0,1,0],
+                          [1,1,1]]),
 
-    Iab = se2hmt(binary([[0,0,0],
-                             [0,1,0],
-                             [1,1,1]]),
                    binary([[1,1,1],
-                             [0,0,0],
-                             [0,0,0]]))
-    return Iab
+                           [0,0,0],
+                           [0,0,0]]))
 
 
-def img2se(fd, FLAT="FLAT", f=None):
+def img2se(fd, flat=True, f=None):
     """
-        - Purpose
-            Create a structuring element from a pair of images.
-        - Synopsis
-            B = img2se(fd, FLAT="FLAT", f=None)
-        - Input
-            fd:   Binary image. The image is in the matrix format where the
-                  origin (0,0) is at the matrix center.
-            FLAT: String Default: "FLAT". 'FLAT' or 'NON-FLAT'.
-            f:    Unsigned gray-scale (uint8 or uint16), signed (int32) or
-                  binary image. Default: None.
-        - Output
-            B: Structuring Element
-        - Description
-            img2se creates a flat structuring element B from the binary
-            image fd or creates a non-flat structuring element b from the
-            binary image fd and the gray-scale image f . fd represents the
-            domain of b and f represents the image of the points in fd .
-        - Examples
-            #
-            #   example 1
-            #
-            a = img2se(binary([
-              [0,1,0],
-              [1,1,1],
-              [0,1,0]]))
-            print seshow(a)
-            #
-            #   example 2
-            #
-            b = binary([
-              [0,1,1,1],
-              [1,1,1,0]])
-            b1 = img2se(b)
-            print seshow(b1)
-            #
-            #   example 3
-            #
-            c = binary([
-              [0,1,0],
-              [1,1,1],
-              [0,1,0]])
-            d = to_int32([
-              [0,0,0],
-              [0,1,0],
-              [0,0,0]])
-            e = img2se(c,'NON-FLAT',d)
-            print seshow(e)
+    B = img2se(fd, flat=True, f=None)
+
+    Create a structuring element from a pair of images.
+
+    `img2se` creates a flat structuring element `B` from the binary
+    image `fd` or creates a non-flat structuring element `B` from the
+    binary image `fd` and the gray-scale image `f`. `fd` represents the
+    domain of `B` and `f` represents the image of the points in `fd`.
+
+    Parameters
+    ----------
+      fd :   Binary image. The image is in the matrix format where the
+              origin (0,0) is at the matrix center.
+      flat : Whether to return a flat structuring element
+      f :    Unsigned gray-scale (uint8 or uint16), signed (int32) or
+              binary image. Default: None.
+    Returns
+    -------
+      B : Structuring Element
     """
-    from string import upper
     from numpy import choose, ones
 
-    assert isbinary(fd),'First parameter must be binary'
-    FLAT = upper(FLAT)
-    if FLAT == 'FLAT':
+    assert isbinary(fd),'pymorph.img2se: first parameter must be binary'
+    if flat:
         return seshow(fd)
-    else:
-        B = choose(fd, (limits(to_int32([0]))[0]*ones(fd.shape),f) )
-    B = seshow(to_int32(B),'NON-FLAT')
-    return B
+    B = choose(fd, (limits(to_int32([0]))[0]*ones(fd.shape),f) )
+    return seshow(to_int32(B),'NON-FLAT')
 
 
 def infcanon(f, Iab, theta=45, DIRECTION="CLOCKWISE"):
@@ -3395,62 +3210,53 @@ def se2flatidx(f,Bc):
     return array(Bi)
 def sebox(r=1):
     """
-        - Purpose
-            Create a box structuring element.
-        - Synopsis
-            B = sebox(r=1)
-        - Input
-            r: Non-negative integer. Default: 1. Radius.
-        - Output
-            B: Structuring Element
-        - Description
-            sebox creates the structuring element B formed by r successive
-            Minkowski additions of the elementary square (i.e., the 3x3
-            square centered at the origin) with itself. If R=0, B is the
-            unitary set that contains the origin. If R=1, B is the
-            elementary square itself.
-        - Examples
-            #
-            b1 = sebox()
-            seshow(b1)
-            b2 = sebox(2)
-            seshow(b2)
+    B = sebox(r=1)
+
+    Create a box structuring element.
+
+    `sebox` creates the structuring element B formed by r successive
+    Minkowski additions of the elementary square (i.e., the 3x3
+    square centered at the origin) with itself. If `R=0`, `B` is the
+    unitary set that contains the origin. If `R=1`, `B` is the
+    elementary square itself.
+
+    Parameters
+    ----------
+      r: size of box (default: 1)
+    Returns
+    -------
+      B : Structuring Element
     """
 
-    B = sesum(binary([[1,1,1],
-                      [1,1,1],
-                      [1,1,1]]),r)
-    return B
+    return sesum(binary([[1,1,1],
+                         [1,1,1],
+                         [1,1,1]]),
+                 r)
 
 
 def secross(r=1):
     """
-        - Purpose
-            Diamond structuring element and elementary 3x3 cross.
-        - Synopsis
-            B = secross(r=1)
-        - Input
-            r: Double Default: 1. (radius).
-        - Output
-            B: Structuring Element
-        - Description
-            secross creates the structuring element B formed by r
-            successive Minkowski additions of the elementary cross (i.e.,
-            the 3x3 cross centered at the origin) with itself. If r=0, B is
-            the unitary set that contains the origin. If r=1 , B is the
-            elementary cross itself.
-        - Examples
-            #
-            b1 = secross()
-            print seshow(b1)
-            b2 = secross(2)
-            print seshow(b2)
-    """
+    B = secross(r=1)
 
-    B = sesum(binary([[0,1,0],
-                          [1,1,1],
-                          [0,1,0]]),r)
-    return B
+    Diamond structuring element and elementary 3x3 cross.
+
+    `secross` creates the structuring element `B` formed by `r`
+    successive Minkowski additions of the elementary cross (i.e.,
+    the 3x3 cross centered at the origin) with itself. If `r=0`, `B` is
+    the unitary set that contains the origin. If `r=1` (the default),
+    `B` is the elementary cross itself.
+
+    Parameters
+    ----------
+      r : radius (default: 1)
+    Returns
+    -------
+      B : Structuring Element
+    """
+    return sesum(binary([[0,1,0],
+                         [1,1,1],
+                         [0,1,0]]),
+                 r)
 
 
 def sedisk(r=3, DIM="2D", METRIC="EUCLIDEAN", FLAT="FLAT", h=0):
