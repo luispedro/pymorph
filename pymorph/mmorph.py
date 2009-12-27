@@ -1781,44 +1781,22 @@ def gdist(f, g, Bc=None, METRIC=None):
 
 def gradm(f, Bdil=None, Bero=None):
     """
-        - Purpose
-            Morphological gradient.
-        - Synopsis
-            y = gradm(f, Bdil=None, Bero=None)
-        - Input
-            f:    Gray-scale (uint8 or uint16) or binary image.
-            Bdil: Structuring Element Default: None (3x3 elementary cross).
-                  for the dilation.
-            Bero: Structuring Element Default: None (3x3 elementary cross).
-                  for the erosion.
-        - Output
-            y: Gray-scale (uint8 or uint16) or binary image. (same type of f
-               ).
-        - Description
-            gradm creates the image y by the subtraction of the erosion of
-            the image f by Bero of the dilation of f by Bdil .
-        - Examples
-            #
-            #   example 1
-            #
-            a = readgray('small_bw.tif')
-            b = gradm(a)
-            show(a)
-            show(b)
-            #
-            #   example 2
-            #
-            c=gradm(a,secross(0),secross())
-            d=gradm(a,secross(),secross(0))
-            show(a,c)
-            show(a,d)
-            #
-            #   example 3
-            #
-            a = readgray('bloodcells.tif')
-            b = gradm(a)
-            show(a)
-            show(b)
+    y = gradm(f, Bdil={3x3 cross}, Bero={3x3 cross})
+
+    Morphological gradient.
+
+    `gradm` creates the image `y` by the subtraction of the erosion of
+    the image `f` by `Bero` of the dilation of `f` by `Bdil`.
+
+    Parameters
+    ----------
+      f :    Gray-scale (uint8 or uint16) or binary image.
+      Bdil : Structuring element for dilation (default: 3x3 cross).
+      Bero : Structuring element for erosion (default: 3x3 cross).
+
+    Returns
+    -------
+      y : Image of same type as `f`.
     """
 
     if Bdil is None: Bdil = secross()
