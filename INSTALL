@@ -1,1 +1,11 @@
-python setup.py install
+Any one of
+
+    python setup.py install
+    easy_install pymorph
+    pip install pymorph
+
+should work (email me if it does not).
+
+This is *pure Python* and there is no compiled code, so you only need to place
+the pymorph/ directory in an accessible location.
+
