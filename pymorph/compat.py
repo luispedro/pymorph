@@ -62,7 +62,6 @@ mmedgeoff=edgeoff
 mmero=ero
 mmflood=flood
 mmframe=frame
-mmfreedom=freedom
 mmgdist=gdist
 mmgdtshow=_not_implemented('gdtshow: use matplotlib')
 mmgradm=gradm
@@ -790,4 +789,56 @@ def lblshow(f, option='noborder'):
     adpil.adshow(y)
     return y
 
+def freedom(L=5):
+    """
+        - Purpose
+            Control automatic data type conversion.
+        - Synopsis
+            Y = freedom(L=5)
+        - Input
+            L: Double Default: 5. level of FREEDOM: 0, 1 or 2. If the input
+               parameter is omitted, the current level is returned.
+        - Output
+            Y: Double current FREEDOM level
+        - Description
+            freedom controls the automatic data type conversion. There are
+            3 possible levels, called FREEDOM levels, for automatic
+            conversion: 0 - image type conversion is not allowed; 1- image
+            type conversion is allowed, but a warning is sent for each
+            conversion; 2- image type conversion is allowed without warning.
+            The FREEDOM levels are set or inquired by freedom . If an
+            image is not in the required datatype, than it should be
+            converted to the maximum and nearest pymorph Morphology Toolbox
+            datatype. For example, if an image is in int32 and a
+            morphological gray-scale processing that accepts only binary,
+            uint8 or uint16 images, is required, it will be converted to
+            uint16. Another example, if a binary image should be added to a
+            uint8 image, the binary image will be converted to uint8. In
+            cases of operators that have as parameters an image and a
+            constant, the type of the image should be kept as reference,
+            while the type of the constant should be converted, if
+            necessary.
+        - Examples
+            #
+            #   example 1
+            #
+            a=subm([4., 2., 1.],to_uint8([3, 2, 0]))
+            print a
+            print datatype(a)
+            #
+            #   example 2
+            #
+            a=subm([4., 2., 1], binary([3, 2, 0]))
+            print a
+            print datatype(a)
+            #
+            #   example 3
+            #
+            a=subm(to_uint8([4, 3, 2, 1]), 1)
+            print a
+            print datatype(a)
+    """
+    return -1
+
+mmfreedom=freedom
 
