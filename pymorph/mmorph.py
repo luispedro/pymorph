@@ -1200,10 +1200,10 @@ def cerode(f, g, Bc=None, n=1):
     if Bc is None: Bc = secross()
     f = union(f,g)
     for i in xrange(n):
-        prev = y
+        prev = f
         f = union(erode(f,Bc),g)
         if isequal(f, prev): break
-    return y
+    return f
 
 
 def close(f, Bc =None):
