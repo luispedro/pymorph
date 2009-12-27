@@ -11,6 +11,13 @@ For 1.0:
 - Have at least one unit test for all functions with more than one
     line of code [December 9 2009]
 
+- Make sure that the following is observed
+    * images are called f
+    * parameter names are lowercase
+    * structuring elements are called B, Bc, Bdil,...
+    * counts are called N
+    [December 26 200]
+
 For later:
 
 - Implement surf()
