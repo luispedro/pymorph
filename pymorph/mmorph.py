@@ -1130,125 +1130,75 @@ def binary(f, k=1):
     return (f >= k)
 
 
-def blob(fr, measurement, option="image"):
+def blob(f, measurement, output="image"):
     """
-        - Purpose
-            Blob measurements from a labeled image.
-        - Synopsis
-            y = blob(fr, measurement, option="image")
-        - Input
-            fr:          Gray-scale (uint8 or uint16) image. Labeled image.
-            measurement: String Default: "". Choice from 'AREA', 'CENTROID',
-                         or 'BOUNDINGBOX'.
-            option:      String Default: "image". Output format: 'image':
-                         results as a binary image; 'data': results a column
-                         vector of measurements (double).
-        - Output
-            y: Gray-scale (uint8 or uint16) or binary image.
-        - Description
-            Take measurements from the labeled image fr.
-            The measurements are:
-                area,
-                centroid,
-                bounding rectangle.
+    y = blob(f, measurement, output="image")
 
-            The parameter option controls the output format:
-                'IMAGE': the result is an image;
-                'DATA': the result is a double column vector with the
+    Blob measurements from a labeled image.
+
+    Take measurements from the labeled image f.
+
+    The measurements are:
+        * area,
+        * centroid,
+        * bounding rectangle.
+
+    `output` controls the output format:
+        'image': the result is an image;
+        'data ': the result is a double column vector with the
                 measurement for each blob.
 
-            The region with label zero is not measured as it is normally
-            the background. The measurement of region with label 1 appears
-            at the first row of the output.
-        - Examples
-            #
-            #   example 1
-            #
-            fr=to_uint8([
-               [1,1,1,0,0,0],
-               [1,1,1,0,0,2],
-               [1,1,1,0,2,2]])
-            f_area=blob(fr,'area')
-            print f_area
-            f_cent=blob(fr,'centroid')
-            print f_cent
-            f_bb=blob(fr,'boundingbox')
-            print f_bb
-            d_area=blob(fr,'area','data')
-            print d_area
-            d_cent=blob(fr,'centroid','data')
-            print d_cent
-            d_bb=blob(fr,'boundingbox','data')
-            print d_bb
-            #
-            #   example 2
-            #
-            f=readgray('blob3.tif')
-            fr=label(f)
-            g=blob(fr,'area')
-            show(f)
-            show(g)
-            #
-            #   example 3
-            #
-            f=readgray('blob3.tif')
-            fr=label(f)
-            centr=blob(fr,'centroid')
-            show(f,dilate(centr))
-            #
-            #   example 4
-            #
-            f=readgray('blob3.tif')
-            fr=label(f)
-            box=blob(fr,'boundingbox')
-            show(f,box)
+    The region with label zero is not measured as it is normally
+    the background. The measurement of region with label 1 appears
+    at the first row of the output.
+
+    Parameters
+    ----------
+      f :           Gray-scale (uint8 or uint16) image. Labeled image.
+      measurement : Measurment. One of ('area', 'centroid', 'boundingbox').
+      output :      Output format:
+                        'image': returns a binary image
+                        'data': returns a vector of measurements
+    Returns
+    -------
+      y : Gray-scale (uint8 or uint16) or binary image.
     """
     import numpy
-    from numpy import newaxis, ravel, zeros, sum, nonzero, array
-    from string import upper
+    from numpy import newaxis, ravel, zeros, sum, nonzero, array, asanyarray
+    from string import lower
 
-    measurement = upper(measurement)
-    option      = upper(option)
-    if len(fr.shape) == 1: fr = fr[newaxis,:]
-    n = fr.max()
-    if option == 'DATA':
+    measurement = lower(measurement)
+    output      = lower(output)
+    if len(f.shape) == 1: f = f[newaxis,:]
+    assert measurement in ('area', 'centroid', 'boundingbox'), 'pymorph.blob: Unknown measurement type \'%s\'' % measurement
+    if output == 'data':
         y = []
-    elif measurement == 'CENTROID':
-        y = zeros(fr.shape,numpy.bool)
+    elif measurement == 'centroid':
+        y = zeros(f.shape,numpy.bool)
     else:
-        y = zeros(fr.shape,numpy.int32)
-    if measurement == 'AREA':
-        for i in xrange(1,n+1):
-            aux  = (fr==i)
-            area = aux.sum()
-            if option == 'DATA': y.append(area)
-            else               : y += area*aux
-    elif measurement == 'CENTROID':
-        for i in xrange(1,n+1):
-            aux  = (fr==i)
-            ind,  = nonzero(ravel(aux))
-            indx = ind // fr.shape[1]
-            indy = ind % fr.shape[1]
-            centroid = [sum(indx)//len(ind), sum(indy)//len(ind)]
-            if option == 'DATA': y.append([centroid[1],centroid[0]])
-            else               : y[centroid] = 1
-    elif measurement == 'BOUNDINGBOX':
-        for i in xrange(1,n+1):
-            aux = fr==i
-            aux1, aux2 = aux.any(0), aux.any(1)
-            col , row  = nonzero(aux1)  , nonzero(aux2)
-            if option == 'DATA': y.append([col[0],row[0],col[-1],row[-1]])
+        y = zeros(f.shape,numpy.int32)
+    for obj_id in xrange(f.max()):
+        blob = (f == (obj_id+1))
+        if measurement == 'area':
+            area = blob.sum()
+            if output == 'data': y.append(area)
+            else               : y += area*blob
+        elif measurement == 'centroid':
+            indy, indx  = nonzero(blob)
+            cy = sum(indy) // len(indy)
+            cx = sum(indx) // len(indx)
+            if output == 'data': y.append( (cy, cx) )
+            else               : y[cy, cx] = 1
+        elif measurement == 'boundingbox':
+            col, = nonzero(blob.any(0))
+            row, = nonzero(blob.any(1))
+            if output == 'data': y.append([col[0],row[0],col[-1]+1,row[-1]+1])
             else:
-                y[row[0]:row[-1],col[0] ] = 1
+                y[row[0]:row[-1], col[0]] = 1
                 y[row[0]:row[-1],col[-1]] = 1
                 y[row[0], col[0]:col[-1]] = 1
                 y[row[-1],col[0]:col[-1]] = 1
-    else:
-        print "Measurement option should be 'AREA','CENTROID', or 'BOUNDINGBOX'."
-    if option == 'DATA':
-        y = array(y)
-        if len(y.shape) == 1: y = y[:,newaxis]
-    return y
+    return asanyarray(y)
 
 
 def cbisector(f, B, n):
