@@ -1875,46 +1875,49 @@ def gray(f, dtype="uint8", k=None):
 
 def hmin(f, h=1, Bc=None):
     """
-        - Purpose
-            Remove basins with contrast less than h.
-        - Synopsis
-            y = hmin(f, h=1, Bc=None)
-        - Input
-            f:  Gray-scale (uint8 or uint16) image.
-            h:  Default: 1. Contrast parameter.
-            Bc: Structuring Element Default: None (3x3 elementary cross).
-                Structuring element (connectivity).
-        - Output
-            y: Gray-scale (uint8 or uint16) or binary image.
-        - Description
-            hmin sup-reconstructs the gray-scale image f from the marker
-            created by the addition of the positive integer value h to f ,
-            using the connectivity Bc . This operator removes connected
-            basins with contrast less than h . This function is very userful
-            for simplifying the basins of the image.
-        - Examples
-            #
-            #   example 1
-            #
-            a = to_uint8([
-                [10,   3,   6,  18,  16,  15,  10],
-                [10,   9,   6,  18,   6,   5,  10],
-                [10,   9,   9,  15,   4,   9,  10],
-                [10,  10,  10,  10,  10,  10,  10]])
-            print hmin(a,1,sebox())
-            #
-            #   example 2
-            #
-            f = readgray('r4x2_256.tif')
-            show(f)
-            fb = hmin(f,70)
-            show(fb)
-            show(regmin(fb))
+    y = hmin(f, h=1, Bc={3x3 cross})
+
+    Remove basins with contrast less than h.
+
+    `hmin` sup-reconstructs the gray-scale image `f` from the marker
+    created by the addition of the positive integer value `h` to `f`,
+    using the connectivity `Bc`. This operator removes connected
+    basins with contrast less than `h`. This function is very useful
+    for simplifying the basins of the image.
+
+    Parameters
+    ----------
+      f :  Gray-scale (uint8 or uint16) image.
+      h :  Contrast (default: 1).
+      Bc : Connectivity structuring element (default: 3x3 cross).
+    Returns
+    -------
+      y : Gray-scale (uint8 or uint16) or binary image.
+    """
+    """
+    Examples
+      #
+      #   example 1
+      #
+      a = to_uint8([
+          [10,   3,   6,  18,  16,  15,  10],
+          [10,   9,   6,  18,   6,   5,  10],
+          [10,   9,   9,  15,   4,   9,  10],
+          [10,  10,  10,  10,  10,  10,  10]])
+      print hmin(a,1,sebox())
+      #
+      #   example 2
+      #
+      f = readgray('r4x2_256.tif')
+      show(f)
+      fb = hmin(f,70)
+      show(fb)
+      show(regmin(fb))
     """
 
     if Bc is None: Bc = secross()
-    g = addm(f,h)
-    return suprec(g,f,Bc);
+    g = addm(f, h)
+    return suprec(g, f, Bc);
 
 
 def vmax(f, v=1, Bc=None):
@@ -1944,45 +1947,48 @@ def vmax(f, v=1, Bc=None):
 
 def hmax(f, h=1, Bc=None):
     """
-        - Purpose
-            Remove peaks with contrast less than h.
-        - Synopsis
-            y = hmax(f, h=1, Bc=None)
-        - Input
-            f:  Gray-scale (uint8 or uint16) image.
-            h:  Default: 1. Contrast parameter.
-            Bc: Structuring Element Default: None (3x3 elementary cross).
-                Structuring element ( connectivity).
-        - Output
-            y: Gray-scale (uint8 or uint16) or binary image.
-        - Description
-            hmax inf-reconstructs the gray-scale image f from the marker
-            created by the subtraction of the positive integer value h from
-            f , using connectivity Bc . This operator removes connected
-            peaks with contrast less than h .
-        - Examples
-            #
-            #   example 1
-            #
-            a = to_uint8([
-                [4,   3,   6,  1,  3,  5,  2],
-                [2,   9,   6,  1,  6,  7,  3],
-                [8,   9,   3,  2,  4,  9,  4],
-                [3,   1,   2,  1,  2,  4,  2]])
-            print hmax(a,2,sebox())
-            #
-            #   example 2
-            #
-            f = readgray('r4x2_256.tif')
-            show(f)
-            fb = hmax(f,50)
-            show(fb)
-            show(regmax(fb))
+    Remove peaks with contrast less than h.
+
+    y = hmax(f, h=1, Bc={3x3 cross})
+
+    `hmax` inf-reconstructs the gray-scale image f from the marker
+    created by the subtraction of the positive integer value h from
+    `f`, using connectivity `Bc`. This operator removes connected
+    peaks with contrast less than `h`.
+
+    Parameters
+    ----------
+      f :  Gray-scale (uint8 or uint16) image.
+      h :  Contrast (default: 1).
+      Bc : Connectivity structuring element (default: 3x3 cross).
+    Returns
+    -------
+      y : Gray-scale (uint8 or uint16) or binary image.
+    """
+    """
+    Examples
+      #
+      #   example 1
+      #
+      a = to_uint8([
+          [4,   3,   6,  1,  3,  5,  2],
+          [2,   9,   6,  1,  6,  7,  3],
+          [8,   9,   3,  2,  4,  9,  4],
+          [3,   1,   2,  1,  2,  4,  2]])
+      print hmax(a,2,sebox())
+      #
+      #   example 2
+      #
+      f = readgray('r4x2_256.tif')
+      show(f)
+      fb = hmax(f,50)
+      show(fb)
+      show(regmax(fb))
     """
 
     if Bc is None: Bc = secross()
-    g = subm(f,h)
-    return infrec(g,f,Bc);
+    g = subm(f, h)
+    return infrec(g, f, Bc);
 
 
 def homothick():
