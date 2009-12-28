@@ -30,6 +30,8 @@ API documentation has been re-written into numpy rst format, I will release
 version 1.0.
 
 The package is actively maintained and any reported bug will be fixed fast.
+
+Currently there are *no known bugs* (although testing coverage is not complete).
 '''
 classifiers = [
     'Development Status :: 5 - Production/Stable',
@@ -42,7 +44,7 @@ classifiers = [
     ]
 
 setup(name='pymorph',
-      version='0.92',
+      version='0.92.1',
       description='Image Morphology Toolbox',
       long_description=long_description,
       author='Luis Pedro Coelho',
