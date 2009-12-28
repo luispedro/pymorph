@@ -2124,72 +2124,73 @@ def infgen(f, Iab):
 
 def infrec(f, g, Bc=None):
     """
-        - Purpose
-            Inf-reconstruction.
-        - Synopsis
-            y = infrec(f, g, Bc=None)
-        - Input
-            f:  Gray-scale (uint8 or uint16) or binary image. Marker image.
-            g:  Gray-scale (uint8 or uint16) or binary image. Conditioning
-                image.
-            Bc: Structuring Element Default: None (3x3 elementary cross).
-                Structuring element ( connectivity).
-        - Output
-            y: Image
-        - Description
-            infrec creates the image y by an infinite number of recursive
-            iterations (iterations until stability) of the dilation of f by
-            Bc conditioned to g . We say the y is the inf-reconstruction of
-            g from the marker f . For algorithms and applications, see
-            Vinc:93b .
-        - Examples
-            #
-            #   example 1
-            #
-            g=readgray('text_128.tif')
-            f=erode(g,seline(9,90))
-            y=infrec(f,g,sebox())
-            show(g)
-            show(f)
-            show(y)
-            #
-            #   example 2
-            #
-            g=neg(readgray('n2538.tif'))
-            f=intersec(g,0)
-            f=draw(f,'LINE:40,30,60,30:END')
-            y30=cdilate(f,g,sebox(),30)
-            y=infrec(f,g,sebox())
-            show(g)
-            show(f)
-            show(y30)
-            show(y)
+    y = infrec(f, g, Bc={3x3 cross})
+
+    Inf-reconstruction.
+
+    `infrec` creates the image `y` by an infinite number of recursive
+    iterations (iterations until stability) of the dilation of `f` by
+    Bc conditioned to `g`. We say the `y` is the inf-reconstruction of
+    g from the marker `f`. For algorithms and applications, see
+    Vinc:93b.
+
+    Parameters
+    ----------
+      f :  Marker image (gray or binary).
+      g :  Conditioning image (gray or binary).
+      Bc : Connectivity Structuring element (default: 3x3 cross).
+    Returns
+    -------
+      y : Image
+    """
+    """
+    - Examples
+        #
+        #   example 1
+        #
+        g=readgray('text_128.tif')
+        f=erode(g,seline(9,90))
+        y=infrec(f,g,sebox())
+        show(g)
+        show(f)
+        show(y)
+        #
+        #   example 2
+        #
+        g=neg(readgray('n2538.tif'))
+        f=intersec(g,0)
+        f=draw(f,'LINE:40,30,60,30:END')
+        y30=cdilate(f,g,sebox(),30)
+        y=infrec(f,g,sebox())
+        show(g)
+        show(f)
+        show(y30)
+        show(y)
     """
     if Bc is None: Bc = secross()
     n = f.size
-    return cdilate(f,g,Bc,n);
+    return cdilate(f, g, Bc, n);
 
 
 def inpos(f, g, Bc=None):
     """
-   y = inpos(f, g, Bc={3x3 cross})
+    y = inpos(f, g, Bc={3x3 cross})
 
-   Minima imposition.
+    Minima imposition.
 
-   Minima imposition on `g` based on the marker `f`. `inpos` creates
-   an image `y` by filing the valleys of `g` that do not cover the
-   connect components of `f`. A remarkable property of `y` is that its
-   regional minima are exactly the connect components of `g`.
+    Minima imposition on `g` based on the marker `f`. `inpos` creates
+    an image `y` by filing the valleys of `g` that do not cover the
+    connect components of `f`. A remarkable property of `y` is that its
+    regional minima are exactly the connect components of `g`.
 
-   Parameters
-   ----------
-     f :  Binary image. Marker image.
-     g :  Gray-scale (uint8 or uint16) image. input image.
-     Bc : connectivity structuring element (default: 3x3 cross).
-   Returns
-   -------
-     y : Gray-scale (uint8 or uint16) image.
-
+    Parameters
+    ----------
+      f :  Binary image. Marker image.
+      g :  Gray-scale (uint8 or uint16) image. input image.
+      Bc : connectivity structuring element (default: 3x3 cross).
+    Returns
+    -------
+      y : Gray-scale (uint8 or uint16) image.
     """
 
     if Bc is None: Bc = secross()
@@ -2199,34 +2200,37 @@ def inpos(f, g, Bc=None):
     return suprec(fg, intersec(union(g, 1), k, fg), Bc)
 
 
-def interot(Iab, theta=45, DIRECTION="CLOCKWISE"):
+def interot(Iab, theta=45, direction="clockwise"):
     """
-        - Purpose
-            Rotate an interval
-        - Synopsis
-            Irot = interot(Iab, theta=45, DIRECTION="CLOCKWISE")
-        - Input
-            Iab:       Interval
-            theta:     Double Default: 45. Degrees of rotation. Available
-                       values are multiple of 45 degrees.
-            DIRECTION: String Default: "CLOCKWISE". 'CLOCKWISE' or '
-                       ANTI-CLOCKWISE'.
-        - Output
-            Irot: Interval
-        - Description
-            interot rotates the interval Iab by an angle theta .
-        - Examples
-            #
-            b1 = endpoints()
-            b2 = interot(b1)
-            print intershow(b1)
-            print intershow(b2)
-    """
-    from string import upper
+    Irot = interot(Iab, theta=45, direction="clockwise")
 
-    DIRECTION = upper(DIRECTION)
+    Rotate an interval
+
+    `interot` rotates the interval `Iab` by `theta`.
+    Parameters
+    ----------
+      Iab :       Interval
+      theta :     Degrees of rotation. Should be a multiple of 45 degrees. If not,
+                   the rotation is approximate (default: 45).
+      direction : one of ('clockwise', 'anti-clockwise'), default is 'clockwise'
+   Returns
+   -------
+     Irot : Interval
+
+    Examples
+    --------
+    ..
+
+        b1 = endpoints()
+        b2 = interot(b1)
+        print intershow(b1)
+        print intershow(b2)
+    """
+    from string import lower
+
+    direction = lower(direction)
     A,Bc = Iab
-    if DIRECTION != 'CLOCKWISE':
+    if direction != 'clockwise':
         theta = 360 - theta
     Irot = se2hmt(serot(A, theta),
                     serot(Bc,theta))
@@ -2235,54 +2239,56 @@ def interot(Iab, theta=45, DIRECTION="CLOCKWISE"):
 
 def intersec(f1, f2, f3=None, f4=None, f5=None):
     """
-        - Purpose
-            Intersection of images.
-        - Synopsis
-            y = intersec(f1, f2, f3=None, f4=None, f5=None)
-        - Input
-            f1: Gray-scale (uint8 or uint16) or binary image.
-            f2: Gray-scale (uint8 or uint16) or binary image. Or constant.
-            f3: Gray-scale (uint8 or uint16) or binary image. Default: None.
-                Or constant.
-            f4: Gray-scale (uint8 or uint16) or binary image. Default: None.
-                Or constant.
-            f5: Gray-scale (uint8 or uint16) or binary image. Default: None.
-                Or constant.
-        - Output
-            y: Image
-        - Description
-            intersec creates the image y by taking the pixelwise minimum
-            between the images f1, f2, f3, f4, and f5 . When f1, f2, f3, f4,
-            and f5 are binary images, y is the intersection of them.
-        - Examples
-            #
-            #   example 1
-            #
-            f=to_uint8([255,  255,    0,   10,    0,   255,   250])
-            g=to_uint8([ 0,    40,   80,   140,  250,    10,    30])
-            print intersec(f, g)
-            print intersec(f, 0)
-            #
-            #   example 2
-            #
-            a = readgray('form-ok.tif')
-            b = readgray('form-1.tif')
-            c = intersec(a,b)
-            show(a)
-            show(b)
-            show(c)
-            #
-            #   example 3
-            #
-            d = readgray('tplayer1.tif')
-            e = readgray('tplayer2.tif')
-            f = readgray('tplayer3.tif')
-            g = intersec(d,e,f)
-            show(d)
-            show(e)
-            show(f)
-            show(g)
+    y = intersec(f1, f2, f3=None, f4=None, f5=None)
+
+    Intersection of images.
+
+    `intersec` creates the image `y` by taking the pixelwise minimum
+    between the images `f1`, `f2`, `f3`, `f4`, and `f5` . When `f1`,
+    `f2`, `f3`, `f4`, and f5 are binary images, `y` is the intersection
+    of them.
+    Parameters
+    ----------
+      f1 : Image (gray or binary) or constant.
+      f2 : Image (gray or binary) or constant.
+      f3 : Image (gray or binary) or constant, optional.
+      f4 : Image (gray or binary) or constant, optional.
+      f5 : Image (gray or binary) or constant, optional.
+    Returns
+    -------
+      y : Image
     """
+    """
+    - Examples
+      #
+      #   example 1
+      #
+      f=to_uint8([255,  255,    0,   10,    0,   255,   250])
+      g=to_uint8([ 0,    40,   80,   140,  250,    10,    30])
+      print intersec(f, g)
+      print intersec(f, 0)
+      #
+      #   example 2
+      #
+      a = readgray('form-ok.tif')
+      b = readgray('form-1.tif')
+      c = intersec(a,b)
+      show(a)
+      show(b)
+      show(c)
+      #
+      #   example 3
+      #
+      d = readgray('tplayer1.tif')
+      e = readgray('tplayer2.tif')
+      f = readgray('tplayer3.tif')
+      g = intersec(d,e,f)
+      show(d)
+      show(e)
+      show(f)
+      show(g)
+    """
+# Should this be intersect(f0, f1, *args) and take an arbitrary nr of inputs?
     from numpy import minimum
 
     y = minimum(f1,f2)
@@ -2294,20 +2300,31 @@ def intersec(f1, f2, f3=None, f4=None, f5=None):
 
 def intershow(Iab):
     """
-        - Purpose
-            Visualize an interval.
-        - Synopsis
-            s = intershow(Iab)
-        - Input
-            Iab: Interval
-        - Output
-            s: String ( representation of the interval).
-        - Description
-            intershow creates a representation for an interval using 0, 1
-            and . ( don't care).
-        - Examples
-            #
-            print intershow(homothin())
+    s = intershow(Iab)
+
+    Visualize an interval.
+
+    `intershow` creates a representation for an interval using `0`, `1`
+    and `.` (don't care).
+    
+    Parameters
+    ----------
+      Iab : Interval
+    Returns
+    -------
+      s : String representation of the interval.
+
+    Examples
+    --------
+    ..
+        print intershow(homothick())
+
+    prints out
+
+    ..
+        0 0 0
+        . 0 .
+        0 0 0
     """
     from numpy import array, product, reshape, choose
     from string import join
