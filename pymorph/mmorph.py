@@ -1482,41 +1482,33 @@ def dilate(f, B=None):
     return y
 
 
-def drawv(f, data, value, GEOM):
+def drawv(f, data, value, geometry):
     """
-        - Purpose
-            Superpose points, rectangles and lines on an image.
-        - Synopsis
-            y = drawv(f, data, value, GEOM)
-        - Input
-            f:     Gray-scale (uint8 or uint16) or binary image.
-            data:  Gray-scale (uint8 or uint16) or binary image. vector of
-                   points. Each row gives information regarding a
-                   geometrical primitive. The interpretation of this data is
-                   dependent on the parameter GEOM. The line drawing
-                   algorithm is not invariant to image transposition.
-            value: Gray-scale (uint8 or uint16) or binary image. pixel
-                   gray-scale value associated to each point in parameter
-                   data. It can be a column vector of values or a single
-                   value.
-            GEOM:  String Default: "". geometrical figure. One of
-                   'point','line', 'rect', or 'frect' for drawing points,
-                   lines, rectangles or filled rectangles respectively.
-        - Output
-            y: Gray-scale (uint8 or uint16) or binary image. y has the same
-               type of f .
-        - Description
-            drawv creates the image y by a superposition of points,
-            rectangles and lines of gray-level k1 on the image f . The
-            parameters for each geometrical primitive are defined by each
-            line in the 'data' parameter. For points , they are represented
-            by a matrix where each row gives the point's row and column, in
-            this order. For lines , they are drawn with the same convention
-            used by points, with a straight line connecting them in the
-            order given by the data matrix. For rectangles and filled
-            rectangles , each row in the data matrix gives the two points of
-            the diagonal of the rectangle, where the points use the same
-            row, column convention.
+    y = drawv(f, data, value, geometry)
+
+    Superpose points, rectangles and lines on an image.
+
+    `drawv` creates the image `y` by a superposition of points,
+    rectangles and lines of gray-level `value` on the image `f`. The
+    parameters for each geometrical primitive are defined by each line
+    in the `data` parameter. For points, they are represented by 2-D
+    coordinates.  For lines, they are drawn with the same convention
+    used by points, with a straight line connecting them in the order
+    given by the data matrix. For rectangles and filled rectangles,
+    data should be an array of 2 x 2D points.
+    Parameters
+    ----------
+      f :        Gray-scale (uint8 or uint16) or binary image.
+      data :     Vector of coordinates.
+      value :    Gray value(s) for drawing.
+                  If it's a single value, then it will be used for all objects,
+                  otherwise, it should be an array of same length as `data`.
+      geometry:  One of 'point', 'line', 'rect', or 'frect' (filled rectangles).
+    Returns
+    -------
+      y : Image of same type as `f`
+    """
+    """
         - Examples
             #
             #   example 1
@@ -1540,51 +1532,64 @@ def drawv(f, data, value, GEOM):
             lines=drawv(intersec(f,0),transpose(pc),to_uint8(1),'line')
             show(f,lines)
     """
-    from numpy import array, newaxis, zeros, Int, put, ravel, arange, floor
-    from string import upper
+    from numpy import array, newaxis, zeros, put, ravel, arange, floor, int32, zeros_like
+    from string import lower
+    import itertools
 
-    GEOM  = upper(GEOM)
-    data  = array(data)
-    value = array(value)
-    y     = array(f)
-    lin, col = data[1,:], data[0,:]
-    i = lin*f.shape[1] + col; i = i.astype(Int)
+    geometry  = lower(geometry)
     if len(f.shape) == 1: f = f[newaxis,:]
-    if value.shape == (): value = value + zeros(lin.shape)
-    if len(lin) != len(value):
-        print 'Number of points must match n. of colors.'
-        return None
-    if GEOM == 'POINT':
-        put(ravel(y), i, value)
-    elif GEOM == 'LINE':
-        for k in xrange(len(value)-1):
-            delta = 1.*(lin[k+1]-lin[k])/(1e-10 + col[k+1]-col[k])
-            if abs(delta) <= 1:
-                if col[k] < col[k+1]: x_ = arange(col[k],col[k+1]+1)
-                else                : x_ = arange(col[k+1],col[k]+1)
-                y_ = floor(delta*(x_-col[k]) + lin[k] + 0.5)
-            else:
-                if lin[k] < lin[k+1]: y_ = arange(lin[k],lin[k+1]+1)
-                else                : y_ = arange(lin[k+1],lin[k]+1)
-                x_ = floor((y_-lin[k])/delta + col[k] + 0.5)
-            i_ = y_*f.shape[1] + x_; i_ = i_.astype(Int)
-            put(ravel(y), i_, value[k])
-    elif GEOM == 'RECT':
-        for k in xrange(data.shape[1]):
-            d = data[:,k]
-            x0,y0,x1,y1 = d[1],d[0],d[3],d[2]
-            y[x0:x1,y0]   = value[k]
-            y[x0:x1,y1]   = value[k]
-            y[x0,y0:y1]   = value[k]
-            y[x1,y0:y1+1] = value[k]
-    elif GEOM == 'FRECT':
-        for k in xrange(data.shape[1]):
-            d = data[:,k]
-            x0,y0,x1,y1 = d[1],d[0],d[3],d[2]
-            y[x0:x1+1,y0:y1+1] = value[k]
+    value     = array(value)
+    if value.shape == ():
+        value = itertools.repeat(value)
     else:
-        print "GEOM should be 'POINT', 'LINE', 'RECT', or 'FRECT'."
-    return y
+        assert (len(data) == len(value) or geometry == 'line'), \
+                'pymorph.drawv: Length of data does not match length of values'
+        assert ((len(data) == len(value)+1) or geometry != 'line'), \
+                'pymorph.drawv: Length of data does not match length of values -1 (for line option)'
+
+    res = zeros_like(f)
+    if geometry == 'point':
+        for (y,x), val in zip(data, value):
+            res[y,x] = val
+    elif geometry == 'line':
+        # Implement algorithm from
+        # http://en.wikipedia.org/wiki/Bresenham's_line_algorithm
+        # To match the Wikipedia version
+        # the coordinates are expressed in *x,y* convention!
+        for val,(x0,y0),(x1,y1) in itertools.izip(value,data[:-1], data[1:]):
+            steep = (abs(y1 - y0) > abs(x1 - x0))
+            if steep:
+                y0,x0 = x0,y0 
+                y1,x1 = x1,y1 
+            if x0 > x1:
+                x0,x1 = x1,x0
+                y0,y1 = y1,y0
+            deltax = x1 - x0
+            deltay = abs(y1 - y0)
+            error = deltax // 2
+            y = y0
+            ystep = (1 if y0 < y1 else -1)
+            for x in xrange(x0, x1+1):
+                if steep: res[y,x] = val
+                else: res[x,y] = val
+                error -= deltay
+                if error < 0:
+                    y += ystep
+                    error += deltax
+    elif geometry in ('frect', 'rect'):
+        for (y0,x0,y1,x1), val in zip(data, value):
+            assert y1 >= y0, 'pymorph.drawv: bad arguments'
+            assert x1 >= x0, 'pymorph.drawv: bad arguments'
+            if geometry == 'rect':
+                res[y0:y1+1,   x0  ] = val
+                res[y0:y1+1,   x1  ] = val
+                res[   y0  ,x0:x1+1] = val
+                res[   y1  ,x0:x1+1] = val
+            else:
+                res[y0:y1+1,x0:x1+1] = val
+    else:
+        assert False, "pymorph.drawv: geometry should be 'point', 'line', 'rect', or 'frect'."
+    return res
 
 
 def endpoints(option="loop"):
@@ -3536,24 +3541,28 @@ def skiz(f, Bc=None, return_lines=False, METRIC=None):
 
 def subm(f1, f2):
     """
-        - Purpose
-            Subtraction of two images, with saturation.
-        - Synopsis
-            y = subm(f1, f2)
-        - Input
-            f1: Unsigned gray-scale (uint8 or uint16), signed (int32) or
-                binary image.
-            f2: Unsigned gray-scale (uint8 or uint16), signed (int32) or
-                binary image. Or constant.
-        - Output
-            y: Unsigned gray-scale (uint8 or uint16), signed (int32) or
-               binary image.
-        - Description
-            subm creates the image y by pixelwise subtraction of the image
-            f2 from the image f1 . When the subtraction of the values of two
-            pixels is negative, 0 is taken as the result of the subtraction.
-            When f1 and f2 are binary images, y represents the set
-            subtraction of f2 from f1 .
+    y = subm(f1, f2)
+
+    Subtraction of two images, with saturation.
+
+    `subm` creates the image `y` by pixelwise subtraction of the image
+    `f2` from the image `f1`. When the subtraction of the values of two
+    pixels is negative, 0 is taken as the result of the subtraction.
+    When `f1` and `f2` are binary images, `y` represents the set
+    subtraction of `f2` from `f1`.
+
+    Parameters
+    ----------
+      f1 : Unsigned gray-scale (uint8 or uint16), signed (int32) or
+           binary image.
+      f2 : Unsigned gray-scale (uint8 or uint16), signed (int32) or
+           binary image. Or constant.
+    Returns
+    -------
+      y : Unsigned gray-scale (uint8 or uint16), signed (int32) or
+          binary image.
+    """
+    """
         - Examples
             #
             #   example 1
