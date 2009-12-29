@@ -38,6 +38,15 @@
 """
 from pymorph.compat import *
 import numpy
+
+print '''\
+*********************** WARNING ******************************
+The demo is not as well maintained as the rest of the package.
+*********************** WARNING ******************************
+
+The demo has not been updated to the newer interfaces.
+'''
+
 def mmshow(f, f1=None, f2=None, f3=None, f4=None, f5=None, f6=None):
     from pylab import imshow, show, ion
     ion()
