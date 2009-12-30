@@ -260,7 +260,7 @@ def close_holes(f, Bc=None):
 
     if Bc is None: Bc = secross()
     delta_f = frame(f)
-    return neg( infrec( delta_f, neg(f), Bc))
+    return neg(infrec(delta_f, neg(f), Bc))
 
 
 def dist(f, Bc=None, metric='euclidean'):
@@ -1036,7 +1036,7 @@ def blob(f, measurement, output="image"):
     Parameters
     ----------
       f :           Gray-scale (uint8 or uint16) image. Labeled image.
-      measurement : Measurment. One of ('area', 'centroid', 'boundingbox').
+      measurement : Measurement. One of ('area', 'centroid', 'boundingbox').
       output :      Output format:
                         'image': returns a binary image
                         'data': returns a vector of measurements
@@ -1559,8 +1559,8 @@ def drawv(f, data, value, geometry):
         for val,(x0,y0),(x1,y1) in itertools.izip(value,data[:-1], data[1:]):
             steep = (abs(y1 - y0) > abs(x1 - x0))
             if steep:
-                y0,x0 = x0,y0 
-                y1,x1 = x1,y1 
+                y0,x0 = x0,y0
+                y1,x1 = x1,y1
             if x0 > x1:
                 x0,x1 = x1,x0
                 y0,y1 = y1,y0
@@ -1736,48 +1736,46 @@ def gradm(f, Bdil=None, Bero=None):
     return subm(dilate(f,Bdil),erode(f,Bero))
 
 
-def grain(fr, f, measurement, option="image"):
+def grain(f, labels, measurement, option="image"):
     """
-        - Purpose
-            Gray-scale statistics for each labeled region.
-        - Synopsis
-            y = grain(fr, f, measurement, option="image")
-        - Input
-            fr:          Gray-scale (uint8 or uint16) image. Labeled image,
-                         to define the regions. Label 0 is the background
-                         region.
-            f:           Gray-scale (uint8 or uint16) image. To extract the
-                         measuremens.
-            measurement: String Default: "". Choose the measure to compute:
-                         'max', 'min', 'median', 'mean', 'sum', 'std',
-                         'std1'.
-            option:      String Default: "image". Output format: 'image':
-                         results as a gray-scale mosaic image (uint16);
-                         'data': results a column vector of measurements
-                         (double).
-        - Output
-            y: Gray-scale (uint8 or uint16) image. Or a column vector
-               (double) with gray-scale statistics per region.
-        - Description
-            Computes gray-scale statistics of each grain in the image. The
-            grains regions are specified by the labeled image fr and the
-            gray-scale information is specified by the image f . The
-            statistics to compute is specified by the parameter measurement,
-            which has the same options as in function stats . The
-            parameter option defines: ('image') if the output is an uint16
-            image where each label value is changed to the measurement
-            value, or ('data') a double column vector. In this case, the
-            first element (index 1) is the measurement of region 1. The
-            region with label zero is not measure as it is normally the
-            background.
+    y = grain(f, labels, measurement, option="image")
+
+    Gray-scale statistics for each labeled region.
+
+    Computes gray-scale statistics of each grain in the image. The
+    grains regions are specified by the labeled image `labels` and the
+    gray-scale information is specified by the image `f`. The
+    statistics to compute is specified by the parameter measurement,
+    which has the same options as in function stats. The
+    parameter option defines the output format:
+        'image': if the output is an uint16 image where each label value is
+                  changed to the measurement value
+        'data':  a double column vector. In this case, the
+                  first element (index 0) is the measurement of region 1. The
+                  region with label zero is not measure as it is normally the
+                  background.
+    Parameters
+    ----------
+      f :          Data image (gray-scale).
+      labels :     Labeled image. As usual, label 0 is backaground.
+      measurement : Which measure to compute. One of 'max', 'min',
+                      'median', 'mean', 'sum', 'std', 'std1'.
+      option :      Output format:
+                      'image': results as a gray-scale mosaic image (default)
+                      'data': results a column vector of measurements
+    Returns
+    -------
+      y: Gray-scale (uint8 or uint16) image. Or an array with gray-scale
+      statistics per region.  """
+    """
         - Examples
             #
             #   example 1
-            #
+            1#
             f=to_uint8([range(6),range(6),range(6)])
-            fr=labelflat(f)
-            grain(fr,f,'sum','data')
-            grain(fr,f,'sum')
+            labels=labelflat(f)
+            grain(labels,f,'sum','data')
+            grain(labels,f,'sum')
             #
             #   example 2
             #
@@ -1789,60 +1787,38 @@ def grain(fr, f, measurement, option="image"):
             show(f)
             show(g)
     """
-    from numpy import newaxis, ravel, zeros, sum, nonzero, put, take, array, mean, std
-    from string import upper
+    from numpy import zeros_like, asarray
+    from string import lower
 
-    measurement = upper(measurement)
-    option      = upper(option)
-    if len(fr.shape) == 1:
-        fr = fr[newaxis,:]
-    n = fr.max()
-    if option == 'DATA': y = []
-    else               : y = zeros(fr.shape)
-    if measurement == 'MAX':
-        for i in xrange(1,n+1):
-            aux = (fr==i)
-            val = (aux*f).max()
-            if option == 'DATA': y.append(val)
-            else               : put(ravel(y), nonzero(ravel(aux)), val)
-    elif measurement == 'MIN':
-        for i in xrange(1,n+1):
-            aux = fr==i
-            lin = ravel(aux*f)
-            ind = nonzero(ravel(aux))
-            val = take(lin,ind).min()
-            if option == 'DATA': y.append(val)
-            else               : put(ravel(y), ind, val)
-    elif measurement == 'SUM':
-        for i in xrange(1,n+1):
-            aux = fr==i
-            val = (aux*f).sum()
-            if option == 'DATA': y.append(val)
-            else               : put(ravel(y), nonzero(ravel(aux)), val)
-    elif measurement == 'MEAN':
-        for i in xrange(1,n+1):
-            aux = fr==i
-            ind = nonzero(ravel(aux))
-            val = take(ravel(aux*f), ind).mean()
-            if option == 'DATA': y.append(val)
-            else               : put(ravel(y), ind, val)
-    elif measurement == 'STD':
-        for i in xrange(1,n+1):
-            aux = fr==i
-            ind = nonzero(ravel(aux))
-            v   = take(ravel(aux*f), ind)
-            if len(v) < 2: val = 0
-            else         : val = std(v)
-            if option == 'DATA': y.append(val)
-            else               : put(ravel(y), ind, val)
-    elif measurement == 'STD1':
-        print "'STD1' is not implemented"
+    measurement = lower(measurement)
+    is_data = (lower(option) == 'data')
+    if is_data:
+        y = []
     else:
-        print "Measurement should be 'MAX', 'MIN', 'MEAN', 'SUM', 'STD', 'STD1'."
-    if option == 'DATA':
-        y = array(y)
-        if len(y.shape) == 1: y = y[:,newaxis]
-    return y
+        y = zeros_like(labels)
+    fdata = f.ravel()
+    labelsravel = labels.ravel()
+    for obj_id in xrange(labelsravel.max()):
+        pixels = fdata[labelsravel == (obj_id + 1)]
+        if measurement == 'max':
+            val = pixels.max()
+        elif measurement == 'min':
+            val = pixels.min()
+        elif measurement == 'sum':
+            val = pixels.sum()
+        elif measurement == 'mean':
+            val = pixels.mean()
+        elif measurement == 'std':
+            val = pixels.std()
+        elif measurement == 'std1':
+            print "'std1' is not implemented"
+        else:
+            print "measurement should be 'max', 'min', 'mean', 'sum', 'std', 'std1'."
+        if is_data:
+            y.append(val)
+        else:
+            y += (labels == (obj_id))*val
+    return asarray(y)
 
 
 def gray(f, dtype="uint8", k=None):
@@ -2311,7 +2287,7 @@ def intershow(Iab):
 
     `intershow` creates a representation for an interval using `0`, `1`
     and `.` (don't care).
-    
+
     Parameters
     ----------
       Iab : Interval
@@ -2567,31 +2543,28 @@ def openrec(f, bero=None, bc=None):
     return infrec(erode(f,bero),f,bc)
 
 
-def openrecth(f, bero=None, bc=None):
+def openrecth(f, Bero=None, Bc=None):
     """
-        - Purpose
-            Open-by-Reconstruction Top-Hat.
-        - Synopsis
-            y = openrecth(f, bero=None, bc=None)
-        - Input
-            f:    Gray-scale (uint8 or uint16) or binary image.
-            bero: Structuring Element Default: None (3x3 elementary cross).
-                  (erosion)
-            bc:   Structuring Element Default: None (3x3 elementary cross).
-                  ( connectivity)
-        - Output
-            y: Gray-scale (uint8 or uint16) or binary image. (same type of f
-               ).
-        - Description
-            openrecth creates the image y by subtracting the open by
-            reconstruction of f , defined by the structuring elements bero e
-            bc , of f itself.
+    y = openrecth(f, Bero={3x3 cross}, Bc={3x3 cross})
 
+    Open-by-Reconstruction Top-Hat.
+
+    `openrecth` creates the image `y` by subtracting the open by
+    reconstruction of `f`, defined by the structuring elements `Bero` and
+    `Bc`, of `f` itself.
+
+    Parameters
+    ----------
+      f :    Gray-scale (uint8 or uint16) or binary image.
+      Bero : Erosion structuring element (default: 3x3 cross).
+      Bc :   Connectivity structuring element (default: 3x3 cross).
+    Returns
+    -------
+      y : Image of same type as `f`.
     """
-
-    if bero is None: bero = secross()
-    if bc is None: bc = secross()
-    return subm(f, openrec( f, bero, bc))
+    if Bero is None: Bero = secross()
+    if Bc is None: Bc = secross()
+    return subm(f, openrec(f, Bero, Bc))
 
 
 def openth(f, b=None):
