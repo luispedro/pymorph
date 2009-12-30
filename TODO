@@ -15,12 +15,14 @@ For 1.0:
     * images are called f
     * parameter names are lowercase
     * structuring elements are called B, Bc, Bdil,...
-    * counts are called N
+    * counts are called n
     [December 26 200]
 
 For later:
 
-- Implement surf()
+- Implement surf() --- unfortunately, it's not clear what the algorithm should be.
+    I am sure that a very simple filter would work, but I am not sure which filter.
+    Trial&error should give a decent result, though [December 8 2009]
 
 - Write non-apidoc docs [December 8 2009]
 
