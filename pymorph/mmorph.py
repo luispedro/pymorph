@@ -2492,7 +2492,7 @@ def lastero(f, B=None):
 
 def open(f, b=None):
     """
-    y = open(f, b=None)
+    y = open(f, b={3x3 cross})
 
     Morphological opening.
 
@@ -2517,9 +2517,9 @@ def open(f, b=None):
     return dilate(erode(f,b),b)
 
 
-def openrec(f, bero=None, bc=None):
+def openrec(f, Bero=None, Bc=None):
     """
-    y = openrec(f, bero=None, bc=None)
+    y = openrec(f, Bero={3x3 cross}, Bc={3x3 cross})
 
     Opening by reconstruction.
 
@@ -2530,17 +2530,17 @@ def openrec(f, bero=None, bc=None):
     Parameters
     ----------
       f :    Gray-scale (uint8 or uint16) or binary image.
-      bero : Eroding structuring element (default: 3x3 cross).
-      bc :   Connecting structuring element (default: 3x3 cross).
+      Bero : Eroding structuring element (default: 3x3 cross).
+      Bc :   Connecting structuring element (default: 3x3 cross).
 
     Returns
     -------
       y : Image (same type as f).
     """
 
-    if bero is None: bero = secross()
-    if bc is None: bc = secross()
-    return infrec(erode(f,bero),f,bc)
+    if Bero is None: Bero = secross()
+    if Bc is None: Bc = secross()
+    return infrec(erode(f,Bero),f,Bc)
 
 
 def openrecth(f, Bero=None, Bc=None):
