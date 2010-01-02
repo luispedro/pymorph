@@ -1,6 +1,7 @@
 import warnings
 warnings.warn('pymorph.compat should be replaced with pymorph', DeprecationWarning)
 
+from notimplemented import *
 from mmorph import *
 from text import *
 
