@@ -1,3 +1,8 @@
+"""
+This contains functions that were not implemented (yet).
+
+Consider them TODO items.
+"""
 
 def swatershed(f, g, B=None, LINEREG="LINES"):
     """
