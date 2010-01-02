@@ -2569,20 +2569,23 @@ def openrecth(f, Bero=None, Bc=None):
 
 def openth(f, b=None):
     """
-        - Purpose
-            Opening Top Hat.
-        - Synopsis
-            y = openth(f, b=None)
-        - Input
-            f: Gray-scale (uint8 or uint16) or binary image.
-            b: Structuring Element Default: None (3x3 elementary cross).
-               structuring element
-        - Output
-            y: Gray-scale (uint8 or uint16) or binary image. (same type of f
-               ).
-        - Description
-            openth creates the image y by subtracting the morphological
-            opening of f by the structuring element b of f itself.
+    y = openth(f, b={3x3 cross})
+
+    Opening Top Hat.
+
+    `openth` creates the image y by subtracting the morphological
+    opening of `f` by the structuring element `b` of `f` itself.
+
+    Parameters
+    ----------
+      f : Gray-scale (uint8 or uint16) or binary image.
+      b : Structuring element (default: 3x3 cross).
+          structuring element
+    Returns
+    -------
+      y : Image of same type as `f`.
+    """
+    """
         - Examples
             #
             a = readgray('keyb.tif')
@@ -2742,22 +2745,22 @@ def patspec(f, type='OCTAGON', n=65535, Bc=None, Buser=None):
 
 def regmax(f, Bc=None):
     """
-        - Purpose
-            Regional Maximum.
-        - Synopsis
-            y = regmax(f, Bc=None)
-        - Input
-            f:  Gray-scale (uint8 or uint16) image.
-            Bc: Structuring Element Default: None (3x3 elementary cross).
-                (connectivity).
-        - Output
-            y: Binary image.
-        - Description
-            regmax creates a binary image y by computing the regional
-            maxima of f , according to the connectivity defined by the
-            structuring element Bc . A regional maximum is a flat zone not
-            surrounded by flat zones of higher gray values.
+    y = regmax(f, Bc={3x3 cross})
 
+    Regional Maximum.
+
+    `regmax` creates a binary image `y` by computing the regional
+    maxima of `f`, according to the connectivity defined by the
+    structuring element `Bc`. A regional maximum is a flat zone not
+    surrounded by flat zones of higher gray values.
+
+    Parameters
+    ----------
+      f :  Gray-scale image.
+      Bc : Connectivity structuring element (default: 3x3 cross).
+    Returns
+    -------
+      y : Binary image.
     """
 
     if Bc is None: Bc = secross()
@@ -2766,43 +2769,56 @@ def regmax(f, Bc=None):
 
 def regmin(f, Bc=None, option="binary"):
     """
-        - Purpose
-            Regional Minimum (with generalized dynamics).
-        - Synopsis
-            y = regmin(f, Bc=None, option="binary")
-        - Input
-            f:      Gray-scale (uint8 or uint16) image.
-            Bc:     Structuring Element Default: None (3x3 elementary
-                    cross). (connectivity).
-            option: String Default: "binary". Choose one of: BINARY: output
-                One of:
-                    'binary': output a binary image
-                    'value': output a grayscale image with
-                        points at the regional minimum with the pixel values of
-                        the input image
-                    'dynamics':  output a grayscale image with
-                        points at the regional minimum with its dynamics;
-                    'area-dyn': int32 image with the area-dynamics;
-                    'volume-dyn': int32 image with the volume-dynamics.
-        - Output
-            y: Gray-scale (uint8 or uint16) or binary image.
-        - Description
-            regmin creates a binary image f by computing the regional
-            minima of f , according to the connectivity defined by the
-            structuring element Bc . A regional minimum is a flat zone not
-            surrounded by flat zones of lower gray values. A flat zone is a
-            maximal connected component of a gray-scale image with same
-            pixel values. There are three output options: binary image;
-            valued image; and generalized dynamics. The dynamics of a
-            regional minima is the minimum height a pixel has to climb in a
-            walk to reach another regional minima with a higher dynamics.
-            The area-dyn is the minimum area a catchment basin has to raise
-            to reach another regional minima with higher area-dynamics. The
-            volume-dyn is the minimum volume a catchment basin has to raise
-            to reach another regional minima with a higher volume dynamics.
-            The dynamics concept was first introduced in Grimaud:92 and it
-            is the basic notion for the hierarchical or multiscale watershed
-            transform.
+    y = regmin(f, Bc=None, option="binary")
+
+    Regional Minimum (with generalized dynamics).
+
+    `regmin` creates a binary image by computing the regional
+    minima of `f`, according to the connectivity defined by the
+    structuring element `Bc`.
+
+    A regional minimum is a flat zone not surrounded by flat zones of
+    lower gray values. A flat zone is a maximal connected component of a
+    gray-scale image with same pixel values.
+
+    Parameters
+    ----------
+      f :      Gray-scale (uint8 or uint16) image.
+      Bc :     Connectivity structuring element (default: 3x3 cross).
+      option : Currently, it must be set to 'binary'
+                - 'binary': output a binary image
+    Returns
+    -------
+      y : Gray-scale (uint8 or uint16) or binary image.
+
+
+    Not Implemented
+    ---------------
+
+    There are three output options: binary image; valued image; and
+    generalized dynamics. The dynamics of a regional minima is the
+    minimum height a pixel has to climb in a walk to reach another
+    regional minima with a higher dynamics.  The area-dyn is the minimum
+    area a catchment basin has to raise to reach another regional minima
+    with higher area-dynamics.  The volume-dyn is the minimum volume a
+    catchment basin has to raise to reach another regional minima with a
+    higher volume dynamics.
+
+    The dynamics concept was first introduced in Grimaud:92 and it is
+    the basic notion for the hierarchical or multiscale watershed
+    transform.
+
+    Controlled by:
+       option
+              'value': output a grayscale image with
+                  points at the regional minimum with the pixel values of
+                  the input image
+              'dynamics':  output a grayscale image with
+                  points at the regional minimum with its dynamics;
+              'area-dyn': int32 image with the area-dynamics;
+              'volume-dyn': int32 image with the volume-dynamics.
+    """
+    """
         - Examples
             #
             #   example 1
@@ -3082,48 +3098,64 @@ def sedisk(r=3, DIM="2D", METRIC="EUCLIDEAN", FLAT="FLAT", h=0):
     return B
 
 
-def seline(l=3, theta=0):
+def seline(length=3, theta=0):
     """
-        - Purpose
-            Create a line structuring element.
-        - Synopsis
-            B = seline(l=3, theta=0)
-        - Input
-            l:     Non-negative integer. Default: 3.
-            theta: Double Default: 0. (degrees, clockwise)
-        - Output
-            B: Structuring Element
-        - Description
-            seline creates a structuring element B that is a line segment
-            that has an extremity at the origin, length l and angle theta (0
-            degrees is east direction, clockwise). If l=0 , it generates the
-            origin.
-        - Examples
-            #
-            seshow(seline())
-            b1 = seline(4,45)
-            seshow(b1)
-            b2 = seline(4,-180)
-            seshow(b2)
-            a=text('Line')
-            b=dilate(a,b1)
-            show(a)
-            show(b)
+    B = seline(length=3, theta=0)
+
+    Create a line structuring element.
+
+    seline creates a structuring element B that is a line segment
+    that has an extremity at the origin, length `length` and angle
+    `theta` (0 degrees is east direction, clockwise). If `length==0` ,
+    it generates the origin.
+
+    Note that `length` is simply the number of on-pixels. Therefore, in
+    diagonal directions it is off by a factor of \sqrt{2}.
+
+    Parameters
+    ----------
+      length : Length of line (default: 3)
+      theta :  Degrees, clockwise (default: 0, i.e. east)
+    Returns
+    -------
+      B: Structuring Element
+
+    Examples
+    --------
+    ::
+
+        >>> import pymorph
+        >>> pymorph.seline(2)
+        array([[0],
+               [1],
+               [1]], dtype=uint8)
+        >>> pymorph.seline(4)
+        array([[0],
+               [0],
+               [0],
+               [1],
+               [1],
+               [1],
+               [1]], dtype=uint8)
+        >>> pymorph.seline(3,45)
+        array([[0, 0, 0],
+               [0, 1, 1],
+               [0, 0, 1]], dtype=uint8)
     """
     import numpy
     from numpy import pi, tan, cos, sin, sign, floor, arange, transpose, array, ones
 
-    theta = pi*theta//180
+    theta = pi*theta/180.
     if abs(tan(theta)) <= 1:
         s  = sign(cos(theta))
-        x0 = arange(0, l * cos(theta)-(s*0.5),s)
+        x0 = arange(length) * cos(theta)
         x1 = floor(x0 * tan(theta) + 0.5)
     else:
         s  = sign(sin(theta))
-        x1 = arange(0, l * sin(theta) - (s*0.5),s)
+        x1 = arange(length) * sin(theta)
         x0 = floor(x1 / tan(theta) + 0.5)
-    x = to_int32(transpose(array([x1,x0])))
-    B = set2mat((x,binary(ones((x.shape[1],1),numpy.uint8))))
+    x = array(zip(x0, x1), int)
+    B = set2mat((x,))
     return B
 
 
@@ -4341,7 +4373,7 @@ def set2mat(A):
 
     ::
 
-        coords = to_int32([ [0,0] , [-1,0] , [1,1]]),
+        coords = to_int32([ [0,0] , [-1,0] , [1,1]])
         print set2mat( (coords,) )
 
     prints out
