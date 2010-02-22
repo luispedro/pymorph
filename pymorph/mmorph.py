@@ -2692,39 +2692,39 @@ def opentransf(f, type='octagon', n=65535, Bc=None, Buser=None):
     return y
 
 
-def patspec(f, type='OCTAGON', n=65535, Bc=None, Buser=None):
+def patspec(f, type='octagon', n=65535, Bc=None, Buser=None):
     """
-        - Purpose
-            Pattern spectrum (also known as granulometric size density).
-        - Synopsis
-            h = patspec(f, type='OCTAGON', n=65535, Bc=None, Buser=None)
-        - Input
-            f:     Binary image.
-            type:  String Default: 'OCTAGON'. Disk family: 'OCTAGON',
-                   'CHESSBOARD', 'CITY-BLOCK', 'LINEAR-V', 'LINEAR-H',
-                   'LINEAR-45R', 'LINEAR-45L', 'USER'.
-            n:     Default: 65535. Maximum disk radii.
-            Bc:    Structuring Element Default: None (3x3 elementary cross).
-                   Connectivity for the reconstructive granulometry. Used if
-                   '-REC' suffix is appended in the 'type' string.
-            Buser: Structuring Element Default: None (3x3 elementary cross).
-                   User disk, used if 'type' is 'USER'.
-        - Output
-            h: Gray-scale (uint8 or uint16) or binary image. a uint16
-               vector.
-        - Description
-            Compute the Pattern Spectrum of a binary image. See Mara:89b .
-            The pattern spectrum is the histogram of the open transform, not
-            taking the zero values.
+    h = patspec(f, type='octagon', n=65535, Bc={3x3 cross}, Buser=None)
 
+    Pattern spectrum (also known as granulometric size density).
+
+    Compute the Pattern Spectrum of a binary image. See Mara:89b .
+    The pattern spectrum is the histogram of the open transform, not
+    taking the zero values.
+
+    Parameters
+    ----------
+      f :     Binary image.
+      type :  string default: 'octagon'. disk family: 'octagon',
+               'chessboard', 'city-block', 'linear-v', 'linear-h',
+               'linear-45r', 'linear-45l', 'user'.
+      n :     Default: 65535. Maximum disk radii.
+      Bc :    Structuring element (Default: 3x3 elementary cross).
+               Connectivity for the reconstructive granulometry. Used if
+               '-rec' suffix is appended in the 'type' string.
+      Buser : Structuring Element Default: None (3x3 elementary cross).
+             user disk, used if 'type' is 'user'.
+    Returns
+    -------
+      h :   A numpy.ndarray
     """
 
     if Bc is None: Bc = secross()
     if Buser is None: Buser = secross()
-    assert isbinary(f),'Error: input image is not binary'
-    g=opentransf(f,type,n,Bc,Buser)
-    h=histogram(g)
-    h=h[1:]
+    assert isbinary(f),'pymorph.patspec: Error: input image is not binary'
+    g = opentransf(f,type,n,Bc,Buser)
+    h = histogram(g)
+    h = h[1:]
     return h
 
 
@@ -2984,7 +2984,7 @@ def secross(r=1):
 
 def sedisk(r=3, dim=2, metric="euclidean", flat=True, h=0):
     """
-    B = sedisk(r=3, dim=2, metric="euclidean", flat=True, h=0) 
+    B = sedisk(r=3, dim=2, metric="euclidean", flat=True, h=0)
 
     Create a disk or a semi-sphere structuring element.
 
