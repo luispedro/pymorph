@@ -2571,35 +2571,39 @@ def openth(f, b=None):
     return subm(f, open(f,b))
 
 
-def opentransf(f, type='OCTAGON', n=65535, Bc=None, Buser=None):
+def opentransf(f, type='octagon', n=65535, Bc=None, Buser=None):
     """
-        - Purpose
-            Open transform.
-        - Synopsis
-            y = opentransf(f, type='OCTAGON', n=65535, Bc=None,
-            Buser=None)
-        - Input
-            f:     Binary image.
-            type:  String Default: 'OCTAGON'. Disk family: 'OCTAGON',
-                   'CHESSBOARD', 'CITY-BLOCK', 'LINEAR-V', 'LINEAR-H',
-                   'LINEAR-45R', 'LINEAR-45L', 'USER'.
-            n:     Default: 65535. Maximum disk radii.
-            Bc:    Structuring Element Default: None (3x3 elementary cross).
-                   Connectivity for the reconstructive opening. Used if
-                   '-REC' suffix is appended in the 'type' string.
-            Buser: Structuring Element Default: None (3x3 elementary cross).
-                   User disk, used if 'type' is 'USER'.
-        - Output
-            y: Gray-scale (uint8 or uint16) image.
-        - Description
-            Compute the open transform of a binary image. The value of the
-            pixels in the open transform gives the largest radii of the disk
-            plus 1, where the open by it is not empty at that pixel. The
-            disk sequence must satisfy the following: if r > s, rB is
-            sB-open, i.e. rB open by sB is equal rB. Note that the Euclidean
-            disk does not satisfy this property in the discrete grid. This
-            function also computes the reconstructive open transform by
-            adding the suffix '-REC' in the 'type' parameter.
+    y = opentransf(f, type='octagon', n=65535, Bc={3x3 cross}, Buser={3x3 cross})
+
+    Open transform.
+
+    Compute the open transform of a binary image. The value of the
+    pixels in the open transform is radius of the smallest disk, which
+    if used to open, nullifies that pixel.
+
+    The disk sequence must satisfy the following: if `r > s`, then `rB` is
+    `sB`-open, i.e. `open(rB,sB) == rB`. Note that the Euclidean
+    disk does not satisfy this property in the discrete grid. This
+    function also computes the reconstructive open transform by
+    adding the suffix '-rec' in the 'type' parameter.
+
+    Parameters
+    ----------
+      f :       binary image.
+      type :    disk family. one of 'octagon' (default), 'chessboard',
+                 'city-block', 'linear-v', 'linear-h', 'linear-45r',
+                 'linear-45l', 'user'.
+      n :       Maximum disk radius (default: 65535).
+      Bc :      Structuring element (default: 3x3 cross).
+                Connectivity for the reconstructive opening. Used if
+                 '-rec' suffix is appended in the 'type' string.
+      Buser :   Structuring element (default 3x3 cross).
+                 User disk, used if 'type' is 'USER'.
+    Returns
+    -------
+      y : Gray-scale (uint16) image.
+    """
+    """
         - Examples
             #
             #   example 1
@@ -2631,52 +2635,60 @@ def opentransf(f, type='OCTAGON', n=65535, Bc=None, Buser=None):
             g2=(g > 3)
             print g1 == g2
     """
-    import numpy
-    from string import find, upper
+    import numpy as np
+    from string import lower
     if Bc is None: Bc = secross()
     if Buser is None: Buser = secross()
-    assert isbinary(f),'Error: input image is not binary'
-    type = upper(type)
-    rec_flag = find(type,'-REC')
-    if rec_flag != -1:
-        type = type[:rec_flag] # remove the -rec suffix
-    flag = not ((type == 'OCTAGON')  or
-                (type == 'CHESSBOARD') or
-                (type == 'CITY-BLOCK'))
-    if not flag:
+    assert isbinary(f),'pymorph.opentransf: input image is not binary'
+    type = lower(type)
+    rec_flag = False
+    if type.endswith('-rec'):
+        rec_flag = True
+        type = type[:-len('-rec')]
+    disk_se = (type in ('octagon', 'chessboard', 'city-block'))
+    if disk_se:
         n  = min(n,min(f.shape))
-    elif  type == 'LINEAR-H':
+    elif  type == 'linear-h':
         se = binary([1, 1, 1])
         n  = min(n,f.shape[1])
-    elif  type =='LINEAR-V':
-        se = binary([[1],[1],[1]])
+    elif  type =='linear-v':
+        se = binary([
+                [1],
+                [1],
+                [1]])
         n  = min(n,f.shape[0])
-    elif  type == 'LINEAR-45R':
-        se = binary([[0, 0, 1],[0, 1, 0],[1, 0, 0]])
+    elif  type == 'linear-45r':
+        se = binary([
+                    [0, 0, 1],
+                    [0, 1, 0],
+                    [1, 0, 0]])
         n  = min(n,min(f.shape))
-    elif  type == 'LINEAR-45L':
-        se = binary([[1, 0, 0],[0, 1, 0],[0, 0, 1]])
+    elif  type == 'linear-45l':
+        se = binary([
+                    [1, 0, 0],
+                    [0, 1, 0],
+                    [0, 0, 1]])
         n  = min(n,min(f.shape))
-    elif  type == 'USER':
+    elif  type == 'user':
         se = Buser
         n  = min(n,min(f.shape))
     else:
-        print 'Error: only accepts OCTAGON, CHESSBOARD, CITY-BLOCK, LINEAR-H, LINEAR-V, LINEAR-45R, LINEAR-45L, or USER as type, or with suffix -REC.'
-        return []
-    k = 0
-    y = numpy.zeros(f.shape,numpy.uint16)
-    a = binary([1])
-    z = binary([0])
-    while not (isequal(a,z) or (k>=n)):
-        print 'processing r=',k
-        if flag:
-            a = open(f,sesum(se,k))
+        assert False, \
+            'pymorph.opentransf: only accepts octagon, chessboard, \
+                city-block, linear-h, linear-v, linear-45r, linear-45l, or user as type, or with suffix -rec.'
+    y = np.zeros(f.shape, np.uint8)
+    for k in xrange(n):
+        prev = y
+        if disk_se:
+            a = open(f, sedisk(k, 2, type))
         else:
-            a = open(f,sedisk(k,'2D',type))
+            a = open(f, sesum(se,k))
         y = addm(y, gray(a,'uint16',1))
-        k = k+1
-    if rec_flag != -1:
-        y = grain(label(f,Bc),y,'max')
+        if isequal(y, prev):
+            break
+
+    if rec_flag:
+        return grain(label(f,Bc), y, 'max')
     return y
 
 
@@ -2970,104 +2982,83 @@ def secross(r=1):
                  r)
 
 
-def sedisk(r=3, DIM="2D", METRIC="EUCLIDEAN", FLAT="FLAT", h=0):
+def sedisk(r=3, dim=2, metric="euclidean", flat=True, h=0):
     """
-        - Purpose
-            Create a disk or a semi-sphere structuring element.
-        - Synopsis
-            B = sedisk(r=3, DIM="2D", METRIC="EUCLIDEAN", FLAT="FLAT",
-            h=0)
-        - Input
-            r:      Non-negative integer. Default: 3. Disk radius.
-            DIM:    String Default: "2D". '1D', '2D, or '3D'.
-            METRIC: String Default: "EUCLIDEAN". 'EUCLIDEAN', ' CITY-BLOCK',
-                    'OCTAGON', or ' CHESSBOARD'.
-            FLAT:   String Default: "FLAT". 'FLAT' or 'NON-FLAT'.
-            h:      Double Default: 0. Elevation of the center of the
-                    semi-sphere.
-        - Output
-            B: Structuring Element
-        - Description
-            sedisk creates a flat structuring element B that is disk under
-            the metric METRIC , centered at the origin and with radius r or
-            a non-flat structuring element that is a semi-sphere under the
-            metric METRIC, centered at (0, h) and with radius r . This
-            structuring element can be created on the 1D, 2D or 3D space.
-        - Examples
-            #
-            #   example 1
-            #
-            a=seshow(sedisk(10,'2D','CITY-BLOCK'))
-            b=seshow(sedisk(10,'2D','EUCLIDEAN'))
-            c=seshow(sedisk(10,'2D','OCTAGON'))
-            show(a)
-            show(b)
-            show(c)
-            #
-            #   example 2
-            #
-            d=seshow(sedisk(10,'2D','CITY-BLOCK','NON-FLAT'))
-            e=seshow(sedisk(10,'2D','EUCLIDEAN','NON-FLAT'))
-            f=seshow(sedisk(10,'2D','OCTAGON','NON-FLAT'))
-            show(d)
-            show(e)
-            show(f)
-            #
-            #   example 3
-            #
-            g=sedisk(3,'2D','EUCLIDEAN','NON-FLAT')
-            seshow(g)
-            h=sedisk(3,'2D','EUCLIDEAN','NON-FLAT',5)
-            seshow(h)
+    B = sedisk(r=3, dim=2, metric="euclidean", flat=True, h=0) 
+
+    Create a disk or a semi-sphere structuring element.
+
+    `sedisk` creates a flat structuring element B that is disk under
+    the metric metric , centered at the origin and with radius r or
+    a non-flat structuring element that is a semi-sphere under the
+    metric metric, centered at (0, h) and with radius r . this
+    structuring element can be created on the 1D, 2D or 3D space.
+
+    Parameters
+    ----------
+     r :        Non-negative integer. Disk radius (default: 3)
+     dim:       integer: one of (1,2,3). default: 2.
+     metric:    string default: "euclidean". 'euclidean', ' city-block',
+                  'octagon', or ' chessboard'.
+     flat:      Boolean (default: True)
+     h:         double default: 0. elevation of the center of the
+                  semi-sphere.
+    Returns
+    -------
+      B : Structuring Element
     """
-    from string import upper
+    from string import lower
     from numpy import resize, transpose, arange
     from numpy import sqrt, arange, transpose, maximum
 
-    METRIC = upper(METRIC)
-    FLAT   = upper(FLAT)
-    assert DIM=='2D','Supports only 2D structuring elements'
-    if FLAT=='FLAT': y = binary([1])
-    else:            y = to_int32([h])
-    if r==0: return y
-    if METRIC == 'CITY-BLOCK':
-        if FLAT == 'FLAT':
+    metric = lower(metric)
+    assert dim== 2, 'pymorph.sedisk: Supports only 2D structuring elements'
+    if flat: y = binary([[1]])
+    else:    y = to_int32([[h]])
+    if r == 0: return y
+    if metric == 'city-block':
+        if flat:
             b = secross(1)
         else:
             b = to_int32([[-2147483647, 0,-2147483647],
                           [          0, 1,          0],
                           [-2147483647, 0,-2147483647]])
         return sedilate(y,sesum(b,r))
-    elif METRIC == 'CHESSBOARD':
-        if FLAT == 'FLAT':
+    elif metric == 'chessboard':
+        if flat:
             b = sebox(1)
         else:
             b = to_int32([[1,1,1],
                           [1,1,1],
                           [1,1,1]])
         return sedilate(y,sesum(b,r))
-    elif METRIC == 'OCTAGON':
-        if FLAT == 'FLAT':
+    elif metric == 'octagon':
+        if flat:
             b1,b2 = sebox(1),secross(1)
         else:
-            b1 = to_int32([[1,1,1],[1,1,1],[1,1,1]])
-            b2 = to_int32([[-2147483647, 0,-2147483647],
-                           [          0, 1,          0],
-                           [-2147483647, 0,-2147483647]])
-        if r==1: return b1
-        else:    return sedilate( sedilate(y,sesum(b1,r//2)) ,sesum(b2,(r+1)//2))
-    elif METRIC == 'EUCLIDEAN':
+            b1 = to_int32([
+                    [1,1,1],
+                    [1,1,1],
+                    [1,1,1]])
+            b2 = to_int32([
+                    [-2147483647, 0, -2147483647],
+                    [          0, 1,           0],
+                    [-2147483647, 0, -2147483647]])
+        if r == 1:
+            return b1
+        return sedilate(sedilate(y,sesum(b1,r//2)), sesum(b2,(r+1)//2))
+    elif metric == 'euclidean':
         v = arange(-r,r+1)
         x = resize(v, (len(v), len(v)))
         y = transpose(x)
         Be = binary(sqrt(x*x + y*y) <= (r+0.5))
-        if FLAT=='FLAT':
+        if flat:
             return Be
         be = h + to_int32( sqrt( maximum((r+0.5)*(r+0.5) - (x*x) - (y*y),0)))
         be = intersec(gray(Be,'int32'),be)
         return be
     else:
-        assert 0,'Non valid metric'
+        assert False,'Non valid metric'
     return B
 
 
