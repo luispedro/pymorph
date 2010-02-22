@@ -2361,34 +2361,34 @@ def isequal(f1, f2):
     return numpy.all(f1 == f2)
 
 
-def labelflat(f, Bc=None, _lambda=0):
+def labelflat(f, Bc=None, lambda_=0):
     """
-        - Purpose
-            Label the flat zones of gray-scale images.
-        - Synopsis
-            y = labelflat(f, Bc=None, _lambda=0)
-        - Input
-            f:       Gray-scale (uint8 or uint16) or binary image.
-            Bc:      Structuring Element Default: None (3x3 elementary
-                     cross). ( connectivity).
-            _lambda: Default: 0. Connectivity given by |f(q)-f(p)|<=_lambda.
-        - Output
-            y: Image If number of labels is less than 65535, the data type
-               is uint16, otherwise it is int32.
-        - Description
-            labelflat creates the image y by labeling the flat zones of f
-            , according to the connectivity defined by the structuring
-            element Bc . A flat zone is a connected region of the image
-            domain in which all the pixels have the same gray-level
-            (lambda=0 ). When lambda is different than zero, a quasi-flat
-            zone is detected where two neighboring pixels belong to the same
-            region if their difference gray-levels is smaller or equal
-            lambda . The minimum label of the output image is 1 and the
-            maximum is the number of flat-zones in the image.
-        - Examples
-            #
-            #   example 1
-            #
+    y = labelflat(f, Bc=None, lambda_=0)
+
+    Label the flat zones of gray-scale images.
+
+    `labelflat` creates the image y by labeling the flat zones of `f`,
+    according to the connectivity defined by the structuring
+    element `Bc`. A flat zone is a connected region of the image
+    domain in which all the pixels have the same gray-level
+    (lambda=0). When lambda is different than zero, a quasi-flat
+    zone is detected where two neighboring pixels belong to the same
+    region if their difference gray-levels is smaller or equal
+    `lambda`. The minimum label of the output image is 1 and the
+    maximum is the number of flat-zones in the image.
+
+    Parameters
+    ----------
+      f :       Gray-scale (uint8 or uint16) or binary image.
+      Bc :      Structuring Element Default: None (3x3 elementary
+                 cross). ( connectivity).
+      lambda_ : Default: 0. Connectivity given by |f(q)-f(p)|<=lambda_.
+    Returns
+    -------
+      y: Image If number of labels is less than 65535, the data type
+         is uint16, otherwise it is int32.
+    """
+    """
             f=to_uint8([
                [5,5,8,3,0],
                [5,8,8,0,2]])
@@ -2415,23 +2415,23 @@ def labelflat(f, Bc=None, _lambda=0):
             lblshow(g)
     """
     from numpy import allclose, ravel, nonzero, array
+    import numpy as np
     if Bc is None: Bc = secross()
-    zero = binary(subm(f,f))       # zero image
-    faux = neg(zero)
-    r = array(zero)
+    assert not lambda_, 'pymorph.labelflat: only lambda_==0 is supported.'
+
     label = 1
-    y = gray( zero,'uint16',0)          # zero image (output)
-    while not allclose(faux,0):
-        x=nonzero(ravel(faux))[0]        # get first unlabeled pixel
-        fmark = array(zero)
-        fmark.flat[x] = 1                # get the first unlabeled pixel
-        f2aux = (f == ravel(f)[x])
-        r = infrec( fmark, f2aux, Bc)  # detects all pixels connected to it
-        faux = subm( faux, r)          # remove them from faux
-        r = gray( r,'uint16',label)    # label them with the value label
-        y = union( y, r)               # merge them with the labeled image
-        label = label + 1
-    return y
+    labeled = np.zeros(f.shape, np.uint16)
+    fmark = np.zeros_like(f)
+    Y,X = np.where(f)
+    for y,x in zip(Y,X):
+        if labeled[y,x]: continue
+        val = f[y,x]
+        fmark[y,x] = val
+        r = infrec(fmark, (f == val), Bc)
+        labeled[r] = label
+        fmark[y,x] = 0
+        label += 1
+    return labeled
 
 
 def lastero(f, B=None):
