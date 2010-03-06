@@ -26,7 +26,7 @@ AUTHORS, COPYRIGHT & LICENSE
 ================================
 
 Copyright 2003, Roberto A. Lotufo, UNICAMP-University of Campinas; CenPRA-Renato Archer Research Center, Rubens C. Machado.
-Copyright 2008-2009, Luís Pedro Coelho <lpc@cmu.edu>
+Copyright 2008-2010, Luis Pedro Coelho <lpc@cmu.edu>
 
 The original package was written by RAF and RCM. Starting June 2008 (with
 release 0.88), LPC updated the code to run on the more modern numpy datatypes.
