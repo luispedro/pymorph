@@ -2850,52 +2850,50 @@ def regmin(f, Bc=None, option="binary"):
 
 def se2interval(a, b):
     """
-        - Purpose
-            Create an interval from a pair of structuring elements.
-        - Synopsis
-            Iab = se2interval(a, b)
-        - Input
-            a: Structuring Element Left extremity.
-            b: Structuring Element Right extremity.
-        - Output
-            Iab: Interval
-        - Description
-            se2interval creates the interval [a,b] from the structuring
-            elements a and b such that a is less or equal b .
+    Iab = se2interval(a, b)
 
+    Create an interval from a pair of structuring elements.
+
+    `se2interval` creates the interval [a,b] from the structuring
+    elements `a` and `b` such that `a` is less or equal `b`.
+
+    Parameters
+    ----------
+      a : Structuring element left extremity
+      b : Structuring element right extremity
+    Returns
+    -------
+      Iab : Interval
     """
-
-    Iab = (a,neg(b))
-    return Iab
+    return a, neg(b)
 
 
 def se2hmt(A, Bc):
     """
-        - Purpose
-            Create a Hit-or-Miss Template (or interval) from a pair of
-            structuring elements.
-        - Synopsis
-            Iab = se2hmt(A, Bc)
-        - Input
-            A:  Structuring Element Left extremity.
-            Bc: Structuring Element Complement of the right extremity.
-        - Output
-            Iab: Interval
-        - Description
-            se2hmt creates the Hit-or-Miss Template (HMT), also called
-            interval [A,Bc] from the structuring elements A and Bc such that
-            A is included in the complement of Bc . The only difference
-            between this function and se2interval is that here the second
-            structuring element is the complement of the one used in the
-            other function. The advantage of this function over
-            se2interval is that this one is more flexible in the use of
-            the structuring elements as they are not required to have the
-            same size.
+    Iab = se2hmt(A, Bc)
 
+    Create a Hit-or-Miss Template (or interval) from a pair of
+    structuring elements.
+
+    `se2hmt` creates the Hit-or-Miss Template (HMT), also called
+    interval `[A,Bc]` from the structuring elements `A` and `Bc` such that
+    `A` is included in the complement of `Bc` . The only difference
+    between this function and `se2interval` is that here the second
+    structuring element is the complement of the one used in the
+    other function. The advantage of this function over
+    `se2interval` is that this one is more flexible in the use of
+    the structuring elements as they are not required to have the
+    same size.
+
+    Parameters
+    ----------
+      A :  Structuring Element Left extremity.
+      Bc : Structuring Element Complement of the right extremity.
+    Returns
+    -------
+      Iab : Interval
     """
-
-    Iab = (A,Bc)
-    return Iab
+    return A, Bc
 
 
 def se2flatidx(f,Bc):
@@ -3640,24 +3638,23 @@ def supgen(f, INTER):
 
 def suprec(f, g, Bc=None):
     """
-        - Purpose
-            Sup-reconstruction.
-        - Synopsis
-            y = suprec(f, g, Bc=None)
-        - Input
-            f:  Gray-scale (uint8 or uint16) or binary image. Marker image.
-            g:  Gray-scale (uint8 or uint16) or binary image. Conditioning
-                image.
-            Bc: Structuring Element Default: None (3x3 elementary cross). (
-                connectivity).
-        - Output
-            y: Image
-        - Description
-            suprec creates the image y by an infinite number of recursive
-            iterations (iterations until stability) of the erosion of f by
-            Bc conditioned to g . We say that y is the sup-reconstruction of
-            g from the marker f .
+    y = suprec(f, g, Bc={3x3 cross})
 
+    Sup-reconstruction.
+
+    `suprec` creates the image `y` by an infinite number of iterations
+    (until stability) of the erosion of `f` by `Bc` conditioned to `g`.
+    We say that y is the sup-reconstruction of `g` from the marker `f`.
+
+    Parameters
+    ----------
+      f :  Gray-scale (uint8 or uint16) or binary image. Marker image.
+      g :  Gray-scale (uint8 or uint16) or binary image. Conditioning
+           image.
+      Bc : Connectivity structuring element (default: 3x3 cross)
+    Returns
+    -------
+      y : Image
     """
     from numpy import product
     if Bc is None: Bc = secross()
