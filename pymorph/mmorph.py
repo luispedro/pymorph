@@ -3360,30 +3360,35 @@ def seunion(B1, B2):
     return B
 
 
-def skelm(f, B=None, option="binary"):
+def skelm(f, B=None, return_binary=True):
     """
-        - Purpose
-            Morphological skeleton (Medial Axis Transform).
-        - Synopsis
-            y = skelm(f, B=None, option="binary")
-        - Input
-            f:      Binary image.
-            B:      Structuring Element Default: None (3x3 elementary
-                    cross).
-            option: String Default: "binary". Choose one of: binary: output
-                    a binary image (medial axis); value: output a grayscale
-                    image with values of the radius of the disk to
-                    reconstruct the original image (medial axis transform).
-        - Output
-            y: Gray-scale (uint8 or uint16) or binary image.
-        - Description
-            skelm creates the image y by computing the morphological
-            skeleton by B of the image f , when option is BINARY. In this
-            case, the pixels of value 1 in y are center of maximal balls
-            (generated from B ) included in f . This is also called Medial
-            Axis. If option is VALUE, the non zeros pixels in y are the
-            radius plus 1 of the maximal balls. This is called Medial Axis
-            Transform or valued morphological skeleton.
+    y = skelm(f, B={3x3 cross}, return_binary=True)
+
+    Morphological skeleton (Medial Axis Transform).
+
+    `skelm` creates the image `y` by computing the morphological
+    skeleton by `B` of the image `f`. In this
+    case, the pixels of value 1 in y are center of maximal balls
+    (generated from B ) included in `f`. This is also called Medial
+    Axis. If `return_binary` is False, the non zeros pixels in `y` are the
+    radius plus 1 of the maximal balls. This is called Medial Axis
+    Transform or valued morphological skeleton.
+
+    Parameters
+    ----------
+      f :      Binary image.
+      B :      Structuring Element Default: None (3x3 elementary
+               cross).
+      return_binary :  Whether to return a binary image of the medial
+                axis (the default) or a greyscale a binary image
+                (medial axis); value: output a grayscale image with
+                values of the radius of the disk to reconstruct the
+                original image (medial axis transform).
+    Returns
+    -------
+      y : Gray-scale (uint8 or uint16) or binary image.
+    """
+    """
         - Examples
             #
             #   example 1
@@ -3406,11 +3411,9 @@ def skelm(f, B=None, option="binary"):
             c=skelm(a,secross(),'value')
             show(c)
     """
-    from string import upper
     from numpy import asarray
     if B is None: B = secross()
-    assert isbinary(f),'Input binary image only'
-    option = upper(option)
+    assert isbinary(f),'pymorph.skelm: only works for binary images'
     k1,k2 = limits(f)
     y = gray(intersec(f, k1),'uint16')
     iszero = asarray(y)
@@ -3418,10 +3421,10 @@ def skelm(f, B=None, option="binary"):
     for r in xrange(1,65535):
         ero = erode(f,nb)
         if isequal(ero, iszero): break
-        f1 = openth( ero, B)
+        f1 = openth(ero, B)
         nb = sedilate(nb, B)
         y = union(y, gray(f1,'uint16',r))
-    if option == 'BINARY':
+    if return_binary:
         return binary(y)
     return y
 
