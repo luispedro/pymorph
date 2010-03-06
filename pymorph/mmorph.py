@@ -3863,20 +3863,23 @@ def thin(f, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
 
 def union(f1, f2, *args):
     """
-        - Purpose
-            Union of images.
-        - Synopsis
-            y = union(f1, f2, f3=None, f4=None, f5=None)
-        - Input
-            f1: Gray-scale (uint8 or uint16) or binary image.
-            f2: Gray-scale (uint8 or uint16) or binary image. Or constant
-            args: Gray-scale (uint8 or uint16) or binary images.
-        - Output
-            y: Image
-        - Description
-            union creates the image y by taking the pixelwise maximum
-            between the images given. When the images are binary images,
-            y represents the union of them.
+    y = union(f1, f2, f3=None, f4=None, f5=None, ...)
+
+    Union of images.
+
+    `union` creates the image `y` by taking the pixelwise maximum
+    between the images given. When the images are binary images,
+    y represents the union of them.
+    Parameters
+    ----------
+      f1 : Gray-scale (uint8 or uint16) or binary image.
+      f2 : Gray-scale (uint8 or uint16) or binary image. Or constant
+      args : Gray-scale (uint8 or uint16) or binary images.
+    Returns
+    -------
+      y : Image
+    """
+    """
         - Examples
             #
             #   example 1
