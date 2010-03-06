@@ -952,7 +952,7 @@ def asfrec(f, seq="OC", B=None, Bc=None, N=1):
     `asf` creates the image `y` by filtering the image `f` by `n`
     iterations of the close by reconstruction and open by
     reconstruction alternating sequential filter characterized by
-    the structuring element `b`. The structure element `bc` is used in
+    the structuring element `B`. The structure element `Bc` is used in
     the reconstruction. The sequence of opening and closing is
     controlled by the parameter `seq`. 'OC' performs opening after
     closing, and 'CO' performs closing after opening.
@@ -970,8 +970,8 @@ def asfrec(f, seq="OC", B=None, Bc=None, N=1):
       y : Same type of f
     """
     from string import upper
-    if b is None: b = secross()
-    if bc is None: bc = secross()
+    if B is None: B = secross()
+    if Bc is None: Bc = secross()
     seq = upper(seq)
     assert seq in ('OC', 'CO'),'pymorph.asfrec: only accepts OC or CO for SEQ parameter'
     firstop = closerec
@@ -982,7 +982,7 @@ def asfrec(f, seq="OC", B=None, Bc=None, N=1):
         Bn = sesum(B, i+1)
         f = firstop(f, Bn, Bc)
         f = secondop(f, Bn, Bc)
-    return y
+    return f
 
 
 def binary(f, k=1):
