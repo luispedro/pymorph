@@ -3226,8 +3226,8 @@ def sesum(B=None, N=1):
 
     if B is None: B = secross()
     if N==0:
-        if isbinary(B): return binary([1])
-        else:           return to_int32([0]) # identity
+        if isbinary(B): return binary([[1]])
+        else:           return to_int32([[0]]) # identity
     NB = B
     for i in xrange(N-1):
         NB = sedilate(NB,B)
