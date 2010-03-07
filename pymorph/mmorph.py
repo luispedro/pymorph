@@ -3431,19 +3431,23 @@ def skelm(f, B=None, return_binary=True):
 
 def skelmrec(f, B=None):
     """
-        - Purpose
-            Morphological skeleton reconstruction (Inverse Medial Axis
-            Transform).
-        - Synopsis
-            y = skelmrec(f, B=None)
-        - Input
-            f: Gray-scale (uint8 or uint16) or binary image.
-            B: Structuring Element Default: None (3x3 elementary cross).
-        - Output
-            y: Binary image.
-        - Description
-            skelmrec reconstructs the valued morphological skeleton to
-            recover the original image.
+    y = skelmrec(f, B={3x3 cross})
+
+    Morphological skeleton reconstruction
+    (inverse medial axis transform).
+
+    `skelmrec` reconstructs the valued morphological skeleton to
+    recover the original image.
+
+    Parameters
+    ----------
+      f : Gray-scale (uint8 or uint16) or binary image.
+      B : Structuring element (default: 3x3 cross).
+    Returns
+    -------
+      y : Binary image.
+    """
+    """
         - Examples
             #
             from numpy import ones
@@ -3454,7 +3458,6 @@ def skelmrec(f, B=None):
             c=skelmrec(b,secross())
             print c
     """
-    from numpy import ravel
     if B is None: B = secross()
     y = binary(intersec(f, 0))
     for r in xrange(f.max(),1,-1):
