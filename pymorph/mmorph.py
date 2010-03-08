@@ -112,9 +112,9 @@ pattern recognition and image analysis.
 
 """
 from __future__ import division
-__version__ = '0.92.2'
 
-__build_date__ = '1 January 2010'
+__version__ = '0.92.5'
+__build_date__ = '8 March 2010'
 
 
 import sys, os
