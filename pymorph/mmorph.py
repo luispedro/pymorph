@@ -1815,7 +1815,7 @@ def grain(f, labels, measurement, option="image"):
         if is_data:
             y.append(val)
         else:
-            y += (labels == (obj_id))*val
+            y += val*(labels == (obj_id+1))
     return asarray(y)
 
 
