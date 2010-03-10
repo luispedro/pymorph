@@ -1785,7 +1785,7 @@ def grain(f, labels, measurement, option="image"):
             show(f)
             show(g)
     """
-    from numpy import zeros_like, asarray
+    from numpy import zeros_like, asarray, zeros, float32
     from string import lower
 
     measurement = lower(measurement)
@@ -1793,7 +1793,10 @@ def grain(f, labels, measurement, option="image"):
     if is_data:
         y = []
     else:
-        y = zeros_like(labels)
+        type = f.dtype
+        if measurement in ('mean', 'std'):
+            type = float32
+        y = zeros(labels.shape)
     fdata = f.ravel()
     labelsravel = labels.ravel()
     for obj_id in xrange(labelsravel.max()):
