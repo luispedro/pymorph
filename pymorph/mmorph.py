@@ -3468,31 +3468,39 @@ def skelmrec(f, B=None):
     return union(y, binary(f,1))
 
 
-def skiz(f, Bc=None, return_lines=False, METRIC=None):
+def skiz(f, Bc=None, return_lines=False, metric=None):
     """
-        - Purpose
-            Skeleton of Influence Zone - also know as Generalized Voronoi
-            Diagram
-        - Synopsis
-            y = skiz(f, Bc=None, return_lines=False, METRIC=None)
-            y,lines = skiz(f, Bc=None, return_lines=True, METRIC=None)
-        - Input
-            f:       Binary image.
-            Bc:      Structuring Element Default: None (3x3 elementary
-                     cross). Connectivity for the distance measurement.
-            return_lines: Whether to return the lines separating regions
-                    in the image. Default=False
-            METRIC:  String Default: None. 'EUCLIDEAN' if specified.
-        - Output
-            y: Gray-scale (uint8 or uint16) or binary image.
-        - Description
-            skiz creates the image y by detecting the lines which are
-            equidistant to two or more connected components of f , according
-            to the connectivity defined by Bc . Depending on with the flag
-            LINEREG, y will be a binary image with the skiz lines or a
-            labeled image representing the zone of influence regions. When
-            the connected objects of f are single points, the skiz is the
-            Voronoi diagram.
+    labeled = skiz(f, Bc={3x3 cross}, return_lines=False, metric=None)
+    labeled,lines = skiz(f, Bc={3x3 cross}, return_lines=True, metric=None)
+
+    Skeleton of Influence Zone - also know as Generalized Voronoi Diagram
+
+
+
+    `skiz` creates the `labeled` image by detecting the lines which are
+    equidistant to two or more connected components of `f`, according
+    to the connectivity defined by `Bc`.
+
+    `labeled` will be a labeled image, while `lines` will be a binary image
+    of the lines between the regions Depending on with the flag
+
+    When
+    the connected objects of `f` are single points, the `skiz` is the
+    Voronoi diagram.
+
+    ----------
+      f :       Binary image.
+      Bc :      Structuring Element (default: 3x3 cross).
+                Connectivity for the distance measurement.
+      return_lines:  Whether to return the lines separating regions
+                      in the image. Default=False
+      metric:  String (default: Euclidean)
+    Returns
+    -------
+      y : Gray-scale (uint8 or uint16) image.
+      lines: binary image.
+    """
+    """
         - Examples
             #
             #   example 1
@@ -3511,8 +3519,7 @@ def skiz(f, Bc=None, return_lines=False, METRIC=None):
     """
     from string import upper
     if Bc is None: Bc = secross()
-    if METRIC is not None: METRIC = upper(METRIC)
-    d = dist(neg(f), Bc, METRIC)
+    d = dist(neg(f), Bc, metric)
     return cwatershed(d,f,Bc,return_lines)
 
 def subm(f1, f2):
