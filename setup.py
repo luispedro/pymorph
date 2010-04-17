@@ -1,4 +1,16 @@
 # -*- coding: utf-8 -*-
+try:
+    import setuptools
+except ImportError:
+    import sys
+    print >>sys.stderr, '''\
+Could not import `setuptools` module.
+
+Please install it.
+
+Under Ubuntu, it is in a package called `python-setuptools`.'''
+    sys.exit(1)
+
 from setuptools import setup, find_packages
 
 long_description='''Image Morphology Toolbox
