@@ -3574,59 +3574,59 @@ def subm(f1, f2):
     return y.astype(f1.dtype)
 
 
-def supcanon(f, Iab, theta=45, DIRECTION="CLOCKWISE"):
+def supcanon(f, Iab, theta=45, direction="clockwise"):
     """
-        - Purpose
-            Union of sup-generating or hit-miss operators.
-        - Synopsis
-            y = supcanon(f, Iab, theta=45, DIRECTION="CLOCKWISE")
-        - Input
-            f:         Binary image.
-            Iab:       Interval
-            theta:     Double Default: 45. Degrees of rotation: 45, 90, or
-                       180.
-            DIRECTION: String Default: "CLOCKWISE". 'CLOCKWISE' or '
-                       ANTI-CLOCKWISE'
-        - Output
-            y: Binary image.
-        - Description
-            supcanon creates the image y by computing the union of
-            transformations of the image f by sup-generating operators.
-            These hit-miss operators are characterized by rotations (in the
-            clockwise or anti-clockwise direction) of theta degrees of the
-            interval Iab .
+    y = supcanon(f, Iab, theta=45, direction="clockwise")
 
+    Union of sup-generating or hit-miss operators.
+
+    `supcanon` creates the image `y` by computing the union of
+    transformations of the image `f` by sup-generating operators.
+    These hit-miss operators are characterized by rotations (in the
+    clockwise or anti-clockwise direction) of `theta` degrees of the
+    interval `Iab`.
+
+    Parameters
+    ----------
+      f:         Binary image.
+      Iab:       Interval
+      theta:     Angle of rotation in degrees.
+                  Should be 45, 90, or 180.
+      direction: Direction of rotation ('clockwise' or 'anti-clockwise')
+    Returns
+    ------
+      y: Binary image.
     """
-    from string import upper
-
-    DIRECTION = upper(DIRECTION)
     y = intersec(f,0)
     for t in xrange(0,360,theta):
-        Irot = interot( Iab, t, DIRECTION )
-        y = union( y, supgen(f, Irot))
+        Irot = interot(Iab, t, direction)
+        y = union(y, supgen(f, Irot))
     return y
 
 
-def supgen(f, INTER):
+def supgen(f, interval):
     """
-        - Purpose
-            Sup-generating (hit-miss).
-        - Synopsis
-            y = supgen(f, INTER)
-        - Input
-            f:     Binary image.
-            INTER: Interval
-        - Output
-            y: Binary image.
-        - Description
-            supgen creates the binary image y by computing the
-            transformation of the image f by the sup-generating operator
-            characterized by the interval Iab . The sup-generating operator
-            is just a relaxed template matching, where the criterion to keep
-            a shape is that it be inside the interval Iab . Note that we
-            have the classical template matching when a=b . Note yet that
-            the sup-generating operator is equivalent to the classical
-            hit-miss operator.
+    y = supgen(f, interval)
+
+    Sup-generating (hit-miss).
+
+    `supgen` creates the binary image `y` by computing the transformation of
+    the image f by the sup-generating operator characterized by the interval
+    `Iab`. The sup-generating operator is just a relaxed template matching,
+    where the criterion to keep a shape is that it be inside the interval
+    `Iab`. Note that we have the classical template matching when `a==b`. Note
+    also that the sup-generating operator is equivalent to the classical
+    hit-miss operator.
+
+    Parameters
+    ----------
+      f :        Binary image.
+      interval : Interval
+    Returns
+    -------
+      y : Binary image.
+    """
+    """
         - Examples
             #
             #   example 1
@@ -3648,7 +3648,7 @@ def supgen(f, INTER):
             show(dilate(b))
     """
 
-    A,Bc = INTER
+    A,Bc = interval
     return intersec(erode(f,A),
                    erode(neg(f),Bc))
 
