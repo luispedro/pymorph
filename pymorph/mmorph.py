@@ -98,7 +98,7 @@ pattern recognition and image analysis.
 - `supcanon()`     : Union of sup-generating or hit-miss operators.
 - `supgen()`       : Sup-generating (hit-miss).
 - `suprec()`       : Sup-reconstruction.
-- `symdif()`       : Symmetric difference between two images
+- `symdiff()`       : Symmetric difference between two images
 - `text()`         : Create a binary image of a text.
 - `thick()`        : Image transformation by thickening.
 - `thin()`         : Image transformation by thinning.
@@ -3738,41 +3738,45 @@ def bshow(f1, f2=None, f3=None, factor=17):
     return (y > 0)
 
 
-def symdif(f1, f2):
+def symdiff(f1, f2):
     """
-        - Purpose
-            Syetric difference between two images
-        - Synopsis
-            y = symdif(f1, f2)
-        - Input
-            f1: Gray-scale (uint8 or uint16) or binary image.
-            f2: Gray-scale (uint8 or uint16) or binary image.
-        - Output
-            y: Image i
-        - Description
-            symdif creates the image y by taken the union of the
-            subtractions of f1 from f2 and f2 from f1 . When f1 and f2 are
-            binary images, y represents the set of points that are in f1 and
-            not in f2 or that are in f2 and not in f1 .
+    y = symdiff(f1, f2)
+
+    Symmetric difference between two images
+
+    `symdiff` creates the image y by taken the union of the subtractions of `f1`
+    from `f2` and `f2` from `f1`. When `f1` and `f2` are binary images, y
+    represents the set of points that are in `f1` and not in `f2` or that are
+    in `f2` and not in `f1`.
+    
+    Parameters
+    ----------
+      f1 : Gray-scale (uint8 or uint16) or binary image.
+      f2 : Gray-scale (uint8 or uint16) or binary image.
+    Returns
+    -------
+      y : Image
+    """
+    """
         - Examples
             #
             #   example 1
             #
             a = to_uint8([1, 2, 3, 4, 5])
             b = to_uint8([5, 4, 3, 2, 1])
-            print symdif(a,b)
+            print symdiff(a,b)
             #
             #   example 2
             #
             c = readgray('tplayer1.tif')
             d = readgray('tplayer2.tif')
-            e = symdif(c,d)
+            e = symdiff(c,d)
             show(c)
             show(d)
             show(e)
     """
-
     return union(subm(f1,f2),subm(f2,f1))
+symdif = symdiff
 
 
 def thick(f, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
