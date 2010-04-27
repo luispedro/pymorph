@@ -113,10 +113,6 @@ pattern recognition and image analysis.
 """
 from __future__ import division
 
-__version__ = '0.92.5'
-__build_date__ = '8 March 2010'
-
-
 import sys, os
 mydir = os.path.dirname(__file__)
 try:

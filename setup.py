@@ -12,6 +12,7 @@ Under Ubuntu, it is in a package called `python-setuptools`.'''
     sys.exit(1)
 
 from setuptools import setup, find_packages
+execfile('pymorph/pymorph_version.py')
 
 long_description='''Image Morphology Toolbox
 
@@ -56,7 +57,7 @@ classifiers = [
     ]
 
 setup(name='pymorph',
-      version='0.92.6',
+      version=__version__,
       description='Image Morphology Toolbox',
       long_description=long_description,
       author='Luis Pedro Coelho',
