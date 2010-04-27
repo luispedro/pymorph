@@ -33,7 +33,13 @@ Includes basic operations such as
     - watershed
     - ...
 
-*Website*: `http://luispedro.org/software/pymorph <http://luispedro.org/software/pymorph>`_
+*Website*: `http://luispedro.org/software/pymorph
+<http://luispedro.org/software/pymorph>`_
+
+*Mailing List*: Use the `pythonvision mailing list
+<http://groups.google.com/group/pythonvision?pli=1>`_ for questions, bug
+submissions, etc.
+
 
 Future Plans
 ~~~~~~~~~~~~
