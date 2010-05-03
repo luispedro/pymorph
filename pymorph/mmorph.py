@@ -3779,36 +3779,31 @@ def symdiff(f1, f2):
 symdif = symdiff
 
 
-def thick(f, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
+def thick(f, Iab=None, n=-1, theta=45, direction="clockwise"):
     """
-        - Purpose
-            Image transformation by thickening.
-        - Synopsis
-            y = thick(f, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE")
-        - Input
-            f:         Binary image.
-            Iab:       Interval Default: None (homothick).
-            n:         Non-negative integer. Default: -1. Number of
-                       iterations.
-            theta:     Double Default: 45. Degrees of rotation: 45, 90, or
-                       180.
-            DIRECTION: String Default: "CLOCKWISE". 'CLOCKWISE' or '
-                       ANTI-CLOCKWISE'
-        - Output
-            y: Binary image.
-        - Description
-            thick creates the binary image y by performing a thickening of
-            the binary image f . The number of iterations of the thickening
-            is n and each iteration is performed by union of f with the
-            points that are detected in f by the hit-miss operators
-            characterized by rotations of theta degrees of the interval Iab
-            .
+    y = thick(f, Iab=None, n=-1, theta=45, direction="clockwise")
 
+    Image transformation by thickening.
+
+    `thick` creates the binary image `y` by performing a thickening of the
+    binary image `f`. The number of iterations of the thickening is `n` and
+    each iteration is performed by union of `f` with the points that are
+    detected in f by the hit-miss operators characterized by rotations of theta
+    degrees of the interval `Iab`.
+
+    Parameters
+    ----------
+      f :         Binary image.
+      Iab :       Interval Default: None (homothick).
+      n :         Number of iterations. Default: -1, i.e., infinite
+      theta :     Degrees of rotation: 45 (default), 90, or 180.
+      direction : One of ('clockwise', 'anti-clockwise').
+    Returns
+    -------
+      y : Binary image.
     """
     from numpy import product
-    from string import upper
     if Iab is None: Iab = homothick()
-    DIRECTION = upper(DIRECTION)
     assert isbinary(f),'f must be binary image'
     if n == -1: n = product(f.shape)
     y = f
@@ -3816,50 +3811,51 @@ def thick(f, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
     for i in xrange(n):
         aux = zero
         for t in xrange(0,360,theta):
-            sup = supgen( y, interot(Iab, t, DIRECTION))
-            aux = union( aux, sup)
-            y = union( y, sup)
+            sup = supgen(y, interot(Iab, t, direction))
+            aux = union(aux, sup)
+            y = union(y, sup)
         if isequal(aux,zero): break
     return y
 
 
-def thin(f, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
+def thin(f, Iab=None, n=-1, theta=45, direction="clockwise"):
     """
-        - Purpose
-            Image transformation by thinning.
-        - Synopsis
-            y = thin(f, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE")
-        - Input
-            f:         Binary image.
-            Iab:       Interval Default: None (homothin).
-            n:         Non-negative integer. Default: -1. Number of
-                       iterations.
-            theta:     Double Default: 45. Degrees of rotation: 45, 90, or
-                       180.
-            DIRECTION: String Default: "CLOCKWISE". 'CLOCKWISE' or '
-                       ANTI-CLOCKWISE'
-        - Output
-            y: Binary image.
-        - Description
-            thin creates the binary image y by performing a thinning of
-            the binary image f . The number of iterations of the thinning is
-            n and each iteration is performed by subtracting the points that
-            are detect in f by hit-miss operators characterized by rotations
-            of theta of the interval Iab . When n is infinite and the
-            interval is homothin (default conditions), thin gives the
-            skeleton by thinning.
-        - Examples
-            #
-            f=readgray('scissors.tif')
-            f1=thin(f)
-            show(f,f1) # skeleton
-            f2=thin(f1,endpoints(),15) # prunning 15 pixels
-            show(f,f2) # prunned skeleton
+    y = thin(f, Iab={Homothin}, n={infinite}, theta=45, direction="clockwise")
+
+    Image transformation by thinning.
+
+    `thin` creates the binary image `y` by performing a thinning of the binary
+    image `f`. The number of iterations of the thinning is n and each iteration
+    is performed by subtracting the points that are detect in f by hit-miss
+    operators characterized by rotations of theta of the interval `Iab`. When
+    `n` is infinite and the interval is homothin (default conditions), thin
+    gives the skeleton by thinning.
+
+    Parameters
+    ----------
+      f :         Binary image.
+      Iab :       Interval Default:(homothin).
+      n :         Number of iterations. (default: -1, i.e. infinite)
+      theta :     Double Default: 45. Degrees of rotation: 45, 90, or
+                  180.
+      direction : One of ('clockwise', 'anti-clockwise'). default: clockwise.
+    Returns
+    -------
+      y: Binary image.
+    """
+    """
+    - Examples
+      #
+      f=readgray('scissors.tif')
+      f1=thin(f)
+      show(f,f1) # skeleton
+      f2=thin(f1,endpoints(),15) # prunning 15 pixels
+      show(f,f2) # prunned skeleton
     """
     from numpy import product
-    from string import upper
+    from string import lower
     if Iab is None: Iab = homothin()
-    DIRECTION = upper(DIRECTION)
+    direction = lower(direction)
     assert isbinary(f),'f must be binary image'
     if n == -1: n = product(f.shape)
     y = f
@@ -3867,9 +3863,9 @@ def thin(f, Iab=None, n=-1, theta=45, DIRECTION="CLOCKWISE"):
     for i in xrange(n):
         aux = zero
         for t in xrange(0,360,theta):
-            sup = supgen( y, interot(Iab, t, DIRECTION))
-            aux = union( aux, sup)
-            y = subm( y, sup)
+            sup = supgen(y, interot(Iab, t, direction))
+            aux = union(aux, sup)
+            y = subm(y, sup)
         if isequal(aux,zero): break
     return y
 
