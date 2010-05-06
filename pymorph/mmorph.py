@@ -2282,18 +2282,18 @@ def intershow(Iab):
     from numpy import array, product, reshape, choose
     from string import join
 
-    assert (type(Iab) is tuple) and (len(Iab) == 2),'not proper fortmat of hit-or-miss template'
-    A,Bc = Iab
-    S = seunion(A,Bc)
-    Z = intersec(S,0)
-    n = product(S.shape)
-    one  = reshape(array(n*'1','c'),S.shape)
-    zero = reshape(array(n*'0','c'),S.shape)
-    x    = reshape(array(n*'.','c'),S.shape)
-    saux = choose( S + seunion(Z,A), ( x, zero, one))
+    assert (type(Iab) is tuple) and (len(Iab) == 2),'pymorph.intershow: not proper format of hit-or-miss template'
+    A,B = Iab
     s = ''
-    for i in xrange(saux.shape[0]):
-        s=s+(join(list(saux[i]))+' \n')
+    for y in xrange(A.shape[0]):
+        for x in xrange(A.shape[1]):
+            if A[y,x]:
+                s += '1 '
+            elif B[y,x]:
+                s += '0 '
+            else:
+                s += '. '
+        s += '\n'
     return s
 
 
