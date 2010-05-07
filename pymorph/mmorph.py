@@ -1461,7 +1461,7 @@ def dilate(f, B=None):
     from numpy import maximum, newaxis, ones, int32
     if B is None: B = secross()
     if len(f.shape) == 1: f = f[newaxis,:]
-    if isbinary(f) and not isbinary(B): B = (B != 0)
+    if isbinary(f): B = asbinary(B)
     h,w = f.shape
     x,v = mat2set(B)
     if len(x)==0:
