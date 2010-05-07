@@ -37,7 +37,6 @@ mmareaclose=areaclose
 mmareaopen=areaopen
 mmasf=asf
 mmasfrec=asfrec
-mmbench=bench
 mmbinary=binary
 mmblob=blob
 mmbshow=bshow
