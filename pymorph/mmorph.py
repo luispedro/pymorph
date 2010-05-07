@@ -1459,6 +1459,7 @@ def dilate(f, B=None):
     from numpy import maximum, newaxis, ones, int32
     if B is None: B = secross()
     if len(f.shape) == 1: f = f[newaxis,:]
+    if isbinary(f) and not isbinary(B): B = (B != 0)
     h,w = f.shape
     x,v = mat2set(B)
     if len(x)==0:
@@ -1633,7 +1634,7 @@ def endpoints(option="loop"):
 
 def erode(f, b=None):
     """
-    y = erode(f, b=None)
+    y = erode(f, b={3x3 cross})
 
     Erode an image by a structuring element.
 
@@ -1648,7 +1649,7 @@ def erode(f, b=None):
     Parameters
     ----------
       f : Gray-scale (uint8 or uint16) or binary image.
-      b : Structuring Element Default: None (3x3 elementary cross).
+      b : Structuring element (Default: 3x3 elementary cross).
 
     Returns
     -------
