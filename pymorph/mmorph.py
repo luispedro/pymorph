@@ -427,6 +427,8 @@ def randomcolor(X):
 
     Apply a random color table to a gray-scale image.
 
+    Zero is guaranteed to be mapped to black (i.e., (0,0,0) triplet)
+
     Parameters
     ----------
      X : Labeled image.
