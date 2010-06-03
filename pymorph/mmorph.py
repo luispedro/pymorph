@@ -112,6 +112,7 @@ pattern recognition and image analysis.
 
 """
 from __future__ import division
+from pymorph_version import __version__, __version_info__
 
 import sys, os
 mydir = os.path.dirname(__file__)
