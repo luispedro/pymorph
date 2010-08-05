@@ -1,42 +1,41 @@
 """
     Module morphdemo -- Demonstrations
     -------------------------------------------------------------------
-    morphdemo is a set of Demonstrations for morph package
-    SDC Morphology Toolbox
+    morphdemo is a set of Demonstrations for pymorph package
     -------------------------------------------------------------------
-    mmdairport()     -- Detecting runways in satellite airport imagery.
-    mmdarea()        -- Remove objects with small areas in binary images.
-    mmdasp()         -- Detect the missing aspirin tablets in a card of aspirin
-                        tablets.
-    mmdbeef()        -- Detect the lean meat region in a beef steak image.
-    mmdblob()        -- Demonstrate blob measurements and display.
-    mmdbrain()       -- Extract the lateral ventricle from an MRI image of the
-                        brain.
-    mmdcalc()        -- Extract the keys of a calculator.
-    mmdcells()       -- Extract blood cells and separate them.
-    mmdchickparts()  -- Classify chicken parts in breast, legs+tights and wings
-    mmdconcrete()    -- Aggregate and anhydrous phase extraction from a concrete
-                        section observed by a SEM image.
-    mmdcookies()     -- Detect broken rounded biscuits.
-    mmdcornea()      -- Cornea cells marking.
-    mmdfabric()      -- Detection of vertical weave in fabrics.
-    mmdfila()        -- Detect Filarial Worms.
-    mmdflatzone()    -- Flat-zone image simplification by connected filtering.
-    mmdflow()        -- Detect water in a static image of an oil-water flow
-                        experiment.
-    mmdgear()        -- Detect the teeth of a gear
-    mmdholecenter()  -- Hole center misalignment in PCB.
-    mmdlabeltext()   -- Segmenting letters, words and paragraphs.
-    mmdleaf()        -- Segment a leaf from the background
-    mmdlith()        -- Detect defects in a microelectronic circuit.
-    mmdpcb()         -- Decompose a printed circuit board in its main parts.
-    mmdpieces()      -- Classify two dimensional pieces.
-    mmdpotatoes()    -- Grade potato quality by shape and skin spots.
-    mmdrobotop()     -- Detect marks on a robot.
-    mmdruler()       -- Detect defects in a ruler.
-    mmdsoil()        -- Detect fractures in soil.
+    airport()     -- Detecting runways in satellite airport imagery.
+    area()        -- Remove objects with small areas in binary images.
+    asp()         -- Detect the missing aspirin tablets in a card of aspirin
+                     tablets.
+    beef()        -- Detect the lean meat region in a beef steak image.
+    blob()        -- Demonstrate blob measurements and display.
+    brain()       -- Extract the lateral ventricle from an MRI image of the
+                     brain.
+    calc()        -- Extract the keys of a calculator.
+    cells()       -- Extract blood cells and separate them.
+    chickparts()  -- Classify chicken parts in breast, legs+tights and wings
+    concrete()    -- Aggregate and anhydrous phase extraction from a concrete
+                     section observed by a SEM image.
+    cookies()     -- Detect broken rounded biscuits.
+    cornea()      -- Cornea cells marking.
+    fabric()      -- Detection of vertical weave in fabrics.
+    fila()        -- Detect Filarial Worms.
+    flatzone()    -- Flat-zone image simplification by connected filtering.
+    flow()        -- Detect water in a static image of an oil-water flow
+                     experiment.
+    gear()        -- Detect the teeth of a gear
+    holecenter()  -- Hole center misalignment in PCB.
+    labeltext()   -- Segmenting letters, words and paragraphs.
+    leaf()        -- Segment a leaf from the background
+    lith()        -- Detect defects in a microelectronic circuit.
+    pcb()         -- Decompose a printed circuit board in its main parts.
+    pieces()      -- Classify two dimensional pieces.
+    potatoes()    -- Grade potato quality by shape and skin spots.
+    robotop()     -- Detect marks on a robot.
+    ruler()       -- Detect defects in a ruler.
+    soil()        -- Detect fractures in soil.
 """
-from pymorph.compat import *
+from pymorph import *
 import numpy
 
 print '''\
@@ -47,17 +46,23 @@ The demo is not as well maintained as the rest of the package.
 The demo has not been updated to the newer interfaces.
 '''
 
-def mmshow(f, f1=None, f2=None, f3=None, f4=None, f5=None, f6=None):
-    from pylab import imshow, show, ion
-    ion()
-    imshow(overlay(f,f1,f2,f3,f4,f5,f6))
-    show()
+def readgray(imgname):
+    import pylab
+    return pylab.imread('pymorph/data/' + imgname)
+
+def show(f, f1=None, f2=None, f3=None, f4=None, f5=None, f6=None):
+    import pylab
+    pylab.ion()
+    pylab.imshow(overlay(f,f1,f2,f3,f4,f5,f6))
+    pylab.draw()
+
+
 # =========================================================================
 #
-#   mmdairport - Detecting runways in satellite airport imagery.
+#   airport - Detecting runways in satellite airport imagery.
 #
 # =========================================================================
-def mmdairport():
+def airport():
 
     print
     print '''Detecting runways in satellite airport imagery.'''
@@ -70,10 +75,10 @@ def mmdairport():
     print '========================================================================='
     #0
     print '''
-    f = mmreadgray('galeao.jpg')
-    mmshow(f)'''
-    f = mmreadgray('galeao.jpg')
-    mmshow(f)
+    f = readgray('galeao.jpg')
+    show(f)'''
+    f = readgray('galeao.jpg')
+    show(f)
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -88,10 +93,10 @@ def mmdairport():
     print '========================================================================='
     #0
     print '''
-    th=mmopenth(f,mmsedisk(5))
-    mmshow(mmaddm(th, 150))'''
-    th=mmopenth(f,mmsedisk(5))
-    mmshow(mmaddm(th, 150))
+    th=openth(f,sedisk(5))
+    show(addm(th, 150))'''
+    th=openth(f,sedisk(5))
+    show(addm(th, 150))
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -105,10 +110,10 @@ def mmdairport():
     print '========================================================================='
     #0
     print '''
-    bin=mmthreshad(th,30)
-    mmshow(f,bin)'''
-    bin=mmthreshad(th,30)
-    mmshow(f,bin)
+    bin=threshad(th,30)
+    show(f,bin)'''
+    bin=threshad(th,30)
+    show(f,bin)
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -123,14 +128,14 @@ def mmdairport():
     print '========================================================================='
     #0
     print '''
-    m1=mmthin(bin)
-    m2=mmthin(m1,mmendpoints())
-    m=mmareaopen(m2,1000,mmsebox())
-    mmshow(f,m1,m2,m)'''
-    m1=mmthin(bin)
-    m2=mmthin(m1,mmendpoints())
-    m=mmareaopen(m2,1000,mmsebox())
-    mmshow(f,m1,m2,m)
+    m1=thin(bin)
+    m2=thin(m1,endpoints())
+    m=areaopen(m2,1000,sebox())
+    show(f,m1,m2,m)'''
+    m1=thin(bin)
+    m2=thin(m1,endpoints())
+    m=areaopen(m2,1000,sebox())
+    show(f,m1,m2,m)
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -145,10 +150,10 @@ def mmdairport():
     print '========================================================================='
     #0
     print '''
-    g=mminfrec(mmgray(m), th)
-    mmshow(g)'''
-    g=mminfrec(mmgray(m), th)
-    mmshow(g)
+    g=infrec(gray(m), th)
+    show(g)'''
+    g=infrec(gray(m), th)
+    show(g)
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -162,10 +167,10 @@ def mmdairport():
     print '========================================================================='
     #0
     print '''
-    final=mmthreshad(g, 20)
-    mmshow(f, final)'''
-    final=mmthreshad(g, 20)
-    mmshow(f, final)
+    final=threshad(g, 20)
+    show(f, final)'''
+    final=threshad(g, 20)
+    show(f, final)
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -174,10 +179,10 @@ def mmdairport():
     return
 # =========================================================================
 #
-#   mmdarea - Remove objects with small areas in binary images.
+#   area - Remove objects with small areas in binary images.
 #
 # =========================================================================
-def mmdarea():
+def area():
 
     print
     print '''Remove objects with small areas in binary images.'''
@@ -190,10 +195,10 @@ def mmdarea():
     print '========================================================================='
     #0
     print '''
-    a = mmreadgray('circuit_bw.tif')
-    mmshow(a)'''
-    a = mmreadgray('circuit_bw.tif')
-    mmshow(a)
+    a = readgray('circuit_bw.tif')
+    show(a)'''
+    a = readgray('circuit_bw.tif')
+    show(a)
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -207,10 +212,10 @@ def mmdarea():
     print '========================================================================='
     #0
     print '''
-    b = mmareaopen(a,200)
-    mmshow(b)'''
-    b = mmareaopen(a,200)
-    mmshow(b)
+    b = areaopen(a,200)
+    show(b)'''
+    b = areaopen(a,200)
+    show(b)
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -224,8 +229,8 @@ def mmdarea():
     print '========================================================================='
     #0
     print '''
-    mmshow(a,b)'''
-    mmshow(a,b)
+    show(a,b)'''
+    show(a,b)
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -234,10 +239,10 @@ def mmdarea():
     return
 # =========================================================================
 #
-#   mmdasp - Detect the missing aspirin tablets in a card of aspirin tablets.
+#   asp - Detect the missing aspirin tablets in a card of aspirin tablets.
 #
 # =========================================================================
-def mmdasp():
+def asp():
 
     print
     print '''Detect the missing aspirin tablets in a card of aspirin tablets.'''
@@ -250,10 +255,10 @@ def mmdasp():
     print '========================================================================='
     #0
     print '''
-    a = mmreadgray('astablet.tif')
-    mmshow(a)'''
-    a = mmreadgray('astablet.tif')
-    mmshow(a)
+    a = readgray('astablet.tif')
+    show(a)'''
+    a = readgray('astablet.tif')
+    show(a)
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -269,14 +274,14 @@ def mmdasp():
     print '========================================================================='
     #0
     print '''
-    b = mmsurf(a)
-    mmshow(b)
-    c = mmregmax(a,mmsebox())
-    mmshow(b,c)'''
-    b = mmsurf(a)
-    mmshow(b)
-    c = mmregmax(a,mmsebox())
-    mmshow(b,c)
+    b = surf(a)
+    show(b)
+    c = regmax(a,sebox())
+    show(b,c)'''
+    b = surf(a)
+    show(b)
+    c = regmax(a,sebox())
+    show(b,c)
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -293,16 +298,16 @@ def mmdasp():
     print '========================================================================='
     #0
     print '''
-    d = mmopen(a, mmsedisk(20))
-    e = mmsurf(d)
-    mmshow(e)
-    f = mmregmax(d,mmsebox())
-    mmshow(e,f)'''
-    d = mmopen(a, mmsedisk(20))
-    e = mmsurf(d)
-    mmshow(e)
-    f = mmregmax(d,mmsebox())
-    mmshow(e,f)
+    d = open(a, sedisk(20))
+    e = surf(d)
+    show(e)
+    f = regmax(d,sebox())
+    show(e,f)'''
+    d = open(a, sedisk(20))
+    e = surf(d)
+    show(e)
+    f = regmax(d,sebox())
+    show(e,f)
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -318,10 +323,10 @@ def mmdasp():
     print '========================================================================='
     #0
     print '''
-    mmshow(a)
-    mmshow(f)'''
-    mmshow(a)
-    mmshow(f)
+    show(a)
+    show(f)'''
+    show(a)
+    show(f)
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -330,10 +335,10 @@ def mmdasp():
     return
 # =========================================================================
 #
-#   mmdlabeltext - Segmenting letters, words and paragraphs.
+#   labeltext - Segmenting letters, words and paragraphs.
 #
 # =========================================================================
-def mmdlabeltext():
+def labeltext():
 
     print
     print '''Segmenting letters, words and paragraphs.'''
@@ -346,10 +351,10 @@ def mmdlabeltext():
     print '========================================================================='
     #0
     print '''
-    f = mmreadgray('stext.tif')
-    mmshow(f)'''
-    f = mmreadgray('stext.tif')
-    mmshow(f)
+    f = readgray('stext.tif')
+    show(f)'''
+    f = readgray('stext.tif')
+    show(f)
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -363,10 +368,10 @@ def mmdlabeltext():
     print '========================================================================='
     #0
     print '''
-    fl=mmlabel(f,mmsebox())
-    mmlblshow(fl)'''
-    fl=mmlabel(f,mmsebox())
-    mmlblshow(fl)
+    fl=label(f,sebox())
+    lblshow(fl)'''
+    fl=label(f,sebox())
+    lblshow(fl)
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -385,15 +390,15 @@ def mmdlabeltext():
     #0
     print '''
     from numpy.oldnumeric import ones
-    sew = mmimg2se(mmbinary(ones((7,11))))
-    mmseshow(sew)
-    fw=mmlabel(f,sew)
-    mmlblshow(fw)'''
+    sew = img2se(binary(ones((7,11))))
+    seshow(sew)
+    fw=label(f,sew)
+    lblshow(fw)'''
     from numpy.oldnumeric import ones
-    sew = mmimg2se(mmbinary(ones((7,11))))
-    mmseshow(sew)
-    fw=mmlabel(f,sew)
-    mmlblshow(fw)
+    sew = img2se(binary(ones((7,11))))
+    seshow(sew)
+    fw=label(f,sew)
+    lblshow(fw)
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -407,12 +412,12 @@ def mmdlabeltext():
     print '========================================================================='
     #0
     print '''
-    sep = mmimg2se(mmbinary(ones((20,35))))
-    fp=mmlabel(f,sep)
-    mmlblshow(fp)'''
-    sep = mmimg2se(mmbinary(ones((20,35))))
-    fp=mmlabel(f,sep)
-    mmlblshow(fp)
+    sep = img2se(binary(ones((20,35))))
+    fp=label(f,sep)
+    lblshow(fp)'''
+    sep = img2se(binary(ones((20,35))))
+    fp=label(f,sep)
+    lblshow(fp)
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -421,10 +426,10 @@ def mmdlabeltext():
     return
 # =========================================================================
 #
-#   mmdbeef - Detect the lean meat region in a beef steak image.
+#   beef - Detect the lean meat region in a beef steak image.
 #
 # =========================================================================
-def mmdbeef():
+def beef():
 
     print
     print '''Detect the lean meat region in a beef steak image.'''
@@ -437,10 +442,10 @@ def mmdbeef():
     print '========================================================================='
     #0
     print '''
-    a = mmreadgray('beef.tif');
-    mmshow(a);'''
-    a = mmreadgray('beef.tif');
-    mmshow(a);
+    a = readgray('beef.tif');
+    show(a);'''
+    a = readgray('beef.tif');
+    show(a);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -455,10 +460,10 @@ def mmdbeef():
     print '========================================================================='
     #0
     print '''
-    b=mmclose(a,mmsedisk(2));
-    mmshow(b);'''
-    b=mmclose(a,mmsedisk(2));
-    mmshow(b);
+    b=close(a,sedisk(2));
+    show(b);'''
+    b=close(a,sedisk(2));
+    show(b);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -474,12 +479,12 @@ def mmdbeef():
     print '========================================================================='
     #0
     print '''
-    c = mmthreshad(a,uint8(10));
-    d = mmareaclose(c,200);
-    mmshow(d);'''
-    c = mmthreshad(a,uint8(10));
-    d = mmareaclose(c,200);
-    mmshow(d);
+    c = threshad(a,uint8(10));
+    d = areaclose(c,200);
+    show(d);'''
+    c = threshad(a,uint8(10));
+    d = areaclose(c,200);
+    show(d);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -493,10 +498,10 @@ def mmdbeef():
     print '========================================================================='
     #0
     print '''
-    e = mmgradm(d,mmsecross(1),mmsebox(13));
-    mmshow(e);'''
-    e = mmgradm(d,mmsecross(1),mmsebox(13));
-    mmshow(e);
+    e = gradm(d,secross(1),sebox(13));
+    show(e);'''
+    e = gradm(d,secross(1),sebox(13));
+    show(e);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -510,14 +515,14 @@ def mmdbeef():
     print '========================================================================='
     #0
     print '''
-    f= mmero(d,mmsecross(80));
-    g = mmunion(e,f);  
-    h = mmgradm(b);
-    mmshow(h,g);'''
-    f= mmero(d,mmsecross(80));
-    g = mmunion(e,f);  
-    h = mmgradm(b);
-    mmshow(h,g);
+    f= erode(d,secross(80));
+    g = union(e,f);
+    h = gradm(b);
+    show(h,g);'''
+    f= erode(d,secross(80));
+    g = union(e,f);
+    h = gradm(b);
+    show(h,g);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -531,10 +536,10 @@ def mmdbeef():
     print '========================================================================='
     #0
     print '''
-    i=mmcwatershed(h,g); 
-    mmshow(i);'''
-    i=mmcwatershed(h,g); 
-    mmshow(i);
+    i=cwatershed(h,g);
+    show(i);'''
+    i=cwatershed(h,g);
+    show(i);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -547,8 +552,8 @@ def mmdbeef():
     print '========================================================================='
     #0
     print '''
-    mmshow(a,mmdil(i));'''
-    mmshow(a,mmdil(i));
+    show(a,dilate(i));'''
+    show(a,dilate(i));
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -557,10 +562,10 @@ def mmdbeef():
     return
 # =========================================================================
 #
-#   mmdblob - Demonstrate blob measurements and display.
+#   blob - Demonstrate blob measurements and display.
 #
 # =========================================================================
-def mmdblob():
+def blob():
 
     print
     print '''Demonstrate blob measurements and display.'''
@@ -574,17 +579,17 @@ def mmdblob():
     print '========================================================================='
     #0
     print '''
-    f  = mmreadgray('blob3.tif')
-    fr = mmlabel(f)
-    mmshow(f)
-    mmlblshow(fr,'border')
-    nblobs=mmstats(fr,'max')
+    f  = readgray('blob3.tif')
+    fr = label(f)
+    show(f)
+    lblshow(fr,'border')
+    nblobs=stats(fr,'max')
     print nblobs'''
-    f  = mmreadgray('blob3.tif')
-    fr = mmlabel(f)
-    mmshow(f)
-    mmlblshow(fr,'border')
-    nblobs=mmstats(fr,'max')
+    f  = readgray('blob3.tif')
+    fr = label(f)
+    show(f)
+    lblshow(fr,'border')
+    nblobs=stats(fr,'max')
     print nblobs
     print
     raw_input(4*' '+'Please press return to continue...')
@@ -603,14 +608,14 @@ def mmdblob():
     print '========================================================================='
     #0
     print '''
-    c  = mmblob(fr,'centroid')
-    cr = mmlabel(c)
-    mmshow(f,c)
-    mmlblshow(mmdil(cr))'''
-    c  = mmblob(fr,'centroid')
-    cr = mmlabel(c)
-    mmshow(f,c)
-    mmlblshow(mmdil(cr))
+    c  = blob(fr,'centroid')
+    cr = label(c)
+    show(f,c)
+    lblshow(dilate(cr))'''
+    c  = blob(fr,'centroid')
+    cr = label(c)
+    show(f,c)
+    lblshow(dilate(cr))
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -628,20 +633,20 @@ def mmdblob():
     print '========================================================================='
     #0
     print '''
-    fbin = mmcmp(cr,'==',uint16(5))
-    f5   = mmtext('5')
+    fbin = cmp(cr,'==',uint16(5))
+    f5   = text('5')
     print f5
-    b5   = mmimg2se(f5)
-    fb5  = mmdil(fbin,b5)
-    mmshow(mmdil(fbin))
-    mmshow(f,fb5)'''
-    fbin = mmcmp(cr,'==',uint16(5))
-    f5   = mmtext('5')
+    b5   = img2se(f5)
+    fb5  = dilate(fbin,b5)
+    show(dilate(fbin))
+    show(f,fb5)'''
+    fbin = cmp(cr,'==',uint16(5))
+    f5   = text('5')
     print f5
-    b5   = mmimg2se(f5)
-    fb5  = mmdil(fbin,b5)
-    mmshow(mmdil(fbin))
-    mmshow(f,fb5)
+    b5   = img2se(f5)
+    fb5  = dilate(fbin,b5)
+    show(dilate(fbin))
+    show(f,fb5)
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -657,26 +662,26 @@ def mmdblob():
     print '========================================================================='
     #0
     print '''
-    facc=mmsubm(f,f)
+    facc=subm(f,f)
     for i in range(1,nblobs+1):
-      fbin = mmcmp(cr,'==',uint16(i))
-      fi   = mmtext(str(i))
-      bi   = mmimg2se(fi)
-      fbi  = mmdil(fbin,bi)
-      facc = mmunion(facc,fbi)
-    mmshow(f,facc)
-    darea = mmblob(fr,'area','data')
-    mmplot([[darea]], [['style','impulses']])'''
-    facc=mmsubm(f,f)
+      fbin = cmp(cr,'==',uint16(i))
+      fi   = text(str(i))
+      bi   = img2se(fi)
+      fbi  = dilate(fbin,bi)
+      facc = union(facc,fbi)
+    show(f,facc)
+    darea = blob(fr,'area','data')
+    plot([[darea]], [['style','impulses']])'''
+    facc=subm(f,f)
     for i in range(1,nblobs+1):
-      fbin = mmcmp(cr,'==',uint16(i))
-      fi   = mmtext(str(i))
-      bi   = mmimg2se(fi)
-      fbi  = mmdil(fbin,bi)
-      facc = mmunion(facc,fbi)
-    mmshow(f,facc)
-    darea = mmblob(fr,'area','data')
-    mmplot([[darea]], [['style','impulses']])
+      fbin = cmp(cr,'==',uint16(i))
+      fi   = text(str(i))
+      bi   = img2se(fi)
+      fbi  = dilate(fbin,bi)
+      facc = union(facc,fbi)
+    show(f,facc)
+    darea = blob(fr,'area','data')
+    plot([[darea]], [['style','impulses']])
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -685,10 +690,10 @@ def mmdblob():
     return
 # =========================================================================
 #
-#   mmdbrain - Extract the lateral ventricle from an MRI image of the brain.
+#   brain - Extract the lateral ventricle from an MRI image of the brain.
 #
 # =========================================================================
-def mmdbrain():
+def brain():
 
     print
     print '''Extract the lateral ventricle from an MRI image of the brain.'''
@@ -701,10 +706,10 @@ def mmdbrain():
     print '========================================================================='
     #0
     print '''
-    a = mmreadgray('mribrain.tif');
-    mmshow(a);'''
-    a = mmreadgray('mribrain.tif');
-    mmshow(a);
+    a = readgray('mribrain.tif');
+    show(a);'''
+    a = readgray('mribrain.tif');
+    show(a);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -718,14 +723,14 @@ def mmdbrain():
     print '========================================================================='
     #0
     print '''
-    b = mmopen(a,mmsedisk(10));
-    c = mminfrec(b,a);
-    mmshow(b);
-    mmshow(c);'''
-    b = mmopen(a,mmsedisk(10));
-    c = mminfrec(b,a);
-    mmshow(b);
-    mmshow(c);
+    b = open(a,sedisk(10));
+    c = infrec(b,a);
+    show(b);
+    show(c);'''
+    b = open(a,sedisk(10));
+    c = infrec(b,a);
+    show(b);
+    show(c);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -742,14 +747,14 @@ def mmdbrain():
     print '========================================================================='
     #0
     print '''
-    d = mmsubm(a,c);
-    mmshow(d);
-    e = mmcmp(d,'>=',uint8(50));
-    mmshow(e);'''
-    d = mmsubm(a,c);
-    mmshow(d);
-    e = mmcmp(d,'>=',uint8(50));
-    mmshow(e);
+    d = subm(a,c);
+    show(d);
+    e = cmp(d,'>=',uint8(50));
+    show(e);'''
+    d = subm(a,c);
+    show(d);
+    e = cmp(d,'>=',uint8(50));
+    show(e);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -764,12 +769,12 @@ def mmdbrain():
     print '========================================================================='
     #0
     print '''
-    f= mmareaopen(e,70);
-    mmshow(f);
-    mmshow(a,f);'''
-    f= mmareaopen(e,70);
-    mmshow(f);
-    mmshow(a,f);
+    f= areaopen(e,70);
+    show(f);
+    show(a,f);'''
+    f= areaopen(e,70);
+    show(f);
+    show(a,f);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -778,10 +783,10 @@ def mmdbrain():
     return
 # =========================================================================
 #
-#   mmdcalc - Extract the keys of a calculator.
+#   calc - Extract the keys of a calculator.
 #
 # =========================================================================
-def mmdcalc():
+def calc():
 
     print
     print '''Extract the keys of a calculator.'''
@@ -794,10 +799,10 @@ def mmdcalc():
     print '========================================================================='
     #0
     print '''
-    a = mmreadgray('keyb.tif');
-    mmshow(a);'''
-    a = mmreadgray('keyb.tif');
-    mmshow(a);
+    a = readgray('keyb.tif');
+    show(a);'''
+    a = readgray('keyb.tif');
+    show(a);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -810,10 +815,10 @@ def mmdcalc():
     print '========================================================================='
     #0
     print '''
-    b = mmgradm(a, mmsebox());
-    mmshow(b);'''
-    b = mmgradm(a, mmsebox());
-    mmshow(b);
+    b = gradm(a, sebox());
+    show(b);'''
+    b = gradm(a, sebox());
+    show(b);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -827,10 +832,10 @@ def mmdcalc():
     print '========================================================================='
     #0
     print '''
-    c = mmopenth(a,mmsebox(5));
-    mmshow(c);'''
-    c = mmopenth(a,mmsebox(5));
-    mmshow(c);
+    c = openth(a,sebox(5));
+    show(c);'''
+    c = openth(a,sebox(5));
+    show(c);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -845,10 +850,10 @@ def mmdcalc():
     print '========================================================================='
     #0
     print '''
-    d = mmthreshad(c, uint8(150));
-    mmshow(d);'''
-    d = mmthreshad(c, uint8(150));
-    mmshow(d);
+    d = threshad(c, uint8(150));
+    show(d);'''
+    d = threshad(c, uint8(150));
+    show(d);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -862,10 +867,10 @@ def mmdcalc():
     print '========================================================================='
     #0
     print '''
-    e = mmdil(d, mmsebox(3));
-    mmshow(e);'''
-    e = mmdil(d, mmsebox(3));
-    mmshow(e);
+    e = dilate(d, sebox(3));
+    show(e);'''
+    e = dilate(d, sebox(3));
+    show(e);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -879,10 +884,10 @@ def mmdcalc():
     print '========================================================================='
     #0
     print '''
-    f = mmwatershed(mmneg(e));
-    mmshow(f);'''
-    f = mmwatershed(mmneg(e));
-    mmshow(f);
+    f = watershed(neg(e));
+    show(f);'''
+    f = watershed(neg(e));
+    show(f);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -896,10 +901,10 @@ def mmdcalc():
     print '========================================================================='
     #0
     print '''
-    g = mmunion(e,f);
-    mmshow(b,g);'''
-    g = mmunion(e,f);
-    mmshow(b,g);
+    g = union(e,f);
+    show(b,g);'''
+    g = union(e,f);
+    show(b,g);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -913,10 +918,10 @@ def mmdcalc():
     print '========================================================================='
     #0
     print '''
-    h = mmcwatershed(b,g,mmsebox());
-    mmshow(h);'''
-    h = mmcwatershed(b,g,mmsebox());
-    mmshow(h);
+    h = cwatershed(b,g,sebox());
+    show(h);'''
+    h = cwatershed(b,g,sebox());
+    show(h);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -929,8 +934,8 @@ def mmdcalc():
     print '========================================================================='
     #0
     print '''
-    mmshow(a,h);'''
-    mmshow(a,h);
+    show(a,h);'''
+    show(a,h);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -939,10 +944,10 @@ def mmdcalc():
     return
 # =========================================================================
 #
-#   mmdcells - Extract blood cells and separate them.
+#   cells - Extract blood cells and separate them.
 #
 # =========================================================================
-def mmdcells():
+def cells():
 
     print
     print '''Extract blood cells and separate them.'''
@@ -956,14 +961,14 @@ def mmdcells():
     print '========================================================================='
     #0
     print '''
-    a = mmreadgray('bloodcells.tif');
-    mmshow(a);
-    b = mmareaopen(a, 200);
-    mmshow(b);'''
-    a = mmreadgray('bloodcells.tif');
-    mmshow(a);
-    b = mmareaopen(a, 200);
-    mmshow(b);
+    a = readgray('bloodcells.tif');
+    show(a);
+    b = areaopen(a, 200);
+    show(b);'''
+    a = readgray('bloodcells.tif');
+    show(a);
+    b = areaopen(a, 200);
+    show(b);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -978,14 +983,14 @@ def mmdcells():
     print '========================================================================='
     #0
     print '''
-    c = mmcmp( uint8(0), '<=', b, '<=', uint8(140));
-    mmshow(c);
-    d = mmopen(c,mmsedisk(2,'2D','OCTAGON'));
-    mmshow(d);'''
-    c = mmcmp( uint8(0), '<=', b, '<=', uint8(140));
-    mmshow(c);
-    d = mmopen(c,mmsedisk(2,'2D','OCTAGON'));
-    mmshow(d);
+    c = cmp( uint8(0), '<=', b, '<=', uint8(140));
+    show(c);
+    d = open(c,sedisk(2,'2D','OCTAGON'));
+    show(d);'''
+    c = cmp( uint8(0), '<=', b, '<=', uint8(140));
+    show(c);
+    d = open(c,sedisk(2,'2D','OCTAGON'));
+    show(d);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1002,18 +1007,18 @@ def mmdcells():
     print '========================================================================='
     #0
     print '''
-    e1 = mmdist(d, mmsebox(),'EUCLIDEAN');
-    e2 = mmsurf(e1);
-    mmshow( e2);
-    e3 = mmregmax(e1);
-    e  = mmdil(e3);
-    mmshow( e2, e);'''
-    e1 = mmdist(d, mmsebox(),'EUCLIDEAN');
-    e2 = mmsurf(e1);
-    mmshow( e2);
-    e3 = mmregmax(e1);
-    e  = mmdil(e3);
-    mmshow( e2, e);
+    e1 = dist(d, sebox(),'EUCLIDEAN');
+    e2 = surf(e1);
+    show( e2);
+    e3 = regmax(e1);
+    e  = dilate(e3);
+    show( e2, e);'''
+    e1 = dist(d, sebox(),'EUCLIDEAN');
+    e2 = surf(e1);
+    show( e2);
+    e3 = regmax(e1);
+    e  = dilate(e3);
+    show( e2, e);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1031,16 +1036,16 @@ def mmdcells():
     print '========================================================================='
     #0
     print '''
-    f = mmneg(e1);
-    fs = mmsurf(f);
-    mmshow(fs);
-    g = mmcwatershed( f, e, mmsebox());
-    mmshow(fs, g, e);'''
-    f = mmneg(e1);
-    fs = mmsurf(f);
-    mmshow(fs);
-    g = mmcwatershed( f, e, mmsebox());
-    mmshow(fs, g, e);
+    f = neg(e1);
+    fs = surf(f);
+    show(fs);
+    g = cwatershed( f, e, sebox());
+    show(fs, g, e);'''
+    f = neg(e1);
+    fs = surf(f);
+    show(fs);
+    g = cwatershed( f, e, sebox());
+    show(fs, g, e);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1056,12 +1061,12 @@ def mmdcells():
     print '========================================================================='
     #0
     print '''
-    mmshow(c,g);
-    h = mmintersec(c,mmneg(g));
-    mmshow(h);'''
-    mmshow(c,g);
-    h = mmintersec(c,mmneg(g));
-    mmshow(h);
+    show(c,g);
+    h = intersec(c,neg(g));
+    show(h);'''
+    show(c,g);
+    h = intersec(c,neg(g));
+    show(h);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1074,10 +1079,10 @@ def mmdcells():
     print '========================================================================='
     #0
     print '''
-    i = mmedgeoff(h);
-    mmshow(i);'''
-    i = mmedgeoff(h);
-    mmshow(i);
+    i = edgeoff(h);
+    show(i);'''
+    i = edgeoff(h);
+    show(i);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1091,10 +1096,10 @@ def mmdcells():
     print '========================================================================='
     #0
     print '''
-    j=mmgradm(i);
-    mmshow(a,j);'''
-    j=mmgradm(i);
-    mmshow(a,j);
+    j=gradm(i);
+    show(a,j);'''
+    j=gradm(i);
+    show(a,j);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1103,10 +1108,10 @@ def mmdcells():
     return
 # =========================================================================
 #
-#   mmdchickparts - Classify chicken parts in breast, legs+tights and wings
+#   chickparts - Classify chicken parts in breast, legs+tights and wings
 #
 # =========================================================================
-def mmdchickparts():
+def chickparts():
 
     print
     print '''Classify chicken parts in breast, legs+tights and wings'''
@@ -1119,10 +1124,10 @@ def mmdchickparts():
     print '========================================================================='
     #0
     print '''
-    a = mmreadgray('chickparts.tif');
-    mmshow(a);'''
-    a = mmreadgray('chickparts.tif');
-    mmshow(a);
+    a = readgray('chickparts.tif');
+    show(a);'''
+    a = readgray('chickparts.tif');
+    show(a);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1136,14 +1141,14 @@ def mmdchickparts():
     print '========================================================================='
     #0
     print '''
-    b = mmcmp(a,'>=', uint8(100));
-    mmshow(b);
-    c = mmlabel(b);
-    mmlblshow(c,'border');'''
-    b = mmcmp(a,'>=', uint8(100));
-    mmshow(b);
-    c = mmlabel(b);
-    mmlblshow(c,'border');
+    b = cmp(a,'>=', uint8(100));
+    show(b);
+    c = label(b);
+    lblshow(c,'border');'''
+    b = cmp(a,'>=', uint8(100));
+    show(b);
+    c = label(b);
+    lblshow(c,'border');
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1158,12 +1163,12 @@ def mmdchickparts():
     print '========================================================================='
     #0
     print '''
-    d = mmblob(c,'area');
-    mmshow(d);
-    mmshow(d, mmcmp(d,'==',0));'''
-    d = mmblob(c,'area');
-    mmshow(d);
-    mmshow(d, mmcmp(d,'==',0));
+    d = blob(c,'area');
+    show(d);
+    show(d, cmp(d,'==',0));'''
+    d = blob(c,'area');
+    show(d);
+    show(d, cmp(d,'==',0));
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1178,14 +1183,14 @@ def mmdchickparts():
     print '========================================================================='
     #0
     print '''
-    wings = mmcmp( uint16(100),'<=',d, '<=', uint16(2500));
-    mmshow(wings);
-    tights = mmcmp( uint16(2500),'<',d, '<=', uint16(5500));
-    mmshow(tights);'''
-    wings = mmcmp( uint16(100),'<=',d, '<=', uint16(2500));
-    mmshow(wings);
-    tights = mmcmp( uint16(2500),'<',d, '<=', uint16(5500));
-    mmshow(tights);
+    wings = cmp( uint16(100),'<=',d, '<=', uint16(2500));
+    show(wings);
+    tights = cmp( uint16(2500),'<',d, '<=', uint16(5500));
+    show(tights);'''
+    wings = cmp( uint16(100),'<=',d, '<=', uint16(2500));
+    show(wings);
+    tights = cmp( uint16(2500),'<',d, '<=', uint16(5500));
+    show(tights);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1200,14 +1205,14 @@ def mmdchickparts():
     print '========================================================================='
     #0
     print '''
-    legs = mmcmp( uint16(5500), '<', d, '<=', uint16(8500));
-    mmshow(legs);
-    breast = mmcmp( d,'>', uint16(8500));
-    mmshow(breast);'''
-    legs = mmcmp( uint16(5500), '<', d, '<=', uint16(8500));
-    mmshow(legs);
-    breast = mmcmp( d,'>', uint16(8500));
-    mmshow(breast);
+    legs = cmp( uint16(5500), '<', d, '<=', uint16(8500));
+    show(legs);
+    breast = cmp( d,'>', uint16(8500));
+    show(breast);'''
+    legs = cmp( uint16(5500), '<', d, '<=', uint16(8500));
+    show(legs);
+    breast = cmp( d,'>', uint16(8500));
+    show(breast);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1220,8 +1225,8 @@ def mmdchickparts():
     print '========================================================================='
     #0
     print '''
-    mmshow(a, mmgradm(wings), mmgradm(tights), mmgradm(legs),mmgradm(breast));'''
-    mmshow(a, mmgradm(wings), mmgradm(tights), mmgradm(legs),mmgradm(breast));
+    show(a, gradm(wings), gradm(tights), gradm(legs),gradm(breast));'''
+    show(a, gradm(wings), gradm(tights), gradm(legs),gradm(breast));
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1230,10 +1235,10 @@ def mmdchickparts():
     return
 # =========================================================================
 #
-#   mmdconcrete - Aggregate and anhydrous phase extraction from a concrete section observed by a SEM image.
+#   concrete - Aggregate and anhydrous phase extraction from a concrete section observed by a SEM image.
 #
 # =========================================================================
-def mmdconcrete():
+def concrete():
 
     print
     print '''Aggregate and anhydrous phase extraction from a concrete section
@@ -1249,10 +1254,10 @@ def mmdconcrete():
     print '========================================================================='
     #0
     print '''
-    f = mmreadgray('csample.jpg')
-    mmshow(f)'''
-    f = mmreadgray('csample.jpg')
-    mmshow(f)
+    f = readgray('csample.jpg')
+    show(f)'''
+    f = readgray('csample.jpg')
+    show(f)
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1266,10 +1271,10 @@ def mmdconcrete():
     print '========================================================================='
     #0
     print '''
-    h = mmhistogram(f)
-    mmplot([[h]])'''
-    h = mmhistogram(f)
-    mmplot([[h]])
+    h = histogram(f)
+    plot([[h]])'''
+    h = histogram(f)
+    plot([[h]])
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1291,26 +1296,26 @@ def mmdconcrete():
     print '========================================================================='
     #0
     print '''
-    hf = mmasf(mmneg(h),'co',mmseline(5))
-    ws = mmwatershed(hf)
-    wsf = mmintersec(mmneg(mmframe(ws,20)),ws)
+    hf = asf(neg(h),'co',seline(5))
+    ws = watershed(hf)
+    wsf = intersec(neg(frame(ws,20)),ws)
     t = nonzero(wsf)
     print t
-    mmax = mmstats(h,'max')
-    hf_plot = mmneg(hf)
-    ws_plot = mmgray(ws, 'uint16', mmax)
-    wsf_plot = mmgray(wsf, 'uint16', mmax)
-    mmplot([[hf_plot],[ws_plot],[wsf_plot]])'''
-    hf = mmasf(mmneg(h),'co',mmseline(5))
-    ws = mmwatershed(hf)
-    wsf = mmintersec(mmneg(mmframe(ws,20)),ws)
+    ax = stats(h,'max')
+    hf_plot = neg(hf)
+    ws_plot = gray(ws, 'uint16', ax)
+    wsf_plot = gray(wsf, 'uint16', ax)
+    plot([[hf_plot],[ws_plot],[wsf_plot]])'''
+    hf = asf(neg(h),'co',seline(5))
+    ws = watershed(hf)
+    wsf = intersec(neg(frame(ws,20)),ws)
     t = nonzero(wsf)
     print t
-    mmax = mmstats(h,'max')
-    hf_plot = mmneg(hf)
-    ws_plot = mmgray(ws, 'uint16', mmax)
-    wsf_plot = mmgray(wsf, 'uint16', mmax)
-    mmplot([[hf_plot],[ws_plot],[wsf_plot]])
+    ax = stats(h,'max')
+    hf_plot = neg(hf)
+    ws_plot = gray(ws, 'uint16', ax)
+    wsf_plot = gray(wsf, 'uint16', ax)
+    plot([[hf_plot],[ws_plot],[wsf_plot]])
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1326,12 +1331,12 @@ def mmdconcrete():
     print '========================================================================='
     #0
     print '''
-    aux = mmthreshad( f, t, 255)
-    anidro = mmareaopen(aux, 20)
-    mmshow( f, mmgradm(anidro))'''
-    aux = mmthreshad( f, t, 255)
-    anidro = mmareaopen(aux, 20)
-    mmshow( f, mmgradm(anidro))
+    aux = threshad( f, t, 255)
+    anidro = areaopen(aux, 20)
+    show( f, gradm(anidro))'''
+    aux = threshad( f, t, 255)
+    anidro = areaopen(aux, 20)
+    show( f, gradm(anidro))
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1347,14 +1352,14 @@ def mmdconcrete():
     print '========================================================================='
     #0
     print '''
-    g=mmgradm(f)
-    m=mmregmin(mmhmin(g,10))
-    ws=mmcwatershed(g,m)
-    mmshow(ws)'''
-    g=mmgradm(f)
-    m=mmregmin(mmhmin(g,10))
-    ws=mmcwatershed(g,m)
-    mmshow(ws)
+    g=gradm(f)
+    m=regmin(hmin(g,10))
+    ws=cwatershed(g,m)
+    show(ws)'''
+    g=gradm(f)
+    m=regmin(hmin(g,10))
+    ws=cwatershed(g,m)
+    show(ws)
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1371,14 +1376,14 @@ def mmdconcrete():
     print '========================================================================='
     #0
     print '''
-    aux1=mmareaopen(mmneg(ws),300)
-    aux2=mmareaclose(aux1,50)
-    aggr=mmsubm(aux2,anidro)
-    mmshow(f, mmgradm(aggr))'''
-    aux1=mmareaopen(mmneg(ws),300)
-    aux2=mmareaclose(aux1,50)
-    aggr=mmsubm(aux2,anidro)
-    mmshow(f, mmgradm(aggr))
+    aux1=areaopen(neg(ws),300)
+    aux2=areaclose(aux1,50)
+    aggr=subm(aux2,anidro)
+    show(f, gradm(aggr))'''
+    aux1=areaopen(neg(ws),300)
+    aux2=areaclose(aux1,50)
+    aggr=subm(aux2,anidro)
+    show(f, gradm(aggr))
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1394,17 +1399,17 @@ def mmdconcrete():
     #0
     print '''
     n = product(shape(f))
-    anidro_phase = mmstats(anidro,'sum')/n
+    anidro_phase = stats(anidro,'sum')/n
     print 'anidro=',anidro_phase
-    aggr_phase = mmstats(aggr,'sum')/n;
+    aggr_phase = stats(aggr,'sum')/n;
     print 'aggr=',aggr_phase
-    mmshow( f, mmgradm(aggr), mmgradm(anidro))'''
+    show( f, gradm(aggr), gradm(anidro))'''
     n = product(shape(f))
-    anidro_phase = mmstats(anidro,'sum')/n
+    anidro_phase = stats(anidro,'sum')/n
     print 'anidro=',anidro_phase
-    aggr_phase = mmstats(aggr,'sum')/n;
+    aggr_phase = stats(aggr,'sum')/n;
     print 'aggr=',aggr_phase
-    mmshow( f, mmgradm(aggr), mmgradm(anidro))
+    show( f, gradm(aggr), gradm(anidro))
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1413,10 +1418,10 @@ def mmdconcrete():
     return
 # =========================================================================
 #
-#   mmdcookies - Detect broken rounded biscuits.
+#   cookies - Detect broken rounded biscuits.
 #
 # =========================================================================
-def mmdcookies():
+def cookies():
 
     print
     print '''Detect broken rounded biscuits.'''
@@ -1429,10 +1434,10 @@ def mmdcookies():
     print '========================================================================='
     #0
     print '''
-    a = mmreadgray('cookies.tif');
-    mmshow(a);'''
-    a = mmreadgray('cookies.tif');
-    mmshow(a);
+    a = readgray('cookies.tif');
+    show(a);'''
+    a = readgray('cookies.tif');
+    show(a);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1445,10 +1450,10 @@ def mmdcookies():
     print '========================================================================='
     #0
     print '''
-    b = mmthreshad(a, uint8(100));
-    mmshow(b);'''
-    b = mmthreshad(a, uint8(100));
-    mmshow(b);
+    b = threshad(a, uint8(100));
+    show(b);'''
+    b = threshad(a, uint8(100));
+    show(b);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1463,10 +1468,10 @@ def mmdcookies():
     print '========================================================================='
     #0
     print '''
-    c = mmopenth(b,mmsedisk(55,'2D','OCTAGON'));
-    mmshow(c);'''
-    c = mmopenth(b,mmsedisk(55,'2D','OCTAGON'));
-    mmshow(c);
+    c = openth(b,sedisk(55,'2D','OCTAGON'));
+    show(c);'''
+    c = openth(b,sedisk(55,'2D','OCTAGON'));
+    show(c);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1480,10 +1485,10 @@ def mmdcookies():
     print '========================================================================='
     #0
     print '''
-    d = mmareaopen(c,400);
-    mmshow(d);'''
-    d = mmareaopen(c,400);
-    mmshow(d);
+    d = areaopen(c,400);
+    show(d);'''
+    d = areaopen(c,400);
+    show(d);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1496,8 +1501,8 @@ def mmdcookies():
     print '========================================================================='
     #0
     print '''
-    mmshow(a,d);'''
-    mmshow(a,d);
+    show(a,d);'''
+    show(a,d);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1506,10 +1511,10 @@ def mmdcookies():
     return
 # =========================================================================
 #
-#   mmdcornea - Cornea cells marking.
+#   cornea - Cornea cells marking.
 #
 # =========================================================================
-def mmdcornea():
+def cornea():
 
     print
     print '''Cornea cells marking.'''
@@ -1525,14 +1530,14 @@ def mmdcornea():
     print '========================================================================='
     #0
     print '''
-    a = mmreadgray('corneacells.tif');
-    mmshow(a);
-    b = mmsurf(a);
-    mmshow(b);'''
-    a = mmreadgray('corneacells.tif');
-    mmshow(a);
-    b = mmsurf(a);
-    mmshow(b);
+    a = readgray('corneacells.tif');
+    show(a);
+    b = surf(a);
+    show(b);'''
+    a = readgray('corneacells.tif');
+    show(a);
+    b = surf(a);
+    show(b);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1551,14 +1556,14 @@ def mmdcornea():
     print '========================================================================='
     #0
     print '''
-    c = mmasf(a,'oc',mmsecross(),2);
-    d = mmregmax( c);
-    mmshow(mmsurf(c));
-    mmshow(mmsurf(c), d);'''
-    c = mmasf(a,'oc',mmsecross(),2);
-    d = mmregmax( c);
-    mmshow(mmsurf(c));
-    mmshow(mmsurf(c), d);
+    c = asf(a,'oc',secross(),2);
+    d = regmax( c);
+    show(surf(c));
+    show(surf(c), d);'''
+    c = asf(a,'oc',secross(),2);
+    d = regmax( c);
+    show(surf(c));
+    show(surf(c), d);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1577,14 +1582,14 @@ def mmdcornea():
     print '========================================================================='
     #0
     print '''
-    e = mmneg(a);
-    f = mmcwatershed(e, d, mmsebox());
-    mmshow(e,d);
-    mmshow(e,f,d);'''
-    e = mmneg(a);
-    f = mmcwatershed(e, d, mmsebox());
-    mmshow(e,d);
-    mmshow(e,f,d);
+    e = neg(a);
+    f = cwatershed(e, d, sebox());
+    show(e,d);
+    show(e,f,d);'''
+    e = neg(a);
+    f = cwatershed(e, d, sebox());
+    show(e,d);
+    show(e,f,d);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1601,20 +1606,20 @@ def mmdcornea():
     print '========================================================================='
     #0
     print '''
-    g = mmgray(f, 'uint16', 1);
-    h1 = mmaddm(mmlabel(d), uint16(1));
-    h = mmintersec(mmgray(d,'uint16'), h1);
-    i = mmunion( g, h);
-    mmlblshow(i);
-    j = mmgradm( a);
-    mmshow(j);'''
-    g = mmgray(f, 'uint16', 1);
-    h1 = mmaddm(mmlabel(d), uint16(1));
-    h = mmintersec(mmgray(d,'uint16'), h1);
-    i = mmunion( g, h);
-    mmlblshow(i);
-    j = mmgradm( a);
-    mmshow(j);
+    g = gray(f, 'uint16', 1);
+    h1 = addm(label(d), uint16(1));
+    h = intersec(gray(d,'uint16'), h1);
+    i = union( g, h);
+    lblshow(i);
+    j = gradm( a);
+    show(j);'''
+    g = gray(f, 'uint16', 1);
+    h1 = addm(label(d), uint16(1));
+    h = intersec(gray(d,'uint16'), h1);
+    i = union( g, h);
+    lblshow(i);
+    j = gradm( a);
+    show(j);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1629,12 +1634,12 @@ def mmdcornea():
     print '========================================================================='
     #0
     print '''
-    k = mmcwatershed(j, i);
-    mmshow( k);
-    mmshow(a, k, k);'''
-    k = mmcwatershed(j, i);
-    mmshow( k);
-    mmshow(a, k, k);
+    k = cwatershed(j, i);
+    show( k);
+    show(a, k, k);'''
+    k = cwatershed(j, i);
+    show( k);
+    show(a, k, k);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1643,10 +1648,10 @@ def mmdcornea():
     return
 # =========================================================================
 #
-#   mmdfabric - Detection of vertical weave in fabrics.
+#   fabric - Detection of vertical weave in fabrics.
 #
 # =========================================================================
-def mmdfabric():
+def fabric():
 
     print
     print '''Detection of vertical weave in fabrics.'''
@@ -1659,10 +1664,10 @@ def mmdfabric():
     print '========================================================================='
     #0
     print '''
-    a = mmreadgray('fabric.tif');
-    mmshow(a);'''
-    a = mmreadgray('fabric.tif');
-    mmshow(a);
+    a = readgray('fabric.tif');
+    show(a);'''
+    a = readgray('fabric.tif');
+    show(a);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1676,14 +1681,14 @@ def mmdfabric():
     print '========================================================================='
     #0
     print '''
-    b = mmdil(a,mmsedisk(4));
-    c = mmdil(b,mmseline(25,90));
-    d = mmdil(c,mmseline(25,-90));
-    mmshow(d);'''
-    b = mmdil(a,mmsedisk(4));
-    c = mmdil(b,mmseline(25,90));
-    d = mmdil(c,mmseline(25,-90));
-    mmshow(d);
+    b = dilate(a,sedisk(4));
+    c = dilate(b,seline(25,90));
+    d = dilate(c,seline(25,-90));
+    show(d);'''
+    b = dilate(a,sedisk(4));
+    c = dilate(b,seline(25,90));
+    d = dilate(c,seline(25,-90));
+    show(d);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1696,12 +1701,12 @@ def mmdfabric():
     print '========================================================================='
     #0
     print '''
-    e = mmhmin(d,25);
-    f = mmregmin(e);
-    mmshow(f);'''
-    e = mmhmin(d,25);
-    f = mmregmin(e);
-    mmshow(f);
+    e = hmin(d,25);
+    f = regmin(e);
+    show(f);'''
+    e = hmin(d,25);
+    f = regmin(e);
+    show(f);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1715,10 +1720,10 @@ def mmdfabric():
     print '========================================================================='
     #0
     print '''
-    g = mmcwatershed(a,f);
-    mmshow(a,mmdil(g));'''
-    g = mmcwatershed(a,f);
-    mmshow(a,mmdil(g));
+    g = cwatershed(a,f);
+    show(a,dilate(g));'''
+    g = cwatershed(a,f);
+    show(a,dilate(g));
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1733,14 +1738,14 @@ def mmdfabric():
     print '========================================================================='
     #0
     print '''
-    h = mmunion(g,f);
-    i = mmgradm(a);
-    mmshow(h);
-    mmshow(i);'''
-    h = mmunion(g,f);
-    i = mmgradm(a);
-    mmshow(h);
-    mmshow(i);
+    h = union(g,f);
+    i = gradm(a);
+    show(h);
+    show(i);'''
+    h = union(g,f);
+    i = gradm(a);
+    show(h);
+    show(i);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1754,10 +1759,10 @@ def mmdfabric():
     print '========================================================================='
     #0
     print '''
-    j = mmcwatershed(i,h,mmsebox());
-    mmshow(a,j);'''
-    j = mmcwatershed(i,h,mmsebox());
-    mmshow(a,j);
+    j = cwatershed(i,h,sebox());
+    show(a,j);'''
+    j = cwatershed(i,h,sebox());
+    show(a,j);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1771,14 +1776,14 @@ def mmdfabric():
     print '========================================================================='
     #0
     print '''
-    k = mmcwatershed(i,h,mmsebox(),'REGIONS');
-    mmlblshow(k,'border');
-    l = mmblob(k,'area');
-    mmshow(l);'''
-    k = mmcwatershed(i,h,mmsebox(),'REGIONS');
-    mmlblshow(k,'border');
-    l = mmblob(k,'area');
-    mmshow(l);
+    k = cwatershed(i,h,sebox(),'REGIONS');
+    lblshow(k,'border');
+    l = blob(k,'area');
+    show(l);'''
+    k = cwatershed(i,h,sebox(),'REGIONS');
+    lblshow(k,'border');
+    l = blob(k,'area');
+    show(l);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1792,14 +1797,14 @@ def mmdfabric():
     print '========================================================================='
     #0
     print '''
-    m = mmcmp(l,'<=',2000);
-    mmshow(m);
-    n = mmlabel(m,mmsebox());
-    mmlblshow(n,'border');'''
-    m = mmcmp(l,'<=',2000);
-    mmshow(m);
-    n = mmlabel(m,mmsebox());
-    mmlblshow(n,'border');
+    m = cmp(l,'<=',2000);
+    show(m);
+    n = label(m,sebox());
+    lblshow(n,'border');'''
+    m = cmp(l,'<=',2000);
+    show(m);
+    n = label(m,sebox());
+    lblshow(n,'border');
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1815,12 +1820,12 @@ def mmdfabric():
     print '========================================================================='
     #0
     print '''
-    mmshow(a);
-    o = mmblob(n,'area','data');
-    mmplot([[o]],[['style','impulses']])'''
-    mmshow(a);
-    o = mmblob(n,'area','data');
-    mmplot([[o]],[['style','impulses']])
+    show(a);
+    o = blob(n,'area','data');
+    plot([[o]],[['style','impulses']])'''
+    show(a);
+    o = blob(n,'area','data');
+    plot([[o]],[['style','impulses']])
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1829,10 +1834,10 @@ def mmdfabric():
     return
 # =========================================================================
 #
-#   mmdfila - Detect Filarial Worms.
+#   fila - Detect Filarial Worms.
 #
 # =========================================================================
-def mmdfila():
+def fila():
 
     print
     print '''Detect Filarial Worms.'''
@@ -1845,10 +1850,10 @@ def mmdfila():
     print '========================================================================='
     #0
     print '''
-    a = mmreadgray('danaus.tif');
-    mmshow(a);'''
-    a = mmreadgray('danaus.tif');
-    mmshow(a);
+    a = readgray('danaus.tif');
+    show(a);'''
+    a = readgray('danaus.tif');
+    show(a);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1862,10 +1867,10 @@ def mmdfila():
     print '========================================================================='
     #0
     print '''
-    b = mmcloserecth(a,mmsebox(5));
-    mmshow(b);'''
-    b = mmcloserecth(a,mmsebox(5));
-    mmshow(b);
+    b = closerecth(a,sebox(5));
+    show(b);'''
+    b = closerecth(a,sebox(5));
+    show(b);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1879,10 +1884,10 @@ def mmdfila():
     print '========================================================================='
     #0
     print '''
-    c = mmopen(b);
-    mmshow(c);'''
-    c = mmopen(b);
-    mmshow(c);
+    c = open(b);
+    show(c);'''
+    c = open(b);
+    show(c);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1896,10 +1901,10 @@ def mmdfila():
     print '========================================================================='
     #0
     print '''
-    d = mmareaopen(c,200);
-    mmshow(d);'''
-    d = mmareaopen(c,200);
-    mmshow(d);
+    d = areaopen(c,200);
+    show(d);'''
+    d = areaopen(c,200);
+    show(d);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1913,10 +1918,10 @@ def mmdfila():
     print '========================================================================='
     #0
     print '''
-    e = mmthreshad(d,50);
-    mmshow(e);'''
-    e = mmthreshad(d,50);
-    mmshow(e);
+    e = threshad(d,50);
+    show(e);'''
+    e = threshad(d,50);
+    show(e);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1932,10 +1937,10 @@ def mmdfila():
     print '========================================================================='
     #0
     print '''
-    f = mmthin(e);
-    mmshow(f);'''
-    f = mmthin(e);
-    mmshow(f);
+    f = thin(e);
+    show(f);'''
+    f = thin(e);
+    show(f);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1950,10 +1955,10 @@ def mmdfila():
     print '========================================================================='
     #0
     print '''
-    g = mmthin(f,mmendpoints(), 12);
-    mmshow(g);'''
-    g = mmthin(f,mmendpoints(), 12);
-    mmshow(g);
+    g = thin(f,endpoints(), 12);
+    show(g);'''
+    g = thin(f,endpoints(), 12);
+    show(g);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1967,10 +1972,10 @@ def mmdfila():
     print '========================================================================='
     #0
     print '''
-    h = mminfrec(g,e);
-    mmshow(h);'''
-    h = mminfrec(g,e);
-    mmshow(h);
+    h = infrec(g,e);
+    show(h);'''
+    h = infrec(g,e);
+    show(h);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1983,8 +1988,8 @@ def mmdfila():
     print '========================================================================='
     #0
     print '''
-    mmshow(a,h);'''
-    mmshow(a,h);
+    show(a,h);'''
+    show(a,h);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -1993,10 +1998,10 @@ def mmdfila():
     return
 # =========================================================================
 #
-#   mmdflatzone - Flat-zone image simplification by connected filtering.
+#   flatzone - Flat-zone image simplification by connected filtering.
 #
 # =========================================================================
-def mmdflatzone():
+def flatzone():
 
     print
     print '''Flat-zone image simplification by connected filtering.'''
@@ -2009,10 +2014,10 @@ def mmdflatzone():
     print '========================================================================='
     #0
     print '''
-    a = mmreadgray('cameraman.tif')
-    mmshow(a)'''
-    a = mmreadgray('cameraman.tif')
-    mmshow(a)
+    a = readgray('cameraman.tif')
+    show(a)'''
+    a = readgray('cameraman.tif')
+    show(a)
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2027,16 +2032,16 @@ def mmdflatzone():
     print '========================================================================='
     #0
     print '''
-    b = mmlabelflat(a,mmsebox())
-    nfz=mmstats(b,'max')
+    b = labelflat(a,sebox())
+    nfz=stats(b,'max')
     print nfz
-    mmshow(a)
-    mmlblshow(b)'''
-    b = mmlabelflat(a,mmsebox())
-    nfz=mmstats(b,'max')
+    show(a)
+    lblshow(b)'''
+    b = labelflat(a,sebox())
+    nfz=stats(b,'max')
     print nfz
-    mmshow(a)
-    mmlblshow(b)
+    show(a)
+    lblshow(b)
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2050,18 +2055,18 @@ def mmdflatzone():
     print '========================================================================='
     #0
     print '''
-    c=mmasfrec(a,'CO',mmsebox(),mmsebox(),2)
-    d=mmasfrec(a,'CO',mmsebox(),mmsebox(),4)
-    e=mmasfrec(a,'CO',mmsebox(),mmsebox(),16)
-    mmshow(c)
-    mmshow(d)
-    mmshow(e)'''
-    c=mmasfrec(a,'CO',mmsebox(),mmsebox(),2)
-    d=mmasfrec(a,'CO',mmsebox(),mmsebox(),4)
-    e=mmasfrec(a,'CO',mmsebox(),mmsebox(),16)
-    mmshow(c)
-    mmshow(d)
-    mmshow(e)
+    c=asfrec(a,'CO',sebox(),sebox(),2)
+    d=asfrec(a,'CO',sebox(),sebox(),4)
+    e=asfrec(a,'CO',sebox(),sebox(),16)
+    show(c)
+    show(d)
+    show(e)'''
+    c=asfrec(a,'CO',sebox(),sebox(),2)
+    d=asfrec(a,'CO',sebox(),sebox(),4)
+    e=asfrec(a,'CO',sebox(),sebox(),16)
+    show(c)
+    show(d)
+    show(e)
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2077,24 +2082,24 @@ def mmdflatzone():
     print '========================================================================='
     #0
     print '''
-    c_lab=mmlabelflat(c,mmsebox())
-    d_lab=mmlabelflat(d,mmsebox())
-    e_lab=mmlabelflat(e,mmsebox())
-    print mmstats(c_lab,'max')
-    print mmstats(d_lab,'max')
-    print mmstats(e_lab,'max')
-    mmlblshow(c_lab)
-    mmlblshow(d_lab)
-    mmlblshow(e_lab)'''
-    c_lab=mmlabelflat(c,mmsebox())
-    d_lab=mmlabelflat(d,mmsebox())
-    e_lab=mmlabelflat(e,mmsebox())
-    print mmstats(c_lab,'max')
-    print mmstats(d_lab,'max')
-    print mmstats(e_lab,'max')
-    mmlblshow(c_lab)
-    mmlblshow(d_lab)
-    mmlblshow(e_lab)
+    c_lab=labelflat(c,sebox())
+    d_lab=labelflat(d,sebox())
+    e_lab=labelflat(e,sebox())
+    print stats(c_lab,'max')
+    print stats(d_lab,'max')
+    print stats(e_lab,'max')
+    lblshow(c_lab)
+    lblshow(d_lab)
+    lblshow(e_lab)'''
+    c_lab=labelflat(c,sebox())
+    d_lab=labelflat(d,sebox())
+    e_lab=labelflat(e,sebox())
+    print stats(c_lab,'max')
+    print stats(d_lab,'max')
+    print stats(e_lab,'max')
+    lblshow(c_lab)
+    lblshow(d_lab)
+    lblshow(e_lab)
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2110,19 +2115,19 @@ def mmdflatzone():
     #0
     print '''
     c_v=c_lab[89,59]
-    c_flat=mmcmp(c_lab,'==',c_v)
+    c_flat=cmp(c_lab,'==',c_v)
     d_v=d_lab[89,59]
-    d_flat=mmcmp(d_lab,'==',d_v)
+    d_flat=cmp(d_lab,'==',d_v)
     e_v=e_lab[89,59]
-    e_flat=mmcmp(e_lab,'==',e_v)
-    mmshow(a,e_flat,d_flat,c_flat)'''
+    e_flat=cmp(e_lab,'==',e_v)
+    show(a,e_flat,d_flat,c_flat)'''
     c_v=c_lab[89,59]
-    c_flat=mmcmp(c_lab,'==',c_v)
+    c_flat=cmp(c_lab,'==',c_v)
     d_v=d_lab[89,59]
-    d_flat=mmcmp(d_lab,'==',d_v)
+    d_flat=cmp(d_lab,'==',d_v)
     e_v=e_lab[89,59]
-    e_flat=mmcmp(e_lab,'==',e_v)
-    mmshow(a,e_flat,d_flat,c_flat)
+    e_flat=cmp(e_lab,'==',e_v)
+    show(a,e_flat,d_flat,c_flat)
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2131,10 +2136,10 @@ def mmdflatzone():
     return
 # =========================================================================
 #
-#   mmdflow - Detect water in a static image of an oil-water flow experiment.
+#   flow - Detect water in a static image of an oil-water flow experiment.
 #
 # =========================================================================
-def mmdflow():
+def flow():
 
     print
     print '''Detect water in a static image of an oil-water flow experiment.'''
@@ -2147,10 +2152,10 @@ def mmdflow():
     print '========================================================================='
     #0
     print '''
-    a = mmreadgray('flow.tif')
-    mmshow(a)'''
-    a = mmreadgray('flow.tif')
-    mmshow(a)
+    a = readgray('flow.tif')
+    show(a)'''
+    a = readgray('flow.tif')
+    show(a)
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2164,10 +2169,10 @@ def mmdflow():
     print '========================================================================='
     #0
     print '''
-    b=mmcloseth(a,mmseline(50,90))
-    mmshow(b)'''
-    b=mmcloseth(a,mmseline(50,90))
-    mmshow(b)
+    b=closeth(a,seline(50,90))
+    show(b)'''
+    b=closeth(a,seline(50,90))
+    show(b)
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2181,10 +2186,10 @@ def mmdflow():
     print '========================================================================='
     #0
     print '''
-    c=mmcloserec(b,mmsebox(5))
-    mmshow(c)'''
-    c=mmcloserec(b,mmsebox(5))
-    mmshow(c)
+    c=closerec(b,sebox(5))
+    show(c)'''
+    c=closerec(b,sebox(5))
+    show(c)
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2197,10 +2202,10 @@ def mmdflow():
     print '========================================================================='
     #0
     print '''
-    d=mmasf(c,'co',mmsecross())
-    mmshow(d)'''
-    d=mmasf(c,'co',mmsecross())
-    mmshow(d)
+    d=asf(c,'co',secross())
+    show(d)'''
+    d=asf(c,'co',secross())
+    show(d)
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2214,12 +2219,12 @@ def mmdflow():
     print '========================================================================='
     #0
     print '''
-    e=mmthreshad(d,100)
-    mmshow(a)
-    mmshow(a,e)'''
-    e=mmthreshad(d,100)
-    mmshow(a)
-    mmshow(a,e)
+    e=threshad(d,100)
+    show(a)
+    show(a,e)'''
+    e=threshad(d,100)
+    show(a)
+    show(a,e)
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2228,10 +2233,10 @@ def mmdflow():
     return
 # =========================================================================
 #
-#   mmdgear - Detect the teeth of a gear
+#   gear - Detect the teeth of a gear
 #
 # =========================================================================
-def mmdgear():
+def gear():
 
     print
     print '''Detect the teeth of a gear'''
@@ -2244,10 +2249,10 @@ def mmdgear():
     print '========================================================================='
     #0
     print '''
-    a = mmreadgray('gear.tif');
-    mmshow(a);'''
-    a = mmreadgray('gear.tif');
-    mmshow(a);
+    a = readgray('gear.tif');
+    show(a);'''
+    a = readgray('gear.tif');
+    show(a);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2257,19 +2262,19 @@ def mmdgear():
     print '''
     Opening of the input image by an Euclidean disk of radius 20. The
     sequence opening-subtraction is called opening top-hat. The opening
-    top-hat could be executed in a single command: c = (a,(20));
+    top-hat could be executed in a single coand: c = (a,(20));
     '''
     print '========================================================================='
     #0
     print '''
-    b = mmopen(a,mmsedisk(20));
-    mmshow(b);
-    c = mmsubm(a,b);
-    mmshow(c);'''
-    b = mmopen(a,mmsedisk(20));
-    mmshow(b);
-    c = mmsubm(a,b);
-    mmshow(c);
+    b = open(a,sedisk(20));
+    show(b);
+    c = subm(a,b);
+    show(c);'''
+    b = open(a,sedisk(20));
+    show(b);
+    c = subm(a,b);
+    show(c);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2283,12 +2288,12 @@ def mmdgear():
     print '========================================================================='
     #0
     print '''
-    d = mmlabel(c);
-    nteeth=mmstats(d,'max')
-    mmlblshow(d,'border');'''
-    d = mmlabel(c);
-    nteeth=mmstats(d,'max')
-    mmlblshow(d,'border');
+    d = label(c);
+    nteeth=stats(d,'max')
+    lblshow(d,'border');'''
+    d = label(c);
+    nteeth=stats(d,'max')
+    lblshow(d,'border');
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2297,10 +2302,10 @@ def mmdgear():
     return
 # =========================================================================
 #
-#   mmdholecenter - Hole center misalignment in PCB.
+#   holecenter - Hole center misalignment in PCB.
 #
 # =========================================================================
-def mmdholecenter():
+def holecenter():
 
     print
     print '''Hole center misalignment in PCB.'''
@@ -2313,10 +2318,10 @@ def mmdholecenter():
     print '========================================================================='
     #0
     print '''
-    a = mmreadgray('pcbholes.tif')
-    mmshow(a)'''
-    a = mmreadgray('pcbholes.tif')
-    mmshow(a)
+    a = readgray('pcbholes.tif')
+    show(a)'''
+    a = readgray('pcbholes.tif')
+    show(a)
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2333,22 +2338,22 @@ def mmdholecenter():
     print '========================================================================='
     #0
     print '''
-    b = mmclohole(a)
-    mmshow(b)
-    d = mmdist(b,mmsecross(),'EUCLIDEAN')
-    e = mmregmax(d,mmsebox())
-    f = mmthreshad(d, uint16([20]))   # radius larger than 20 pixels
-    g = mmintersec(e,f)
-    h = mmblob(mmlabel(g,mmsebox()),'CENTROID'); # pad center
-    mmshow(b,mmdil(h))'''
-    b = mmclohole(a)
-    mmshow(b)
-    d = mmdist(b,mmsecross(),'EUCLIDEAN')
-    e = mmregmax(d,mmsebox())
-    f = mmthreshad(d, uint16([20]))   # radius larger than 20 pixels
-    g = mmintersec(e,f)
-    h = mmblob(mmlabel(g,mmsebox()),'CENTROID'); # pad center
-    mmshow(b,mmdil(h))
+    b = clohole(a)
+    show(b)
+    d = dist(b,secross(),'EUCLIDEAN')
+    e = regmax(d,sebox())
+    f = threshad(d, uint16([20]))   # radius larger than 20 pixels
+    g = intersec(e,f)
+    h = blob(label(g,sebox()),'CENTROID'); # pad center
+    show(b,dilate(h))'''
+    b = clohole(a)
+    show(b)
+    d = dist(b,secross(),'EUCLIDEAN')
+    e = regmax(d,sebox())
+    f = threshad(d, uint16([20]))   # radius larger than 20 pixels
+    g = intersec(e,f)
+    h = blob(label(g,sebox()),'CENTROID'); # pad center
+    show(b,dilate(h))
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2363,18 +2368,18 @@ def mmdholecenter():
     print '========================================================================='
     #0
     print '''
-    i = mmsubm(b,a)
-    mmshow(i)
-    j = mmdist(i,mmsecross(),'EUCLIDEAN')
-    k = mmregmax(j,mmsebox())
-    l = mmblob(mmlabel(k,mmsebox()),'CENTROID') # hole center
-    mmshow(i,mmdil(l))'''
-    i = mmsubm(b,a)
-    mmshow(i)
-    j = mmdist(i,mmsecross(),'EUCLIDEAN')
-    k = mmregmax(j,mmsebox())
-    l = mmblob(mmlabel(k,mmsebox()),'CENTROID') # hole center
-    mmshow(i,mmdil(l))
+    i = subm(b,a)
+    show(i)
+    j = dist(i,secross(),'EUCLIDEAN')
+    k = regmax(j,sebox())
+    l = blob(label(k,sebox()),'CENTROID') # hole center
+    show(i,dilate(l))'''
+    i = subm(b,a)
+    show(i)
+    j = dist(i,secross(),'EUCLIDEAN')
+    k = regmax(j,sebox())
+    l = blob(label(k,sebox()),'CENTROID') # hole center
+    show(i,dilate(l))
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2390,20 +2395,20 @@ def mmdholecenter():
     #0
     print '''
     from numpy.oldnumeric import nonzero
-    mmshow(a,h,l)
-    m = mmdist(mmneg(l),mmsecross(),'EUCLIDEAN')
-    n = mmintersec(mmgray(h),uint8(m))
-    mmshow(n,a)
+    show(a,h,l)
+    m = dist(neg(l),secross(),'EUCLIDEAN')
+    n = intersec(gray(h),uint8(m))
+    show(n,a)
     i = nonzero(n.ravel())
     x = i / n.shape[1]
     y = i % n.shape[1]
     for k in range(len(i)):
       print 'displacement of %d at (%d,%d)\n' %(n[x[k],y[k]],x[k],y[k])'''
     from numpy.oldnumeric import nonzero
-    mmshow(a,h,l)
-    m = mmdist(mmneg(l),mmsecross(),'EUCLIDEAN')
-    n = mmintersec(mmgray(h),uint8(m))
-    mmshow(n,a)
+    show(a,h,l)
+    m = dist(neg(l),secross(),'EUCLIDEAN')
+    n = intersec(gray(h),uint8(m))
+    show(n,a)
     i = nonzero(n.ravel())
     x = i / n.shape[1]
     y = i % n.shape[1]
@@ -2424,28 +2429,28 @@ def mmdholecenter():
     print '========================================================================='
     #0
     print '''
-    o=mmthin(a)
-    p=mmthin(o,mmendpoints())
-    mmshow(a,p)
-    q = mmdist(a,mmsecross(),'EUCLIDEAN')
-    r = mmgrain(mmlabel(p,mmsebox()),q,'min') # minimum
-    s = mmgrain(mmlabel(p,mmsebox()),q,'min','data') # minimum
+    o=thin(a)
+    p=thin(o,endpoints())
+    show(a,p)
+    q = dist(a,secross(),'EUCLIDEAN')
+    r = grain(label(p,sebox()),q,'min') # minimum
+    s = grain(label(p,sebox()),q,'min','data') # minimum
     from numpy.oldnumeric import ravel
     for k in ravel(s):
       print 'Minimum distance: %d pixels' %(2*k+1)
-    t = mmintersec(mmcmp(r,'==',q),a)
-    mmshow(a,mmdil(t))'''
-    o=mmthin(a)
-    p=mmthin(o,mmendpoints())
-    mmshow(a,p)
-    q = mmdist(a,mmsecross(),'EUCLIDEAN')
-    r = mmgrain(mmlabel(p,mmsebox()),q,'min') # minimum
-    s = mmgrain(mmlabel(p,mmsebox()),q,'min','data') # minimum
+    t = intersec(cmp(r,'==',q),a)
+    show(a,dilate(t))'''
+    o=thin(a)
+    p=thin(o,endpoints())
+    show(a,p)
+    q = dist(a,secross(),'EUCLIDEAN')
+    r = grain(label(p,sebox()),q,'min') # minimum
+    s = grain(label(p,sebox()),q,'min','data') # minimum
     from numpy.oldnumeric import ravel
     for k in ravel(s):
       print 'Minimum distance: %d pixels' %(2*k+1)
-    t = mmintersec(mmcmp(r,'==',q),a)
-    mmshow(a,mmdil(t))
+    t = intersec(cmp(r,'==',q),a)
+    show(a,dilate(t))
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2454,10 +2459,10 @@ def mmdholecenter():
     return
 # =========================================================================
 #
-#   mmdleaf - Segment a leaf from the background
+#   leaf - Segment a leaf from the background
 #
 # =========================================================================
-def mmdleaf():
+def leaf():
 
     print
     print '''Segment a leaf from the background'''
@@ -2470,10 +2475,10 @@ def mmdleaf():
     print '========================================================================='
     #0
     print '''
-    f = mmreadgray('leaf.tif')
-    mmshow(f)'''
-    f = mmreadgray('leaf.tif')
-    mmshow(f)
+    f = readgray('leaf.tif')
+    show(f)'''
+    f = readgray('leaf.tif')
+    show(f)
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2487,18 +2492,18 @@ def mmdleaf():
     print '========================================================================='
     #0
     print '''
-    f_low=mmthreshad(f,100)
-    f_med=mmthreshad(f,128)
-    f_high=mmthreshad(f,160)
-    mmshow(f_low)
-    mmshow(f_med)
-    mmshow(f_high)'''
-    f_low=mmthreshad(f,100)
-    f_med=mmthreshad(f,128)
-    f_high=mmthreshad(f,160)
-    mmshow(f_low)
-    mmshow(f_med)
-    mmshow(f_high)
+    f_low=threshad(f,100)
+    f_med=threshad(f,128)
+    f_high=threshad(f,160)
+    show(f_low)
+    show(f_med)
+    show(f_high)'''
+    f_low=threshad(f,100)
+    f_med=threshad(f,128)
+    f_high=threshad(f,160)
+    show(f_low)
+    show(f_med)
+    show(f_high)
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2515,10 +2520,10 @@ def mmdleaf():
     print '========================================================================='
     #0
     print '''
-    f1=mmtoggle(f,mmero(f,mmsedisk(7)),mmdil(f,mmsedisk(7)))
-    mmshow(f1)'''
-    f1=mmtoggle(f,mmero(f,mmsedisk(7)),mmdil(f,mmsedisk(7)))
-    mmshow(f1)
+    f1=toggle(f,erode(f,sedisk(7)),dilate(f,sedisk(7)))
+    show(f1)'''
+    f1=toggle(f,erode(f,sedisk(7)),dilate(f,sedisk(7)))
+    show(f1)
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2533,14 +2538,14 @@ def mmdleaf():
     print '========================================================================='
     #0
     print '''
-    f2=mmthreshad(f1,100)
-    f3=mmareaopen(f2,80)
-    mmshow(f2)
-    mmshow(f3)'''
-    f2=mmthreshad(f1,100)
-    f3=mmareaopen(f2,80)
-    mmshow(f2)
-    mmshow(f3)
+    f2=threshad(f1,100)
+    f3=areaopen(f2,80)
+    show(f2)
+    show(f3)'''
+    f2=threshad(f1,100)
+    f3=areaopen(f2,80)
+    show(f2)
+    show(f3)
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2554,10 +2559,10 @@ def mmdleaf():
     print '========================================================================='
     #0
     print '''
-    f4=mmgradm(f3)
-    mmshow(f,f4)'''
-    f4=mmgradm(f3)
-    mmshow(f,f4)
+    f4=gradm(f3)
+    show(f,f4)'''
+    f4=gradm(f3)
+    show(f,f4)
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2566,10 +2571,10 @@ def mmdleaf():
     return
 # =========================================================================
 #
-#   mmdlith - Detect defects in a microelectronic circuit.
+#   lith - Detect defects in a microelectronic circuit.
 #
 # =========================================================================
-def mmdlith():
+def lith():
 
     print
     print '''Detect defects in a microelectronic circuit.'''
@@ -2583,12 +2588,12 @@ def mmdlith():
     print '========================================================================='
     #0
     print '''
-    a = mmreadgray('r4x2_256.tif');
-    mmshow(a);
-    mmshow(mmsurf(a));'''
-    a = mmreadgray('r4x2_256.tif');
-    mmshow(a);
-    mmshow(mmsurf(a));
+    a = readgray('r4x2_256.tif');
+    show(a);
+    show(surf(a));'''
+    a = readgray('r4x2_256.tif');
+    show(a);
+    show(surf(a));
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2598,18 +2603,18 @@ def mmdlith():
     print '''
     Closing of the image by a vertical line of length 25 pixels. Then
     subtract it from the original. The sequence closing-subtraction is
-    called closing top-hat. (This could be executed in a single command:
+    called closing top-hat. (This could be executed in a single coand:
     c=(a,(25,90));).
     '''
     print '========================================================================='
     #0
     print '''
-    b = mmclose(a,mmseline(25,90));
-    mmshow(b);
-    mmshow(mmsurf(b));'''
-    b = mmclose(a,mmseline(25,90));
-    mmshow(b);
-    mmshow(mmsurf(b));
+    b = close(a,seline(25,90));
+    show(b);
+    show(surf(b));'''
+    b = close(a,seline(25,90));
+    show(b);
+    show(surf(b));
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2625,12 +2630,12 @@ def mmdlith():
     print '========================================================================='
     #0
     print '''
-    c = mmsubm(b,a);
-    mmshow(c);
-    mmshow(mmsurf(c));'''
-    c = mmsubm(b,a);
-    mmshow(c);
-    mmshow(mmsurf(c));
+    c = subm(b,a);
+    show(c);
+    show(surf(c));'''
+    c = subm(b,a);
+    show(c);
+    show(surf(c));
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2644,14 +2649,14 @@ def mmdlith():
     print '========================================================================='
     #0
     print '''
-    d = mmcmp(c,'>=',50);
-    e = mmareaopen(d,5);
-    mmshow(d);
-    mmshow(e);'''
-    d = mmcmp(c,'>=',50);
-    e = mmareaopen(d,5);
-    mmshow(d);
-    mmshow(e);
+    d = cmp(c,'>=',50);
+    e = areaopen(d,5);
+    show(d);
+    show(e);'''
+    d = cmp(c,'>=',50);
+    e = areaopen(d,5);
+    show(d);
+    show(e);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2665,10 +2670,10 @@ def mmdlith():
     print '========================================================================='
     #0
     print '''
-    mmshow(a,e);
-    mmshow(mmsurf(a),e);'''
-    mmshow(a,e);
-    mmshow(mmsurf(a),e);
+    show(a,e);
+    show(surf(a),e);'''
+    show(a,e);
+    show(surf(a),e);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2677,10 +2682,10 @@ def mmdlith():
     return
 # =========================================================================
 #
-#   mmdpcb - Decompose a printed circuit board in its main parts.
+#   pcb - Decompose a printed circuit board in its main parts.
 #
 # =========================================================================
-def mmdpcb():
+def pcb():
 
     print
     print '''Decompose a printed circuit board in its main parts.'''
@@ -2693,10 +2698,10 @@ def mmdpcb():
     print '========================================================================='
     #0
     print '''
-    a = mmreadgray('pcb1bin.tif');
-    mmshow(a);'''
-    a = mmreadgray('pcb1bin.tif');
-    mmshow(a);
+    a = readgray('pcb1bin.tif');
+    show(a);'''
+    a = readgray('pcb1bin.tif');
+    show(a);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2711,14 +2716,14 @@ def mmdpcb():
     print '========================================================================='
     #0
     print '''
-    b = mmclohole(a);
-    holes = mmsubm(b,a);
-    mmshow(b);
-    mmshow(a, holes);'''
-    b = mmclohole(a);
-    holes = mmsubm(b,a);
-    mmshow(b);
-    mmshow(a, holes);
+    b = clohole(a);
+    holes = subm(b,a);
+    show(b);
+    show(a, holes);'''
+    b = clohole(a);
+    holes = subm(b,a);
+    show(b);
+    show(a, holes);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2732,14 +2737,14 @@ def mmdpcb():
     print '========================================================================='
     #0
     print '''
-    c = mmopen(b,mmsebox(8));
-    square = mmcdil(c, a);
-    mmshow(b, c);
-    mmshow(holes, square);'''
-    c = mmopen(b,mmsebox(8));
-    square = mmcdil(c, a);
-    mmshow(b, c);
-    mmshow(holes, square);
+    c = open(b,sebox(8));
+    square = cdil(c, a);
+    show(b, c);
+    show(holes, square);'''
+    c = open(b,sebox(8));
+    square = cdil(c, a);
+    show(b, c);
+    show(holes, square);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2753,16 +2758,16 @@ def mmdpcb():
     print '========================================================================='
     #0
     print '''
-    f = mmsubm(b, c);
-    g = mmopen(f, mmsedisk(8));
-    circle = mmcdil(g,a);
-    mmshow(f, g);
-    mmshow(holes, square, circle);'''
-    f = mmsubm(b, c);
-    g = mmopen(f, mmsedisk(8));
-    circle = mmcdil(g,a);
-    mmshow(f, g);
-    mmshow(holes, square, circle);
+    f = subm(b, c);
+    g = open(f, sedisk(8));
+    circle = cdil(g,a);
+    show(f, g);
+    show(holes, square, circle);'''
+    f = subm(b, c);
+    g = open(f, sedisk(8));
+    circle = cdil(g,a);
+    show(f, g);
+    show(holes, square, circle);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2778,16 +2783,16 @@ def mmdpcb():
     print '========================================================================='
     #0
     print '''
-    i = mmsubm(f, g);
-    m = mmopen(i,mmsedil(mmseline(8,90), mmseline(25)));
-    rect = mmcdil(m,a);
-    mmshow(i, m);
-    mmshow(holes, square, circle, rect);'''
-    i = mmsubm(f, g);
-    m = mmopen(i,mmsedil(mmseline(8,90), mmseline(25)));
-    rect = mmcdil(m,a);
-    mmshow(i, m);
-    mmshow(holes, square, circle, rect);
+    i = subm(f, g);
+    m = open(i,sedil(seline(8,90), seline(25)));
+    rect = cdil(m,a);
+    show(i, m);
+    show(holes, square, circle, rect);'''
+    i = subm(f, g);
+    m = open(i,sedil(seline(8,90), seline(25)));
+    rect = cdil(m,a);
+    show(i, m);
+    show(holes, square, circle, rect);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2801,16 +2806,16 @@ def mmdpcb():
     print '========================================================================='
     #0
     print '''
-    o = mmsubm(i,m);
-    p = mmopen(o, mmsebox(2));
-    thin = mmcdil(p,a);
-    mmshow(o, p);
-    mmshow(holes, square, circle, rect, thin);'''
-    o = mmsubm(i,m);
-    p = mmopen(o, mmsebox(2));
-    thin = mmcdil(p,a);
-    mmshow(o, p);
-    mmshow(holes, square, circle, rect, thin);
+    o = subm(i,m);
+    p = open(o, sebox(2));
+    thin = cdil(p,a);
+    show(o, p);
+    show(holes, square, circle, rect, thin);'''
+    o = subm(i,m);
+    p = open(o, sebox(2));
+    thin = cdil(p,a);
+    show(o, p);
+    show(holes, square, circle, rect, thin);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2824,16 +2829,16 @@ def mmdpcb():
     print '========================================================================='
     #0
     print '''
-    r = mmsubm(o,p);
-    s = mmopen(r, mmsebox());
-    thick = mmcdil(s,a);
-    mmshow(r, s);
-    mmshow(holes, square, circle, rect, thin, thick);'''
-    r = mmsubm(o,p);
-    s = mmopen(r, mmsebox());
-    thick = mmcdil(s,a);
-    mmshow(r, s);
-    mmshow(holes, square, circle, rect, thin, thick);
+    r = subm(o,p);
+    s = open(r, sebox());
+    thick = cdil(s,a);
+    show(r, s);
+    show(holes, square, circle, rect, thin, thick);'''
+    r = subm(o,p);
+    s = open(r, sebox());
+    thick = cdil(s,a);
+    show(r, s);
+    show(holes, square, circle, rect, thin, thick);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2847,8 +2852,8 @@ def mmdpcb():
     print '========================================================================='
     #0
     print '''
-    mmshow(holes, square, circle, rect, thin, thick);'''
-    mmshow(holes, square, circle, rect, thin, thick);
+    show(holes, square, circle, rect, thin, thick);'''
+    show(holes, square, circle, rect, thin, thick);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2857,10 +2862,10 @@ def mmdpcb():
     return
 # =========================================================================
 #
-#   mmdpieces - Classify two dimensional pieces.
+#   pieces - Classify two dimensional pieces.
 #
 # =========================================================================
-def mmdpieces():
+def pieces():
 
     print
     print '''Classify two dimensional pieces.'''
@@ -2873,10 +2878,10 @@ def mmdpieces():
     print '========================================================================='
     #0
     print '''
-    a = mmreadgray('pieces_bw.tif');
-    mmshow(a);'''
-    a = mmreadgray('pieces_bw.tif');
-    mmshow(a);
+    a = readgray('pieces_bw.tif');
+    show(a);'''
+    a = readgray('pieces_bw.tif');
+    show(a);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2889,18 +2894,18 @@ def mmdpieces():
     print '========================================================================='
     #0
     print '''
-    seA = mmimg2se(mmbinary([[0,1,0],[1,0,1],[0,0,0]]))
-    seB = mmimg2se(mmbinary([[0,0,0],[0,1,0],[0,0,0]]))
-    iAB = mmse2hmt(seA,seB);
-    print mmintershow(iAB)
-    b = mmthick(a, iAB);
-    mmshow(b);'''
-    seA = mmimg2se(mmbinary([[0,1,0],[1,0,1],[0,0,0]]))
-    seB = mmimg2se(mmbinary([[0,0,0],[0,1,0],[0,0,0]]))
-    iAB = mmse2hmt(seA,seB);
-    print mmintershow(iAB)
-    b = mmthick(a, iAB);
-    mmshow(b);
+    seA = img2se(binary([[0,1,0],[1,0,1],[0,0,0]]))
+    seB = img2se(binary([[0,0,0],[0,1,0],[0,0,0]]))
+    iAB = se2hmt(seA,seB);
+    print intershow(iAB)
+    b = thick(a, iAB);
+    show(b);'''
+    seA = img2se(binary([[0,1,0],[1,0,1],[0,0,0]]))
+    seB = img2se(binary([[0,0,0],[0,1,0],[0,0,0]]))
+    iAB = se2hmt(seA,seB);
+    print intershow(iAB)
+    b = thick(a, iAB);
+    show(b);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2913,10 +2918,10 @@ def mmdpieces():
     print '========================================================================='
     #0
     print '''
-    c = mmthin(b);
-    mmshow(c);'''
-    c = mmthin(b);
-    mmshow(c);
+    c = thin(b);
+    show(c);'''
+    c = thin(b);
+    show(c);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2931,10 +2936,10 @@ def mmdpieces():
     print '========================================================================='
     #0
     print '''
-    d = mmthin(c,mmendpoints());
-    mmshow(c,d);'''
-    d = mmthin(c,mmendpoints());
-    mmshow(c,d);
+    d = thin(c,endpoints());
+    show(c,d);'''
+    d = thin(c,endpoints());
+    show(c,d);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2948,10 +2953,10 @@ def mmdpieces():
     print '========================================================================='
     #0
     print '''
-    e = mminfrec(d,b);
-    mmshow(e);'''
-    e = mminfrec(d,b);
-    mmshow(e);
+    e = infrec(d,b);
+    show(e);'''
+    e = infrec(d,b);
+    show(e);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2964,10 +2969,10 @@ def mmdpieces():
     print '========================================================================='
     #0
     print '''
-    f = mmintersec(a,e);
-    mmshow(f);'''
-    f = mmintersec(a,e);
-    mmshow(f);
+    f = intersec(a,e);
+    show(f);'''
+    f = intersec(a,e);
+    show(f);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2980,10 +2985,10 @@ def mmdpieces():
     print '========================================================================='
     #0
     print '''
-    g = mmsubm(c,e);
-    mmshow(g);'''
-    g = mmsubm(c,e);
-    mmshow(g);
+    g = subm(c,e);
+    show(g);'''
+    g = subm(c,e);
+    show(g);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -2997,10 +3002,10 @@ def mmdpieces():
     print '========================================================================='
     #0
     print '''
-    h = mmthin(g, mmendpoints(), 4);
-    mmshow(h);'''
-    h = mmthin(g, mmendpoints(), 4);
-    mmshow(h);
+    h = thin(g, endpoints(), 4);
+    show(h);'''
+    h = thin(g, endpoints(), 4);
+    show(h);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -3014,22 +3019,22 @@ def mmdpieces():
     print '========================================================================='
     #0
     print '''
-    seA1 = mmimg2se(mmbinary([[0,1,0],[0,1,0],[1,0,1]]))
-    seB1 = mmimg2se(mmbinary([[0,0,0],[1,0,1],[0,1,0]]))
-    seA2 = mmimg2se(mmbinary([[0,1,0],[1,1,1],[0,0,0]]))
-    seB2 = mmimg2se(mmbinary([[1,0,1],[0,0,0],[0,1,0]]))
-    i1 = mmsupcanon(h, mmse2hmt(seA1,seB1));
-    i2 = mmsupcanon(h, mmse2hmt(seA2,seB2));
-    i = mmunion(i1,i2);
-    mmshow(h,mmdil(i,mmsedisk(2)));'''
-    seA1 = mmimg2se(mmbinary([[0,1,0],[0,1,0],[1,0,1]]))
-    seB1 = mmimg2se(mmbinary([[0,0,0],[1,0,1],[0,1,0]]))
-    seA2 = mmimg2se(mmbinary([[0,1,0],[1,1,1],[0,0,0]]))
-    seB2 = mmimg2se(mmbinary([[1,0,1],[0,0,0],[0,1,0]]))
-    i1 = mmsupcanon(h, mmse2hmt(seA1,seB1));
-    i2 = mmsupcanon(h, mmse2hmt(seA2,seB2));
-    i = mmunion(i1,i2);
-    mmshow(h,mmdil(i,mmsedisk(2)));
+    seA1 = img2se(binary([[0,1,0],[0,1,0],[1,0,1]]))
+    seB1 = img2se(binary([[0,0,0],[1,0,1],[0,1,0]]))
+    seA2 = img2se(binary([[0,1,0],[1,1,1],[0,0,0]]))
+    seB2 = img2se(binary([[1,0,1],[0,0,0],[0,1,0]]))
+    i1 = supcanon(h, se2hmt(seA1,seB1));
+    i2 = supcanon(h, se2hmt(seA2,seB2));
+    i = union(i1,i2);
+    show(h,dilate(i,sedisk(2)));'''
+    seA1 = img2se(binary([[0,1,0],[0,1,0],[1,0,1]]))
+    seB1 = img2se(binary([[0,0,0],[1,0,1],[0,1,0]]))
+    seA2 = img2se(binary([[0,1,0],[1,1,1],[0,0,0]]))
+    seB2 = img2se(binary([[1,0,1],[0,0,0],[0,1,0]]))
+    i1 = supcanon(h, se2hmt(seA1,seB1));
+    i2 = supcanon(h, se2hmt(seA2,seB2));
+    i = union(i1,i2);
+    show(h,dilate(i,sedisk(2)));
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -3043,10 +3048,10 @@ def mmdpieces():
     print '========================================================================='
     #0
     print '''
-    j = mminfrec(i,b,mmsebox());
-    mmshow(j);'''
-    j = mminfrec(i,b,mmsebox());
-    mmshow(j);
+    j = infrec(i,b,sebox());
+    show(j);'''
+    j = infrec(i,b,sebox());
+    show(j);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -3059,10 +3064,10 @@ def mmdpieces():
     print '========================================================================='
     #0
     print '''
-    k = mmintersec(a,j);
-    mmshow(k);'''
-    k = mmintersec(a,j);
-    mmshow(k);
+    k = intersec(a,j);
+    show(k);'''
+    k = intersec(a,j);
+    show(k);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -3076,10 +3081,10 @@ def mmdpieces():
     print '========================================================================='
     #0
     print '''
-    l = mmsubm(mmsubm(a,f),k);
-    mmshow(l);'''
-    l = mmsubm(mmsubm(a,f),k);
-    mmshow(l);
+    l = subm(subm(a,f),k);
+    show(l);'''
+    l = subm(subm(a,f),k);
+    show(l);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -3093,16 +3098,16 @@ def mmdpieces():
     print '========================================================================='
     #0
     print '''
-    m = mmgray(f,'uint8',1);
-    n = mmgray(k,'uint8',2);
-    o = mmgray(l,'uint8',3);
-    p = mmunion(m,n,o);
-    mmlblshow(p);'''
-    m = mmgray(f,'uint8',1);
-    n = mmgray(k,'uint8',2);
-    o = mmgray(l,'uint8',3);
-    p = mmunion(m,n,o);
-    mmlblshow(p);
+    m = gray(f,'uint8',1);
+    n = gray(k,'uint8',2);
+    o = gray(l,'uint8',3);
+    p = union(m,n,o);
+    lblshow(p);'''
+    m = gray(f,'uint8',1);
+    n = gray(k,'uint8',2);
+    o = gray(l,'uint8',3);
+    p = union(m,n,o);
+    lblshow(p);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -3111,10 +3116,10 @@ def mmdpieces():
     return
 # =========================================================================
 #
-#   mmdpotatoes - Grade potato quality by shape and skin spots.
+#   potatoes - Grade potato quality by shape and skin spots.
 #
 # =========================================================================
-def mmdpotatoes():
+def potatoes():
 
     print
     print '''Grade potato quality by shape and skin spots.'''
@@ -3127,10 +3132,10 @@ def mmdpotatoes():
     print '========================================================================='
     #0
     print '''
-    a = mmreadgray('potatoes.tif');
-    mmshow(a);'''
-    a = mmreadgray('potatoes.tif');
-    mmshow(a);
+    a = readgray('potatoes.tif');
+    show(a);'''
+    a = readgray('potatoes.tif');
+    show(a);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -3143,10 +3148,10 @@ def mmdpotatoes():
     print '========================================================================='
     #0
     print '''
-    b = mmthreshad(a,90);
-    mmshow(b);'''
-    b = mmthreshad(a,90);
-    mmshow(b);
+    b = threshad(a,90);
+    show(b);'''
+    b = threshad(a,90);
+    show(b);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -3160,10 +3165,10 @@ def mmdpotatoes():
     print '========================================================================='
     #0
     print '''
-    c = mmthin(b);
-    mmshow(a,c);'''
-    c = mmthin(b);
-    mmshow(a,c);
+    c = thin(b);
+    show(a,c);'''
+    c = thin(b);
+    show(a,c);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -3177,10 +3182,10 @@ def mmdpotatoes():
     print '========================================================================='
     #0
     print '''
-    d = mmcloseth(a,mmsedisk(5));
-    mmshow(d);'''
-    d = mmcloseth(a,mmsedisk(5));
-    mmshow(d);
+    d = closeth(a,sedisk(5));
+    show(d);'''
+    d = closeth(a,sedisk(5));
+    show(d);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -3195,12 +3200,12 @@ def mmdpotatoes():
     print '========================================================================='
     #0
     print '''
-    e = mmthreshad(d,20);
-    f = mmintersec(e,b);
-    mmshow(f);'''
-    e = mmthreshad(d,20);
-    f = mmintersec(e,b);
-    mmshow(f);
+    e = threshad(d,20);
+    f = intersec(e,b);
+    show(f);'''
+    e = threshad(d,20);
+    f = intersec(e,b);
+    show(f);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -3214,10 +3219,10 @@ def mmdpotatoes():
     print '========================================================================='
     #0
     print '''
-    mmshow(a);
-    mmshow(a,f,c);'''
-    mmshow(a);
-    mmshow(a,f,c);
+    show(a);
+    show(a,f,c);'''
+    show(a);
+    show(a,f,c);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -3226,10 +3231,10 @@ def mmdpotatoes():
     return
 # =========================================================================
 #
-#   mmdrobotop - Detect marks on a robot.
+#   robotop - Detect marks on a robot.
 #
 # =========================================================================
-def mmdrobotop():
+def robotop():
 
     print
     print '''Detect marks on a robot.'''
@@ -3242,10 +3247,10 @@ def mmdrobotop():
     print '========================================================================='
     #0
     print '''
-    a = mmreadgray('robotop.tif');
-    mmshow(a);'''
-    a = mmreadgray('robotop.tif');
-    mmshow(a);
+    a = readgray('robotop.tif');
+    show(a);'''
+    a = readgray('robotop.tif');
+    show(a);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -3258,10 +3263,10 @@ def mmdrobotop():
     print '========================================================================='
     #0
     print '''
-    b = mmopenth(a,mmsebox(4));
-    mmshow(b);'''
-    b = mmopenth(a,mmsebox(4));
-    mmshow(b);
+    b = openth(a,sebox(4));
+    show(b);'''
+    b = openth(a,sebox(4));
+    show(b);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -3274,10 +3279,10 @@ def mmdrobotop():
     print '========================================================================='
     #0
     print '''
-    c = mmopen(b,mmsebox());
-    mmshow(c);'''
-    c = mmopen(b,mmsebox());
-    mmshow(c);
+    c = open(b,sebox());
+    show(c);'''
+    c = open(b,sebox());
+    show(c);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -3293,10 +3298,10 @@ def mmdrobotop():
     print '========================================================================='
     #0
     print '''
-    d = mmthreshad(c,100);
-    mmshow(a,d);'''
-    d = mmthreshad(c,100);
-    mmshow(a,d);
+    d = threshad(c,100);
+    show(a,d);'''
+    d = threshad(c,100);
+    show(a,d);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -3305,10 +3310,10 @@ def mmdrobotop():
     return
 # =========================================================================
 #
-#   mmdruler - Detect defects in a ruler.
+#   ruler - Detect defects in a ruler.
 #
 # =========================================================================
-def mmdruler():
+def ruler():
 
     print
     print '''Detect defects in a ruler.'''
@@ -3321,10 +3326,10 @@ def mmdruler():
     print '========================================================================='
     #0
     print '''
-    a = mmreadgray('mm3.tif');
-    mmshow(a);'''
-    a = mmreadgray('mm3.tif');
-    mmshow(a);
+    a = readgray('3.tif');
+    show(a);'''
+    a = readgray('3.tif');
+    show(a);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -3337,10 +3342,10 @@ def mmdruler():
     print '========================================================================='
     #0
     print '''
-    b = mmthreshad( mmcloseth(a,mmsebox(5)),40);
-    mmshow(b);'''
-    b = mmthreshad( mmcloseth(a,mmsebox(5)),40);
-    mmshow(b);
+    b = threshad( closeth(a,sebox(5)),40);
+    show(b);'''
+    b = threshad( closeth(a,sebox(5)),40);
+    show(b);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -3353,10 +3358,10 @@ def mmdruler():
     print '========================================================================='
     #0
     print '''
-    c = mmopen(b,mmseline(50,90));
-    mmshow(c);'''
-    c = mmopen(b,mmseline(50,90));
-    mmshow(c);
+    c = open(b,seline(50,90));
+    show(c);'''
+    c = open(b,seline(50,90));
+    show(c);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -3369,10 +3374,10 @@ def mmdruler():
     print '========================================================================='
     #0
     print '''
-    d =mmclose(c,mmseline(15));
-    mmshow(d);'''
-    d =mmclose(c,mmseline(15));
-    mmshow(d);
+    d =close(c,seline(15));
+    show(d);'''
+    d =close(c,seline(15));
+    show(d);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -3385,10 +3390,10 @@ def mmdruler():
     print '========================================================================='
     #0
     print '''
-    e = mminfrec(d,b);
-    mmshow(e);'''
-    e = mminfrec(d,b);
-    mmshow(e);
+    e = infrec(d,b);
+    show(e);'''
+    e = infrec(d,b);
+    show(e);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -3403,10 +3408,10 @@ def mmdruler():
     print '========================================================================='
     #0
     print '''
-    f = mminfrec(d,b,mmseline(3,90));
-    mmshow(f);'''
-    f = mminfrec(d,b,mmseline(3,90));
-    mmshow(f);
+    f = infrec(d,b,seline(3,90));
+    show(f);'''
+    f = infrec(d,b,seline(3,90));
+    show(f);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -3419,10 +3424,10 @@ def mmdruler():
     print '========================================================================='
     #0
     print '''
-    g = mmsubm(e,f);
-    mmshow(g);'''
-    g = mmsubm(e,f);
-    mmshow(g);
+    g = subm(e,f);
+    show(g);'''
+    g = subm(e,f);
+    show(g);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -3436,10 +3441,10 @@ def mmdruler():
     print '========================================================================='
     #0
     print '''
-    h = mmopen(g);
-    mmshow(h);'''
-    h = mmopen(g);
-    mmshow(h);
+    h = open(g);
+    show(h);'''
+    h = open(g);
+    show(h);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -3453,10 +3458,10 @@ def mmdruler():
     print '========================================================================='
     #0
     print '''
-    i = mminfrec(h, b);
-    mmshow(i);'''
-    i = mminfrec(h, b);
-    mmshow(i);
+    i = infrec(h, b);
+    show(i);'''
+    i = infrec(h, b);
+    show(i);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -3469,8 +3474,8 @@ def mmdruler():
     print '========================================================================='
     #0
     print '''
-    mmshow(a,i);'''
-    mmshow(a,i);
+    show(a,i);'''
+    show(a,i);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -3479,10 +3484,10 @@ def mmdruler():
     return
 # =========================================================================
 #
-#   mmdsoil - Detect fractures in soil.
+#   soil - Detect fractures in soil.
 #
 # =========================================================================
-def mmdsoil():
+def soil():
 
     print
     print '''Detect fractures in soil.'''
@@ -3495,10 +3500,10 @@ def mmdsoil():
     print '========================================================================='
     #0
     print '''
-    a = mmreadgray('soil.tif');
-    mmshow(a);'''
-    a = mmreadgray('soil.tif');
-    mmshow(a);
+    a = readgray('soil.tif');
+    show(a);'''
+    a = readgray('soil.tif');
+    show(a);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -3511,10 +3516,10 @@ def mmdsoil():
     print '========================================================================='
     #0
     print '''
-    b = mmcloseth(a,mmsebox(2));
-    mmshow(b);'''
-    b = mmcloseth(a,mmsebox(2));
-    mmshow(b);
+    b = closeth(a,sebox(2));
+    show(b);'''
+    b = closeth(a,sebox(2));
+    show(b);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -3528,10 +3533,10 @@ def mmdsoil():
     print '========================================================================='
     #0
     print '''
-    c= mmareaopen(b,80,mmsebox());
-    mmshow(c);'''
-    c= mmareaopen(b,80,mmsebox());
-    mmshow(c);
+    c= areaopen(b,80,sebox());
+    show(c);'''
+    c= areaopen(b,80,sebox());
+    show(c);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -3544,10 +3549,10 @@ def mmdsoil():
     print '========================================================================='
     #0
     print '''
-    d = mmthreshad(c,15);
-    mmshow(d);'''
-    d = mmthreshad(c,15);
-    mmshow(d);
+    d = threshad(c,15);
+    show(d);'''
+    d = threshad(c,15);
+    show(d);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -3560,8 +3565,8 @@ def mmdsoil():
     print '========================================================================='
     #0
     print '''
-    mmshow(a,d);'''
-    mmshow(a,d);
+    show(a,d);'''
+    show(a,d);
     print
     raw_input(4*' '+'Please press return to continue...')
     print
@@ -3576,49 +3581,48 @@ def mmdsoil():
 # =====================================================================
 
 #all demonstrations - initialization
-_alldemos = []
+_alldemos = [
+    'airport',
+    'area',
+    'asp',
+    'labeltext',
+    'beef',
+    'blob',
+    'brain',
+    'calc',
+    'cells',
+    'chickparts',
+    'concrete',
+    'cookies',
+    'cornea',
+    'fabric',
+    'fila',
+    'flatzone',
+    'flow',
+    'gear',
+    'holecenter',
+    'leaf',
+    'lith',
+    'pcb',
+    'pieces',
+    'potatoes',
+    'robotop',
+    'ruler',
+    'soil',
+    ]
 
-_alldemos.append('mmdairport') 
-_alldemos.append('mmdarea') 
-_alldemos.append('mmdasp') 
-_alldemos.append('mmdlabeltext') 
-_alldemos.append('mmdbeef') 
-_alldemos.append('mmdblob') 
-_alldemos.append('mmdbrain') 
-_alldemos.append('mmdcalc') 
-_alldemos.append('mmdcells') 
-_alldemos.append('mmdchickparts') 
-_alldemos.append('mmdconcrete') 
-_alldemos.append('mmdcookies') 
-_alldemos.append('mmdcornea') 
-_alldemos.append('mmdfabric') 
-_alldemos.append('mmdfila') 
-_alldemos.append('mmdflatzone') 
-_alldemos.append('mmdflow') 
-_alldemos.append('mmdgear') 
-_alldemos.append('mmdholecenter') 
-_alldemos.append('mmdleaf') 
-_alldemos.append('mmdlith') 
-_alldemos.append('mmdpcb') 
-_alldemos.append('mmdpieces') 
-_alldemos.append('mmdpotatoes') 
-_alldemos.append('mmdrobotop') 
-_alldemos.append('mmdruler') 
-_alldemos.append('mmdsoil') 
-
-#main execution
-print '\nmorph Demonstrations -- SDC Morphology Toolbox\n'
-print 'Available Demonstrations: \n' + str(_alldemos) + '\n'
-if __name__ == '__main__':
+def main():
     import sys
+    print '\npymorph Demonstrations -- SDC Morphology Toolbox\n'
+    print 'Available Demonstrations: \n' + str(_alldemos) + '\n'
     if len(sys.argv) > 1:
         for demo in sys.argv[1:]:
-            if _alldemos.count(demo) > 0:
+            if demo in _alldemos:
                 eval(demo + '()')
             else:
                 print "Demonstration " + demo + " is not in this package. Please use help for details\n"
     else:
-        print "\nUsage: python morph.py <demo_name>\n\n"
-else:
-    print 'Please use help(morphdemo) for details\n'
+        print "\nUsage: python %s <demo_name>\n\n" % sys.argv[0]
 
+if __name__ == '__main__':
+    main()
