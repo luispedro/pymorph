@@ -64,11 +64,8 @@ def adread(imagefile):
             arr: numpy array representing an image.
 
     """
-
-    import Image
-    img = findImageFile(imagefile)
-    arr = pil2array(Image.open(img))
-    return arr
+    from matplotlib import imread
+    return imread(imagefile)
 
 
 def adwrite(imagefile, arr):
