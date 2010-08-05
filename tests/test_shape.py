@@ -1,10 +1,9 @@
 import pymorph
-import readmagick
-pieces = readmagick.readimg('pymorph/data/pieces_bw.tif').max(2)
+import pylab
+pieces = pylab.imread('pymorph/data/pieces_bw.tif').max(2)
 h,w = pieces.shape
 
 def test_isolines():
-    import readmagick
     D = pymorph.dist(pieces == 0)
     assert D.shape == (h,w)
     assert pymorph.isolines(D).shape == (h,w,3)
@@ -16,5 +15,5 @@ def test_label():
     assert (h,w) == pymorph.label(pieces > 0).shape
 
 def test_overlay():
-    img = readmagick.readimg('pymorph/data/fabric.tif')
+    img = pylab.imread('pymorph/data/fabric.tif')
     assert pymorph.overlay(img, img == 255).shape == (img.shape + (3,))
