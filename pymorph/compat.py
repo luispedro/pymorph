@@ -528,51 +528,6 @@ def mmdist(f,Bc=None,METRIC=None):
 def mmendpoints(OPTION='LOOP'):
     return endpoints(option=OPTION)
 
-def mmshow(f, f1=None, f2=None, f3=None, f4=None, f5=None, f6=None):
-    """
-        - Purpose
-            Display binary or gray-scale images and optionally overlay it
-            with binary images.
-        - Synopsis
-            show(f, f1=None, f2=None, f3=None, f4=None, f5=None, f6=None)
-        - Input
-            f:  Gray-scale (uint8 or uint16) or binary image.
-            f1: Binary image. Default: None. Red overlay.
-            f2: Binary image. Default: None. Green overlay.
-            f3: Binary image. Default: None. Blue overlay.
-            f4: Binary image. Default: None. Magenta overlay.
-            f5: Binary image. Default: None. Yellow overlay.
-            f6: Binary image. Default: None. Cyan overlay.
-
-        - Description
-            Displays the binary or gray-scale (uint8 or uint16) image f ,
-            and optionally overlay it with up to six binary images f1 to f6
-            in the following colors: f1 as red, f2 as green, f3 as blue, f4
-            as yellow, f5 as magenta, and f6 as cian. The image is displayed
-            in the MATLAB figure only if no output parameter is given.
-        - Examples
-            #
-            f=readgray('mribrain.tif');
-            f150=threshad(f,150);
-            f200=threshad(f,200);
-            show(f);
-            show(f150);
-            show(f,f150,f200);
-    """
-    import adpil
-
-    if len(f.shape) != 2:
-       print "Error, show: can only process gray-scale and binary images."
-       return
-    if   f1 == None: y = gshow(f)
-    elif f2 == None: y = gshow(f,f1)
-    elif f3 == None: y = gshow(f,f1,f2)
-    elif f4 == None: y = gshow(f,f1,f2,f3)
-    elif f5 == None: y = gshow(f,f1,f2,f3,f4)
-    elif f6 == None: y = gshow(f,f1,f2,f3,f4,f5)
-    elif f6 == None: y = gshow(f,f1,f2,f3,f4,f5)
-    else:            y = gshow(f,f1,f2,f3,f4,f5,f6)
-    adpil.adshow(y)
 
 
 def mmgshow(X, X1=None, X2=None, X3=None, X4=None, X5=None, X6=None):
@@ -669,40 +624,6 @@ def mmglblshow(X, border=0.0):
     return Y
 
 
-def dtshow(f, n=10):
-    """
-        - Purpose
-            Display a distance transform image with an iso-line color table.
-        - Synopsis
-            y = dtshow(f, n=10)
-        - Input
-            f: Gray-scale (uint8 or uint16) image. Distance transform.
-            n: Boolean Default: 10. Number of iso-contours.
-        - Output
-            y: Gray-scale (uint8 or uint16) or binary image. Optionally
-               return RGB uint8 image
-        - Description
-            Displays the distance transform image f (uint8 or uint16) with a
-            special gray-scale color table with n pseudo-color equaly
-            spaced. The final appearance of this display is similar to an
-            iso-contour image display. The infinity value, which is the
-            maximum level allowed in the image, is displayed as black. The
-            image is displayed in the MATLAB figure only if no output
-            parameter is given.
-        - Examples
-            #
-            f=readgray('blob.tif')
-            fd=dist(f)
-            show(fd)
-            dtshow(fd)
-    """
-    import adpil
-
-    if (isbinary(f)) or (len(f.shape) != 2):
-      print 'Error, dtshow: works only for grayscale labeled image'
-      return
-    y=gdtshow(f, n)
-    adpil.adshow(y)
 
 def readgray(filename):
     """
@@ -726,10 +647,10 @@ def readgray(filename):
             a=readgray('cookies.tif')
             show(a)
     """
-    import adpil
+    import pylab
     import numpy
 
-    y = adpil.adread(filename)
+    y = pylab.imread(filename)
     if (len(y.shape) == 3) and (y.shape[0] == 3):
        if numpy.alltrue(numpy.alltrue(y[0,:,:] == y[1,:,:] and
                                           y[0,:,:] == y[2,:,:])):
@@ -746,97 +667,10 @@ def readgray(filename):
     return y
 
 
-def lblshow(f, option='noborder'):
-    """
-        - Purpose
-            Display a labeled image assigning a random color for each label.
-        - Synopsis
-            y = lblshow(f, option='noborder')
-        - Input
-            f:      Gray-scale (uint8 or uint16) image. Labeled image.
-            option: String Default: 'noborder'. BORDER or NOBORDER: includes
-                    or not a white border around each labeled region
-        - Output
-            y: Gray-scale (uint8 or uint16) or binary image. Optionally
-               return RGB uint8 image
-        - Description
-            Displays the labeled image f (uint8 or uint16) with a pseudo
-            color where each label appears with a random color. The image is
-            displayed in the MATLAB figure only if no output parameter is
-            given.
-        - Examples
-            #
-            f=readgray('blob3.tif')
-            f1=label(f,sebox())
-            show(f1)
-            lblshow(f1)
-            lblshow(f1,'border')
-    """
-    import string
-    import adpil
-
-    if (isbinary(f)) or (len(f.shape) != 2):
-      print 'Error, lblshow: works only for grayscale labeled image'
-      return
-    option = string.upper(option);
-    if option == 'NOBORDER':
-      border = 0.0;
-    elif option == 'BORDER':
-      border = 1.0;
-    else:
-      print 'Error: option must be BORDER or NOBORDER'
-    y = randomcolor(f, border);
-    adpil.adshow(y)
-    return y
 
 def freedom(L=5):
     """
-        - Purpose
-            Control automatic data type conversion.
-        - Synopsis
-            Y = freedom(L=5)
-        - Input
-            L: Double Default: 5. level of FREEDOM: 0, 1 or 2. If the input
-               parameter is omitted, the current level is returned.
-        - Output
-            Y: Double current FREEDOM level
-        - Description
-            freedom controls the automatic data type conversion. There are
-            3 possible levels, called FREEDOM levels, for automatic
-            conversion: 0 - image type conversion is not allowed; 1- image
-            type conversion is allowed, but a warning is sent for each
-            conversion; 2- image type conversion is allowed without warning.
-            The FREEDOM levels are set or inquired by freedom . If an
-            image is not in the required datatype, than it should be
-            converted to the maximum and nearest pymorph Morphology Toolbox
-            datatype. For example, if an image is in int32 and a
-            morphological gray-scale processing that accepts only binary,
-            uint8 or uint16 images, is required, it will be converted to
-            uint16. Another example, if a binary image should be added to a
-            uint8 image, the binary image will be converted to uint8. In
-            cases of operators that have as parameters an image and a
-            constant, the type of the image should be kept as reference,
-            while the type of the constant should be converted, if
-            necessary.
-        - Examples
-            #
-            #   example 1
-            #
-            a=subm([4., 2., 1.],to_uint8([3, 2, 0]))
-            print a
-            print datatype(a)
-            #
-            #   example 2
-            #
-            a=subm([4., 2., 1], binary([3, 2, 0]))
-            print a
-            print datatype(a)
-            #
-            #   example 3
-            #
-            a=subm(to_uint8([4, 3, 2, 1]), 1)
-            print a
-            print datatype(a)
+    DOES NOT DO ANYTHING
     """
     return -1
 

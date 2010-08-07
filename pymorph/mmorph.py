@@ -112,6 +112,7 @@ pattern recognition and image analysis.
 
 """
 from __future__ import division
+from pymorph_version import __version__, __version_info__
 
 import sys, os
 mydir = os.path.dirname(__file__)
@@ -193,12 +194,13 @@ def limits(f):
       y : Two element vector, the first element is the infimum, the second, the
            supremum.
     """
-    from numpy import array, bool, uint8, uint16, int32
+    from numpy import array, bool, uint8, uint16, int32, int64
     code = f.dtype
     if code == bool: return array([0,1])
     if code == uint8: return array([0,255])
     if code == uint16: return array([0,65535])
     if code == int32: return array([-2147483647,2147483647])
+    if code == int64: return array([-2**63,2**63-1])
 
     raise ValueError('pymorph.limits: does not accept this typecode: %s' % code)
 
