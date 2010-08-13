@@ -676,40 +676,36 @@ def threshad(f, f1, f2=None):
     return (f1 <= f) & (f <= f2)
 
 
-def toggle(f, f1, f2, gray=True):
+def toggle(f, f1, f2, gray_mode=True):
     """
-    y = toggle(f, f1, f2, gray=True)
+    y = toggle(f, f1, f2, gray_mode=True)
 
     Toggle operator
 
-    Image contrast enhancement or classification by the toggle
-    operator.
+    Image contrast enhancement or classification by the toggle operator.
 
-    toggle creates the image y that is an enhancement or
-    classification of the image f by the toggle operator, with
-    parameters f1 and f2 . if option is 'iray', it performs an
-    enhancement and, if the option is 'binary', it performs a binary
+    `toggle` creates the image `y` that is an enhancement or classification of
+    the image f by the toggle operator, with parameters `f1` and `f2`. If
+    `gray`, it performs an enhancement; otherwise, it performs a binary
     classification.
 
-    In the enhancement, a pixel takes the value of
-    the corresponding pixel in f1 or f2 , according to a minimum
-    distance criterion from f to f1 or f to f2 . In the
-    classification, the pixels in f nearest to f1 receive the value
-    0 , while the ones nearest to f2 receive the value 1.
+    In the enhancement, a pixel takes the value of the corresponding pixel in
+    `f1` or `f2`, according to a minimum distance criterion from `f` to `f1` or
+    `f` to `f2`. In the classification, the pixels in f nearest to `f1` receive
+    the value `0`, while the ones nearest to `f2` receive the value `1`.
 
     Inputs
     ------
      f :    Gray-scale (uint8 or uint16) image.
      f1 :   Gray-scale (uint8 or uint16) image.
      f2 :   Gray-scale (uint8 or uint16) image.
-     gray : Whether to work in grey mode (default: True)
+     gray_mode : Whether to work in grey mode (default: True)
     """
-    from string import lower
 
     y = binary(subm(f,f1),subm(f2,f))
-    if gray:
-        t=gray(y)
-        y=union(intersec(neg(t),f1),intersec(t,f2))
+    if gray_mode:
+        t = gray(y)
+        y = union(intersec(neg(t),f1),intersec(t,f2))
     return y
 
 
