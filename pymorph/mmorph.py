@@ -187,8 +187,8 @@ def limits(f):
 
     Parameters
     ----------
-      f : Unsigned gray-scale (uint8 or uint16), signed (int32) or
-           binary image.
+      f : Unsigned gray-scale (uint8 or uint16), signed (int32) or binary image.
+
     Returns
     -------
       y : Two element vector, the first element is the infimum, the second, the
@@ -214,13 +214,13 @@ def center(f, b=None):
     center() computes the morphological center of f w.r.t. to the
     structuring element b.
 
-    Inputs
-    ------
+    Parameters
+    ----------
       f : Gray-scale (uint8 or uint16) or binary image.
       b : Structuring element (default: 3x3 cross).
 
-    Output
-    ------
+    Returns
+    -------
       y : Image
     """
 
@@ -249,6 +249,7 @@ def close_holes(f, Bc=None):
     ----------
       f :  Gray-scale (uint8 or uint16) or binary image.
       Bc : Connectivity (default: 3x3 cross).
+
     Returns
     -------
       y : image of same type as `f`.
@@ -280,6 +281,7 @@ def dist(f, Bc=None, metric='euclidean'):
       Bc :     Structuring Element Default: None (3x3 elementary
                  cross). (connectivity)
       metric : Metric to use, one of ('euclidean', 'euclidean2'), 'euclidean' by default.
+
     Returns
     -------
       y : distance image in uint16, or in int32 datatype with euclidean2
@@ -311,6 +313,7 @@ def cdist(f, g=None, Bc=None,metric=None):
       Bc :     Structuring Element Default: None (3x3 elementary
               cross). (connectivity)
       metric : Metric to use, one of ('euclidean', 'euclidean2'), 'euclidean' by default.
+
     Returns
     -------
       y : distance image in uint16, or in int32 datatype with euclidean2
@@ -375,6 +378,7 @@ def edgeoff(f, Bc=None):
     ----------
       f :  Binary image.
       Bc : Structuring element (default: 3x3 cross)
+
     Returns
     -------
        y : Binary image.
@@ -405,6 +409,7 @@ def frame(f, Ht=1, Wt=1, Dt=0, framevalue=None, bgvalue=None):
      Dt : Depth thickness (default 0)
      framevalue : Frame grey-level (default: max of f.dtype)
      bgvalue : Background grey-level (default: min of f.dtype)
+
     Returns
     -------
       y : image of same type as f .
@@ -435,8 +440,9 @@ def randomcolor(X):
     ----------
      X : Labeled image.
 
-    Output
-    ------
+
+    Returns
+    -------
      y : Colour image.
     """
     from numpy import take, reshape, shape, dstack
@@ -466,6 +472,7 @@ def isolines(X, N=10):
     ----------
       X : Distance transform image.
       N : Number of iso-contours (default: 10).
+
     Returns
     -------
      Y : Gray-scale (uint8 or uint16) or binary image.
@@ -512,8 +519,9 @@ def overlay(X, red=None, green=None, blue=None, magenta=None, yellow=None, cyan=
       magenta : magenta overlay, binary image (default: None)
       yellow : yellow overlay, binary image (default: None)
       cyan : cyan overlay, binary image (default: None)
-    Output
-    ------
+
+    Returns
+    -------
       Y : Colour image (in HxWx3 format)
     """
     from numpy import dstack
@@ -571,8 +579,9 @@ def histogram(f):
     Parameters
     ----------
       f : Input image (of any integer type).
-    Output
-    ------
+
+    Returns
+    -------
       h : Histogram in a uint16 or an int32 vector.
     """
     import numpy as np
@@ -595,6 +604,7 @@ def label(f, Bc=None):
     ----------
       f :  Binary image.
       Bc : Connectivity (default: 3x3 cross)
+
     Returns
     -------
       y : Image of same size as `f`.
@@ -666,6 +676,7 @@ def threshad(f, f1, f2=None):
       f :  Gray-scale (uint8 or uint16) image.
       f1 : Lower value.
       f2 : Upper value.
+
     Returns
     -------
       y : Binary image.
@@ -694,8 +705,8 @@ def toggle(f, f1, f2, gray_mode=True):
     `f` to `f2`. In the classification, the pixels in f nearest to `f1` receive
     the value `0`, while the ones nearest to `f2` receive the value `1`.
 
-    Inputs
-    ------
+    Parameters
+    ----------
      f :    Gray-scale (uint8 or uint16) image.
      f1 :   Gray-scale (uint8 or uint16) image.
      f2 :   Gray-scale (uint8 or uint16) image.
@@ -726,10 +737,12 @@ def addm(f1, f2):
             binary image.
         f2 : Unsigned gray-scale (uint8 or uint16), signed (int32) or
             binary image. Or constant.
+
     Returns
     -------
         y: Unsigned gray-scale (uint8 or uint16), signed (int32) or
            binary image.
+
     Examples
     --------
     ::
@@ -772,6 +785,7 @@ def areaclose(f, a, Bc=None):
       f :  Gray-scale (uint8 or uint16) or binary image.
       a :  Non negative integer.
       Bc : Structuring element (default: 3x3 cross).
+
     Returns
     -------
       y : Same type of f
@@ -880,7 +894,7 @@ def flood(fin, T, option, Bc=None):
     and in the merging of basins.
 
     Parameters
-    ---------
+    ----------
       fin :    Gray-scale image (uint8 or uint16).
       T :      Criterion value. If T==-1, then the dynamics is
                  determined, not the flooding at this criterion. This was
@@ -918,6 +932,7 @@ def asf(f, seq="OC", B=None, n=1):
       seq : Order of operations, one of ('OC', 'CO', 'OCO', 'COC'), default: 'OC'.
       B :   Structuring element (default: 3x3  cross).
       n :   Number of iterations (default: 1).
+
     Returns
     -------
       y : Image
@@ -996,6 +1011,7 @@ def binary(f, k=1):
       f :  Unsigned gray-scale (uint8 or uint16), signed (int32) or
                 binary image.
       k1 : Threshold (default: 1)
+
     Returns
     -------
       y : Binary image.
@@ -1034,6 +1050,7 @@ def blob(f, measurement, output="image"):
       output :      Output format:
                         'image': returns a binary image
                         'data': returns a vector of measurements
+
     Returns
     -------
       y : Gray-scale (uint8 or uint16) or binary image.
@@ -1093,6 +1110,7 @@ def cbisector(f, B, n):
       f : Binary image.
       B : Structuring element
       n : filtering rate (positive integer)
+
     Returns
     -------
       y : Binary image.
@@ -1124,6 +1142,7 @@ def cdilate(f, g, Bc=None, n=1):
       g : Conditioning image. (Gray-scale or binary).
       Bc : Structuring element (default: 3x3 cross)
       n : Number of iterations (default: 1)
+
     Returns
     -------
       y : Image
@@ -1154,6 +1173,7 @@ def cerode(f, g, Bc=None, n=1):
       g : Conditioning image.
       Bc : Structuring element (default: 3x3 cross)
       n : Number of iterations (default: 1)
+
     Returns
     -------
       y : Image
@@ -1186,6 +1206,7 @@ def close(f, Bc =None):
     ----------
       f : Gray-scale (uint8 or uint16) or binary image.
       Bc : Structuring Element Default: None (3x3 elementary cross).
+
     Returns
     -------
       y : Image
@@ -1238,6 +1259,7 @@ def closerecth(f, Bdil=None, Bc=None):
       f :    Gray-scale (uint8 or uint16) or binary image.
       Bdil : Dilation structuring element (default: 3x3 cross)
       Bc :   Connectivity structuring element (default: 3x3 cross)
+
     Returns
     -------
       y : Gray-scale (uint8 or uint16) or binary image.
@@ -1261,6 +1283,7 @@ def closeth(f, B=None):
     ----------
       f : Gray-scale (uint8 or uint16) or binary image.
       B : Structuring Element Default: None (3x3 elementary cross).
+
     Returns
     -------
       y : Same type as `f`
@@ -1290,6 +1313,7 @@ def cthick(f, g, Iab=None, n=-1, theta=45, direction="clockwise"):
       n :         Number of iterations, -1 for infinite (default: -1)
       theta :     Degrees of rotation, 45 (default), 90, or 180.
       direction: 'clockwise' or 'anti-clockwise'.
+
     Returns
     -------
       y : Binary image.
@@ -1330,6 +1354,7 @@ def cthin(f, g, Iab=None, n=-1, theta=45, direction="clockwise"):
       n :         Number of iterations, -1 for infinite (default: -1)
       theta :     Degrees of rotation, 45 (default), 90, or 180.
       direction: 'clockwise' or 'anti-clockwise'.
+
     Returns
     -------
       y : Binary image.
@@ -1378,6 +1403,7 @@ def cwatershed(f, markers, Bc=None, return_lines=False,is_gvoronoi=False):
                      image: binary or labeled.
       Bc :      Watershed connectivity (default: 3x3 cross)
       return_lines : Whether to return lines as well as regions (default: False)
+
     Returns
     -------
       R : Gray-scale (uint8 or uint16) or binary image.
@@ -1452,6 +1478,7 @@ def dilate(f, B=None):
     ----------
       f : Gray-scale (uint8 or uint16) or binary image.
       B : Structuring element (default: 3x3 cross).
+
     Returns
     -------
       y: Same type as `f`
@@ -1499,6 +1526,7 @@ def drawv(f, data, value, geometry):
                   If it's a single value, then it will be used for all objects,
                   otherwise, it should be an array of same length as `data`.
       geometry:  One of 'point', 'line', 'rect', or 'frect' (filled rectangles).
+
     Returns
     -------
       y : Image of same type as `f`
@@ -1605,6 +1633,7 @@ def endpoints(option="loop"):
     Parameters
     ----------
       option : type, one of ('loop' 'homotopic'). default: 'loop'
+
     Returns
     -------
       Iab : Interval
@@ -1686,6 +1715,7 @@ def gdist(f, g, Bc=None, metric=None):
       Bc :     Structuring Element Default: None (3x3 elementary
               cross). (metric for distance).
       metric: string default: none. 'euclidean' if specified.
+
     Returns
     -------
       y : uint16 (distance image).
@@ -1758,6 +1788,7 @@ def grain(f, labels, measurement, option="image"):
       option :      Output format:
                       'image': results as a gray-scale mosaic image (default)
                       'data': results a column vector of measurements
+
     Returns
     -------
       y: Gray-scale (uint8 or uint16) image. Or an array with gray-scale
@@ -1835,6 +1866,7 @@ def gray(f, dtype="uint8", k=None):
       f :      Binary image.
       dtype :  One of 'uint8' (default), 'uint16', or 'int32'.
       k :      Pixel value to assign to `True` pixels (default: max value for `dtype`).
+
     Returns
     -------
       y : Unsigned gray-scale (uint8 or uint16), signed (int32) or
@@ -1869,6 +1901,7 @@ def hmin(f, h=1, Bc=None):
       f :  Gray-scale (uint8 or uint16) image.
       h :  Contrast (default: 1).
       Bc : Connectivity structuring element (default: 3x3 cross).
+
     Returns
     -------
       y : Gray-scale (uint8 or uint16) or binary image.
@@ -1915,6 +1948,7 @@ def hmax(f, h=1, Bc=None):
       f :  Gray-scale (uint8 or uint16) image.
       h :  Contrast (default: 1).
       Bc : Connectivity structuring element (default: 3x3 cross).
+
     Returns
     -------
       y : Gray-scale (uint8 or uint16) or binary image.
@@ -2008,6 +2042,7 @@ def img2se(fd, flat=True, f=None):
       flat : Whether to return a flat structuring element
       f :    Unsigned gray-scale (uint8 or uint16), signed (int32) or
               binary image. Default: None.
+
     Returns
     -------
       B : Structuring Element
@@ -2039,6 +2074,7 @@ def infcanon(f, Iab, theta=45, direction='clockwise'):
       Iab :       Interval
       theta :     Degrees of rotation (default: 45)
       direction:  One of 'clockwise' (default), or 'anti-clockwise'
+
     Returns
     -------
       y : Binary image.
@@ -2067,6 +2103,7 @@ def infgen(f, Iab):
     ----------
       f :   Binary image.
       Iab : Interval
+
     Returns
     -------
     y: Binary image.
@@ -2093,6 +2130,7 @@ def infrec(f, g, Bc=None):
       f :  Marker image (gray or binary).
       g :  Conditioning image (gray or binary).
       Bc : Connectivity Structuring element (default: 3x3 cross).
+
     Returns
     -------
       y : Image
@@ -2142,6 +2180,7 @@ def inpos(f, g, Bc=None):
       f :  Binary image. Marker image.
       g :  Gray-scale (uint8 or uint16) image. input image.
       Bc : connectivity structuring element (default: 3x3 cross).
+
     Returns
     -------
       y : Gray-scale (uint8 or uint16) image.
@@ -2167,6 +2206,7 @@ def interot(Iab, theta=45, direction="clockwise"):
       theta :     Degrees of rotation. Should be a multiple of 45 degrees. If not,
                    the rotation is approximate (default: 45).
       direction : one of ('clockwise', 'anti-clockwise'), default is 'clockwise'
+
    Returns
    -------
      Irot : Interval
@@ -2208,6 +2248,7 @@ def intersec(f1, f2, f3=None, f4=None, f5=None):
       f3 : Image (gray or binary) or constant, optional.
       f4 : Image (gray or binary) or constant, optional.
       f5 : Image (gray or binary) or constant, optional.
+
     Returns
     -------
       y : Image
@@ -2264,9 +2305,10 @@ def intershow(Iab):
     Parameters
     ----------
       Iab : Interval
+
     Returns
     -------
-      s : String representation of the interval.
+      s : string representation of the interval.
 
     Examples
     --------
@@ -2310,6 +2352,7 @@ def isbinary(f):
     Parameters
     ----------
       f : Image
+
     Returns
     -------
       bool : Whether `f` is a binary image
@@ -2351,6 +2394,7 @@ def isequal(f1, f2):
              binary image.
       f2 :  Unsigned gray-scale (uint8 or uint16), signed (int32) or
              binary image.
+
     Returns
     -------
       bool : Whether the two images are equal
@@ -2383,6 +2427,7 @@ def labelflat(f, Bc=None, lambda_=0):
       Bc :      Structuring Element Default: None (3x3 elementary
                  cross). ( connectivity).
       lambda_ : Default: 0. Connectivity given by |f(q)-f(p)|<=lambda_.
+
     Returns
     -------
       y: Image If number of labels is less than 65535, the data type
@@ -2531,6 +2576,7 @@ def openrecth(f, Bero=None, Bc=None):
       f :    Gray-scale (uint8 or uint16) or binary image.
       Bero : Erosion structuring element (default: 3x3 cross).
       Bc :   Connectivity structuring element (default: 3x3 cross).
+
     Returns
     -------
       y : Image of same type as `f`.
@@ -2554,6 +2600,7 @@ def openth(f, b=None):
       f : Gray-scale (uint8 or uint16) or binary image.
       b : Structuring element (default: 3x3 cross).
           structuring element
+
     Returns
     -------
       y : Image of same type as `f`.
@@ -2599,6 +2646,7 @@ def opentransf(f, type='octagon', n=65535, Bc=None, Buser=None):
                  '-rec' suffix is appended in the 'type' string.
       Buser :   Structuring element (default 3x3 cross).
                  User disk, used if 'type' is 'USER'.
+
     Returns
     -------
       y : Gray-scale (uint16) image.
@@ -2714,6 +2762,7 @@ def patspec(f, type='octagon', n=65535, Bc=None, Buser=None):
                '-rec' suffix is appended in the 'type' string.
       Buser : Structuring Element Default: None (3x3 elementary cross).
              user disk, used if 'type' is 'user'.
+
     Returns
     -------
       h :   A numpy.ndarray
@@ -2743,6 +2792,7 @@ def regmax(f, Bc=None):
     ----------
       f :  Gray-scale image.
       Bc : Connectivity structuring element (default: 3x3 cross).
+
     Returns
     -------
       y : Binary image.
@@ -2772,6 +2822,7 @@ def regmin(f, Bc=None, option="binary"):
       Bc :     Connectivity structuring element (default: 3x3 cross).
       option : Currently, it must be set to 'binary'
                 - 'binary': output a binary image
+
     Returns
     -------
       y : Gray-scale (uint8 or uint16) or binary image.
@@ -2861,6 +2912,7 @@ def se2interval(a, b):
     ----------
       a : Structuring element left extremity
       b : Structuring element right extremity
+
     Returns
     -------
       Iab : Interval
@@ -2889,6 +2941,7 @@ def se2hmt(A, Bc):
     ----------
       A :  Structuring Element Left extremity.
       Bc : Structuring Element Complement of the right extremity.
+
     Returns
     -------
       Iab : Interval
@@ -2917,6 +2970,7 @@ def se2flatidx(f,Bc):
     ----------
       f : image
       Bc : structuring element
+
     Returns
     -------
       Bi : array of indice offsets.
@@ -2943,10 +2997,12 @@ def sebox(r=1):
 
     Parameters
     ----------
-      r: size of box (default: 1)
+    r : integer, optional
+        size of box (default: 1)
+
     Returns
     -------
-      B : Structuring Element
+    B : Structuring Element
     """
 
     return sesum(binary([[1,1,1],
@@ -2969,10 +3025,12 @@ def secross(r=1):
 
     Parameters
     ----------
-      r : radius (default: 1)
+    r : integer, optional
+        radius (default: 1)
+
     Returns
     -------
-      B : Structuring Element
+    B : Structuring Element
     """
     return sesum(binary([[0,1,0],
                          [1,1,1],
@@ -3001,6 +3059,7 @@ def sedisk(r=3, dim=2, metric="euclidean", flat=True, h=0):
      flat:      Boolean (default: True)
      h:         double default: 0. elevation of the center of the
                   semi-sphere.
+
     Returns
     -------
       B : Structuring Element
@@ -3076,11 +3135,12 @@ def seline(length=3, theta=0):
 
     Parameters
     ----------
-      length : Length of line (default: 3)
-      theta :  Degrees, clockwise (default: 0, i.e. east)
+    length : Length of line (default: 3)
+    theta :  Degrees, clockwise (default: 0, i.e. east)
+
     Returns
     -------
-      B: Structuring Element
+    B : Structuring Element
 
     Examples
     --------
@@ -3134,6 +3194,7 @@ def serot(b, theta=45, direction="clockwise"):
       theta :   Degrees of rotation. Should be a multiple of 45 degrees. If not,
                 the rotation is approximate (default: 45).
       direction : one of ('clockwise', 'anti-clockwise'), default is 'clockwise'
+
     Returns
     -------
       brot : structuring element
@@ -3175,12 +3236,14 @@ def seshow(b, option="normal"):
 
     Parameters
     ----------
-      b :      Structuring element
-      option : One of ('normal', 'expand', 'non-flat').
+    b :      Structuring element
+    option : string, optional
+            One of ('normal', 'expand', 'non-flat').
               Default: 'normal'
+
     Returns
     -------
-      y : Gray-scale (uint8 or uint16) or binary image.
+    y : Gray-scale (uint8 or uint16) or binary image.
     """
     from string import upper
 
@@ -3246,6 +3309,7 @@ def setrans(Bi, t):
     ----------
       Bi : Structuring Element
       t : translation amount
+
     Returns
     -------
       Bo : Structuring Element
@@ -3292,6 +3356,7 @@ def sedilate(B1, B2):
     ----------
       B1 : Structuring Element
       B2 : Structuring Element
+
     Returns
     -------
     Bo: Structuring Element
@@ -3331,6 +3396,7 @@ def seunion(B1, B2):
     ----------
       B1 : Structuring element
       B2 : Structuring element
+
     Returns
     -------
       B : union of B1 and B2
@@ -3384,6 +3450,7 @@ def skelm(f, B=None, return_binary=True):
                 (medial axis); value: output a grayscale image with
                 values of the radius of the disk to reconstruct the
                 original image (medial axis transform).
+
     Returns
     -------
       y : Gray-scale (uint8 or uint16) or binary image.
@@ -3443,6 +3510,7 @@ def skelmrec(f, B=None):
     ----------
       f : Gray-scale (uint8 or uint16) or binary image.
       B : Structuring element (default: 3x3 cross).
+
     Returns
     -------
       y : Binary image.
@@ -3485,6 +3553,7 @@ def skiz(f, Bc=None, return_lines=False, metric=None):
     the connected objects of `f` are single points, the `skiz` is the
     Voronoi diagram.
 
+    Parameters
     ----------
       f :       Binary image.
       Bc :      Structuring Element (default: 3x3 cross).
@@ -3492,6 +3561,7 @@ def skiz(f, Bc=None, return_lines=False, metric=None):
       return_lines:  Whether to return the lines separating regions
                       in the image. Default=False
       metric:  String (default: Euclidean)
+
     Returns
     -------
       y : Gray-scale (uint8 or uint16) image.
@@ -3537,6 +3607,7 @@ def subm(f1, f2):
            binary image.
       f2 : Unsigned gray-scale (uint8 or uint16), signed (int32) or
            binary image. Or constant.
+
     Returns
     -------
       y : Unsigned gray-scale (uint8 or uint16), signed (int32) or
@@ -3590,6 +3661,7 @@ def supcanon(f, Iab, theta=45, direction="clockwise"):
       theta:     Angle of rotation in degrees.
                   Should be 45, 90, or 180.
       direction: Direction of rotation ('clockwise' or 'anti-clockwise')
+
     Returns
     ------
       y: Binary image.
@@ -3619,6 +3691,7 @@ def supgen(f, interval):
     ----------
       f :        Binary image.
       interval : Interval
+
     Returns
     -------
       y : Binary image.
@@ -3665,6 +3738,7 @@ def suprec(f, g, Bc=None):
       g :  Gray-scale (uint8 or uint16) or binary image. Conditioning
            image.
       Bc : Connectivity structuring element (default: 3x3 cross)
+
     Returns
     -------
       y : Image
@@ -3697,6 +3771,7 @@ def bshow(f1, f2=None, f3=None, factor=17):
     f3 :     Binary image. Default: None.
     factor : Double Default: 17. Expansion factor for the output
                   image. Use odd values above 9.
+
     Returns
     -------
     y : Binary image.
@@ -3754,6 +3829,7 @@ def symdiff(f1, f2):
     ----------
       f1 : Gray-scale (uint8 or uint16) or binary image.
       f2 : Gray-scale (uint8 or uint16) or binary image.
+
     Returns
     -------
       y : Image
@@ -3799,6 +3875,7 @@ def thick(f, Iab=None, n=-1, theta=45, direction="clockwise"):
       n :         Number of iterations. Default: -1, i.e., infinite
       theta :     Degrees of rotation: 45 (default), 90, or 180.
       direction : One of ('clockwise', 'anti-clockwise').
+
     Returns
     -------
       y : Binary image.
@@ -3840,6 +3917,7 @@ def thin(f, Iab=None, n=-1, theta=45, direction="clockwise"):
       theta :     Double Default: 45. Degrees of rotation: 45, 90, or
                   180.
       direction : One of ('clockwise', 'anti-clockwise'). default: clockwise.
+
     Returns
     -------
       y: Binary image.
@@ -3880,11 +3958,13 @@ def union(f1, f2, *args):
     `union` creates the image `y` by taking the pixelwise maximum
     between the images given. When the images are binary images,
     y represents the union of them.
+
     Parameters
     ----------
       f1 : Gray-scale (uint8 or uint16) or binary image.
       f2 : Gray-scale (uint8 or uint16) or binary image. Or constant
       args : Gray-scale (uint8 or uint16) or binary images.
+
     Returns
     -------
       y : Image
@@ -3953,12 +4033,14 @@ def watershed(f, Bc=None, return_lines=False):
 
     Parameters
     ----------
-      f :       Gray-scale (uint8 or uint16) or binary image.
-      return_lines: Whether to return the boundaries (default: returns segmentation)
+    f :  Gray-scale (uint8 or uint16) or binary image.
+    return_lines : boolean
+            Whether to return the boundaries (default: False)
+
     Returns
     -------
-      W : labeled image
-      Wl : separation lines
+    W : labeled image
+    Wl : separation lines
     """
     from string import upper
     if Bc is None: Bc = secross()
@@ -3974,6 +4056,7 @@ def maxleveltype(type='uint8'):
     Parameters
     ----------
       type : one of ('uint8', 'uint16', 'int32'). Default: uint8
+
     Returns
     -------
       The maximum level value of `type`
@@ -3997,6 +4080,7 @@ def to_int32(f):
     Parameters
     ----------
       f : Any image
+
     Returns
     -------
       img : The converted image
@@ -4017,6 +4101,7 @@ def to_uint8(f):
     Parameters
     ----------
       f : Any image
+
     Returns
     -------
       img : Gray-scale uint8 image. The converted image
@@ -4051,6 +4136,7 @@ def to_uint16(f):
     Parameters
     ----------
       f : Any image
+
     Returns
     -------
       img : The converted image
@@ -4109,10 +4195,12 @@ def datatype(f):
     ----------
       f : Unsigned gray-scale (uint8 or uint16), signed (int32) or
          binary image. Any image
+
     Returns
     -------
-      type : String String representation of image type: 'binary',
-          'uint8', 'uint16' or 'int32'
+      type : String
+            String representation of image type: 'binary',
+              'uint8', 'uint16' or 'int32'
     """
     from numpy import bool, uint8, uint16, int32
     code = f.dtype
@@ -4211,7 +4299,8 @@ def set2mat(A):
       M : Image in matrix format, origin (0,0) at the matrix center
 
 
-    Example:
+    Example
+    -------
 
     ::
 
@@ -4258,6 +4347,7 @@ def pad4n(f, Bc, value, scale=1):
       Bc :    Structuring Element (connectivity).
       value :
       scale : (default=1).
+
     Returns
     -------
       The converted image
