@@ -873,45 +873,6 @@ def areaopen(f, a, Bc=None):
     return y
 
 
-def flood(fin, T, option, Bc=None):
-    """
-    y = flood(fin, T, option, Bc=None)
-
-    Flooding filter h,v,a-basin and dynamics (depth, area, volume)
-
-    This is a flooding algorithm. It is the basis to implement many
-    topological functions. It is a connected filter that floods an
-    image following some topological criteria: area, volume, depth.
-    These filters are equivalent to area-close, volume-basin or
-    h-basin, respectively. This code may be difficult to understand
-    because of its many options. Basically, when t is negative, the
-    generalized dynamics: area, volume, h is computed. When the
-    flooding is computed, every time a new level in the flooding
-    happens, a test is made to verify if the criterion has reached.
-    This is used to set the value to that height. This value image
-    will be used later for sup-reconstruction (flooding) at that
-    particular level. This test happens in the raising of the water
-    and in the merging of basins.
-
-    Parameters
-    ----------
-      fin :    Gray-scale image (uint8 or uint16).
-      T :      Criterion value. If T==-1, then the dynamics is
-                 determined, not the flooding at this criterion. This was
-                 selected just to use the same algoritm to compute two
-                 completely distinct functions.
-      option : One of ('AREA', 'VOLUME', 'H').
-      Bc :     Structuring element (default: 3x3 cross)
-
-    Returns
-    -------
-      y : Gray-scale image (same type as input).
-    """
-
-    if Bc is None: Bc = secross()
-    raise NotImplementedError, 'pymorph.flood'
-
-
 def asf(f, seq="OC", B=None, n=1):
     """
     y = asf(f, seq="OC", B={3x3 cross}, n=1)
@@ -1779,6 +1740,7 @@ def grain(f, labels, measurement, option="image"):
                   first element (index 0) is the measurement of region 1. The
                   region with label zero is not measure as it is normally the
                   background.
+
     Parameters
     ----------
       f :          Data image (gray-scale).
@@ -3734,10 +3696,11 @@ def suprec(f, g, Bc=None):
 
     Parameters
     ----------
-      f :  Gray-scale (uint8 or uint16) or binary image. Marker image.
-      g :  Gray-scale (uint8 or uint16) or binary image. Conditioning
-           image.
-      Bc : Connectivity structuring element (default: 3x3 cross)
+    f :  Gray-scale (uint8 or uint16) or binary image.
+        Marker image.
+    g :  Gray-scale (uint8 or uint16) or binary image.
+        Conditioning image.
+    Bc : Connectivity structuring element (default: 3x3 cross)
 
     Returns
     -------
@@ -3911,16 +3874,16 @@ def thin(f, Iab=None, n=-1, theta=45, direction="clockwise"):
 
     Parameters
     ----------
-      f :         Binary image.
-      Iab :       Interval Default:(homothin).
-      n :         Number of iterations. (default: -1, i.e. infinite)
-      theta :     Double Default: 45. Degrees of rotation: 45, 90, or
-                  180.
-      direction : One of ('clockwise', 'anti-clockwise'). default: clockwise.
+    f :         Binary image.
+    Iab :       Interval Default:(homothin).
+    n :         Number of iterations. (default: -1, i.e. infinite)
+    theta :     Double Default: 45. Degrees of rotation: 45, 90, or
+                180.
+    direction : One of ('clockwise', 'anti-clockwise'). default: clockwise.
 
     Returns
     -------
-      y: Binary image.
+    y : Binary image.
     """
     """
     - Examples

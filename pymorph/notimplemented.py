@@ -80,3 +80,41 @@ def vmax(f, v=1, Bc=None):
     if Bc is None: Bc = secross()
     raise NotImplementedError, 'Not implemented yet'
 
+
+def flood(fin, T, option, Bc=None):
+    """
+    y = flood(fin, T, option, Bc=None)
+
+    Flooding filter h,v,a-basin and dynamics (depth, area, volume)
+
+    This is a flooding algorithm. It is the basis to implement many
+    topological functions. It is a connected filter that floods an
+    image following some topological criteria: area, volume, depth.
+    These filters are equivalent to area-close, volume-basin or
+    h-basin, respectively. This code may be difficult to understand
+    because of its many options. Basically, when t is negative, the
+    generalized dynamics: area, volume, h is computed. When the
+    flooding is computed, every time a new level in the flooding
+    happens, a test is made to verify if the criterion has reached.
+    This is used to set the value to that height. This value image
+    will be used later for sup-reconstruction (flooding) at that
+    particular level. This test happens in the raising of the water
+    and in the merging of basins.
+
+    Parameters
+    ----------
+      fin :    Gray-scale image (uint8 or uint16).
+      T :      Criterion value. If T==-1, then the dynamics is
+                 determined, not the flooding at this criterion. This was
+                 selected just to use the same algoritm to compute two
+                 completely distinct functions.
+      option : One of ('AREA', 'VOLUME', 'H').
+      Bc :     Structuring element (default: 3x3 cross)
+
+    Returns
+    -------
+      y : Gray-scale image (same type as input).
+    """
+
+    if Bc is None: Bc = secross()
+    raise NotImplementedError, 'pymorph.flood'
