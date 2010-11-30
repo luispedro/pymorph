@@ -2659,7 +2659,7 @@ def opentransf(f, type='octagon', n=65535, Bc=None, Buser=None):
     if disk_se:
         n  = min(n,min(f.shape))
     elif  type == 'linear-h':
-        se = binary([1, 1, 1])
+        se = binary([[1, 1, 1]])
         n  = min(n,f.shape[1])
     elif  type =='linear-v':
         se = binary([
