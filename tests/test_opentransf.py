@@ -17,3 +17,9 @@ def test_opentransf():
                 t = pymorph.open(f, pymorph.sedisk(k, 2, 'city-block'))
             assert not t[y,x]
 
+def test_all():
+    f = np.arange(9).reshape((3,3)) % 3 > 0
+    # linear-h crashed in 0.95
+    # and was underlying cause of crash in patsec(f, 'linear-h')
+    g = pymorph.opentransf(f, 'linear-h')
+
