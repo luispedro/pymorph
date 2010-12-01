@@ -900,18 +900,14 @@ def asf(f, seq="OC", B=None, n=1):
     """
     from string import upper
     if B is None: B = secross()
-    seq=upper(seq)
+    seq = upper(seq)
     ops = { 'O' : open, 'C' : close }
-    first = ops[seq[-1]]
-    second = ops[seq[-2]]
-    third = (lambda f,_: f)
-    if len(seq) == 3: third =ops[third[-3]]
+    ops = map(ops.get, reversed(seq))
 
     for i in xrange(n):
         Bn = sesum(B, i+1)
-        f = first(f, Bn)
-        f = second(f, Bn)
-        f = third(f, Bn)
+        for op in ops:
+            f = op(f, Bn)
     return f
 
 
