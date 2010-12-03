@@ -16,8 +16,11 @@ Includes basic operations such as
 *Website*: `http://luispedro.org/software/pymorph
 <http://luispedro.org/software/pymorph>`_
 
+*API Documentation*: `http://packages.python.org/pymorph/
+<http://packages.python.org/pymorph/>`__
+
 *Mailing List*: Use the `pythonvision mailing list
-<http://groups.google.com/group/pythonvision?pli=1>`_ for questions, bug
+<http://groups.google.com/group/pythonvision>`_ for questions, bug
 submissions, etc.
 
 ========
