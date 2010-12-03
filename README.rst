@@ -2,16 +2,29 @@
 PYMORPH
 ========
 
-Pymorph is a collection of pure python implementations of many image morphology functions.
+
+Summary
+-------
+
+This image morphology toolbox implements the basic binary and greyscale
+morphology operations, working with numpy arrays representing images.
+
+This is a pure Python package which is the companion package
+to the book "Hands-on Morphological Image Processing." It has been
+updated to work with numpy and the names and interfaces have been
+Pythonised.
+
 
 Includes basic operations such as
-    - erode
-    - dilate
-    - open
-    - tophat opening
-    - watershed
-    - ...
+- erode
+- dilate
+- open
+- tophat opening
+- watershed
+- ...
 
+Links
+-----
 
 *Website*: `http://luispedro.org/software/pymorph
 <http://luispedro.org/software/pymorph>`_
@@ -23,48 +36,50 @@ Includes basic operations such as
 <http://groups.google.com/group/pythonvision>`_ for questions, bug
 submissions, etc.
 
-========
-INSTALL
-========
+Install
+-------
 
-python setup.py install
+One of
 
-================================
-AUTHORS, COPYRIGHT & LICENSE
-================================
+::
 
-Copyright 2003, Roberto A. Lotufo, UNICAMP-University of Campinas; CenPRA-Renato Archer Research Center, Rubens C. Machado.
+    pip install pymorph
+    easy_install pymorph
+
+or download and run
+
+::
+
+    python setup.py install
+
+See Also
+--------
+
+The package `mahotas <http://luispedro.org/software/mahotas>`_ implements some
+of the same functions in C++ and, so, it is much faster (even if it is not as
+feature-full).
+
+Status & Future Plans
+---------------------
+
+The package is actively maintained and any reported bug will be fixed fast.
+
+Currently there are *no known bugs* (although testing coverage is not complete).
+
+When all functions have a corresponding unit test and the whole of the
+API documentation has been re-written into numpy rst format, I will release
+version 1.0.
+
+Authors, Copyright & License
+----------------------------
+
+Copyright 2003, Roberto A. Lotufo, UNICAMP-University of Campinas;
+CenPRA-Renato Archer Research Center, Rubens C. Machado.
+
 Copyright 2008-2010, Luis Pedro Coelho <lpc@cmu.edu>
 
 The original package was written by RAF and RCM. Starting June 2008 (with
 release 0.88), LPC updated the code to run on the more modern numpy base and
 started fixing bugs and maintaining the package.
 
-
 Pymorph is ruled by the **BSD License Terms**:
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-    * Redistributions of source code must retain the above copyright notice,
-    this list of conditions and the following disclaimer.
-
-    * Redistributions in binary form must reproduce the above copyright notice,
-    this list of conditions and the following disclaimer in the documentation
-    and/or other materials provided with the distribution.
-
-    * Neither the name of UNICAMP, CenPRA nor the names of its contributors may
-    be used to endorse or promote products derived from this software without
-    specific prior written permission.
-    
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
-ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-

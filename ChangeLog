@@ -1,5 +1,7 @@
-2008-12-29 Luis Pedro Coelho <luis@luispedro.org>
+Version 0.96 2010-12-3 Luis Pedro Coelho <luis@luispedro.org>
 	* Fixed patsec() and opentransf() for type='linear-h'
+	* Fix asf() for 3 letter codes
+	* Made all API documentation numpydoc compatible
 
 2009-12-29 Luis Pedro Coelho <luis@luispedro.org>
 	* Fixed drawv()
