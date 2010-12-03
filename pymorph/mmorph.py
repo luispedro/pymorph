@@ -212,6 +212,7 @@ __all__ = \
     ,'supgen'
     ,'suprec'
     ,'bshow'
+    ,'symdif'
     ,'symdiff'
     ,'thick'
     ,'thin'
