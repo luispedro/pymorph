@@ -1,6 +1,8 @@
 """
+==============
 Module pymorph
 ==============
+
 pymorph a powerful collection of state-of-the-art gray-scale morphological
 tools that can be applied to image segmentation, non-linear filtering,
 pattern recognition and image analysis.
@@ -241,8 +243,8 @@ def concat(dim, *imgs):
 
     Parameters
     ----------
-    dim : Dimension to concatenate (string):
-                    ['width', 'height', 'depth'] or just the initial letter
+    dim : {'width', 'heigh', 'depth', 'w', 'h', 'd' }
+        Dimension along which to concatenate.
     img0, img1, ... : Images to concatenate
 
     Returns
@@ -973,6 +975,7 @@ def areaopen(f, a, Bc=None):
         b=areaopen(a, 500)
         show(a)
         show(b)
+
     """
 
     if Bc is None: Bc = secross()
@@ -1115,9 +1118,12 @@ def blob(f, measurement, output="image"):
     - bounding rectangle.
 
     `output` controls the output format:
-        'image' : the result is an image;
-        'data ' : the result is a double column vector with the
-                  measurement for each blob.
+
+    image
+        the result is an image
+    data
+        the result is a double column vector with the measurement for each
+        blob.
 
     The region with label zero is not measured as it is normally
     the background. The measurement of region with label 1 appears
@@ -1128,9 +1134,8 @@ def blob(f, measurement, output="image"):
     f :           Gray-scale (uint8 or uint16) image. Labeled image.
     measurement : Measurement. One of ('area', 'centroid', 'boundingbox').
     output : {'image' [default], 'data'}, optional
-            Output format:
-                'image' : returns a binary image
-                'data' : returns a vector of measurements
+            Output format: if 'image', returns a binary image; if 'data',
+            returns a vector of measurements
 
     Returns
     -------
@@ -1309,14 +1314,12 @@ def closerec(f, Bdil=None, Bc=None):
 
     Parameters
     ----------
-
     f :    Gray-scale (uint8 or uint16) or binary image
     Bdil : Dilation structuring element (default 3x3 elementary cross)
     Bc :  Connectivity structuring element (default: 3x3 elementary cross)
 
     Returns
     -------
-
     y : Image (same type as f)
     """
 
@@ -1603,6 +1606,7 @@ def drawv(f, data, value, geometry):
     used by points, with a straight line connecting them in the order
     given by the data matrix. For rectangles and filled rectangles,
     data should be an array of 2 x 2D points.
+
     Parameters
     ----------
     f :        Gray-scale (uint8 or uint16) or binary image.
@@ -1864,27 +1868,31 @@ def grain(f, labels, measurement, option="image"):
     statistics to compute is specified by the parameter measurement,
     which has the same options as in function stats. The
     parameter option defines the output format:
-        'image': if the output is an uint16 image where each label value is
-                  changed to the measurement value
-        'data':  a double column vector. In this case, the
-                  first element (index 0) is the measurement of region 1. The
-                  region with label zero is not measure as it is normally the
-                  background.
+
+    'image'
+        if the output is an uint16 image where each label value is changed to
+        the measurement value
+    'data'
+        a double column vector. In this case, the first element (index 0) is
+        the measurement of region 1. The region with label zero is not measure
+        as it is normally the background.
 
     Parameters
     ----------
-      f :          Data image (gray-scale).
-      labels :     Labeled image. As usual, label 0 is backaground.
-      measurement : Which measure to compute. One of 'max', 'min',
-                      'median', 'mean', 'sum', 'std', 'std1'.
-      option :      Output format:
-                      'image': results as a gray-scale mosaic image (default)
-                      'data': results a column vector of measurements
+    f : ndarray (gray-scale)
+    labels : ndarray of integer dtype
+        Labeled image. As usual, label 0 is backaground.
+    measurement : {'max', 'min', 'median', 'mean', 'sum', 'std', 'std1' }
+        Which measure to compute.
+    option : {'image' [default], 'data' }
+        Output format: if 'image', results as a gray-scale mosaic image
+        (default): if 'data', results a column vector of measurements.
 
     Returns
     -------
-      y: Gray-scale (uint8 or uint16) image. Or an array with gray-scale
-      statistics per region.  """
+    y: Gray-scale (uint8 or uint16) image.
+        Or an array with gray-scale statistics per region
+    """
     """
         - Examples
             #
@@ -2293,6 +2301,7 @@ def interot(Iab, theta=45, direction="clockwise"):
     Rotate an interval
 
     `interot` rotates the interval `Iab` by `theta`.
+
     Parameters
     ----------
     Iab :       Interval
@@ -2313,6 +2322,7 @@ def interot(Iab, theta=45, direction="clockwise"):
         b2 = interot(b1)
         print intershow(b1)
         print intershow(b2)
+
     """
     from string import lower
 
@@ -2335,6 +2345,7 @@ def intersec(f1, f2, f3=None, f4=None, f5=None):
     between the images `f1`, `f2`, `f3`, `f4`, and `f5` . When `f1`,
     `f2`, `f3`, `f4`, and f5 are binary images, `y` is the intersection
     of them.
+
     Parameters
     ----------
     f1 : Image (gray or binary) or constant.
@@ -2463,7 +2474,7 @@ def asbinary(f):
     Transforms f into a binary image
 
     Parameters
-    ---------
+    ----------
     f : image of any type, consisting only of 0s and 1s.
 
     Returns
@@ -2519,14 +2530,14 @@ def labelflat(f, Bc=None, lambda_=0):
 
     Parameters
     ----------
-    f :       Gray-scale (uint8 or uint16) or binary image.
-    Bc :      Structuring Element Default: None (3x3 elementary
-                 cross). ( connectivity).
-    lambda_ : Default: 0. Connectivity given by |f(q)-f(p)|<=lambda_.
+    f : Gray-scale (uint8 or uint16) or binary image.
+    Bc : Structuring element, optional
+        Connectivity (efault: 3x3 elementary cross).
+    lambda_ : Default: 0. Connectivity given by ``|f(q)-f(p)|<=lambda_``.
 
     Returns
     -------
-    y: Image
+    y: ndarray of same shape as `f`
         If number of labels is less than 65535, the data type is uint16;
         otherwise, it is int32.
     """
@@ -2732,14 +2743,14 @@ def opentransf(f, type='octagon', n=65535, Bc=None, Buser=None):
 
     Parameters
     ----------
-    f :       binary image.
-    type :    disk family. one of 'octagon' (default), 'chessboard',
-                 'city-block', 'linear-v', 'linear-h', 'linear-45r',
-                 'linear-45l', 'user'.
-    n :       Maximum disk radius (default: 65535).
-    Bc :      Structuring element (default: 3x3 cross).
-                Connectivity for the reconstructive opening. Used if
-                 '-rec' suffix is appended in the 'type' string.
+    f : binary image.
+    type : { 'octagon' [default], 'chessboard', 'citi-block', 'linear-h', 'linear-v', 'linear-45r', 'user' }
+        disk family.
+    n : integer, optional
+        Maximum disk radius (default: 65535).
+    Bc :  Structuring element, optional
+        Connectivity for the reconstructive opening. Used if '-rec' suffix is
+        appended in the 'type' string. default: 3x3 cross
     Buser : structure element, optional
         user disk, used if 'type' is 'user'.
 
@@ -2849,13 +2860,13 @@ def patspec(f, type='octagon', n=65535, Bc=None, Buser=None):
     Parameters
     ----------
     f :     Binary image.
-    type :  string default: 'octagon'. disk family: 'octagon',
-             'chessboard', 'city-block', 'linear-v', 'linear-h',
-             'linear-45r', 'linear-45l', 'user'.
-    n :     Default: 65535. Maximum disk radii.
-    Bc :    Structuring element (Default: 3x3 elementary cross).
-             Connectivity for the reconstructive granulometry. Used if
-             '-rec' suffix is appended in the 'type' string.
+    type : { 'octagon' [default], 'chessboard', 'citi-block', 'linear-h', 'linear-v', 'linear-45r', 'user' }
+        disk family.
+    n : integer, optional
+        Maximum disk radius (default: 65535).
+    Bc :  Structuring element, optional
+        Connectivity for the reconstructive granulometry. Used if '-rec' suffix
+        is appended in the 'type' string. default: 3x3 cross
     Buser : structure element, optional
         user disk, used if 'type' is 'user'.
 
@@ -2917,8 +2928,8 @@ def regmin(f, Bc=None, option="binary"):
     f :      Gray-scale (uint8 or uint16) image.
     Bc :     Connectivity structuring element (default: 3x3 cross).
     option : 'binary'
-        - 'binary': output a binary image
-        Currently, it must be set to 'binary'. Fortunately, that's the default.
+        if 'binary', outputs a binary image. Currently, it must be set to
+        'binary'. Fortunately, that's the default.
 
     Returns
     -------
@@ -2941,15 +2952,19 @@ def regmin(f, Bc=None, option="binary"):
     the basic notion for the hierarchical or multiscale watershed
     transform.
 
-    Controlled by:
-       option
-              'value': output a grayscale image with
-                  points at the regional minimum with the pixel values of
-                  the input image
-              'dynamics':  output a grayscale image with
-                  points at the regional minimum with its dynamics;
-              'area-dyn': int32 image with the area-dynamics;
-              'volume-dyn': int32 image with the volume-dynamics.
+    Controlled by option:
+
+    'value'
+        output a grayscale image with points at the regional minimum with the
+        pixel values of the input image
+    'dynamics'
+        output a grayscale image with points at the regional minimum with its
+        dynamics;
+    'area-dyn'
+        int32 image with the area-dynamics;
+    'volume-dyn'
+        int32 image with the volume-dynamics.
+
     """
     """
         - Examples
@@ -3053,15 +3068,15 @@ def se2flatidx(f,Bc):
     Transforms the Bc structuring element into an array of indices so that
     f.flat[Bi[i]] corresponds to the i-th element where Bc is true
 
-    Equivalent of
+    Equivalent of::
 
-    g = zeros(f.shape)
-    h,w=Bc.shape
-    g[:h,:w]=Bc
-    Bi, = where(g.ravel())
+        g = zeros(f.shape)
+        h,w=Bc.shape
+        g[:h,:w]=Bc
+        Bi, = where(g.ravel())
 
     This is useful for implementing many functions. See the implementation of
-    label() for an example.
+    `label()` for an example.
 
     Parameters
     ----------
@@ -3242,6 +3257,7 @@ def seline(length=3, theta=0):
 
     Examples
     --------
+
     ::
 
         >>> import pymorph
@@ -3261,6 +3277,7 @@ def seline(length=3, theta=0):
         array([[0, 0, 0],
                [0, 1, 1],
                [0, 0, 1]], dtype=uint8)
+
     """
     import numpy
     from numpy import pi, tan, cos, sin, sign, floor, arange, transpose, array, ones
@@ -3335,9 +3352,8 @@ def seshow(b, option="normal"):
     Parameters
     ----------
     b :      Structuring element
-    option : string, optional
-            One of ('normal', 'expand', 'non-flat').
-              Default: 'normal'
+    option : { 'normal' [default], 'expand', 'non-flat' }
+        Mode
 
     Returns
     -------
@@ -4404,8 +4420,8 @@ def set2mat(A):
     M : Image in matrix format, origin (0,0) at the matrix center
 
 
-    Example
-    -------
+    Examples
+    --------
 
     ::
 
