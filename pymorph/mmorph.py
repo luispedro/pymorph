@@ -3559,8 +3559,8 @@ def skelm(f, B=None, return_binary=True):
     Parameters
     ----------
     f :      Binary image.
-    B :      Structuring Element Default: None (3x3 elementary
-               cross).
+    B :      ndarray, optional
+        Structuring Element Default: 3x3 elementary cross.
     return_binary : boolean, optional
          Whether to return a binary image of the medial axis (the default) or a
          greyscale a binary image (medial axis); value: output a grayscale
