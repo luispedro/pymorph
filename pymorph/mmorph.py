@@ -1452,7 +1452,7 @@ def cthin(f, g, Iab=None, n=-1, theta=45, direction="clockwise"):
     for i in xrange(n):
         prev = f
         for t in xrange(0,360,theta):
-            sup = supgen(f, interot(iab, t, direction))
+            sup = supgen(f, interot(Iab, t, direction))
             y = union(subm(f, sup),g)
         if isequal(prev, f): break
     return f
