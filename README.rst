@@ -59,6 +59,10 @@ The package `mahotas <http://luispedro.org/software/mahotas>`_ implements some
 of the same functions in C++ and, so, it is much faster (even if it is not as
 feature-full).
 
+This `tutorial <http://pythonvision.org/basic-tutorial>`_ on getting started
+with pymorph and mahotas will be very useful if you're completely new to numpy,
+pymorph and pyhton in general.
+
 Status & Future Plans
 ---------------------
 
