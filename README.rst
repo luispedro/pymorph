@@ -2,6 +2,9 @@
 PYMORPH
 ========
 
+This project is generally unmaintained and deprecated. Please check out
+`mahotas <https://mahotas.readthedocs.io>`__ or `scikit-image
+<http://scikit-image.org>`__ for better alternatives.
 
 Summary
 -------
